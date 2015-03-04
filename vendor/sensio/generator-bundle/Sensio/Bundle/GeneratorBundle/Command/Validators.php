@@ -18,7 +18,7 @@ namespace Sensio\Bundle\GeneratorBundle\Command;
  */
 class Validators
 {
-    public static function validateBundleNamespace($namespace, $requireVendorNamespace = true)
+    public static function validateBundleNamespace($namespace)
     {
         if (!preg_match('/Bundle$/', $namespace)) {
             throw new \InvalidArgumentException('The namespace must end with Bundle.');
@@ -38,8 +38,7 @@ class Validators
         }
 
         // validate that the namespace is at least one level deep
-        if ($requireVendorNamespace && false === strpos($namespace, '\\')) {
-            // language is (almost) duplicated in GenerateBundleCommand
+        if (false === strpos($namespace, '\\')) {
             $msg = array();
             $msg[] = sprintf('The namespace must contain a vendor namespace (e.g. "VendorName\%s" instead of simply "%s").', $namespace, $namespace);
             $msg[] = 'If you\'ve specified a vendor namespace, did you forget to surround it with quotes (init:bundle "Acme\BlogBundle")?';
@@ -55,7 +54,7 @@ class Validators
         if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $bundle)) {
             throw new \InvalidArgumentException('The bundle name contains invalid characters.');
         }
-
+        
         if (!preg_match('/Bundle$/', $bundle)) {
             throw new \InvalidArgumentException('The bundle name must end with Bundle.');
         }
@@ -113,7 +112,6 @@ class Validators
             'array',
             'as',
             'break',
-            'callable',
             'case',
             'catch',
             'class',
@@ -133,7 +131,6 @@ class Validators
             'endwhile',
             'extends',
             'final',
-            'finally',
             'for',
             'foreach',
             'function',
@@ -143,7 +140,6 @@ class Validators
             'implements',
             'interface',
             'instanceof',
-            'insteadof',
             'namespace',
             'new',
             'or',
@@ -153,13 +149,11 @@ class Validators
             'static',
             'switch',
             'throw',
-            'trait',
             'try',
             'use',
             'var',
             'while',
             'xor',
-            'yield',
             '__CLASS__',
             '__DIR__',
             '__FILE__',
@@ -167,8 +161,6 @@ class Validators
             '__FUNCTION__',
             '__METHOD__',
             '__NAMESPACE__',
-            '__TRAIT__',
-            '__halt_compiler',
             'die',
             'echo',
             'empty',

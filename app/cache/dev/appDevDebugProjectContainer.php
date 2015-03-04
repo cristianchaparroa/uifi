@@ -147,6 +147,32 @@ class appDevDebugProjectContainer extends Container
             'fragment.renderer.ssi' => 'getFragment_Renderer_SsiService',
             'http_kernel' => 'getHttpKernelService',
             'kernel' => 'getKernelService',
+            'lexik_form_filter.apply_filter.doctrine_dbal' => 'getLexikFormFilter_ApplyFilter_DoctrineDbalService',
+            'lexik_form_filter.apply_filter.doctrine_orm' => 'getLexikFormFilter_ApplyFilter_DoctrineOrmService',
+            'lexik_form_filter.data_extraction_method.default' => 'getLexikFormFilter_DataExtractionMethod_DefaultService',
+            'lexik_form_filter.data_extraction_method.key_values' => 'getLexikFormFilter_DataExtractionMethod_KeyValuesService',
+            'lexik_form_filter.data_extraction_method.text' => 'getLexikFormFilter_DataExtractionMethod_TextService',
+            'lexik_form_filter.filter_prepare' => 'getLexikFormFilter_FilterPrepareService',
+            'lexik_form_filter.form_data_extractor' => 'getLexikFormFilter_FormDataExtractorService',
+            'lexik_form_filter.get_filter.doctrine_dbal' => 'getLexikFormFilter_GetFilter_DoctrineDbalService',
+            'lexik_form_filter.get_filter.doctrine_orm' => 'getLexikFormFilter_GetFilter_DoctrineOrmService',
+            'lexik_form_filter.query_builder_updater' => 'getLexikFormFilter_QueryBuilderUpdaterService',
+            'lexik_form_filter.type.filter' => 'getLexikFormFilter_Type_FilterService',
+            'lexik_form_filter.type.filter_boolean' => 'getLexikFormFilter_Type_FilterBooleanService',
+            'lexik_form_filter.type.filter_checkbox' => 'getLexikFormFilter_Type_FilterCheckboxService',
+            'lexik_form_filter.type.filter_choice' => 'getLexikFormFilter_Type_FilterChoiceService',
+            'lexik_form_filter.type.filter_collection_adapter' => 'getLexikFormFilter_Type_FilterCollectionAdapterService',
+            'lexik_form_filter.type.filter_date' => 'getLexikFormFilter_Type_FilterDateService',
+            'lexik_form_filter.type.filter_date_range' => 'getLexikFormFilter_Type_FilterDateRangeService',
+            'lexik_form_filter.type.filter_datetime' => 'getLexikFormFilter_Type_FilterDatetimeService',
+            'lexik_form_filter.type.filter_datetime_range' => 'getLexikFormFilter_Type_FilterDatetimeRangeService',
+            'lexik_form_filter.type.filter_entity' => 'getLexikFormFilter_Type_FilterEntityService',
+            'lexik_form_filter.type.filter_field' => 'getLexikFormFilter_Type_FilterFieldService',
+            'lexik_form_filter.type.filter_number' => 'getLexikFormFilter_Type_FilterNumberService',
+            'lexik_form_filter.type.filter_number_range' => 'getLexikFormFilter_Type_FilterNumberRangeService',
+            'lexik_form_filter.type.filter_sharedable' => 'getLexikFormFilter_Type_FilterSharedableService',
+            'lexik_form_filter.type.filter_text' => 'getLexikFormFilter_Type_FilterTextService',
+            'lexik_form_filter.type_extension.filter_extension' => 'getLexikFormFilter_TypeExtension_FilterExtensionService',
             'locale_listener' => 'getLocaleListenerService',
             'logger' => 'getLoggerService',
             'monolog.handler.console' => 'getMonolog_Handler_ConsoleService',
@@ -554,6 +580,9 @@ class appDevDebugProjectContainer extends Container
 
         $instance->addListenerService('kernel.controller', array(0 => 'data_collector.router', 1 => 'onKernelController'), 0);
         $instance->addListenerService('kernel.request', array(0 => 'assetic.request_listener', 1 => 'onKernelRequest'), 0);
+        $instance->addListenerService('lexik_filter.prepare', array(0 => 'lexik_form_filter.filter_prepare', 1 => 'onFilterBuilderPrepare'), 0);
+        $instance->addListenerService('lexik_filter.apply_filters.orm', array(0 => 'lexik_form_filter.apply_filter.doctrine_orm', 1 => 'onApplyFilterCondition'), 0);
+        $instance->addListenerService('lexik_filter.apply_filters.dbal', array(0 => 'lexik_form_filter.apply_filter.doctrine_dbal', 1 => 'onApplyFilterCondition'), 0);
         $instance->addListenerService('kernel.controller', array(0 => 'acme.demo.listener', 1 => 'onKernelController'), 0);
         $instance->addSubscriberService('response_listener', 'Symfony\\Component\\HttpKernel\\EventListener\\ResponseListener');
         $instance->addSubscriberService('streamed_response_listener', 'Symfony\\Component\\HttpKernel\\EventListener\\StreamedResponseListener');
@@ -581,6 +610,8 @@ class appDevDebugProjectContainer extends Container
         $instance->addSubscriberService('fos_user.listener.authentication', 'FOS\\UserBundle\\EventListener\\AuthenticationListener');
         $instance->addSubscriberService('fos_user.listener.flash', 'FOS\\UserBundle\\EventListener\\FlashListener');
         $instance->addSubscriberService('fos_user.listener.resetting', 'FOS\\UserBundle\\EventListener\\ResettingListener');
+        $instance->addSubscriberService('lexik_form_filter.get_filter.doctrine_orm', 'Lexik\\Bundle\\FormFilterBundle\\Event\\Subscriber\\DoctrineORMSubscriber');
+        $instance->addSubscriberService('lexik_form_filter.get_filter.doctrine_dbal', 'Lexik\\Bundle\\FormFilterBundle\\Event\\Subscriber\\DoctrineDBALSubscriber');
         $instance->addSubscriberService('debug.dump_listener', 'Symfony\\Component\\HttpKernel\\EventListener\\DumpListener');
         $instance->addSubscriberService('web_profiler.debug_toolbar', 'Symfony\\Bundle\\WebProfilerBundle\\EventListener\\WebDebugToolbarListener');
 
@@ -867,7 +898,7 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getForm_RegistryService()
     {
-        return $this->services['form.registry'] = new \Symfony\Component\Form\FormRegistry(array(0 => new \Symfony\Component\Form\Extension\DependencyInjection\DependencyInjectionExtension($this, array('form' => 'form.type.form', 'birthday' => 'form.type.birthday', 'checkbox' => 'form.type.checkbox', 'choice' => 'form.type.choice', 'collection' => 'form.type.collection', 'country' => 'form.type.country', 'date' => 'form.type.date', 'datetime' => 'form.type.datetime', 'email' => 'form.type.email', 'file' => 'form.type.file', 'hidden' => 'form.type.hidden', 'integer' => 'form.type.integer', 'language' => 'form.type.language', 'locale' => 'form.type.locale', 'money' => 'form.type.money', 'number' => 'form.type.number', 'password' => 'form.type.password', 'percent' => 'form.type.percent', 'radio' => 'form.type.radio', 'repeated' => 'form.type.repeated', 'search' => 'form.type.search', 'textarea' => 'form.type.textarea', 'text' => 'form.type.text', 'time' => 'form.type.time', 'timezone' => 'form.type.timezone', 'url' => 'form.type.url', 'button' => 'form.type.button', 'submit' => 'form.type.submit', 'reset' => 'form.type.reset', 'currency' => 'form.type.currency', 'entity' => 'form.type.entity', 'fos_user_username' => 'fos_user.username_form_type', 'fos_user_profile' => 'fos_user.profile.form.type', 'fos_user_registration' => 'fos_user.registration.form.type', 'fos_user_change_password' => 'fos_user.change_password.form.type', 'fos_user_resetting' => 'fos_user.resetting.form.type'), array('form' => array(0 => 'form.type_extension.form.http_foundation', 1 => 'form.type_extension.form.validator', 2 => 'form.type_extension.csrf', 3 => 'form.type_extension.form.data_collector'), 'repeated' => array(0 => 'form.type_extension.repeated.validator'), 'submit' => array(0 => 'form.type_extension.submit.validator')), array(0 => 'form.type_guesser.validator', 1 => 'form.type_guesser.doctrine'))), $this->get('form.resolved_type_factory'));
+        return $this->services['form.registry'] = new \Symfony\Component\Form\FormRegistry(array(0 => new \Symfony\Component\Form\Extension\DependencyInjection\DependencyInjectionExtension($this, array('form' => 'form.type.form', 'birthday' => 'form.type.birthday', 'checkbox' => 'form.type.checkbox', 'choice' => 'form.type.choice', 'collection' => 'form.type.collection', 'country' => 'form.type.country', 'date' => 'form.type.date', 'datetime' => 'form.type.datetime', 'email' => 'form.type.email', 'file' => 'form.type.file', 'hidden' => 'form.type.hidden', 'integer' => 'form.type.integer', 'language' => 'form.type.language', 'locale' => 'form.type.locale', 'money' => 'form.type.money', 'number' => 'form.type.number', 'password' => 'form.type.password', 'percent' => 'form.type.percent', 'radio' => 'form.type.radio', 'repeated' => 'form.type.repeated', 'search' => 'form.type.search', 'textarea' => 'form.type.textarea', 'text' => 'form.type.text', 'time' => 'form.type.time', 'timezone' => 'form.type.timezone', 'url' => 'form.type.url', 'button' => 'form.type.button', 'submit' => 'form.type.submit', 'reset' => 'form.type.reset', 'currency' => 'form.type.currency', 'entity' => 'form.type.entity', 'fos_user_username' => 'fos_user.username_form_type', 'fos_user_profile' => 'fos_user.profile.form.type', 'fos_user_registration' => 'fos_user.registration.form.type', 'fos_user_change_password' => 'fos_user.change_password.form.type', 'fos_user_resetting' => 'fos_user.resetting.form.type', 'filter_field' => 'lexik_form_filter.type.filter_field', 'filter' => 'lexik_form_filter.type.filter', 'filter_text' => 'lexik_form_filter.type.filter_text', 'filter_number' => 'lexik_form_filter.type.filter_number', 'filter_number_range' => 'lexik_form_filter.type.filter_number_range', 'filter_checkbox' => 'lexik_form_filter.type.filter_checkbox', 'filter_boolean' => 'lexik_form_filter.type.filter_boolean', 'filter_choice' => 'lexik_form_filter.type.filter_choice', 'filter_entity' => 'lexik_form_filter.type.filter_entity', 'filter_date' => 'lexik_form_filter.type.filter_date', 'filter_date_range' => 'lexik_form_filter.type.filter_date_range', 'filter_datetime' => 'lexik_form_filter.type.filter_datetime', 'filter_datetime_range' => 'lexik_form_filter.type.filter_datetime_range', 'filter_collection_adapter' => 'lexik_form_filter.type.filter_collection_adapter', 'filter_sharedable' => 'lexik_form_filter.type.filter_sharedable'), array('form' => array(0 => 'form.type_extension.form.http_foundation', 1 => 'form.type_extension.form.validator', 2 => 'form.type_extension.csrf', 3 => 'form.type_extension.form.data_collector', 4 => 'lexik_form_filter.type_extension.filter_extension'), 'repeated' => array(0 => 'form.type_extension.repeated.validator'), 'submit' => array(0 => 'form.type_extension.submit.validator')), array(0 => 'form.type_guesser.validator', 1 => 'form.type_guesser.doctrine'))), $this->get('form.resolved_type_factory'));
     }
 
     /**
@@ -1767,6 +1798,350 @@ class appDevDebugProjectContainer extends Container
     }
 
     /**
+     * Gets the 'lexik_form_filter.apply_filter.doctrine_dbal' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return \Lexik\Bundle\FormFilterBundle\Event\Listener\DoctrineApplyFilterListener A Lexik\Bundle\FormFilterBundle\Event\Listener\DoctrineApplyFilterListener instance.
+     */
+    protected function getLexikFormFilter_ApplyFilter_DoctrineDbalService()
+    {
+        return $this->services['lexik_form_filter.apply_filter.doctrine_dbal'] = new \Lexik\Bundle\FormFilterBundle\Event\Listener\DoctrineApplyFilterListener(NULL);
+    }
+
+    /**
+     * Gets the 'lexik_form_filter.apply_filter.doctrine_orm' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return \Lexik\Bundle\FormFilterBundle\Event\Listener\DoctrineApplyFilterListener A Lexik\Bundle\FormFilterBundle\Event\Listener\DoctrineApplyFilterListener instance.
+     */
+    protected function getLexikFormFilter_ApplyFilter_DoctrineOrmService()
+    {
+        return $this->services['lexik_form_filter.apply_filter.doctrine_orm'] = new \Lexik\Bundle\FormFilterBundle\Event\Listener\DoctrineApplyFilterListener(NULL);
+    }
+
+    /**
+     * Gets the 'lexik_form_filter.data_extraction_method.default' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return \Lexik\Bundle\FormFilterBundle\Filter\DataExtractor\Method\DefaultExtractionMethod A Lexik\Bundle\FormFilterBundle\Filter\DataExtractor\Method\DefaultExtractionMethod instance.
+     */
+    protected function getLexikFormFilter_DataExtractionMethod_DefaultService()
+    {
+        return $this->services['lexik_form_filter.data_extraction_method.default'] = new \Lexik\Bundle\FormFilterBundle\Filter\DataExtractor\Method\DefaultExtractionMethod();
+    }
+
+    /**
+     * Gets the 'lexik_form_filter.data_extraction_method.key_values' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return \Lexik\Bundle\FormFilterBundle\Filter\DataExtractor\Method\ValueKeysExtractionMethod A Lexik\Bundle\FormFilterBundle\Filter\DataExtractor\Method\ValueKeysExtractionMethod instance.
+     */
+    protected function getLexikFormFilter_DataExtractionMethod_KeyValuesService()
+    {
+        return $this->services['lexik_form_filter.data_extraction_method.key_values'] = new \Lexik\Bundle\FormFilterBundle\Filter\DataExtractor\Method\ValueKeysExtractionMethod();
+    }
+
+    /**
+     * Gets the 'lexik_form_filter.data_extraction_method.text' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return \Lexik\Bundle\FormFilterBundle\Filter\DataExtractor\Method\TextExtractionMethod A Lexik\Bundle\FormFilterBundle\Filter\DataExtractor\Method\TextExtractionMethod instance.
+     */
+    protected function getLexikFormFilter_DataExtractionMethod_TextService()
+    {
+        return $this->services['lexik_form_filter.data_extraction_method.text'] = new \Lexik\Bundle\FormFilterBundle\Filter\DataExtractor\Method\TextExtractionMethod();
+    }
+
+    /**
+     * Gets the 'lexik_form_filter.filter_prepare' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return \Lexik\Bundle\FormFilterBundle\Event\Listener\PrepareListener A Lexik\Bundle\FormFilterBundle\Event\Listener\PrepareListener instance.
+     */
+    protected function getLexikFormFilter_FilterPrepareService()
+    {
+        return $this->services['lexik_form_filter.filter_prepare'] = new \Lexik\Bundle\FormFilterBundle\Event\Listener\PrepareListener();
+    }
+
+    /**
+     * Gets the 'lexik_form_filter.form_data_extractor' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return \Lexik\Bundle\FormFilterBundle\Filter\DataExtractor\FormDataExtractor A Lexik\Bundle\FormFilterBundle\Filter\DataExtractor\FormDataExtractor instance.
+     */
+    protected function getLexikFormFilter_FormDataExtractorService()
+    {
+        $this->services['lexik_form_filter.form_data_extractor'] = $instance = new \Lexik\Bundle\FormFilterBundle\Filter\DataExtractor\FormDataExtractor();
+
+        $instance->addMethod($this->get('lexik_form_filter.data_extraction_method.default'));
+        $instance->addMethod($this->get('lexik_form_filter.data_extraction_method.text'));
+        $instance->addMethod($this->get('lexik_form_filter.data_extraction_method.key_values'));
+
+        return $instance;
+    }
+
+    /**
+     * Gets the 'lexik_form_filter.get_filter.doctrine_dbal' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return \Lexik\Bundle\FormFilterBundle\Event\Subscriber\DoctrineDBALSubscriber A Lexik\Bundle\FormFilterBundle\Event\Subscriber\DoctrineDBALSubscriber instance.
+     */
+    protected function getLexikFormFilter_GetFilter_DoctrineDbalService()
+    {
+        return $this->services['lexik_form_filter.get_filter.doctrine_dbal'] = new \Lexik\Bundle\FormFilterBundle\Event\Subscriber\DoctrineDBALSubscriber();
+    }
+
+    /**
+     * Gets the 'lexik_form_filter.get_filter.doctrine_orm' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return \Lexik\Bundle\FormFilterBundle\Event\Subscriber\DoctrineORMSubscriber A Lexik\Bundle\FormFilterBundle\Event\Subscriber\DoctrineORMSubscriber instance.
+     */
+    protected function getLexikFormFilter_GetFilter_DoctrineOrmService()
+    {
+        return $this->services['lexik_form_filter.get_filter.doctrine_orm'] = new \Lexik\Bundle\FormFilterBundle\Event\Subscriber\DoctrineORMSubscriber();
+    }
+
+    /**
+     * Gets the 'lexik_form_filter.query_builder_updater' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return \Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdater A Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdater instance.
+     */
+    protected function getLexikFormFilter_QueryBuilderUpdaterService()
+    {
+        return $this->services['lexik_form_filter.query_builder_updater'] = new \Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdater($this->get('lexik_form_filter.form_data_extractor'), $this->get('debug.event_dispatcher'));
+    }
+
+    /**
+     * Gets the 'lexik_form_filter.type.filter' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return \Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\FilterType A Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\FilterType instance.
+     */
+    protected function getLexikFormFilter_Type_FilterService()
+    {
+        return $this->services['lexik_form_filter.type.filter'] = new \Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\FilterType();
+    }
+
+    /**
+     * Gets the 'lexik_form_filter.type.filter_boolean' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return \Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\BooleanFilterType A Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\BooleanFilterType instance.
+     */
+    protected function getLexikFormFilter_Type_FilterBooleanService()
+    {
+        return $this->services['lexik_form_filter.type.filter_boolean'] = new \Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\BooleanFilterType();
+    }
+
+    /**
+     * Gets the 'lexik_form_filter.type.filter_checkbox' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return \Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\CheckboxFilterType A Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\CheckboxFilterType instance.
+     */
+    protected function getLexikFormFilter_Type_FilterCheckboxService()
+    {
+        return $this->services['lexik_form_filter.type.filter_checkbox'] = new \Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\CheckboxFilterType();
+    }
+
+    /**
+     * Gets the 'lexik_form_filter.type.filter_choice' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return \Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\ChoiceFilterType A Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\ChoiceFilterType instance.
+     */
+    protected function getLexikFormFilter_Type_FilterChoiceService()
+    {
+        return $this->services['lexik_form_filter.type.filter_choice'] = new \Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\ChoiceFilterType();
+    }
+
+    /**
+     * Gets the 'lexik_form_filter.type.filter_collection_adapter' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return \Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\CollectionAdapterFilterType A Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\CollectionAdapterFilterType instance.
+     */
+    protected function getLexikFormFilter_Type_FilterCollectionAdapterService()
+    {
+        return $this->services['lexik_form_filter.type.filter_collection_adapter'] = new \Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\CollectionAdapterFilterType();
+    }
+
+    /**
+     * Gets the 'lexik_form_filter.type.filter_date' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return \Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\DateFilterType A Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\DateFilterType instance.
+     */
+    protected function getLexikFormFilter_Type_FilterDateService()
+    {
+        return $this->services['lexik_form_filter.type.filter_date'] = new \Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\DateFilterType();
+    }
+
+    /**
+     * Gets the 'lexik_form_filter.type.filter_date_range' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return \Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\DateRangeFilterType A Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\DateRangeFilterType instance.
+     */
+    protected function getLexikFormFilter_Type_FilterDateRangeService()
+    {
+        return $this->services['lexik_form_filter.type.filter_date_range'] = new \Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\DateRangeFilterType();
+    }
+
+    /**
+     * Gets the 'lexik_form_filter.type.filter_datetime' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return \Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\DateTimeFilterType A Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\DateTimeFilterType instance.
+     */
+    protected function getLexikFormFilter_Type_FilterDatetimeService()
+    {
+        return $this->services['lexik_form_filter.type.filter_datetime'] = new \Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\DateTimeFilterType();
+    }
+
+    /**
+     * Gets the 'lexik_form_filter.type.filter_datetime_range' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return \Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\DateTimeRangeFilterType A Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\DateTimeRangeFilterType instance.
+     */
+    protected function getLexikFormFilter_Type_FilterDatetimeRangeService()
+    {
+        return $this->services['lexik_form_filter.type.filter_datetime_range'] = new \Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\DateTimeRangeFilterType();
+    }
+
+    /**
+     * Gets the 'lexik_form_filter.type.filter_entity' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return \Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\EntityFilterType A Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\EntityFilterType instance.
+     */
+    protected function getLexikFormFilter_Type_FilterEntityService()
+    {
+        return $this->services['lexik_form_filter.type.filter_entity'] = new \Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\EntityFilterType($this->get('doctrine'));
+    }
+
+    /**
+     * Gets the 'lexik_form_filter.type.filter_field' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return \Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\FieldFilterType A Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\FieldFilterType instance.
+     */
+    protected function getLexikFormFilter_Type_FilterFieldService()
+    {
+        return $this->services['lexik_form_filter.type.filter_field'] = new \Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\FieldFilterType();
+    }
+
+    /**
+     * Gets the 'lexik_form_filter.type.filter_number' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return \Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\NumberFilterType A Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\NumberFilterType instance.
+     */
+    protected function getLexikFormFilter_Type_FilterNumberService()
+    {
+        return $this->services['lexik_form_filter.type.filter_number'] = new \Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\NumberFilterType();
+    }
+
+    /**
+     * Gets the 'lexik_form_filter.type.filter_number_range' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return \Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\NumberRangeFilterType A Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\NumberRangeFilterType instance.
+     */
+    protected function getLexikFormFilter_Type_FilterNumberRangeService()
+    {
+        return $this->services['lexik_form_filter.type.filter_number_range'] = new \Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\NumberRangeFilterType();
+    }
+
+    /**
+     * Gets the 'lexik_form_filter.type.filter_sharedable' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return \Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\SharedableFilterType A Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\SharedableFilterType instance.
+     */
+    protected function getLexikFormFilter_Type_FilterSharedableService()
+    {
+        return $this->services['lexik_form_filter.type.filter_sharedable'] = new \Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\SharedableFilterType();
+    }
+
+    /**
+     * Gets the 'lexik_form_filter.type.filter_text' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return \Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\TextFilterType A Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\TextFilterType instance.
+     */
+    protected function getLexikFormFilter_Type_FilterTextService()
+    {
+        return $this->services['lexik_form_filter.type.filter_text'] = new \Lexik\Bundle\FormFilterBundle\Filter\Extension\Type\TextFilterType();
+    }
+
+    /**
+     * Gets the 'lexik_form_filter.type_extension.filter_extension' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return \Lexik\Bundle\FormFilterBundle\Filter\Extension\FilterTypeExtension A Lexik\Bundle\FormFilterBundle\Filter\Extension\FilterTypeExtension instance.
+     */
+    protected function getLexikFormFilter_TypeExtension_FilterExtensionService()
+    {
+        return $this->services['lexik_form_filter.type_extension.filter_extension'] = new \Lexik\Bundle\FormFilterBundle\Filter\Extension\FilterTypeExtension();
+    }
+
+    /**
      * Gets the 'locale_listener' service.
      *
      * This service is shared.
@@ -2325,7 +2700,7 @@ class appDevDebugProjectContainer extends Container
         $o = new \Symfony\Component\Security\Http\Authentication\DefaultAuthenticationFailureHandler($e, $l, array(), $a);
         $o->setOptions(array('login_path' => '/login', 'failure_path' => NULL, 'failure_forward' => false, 'failure_path_parameter' => '_failure_path'));
 
-        return $this->services['security.firewall.map.context.main'] = new \Symfony\Bundle\SecurityBundle\Security\FirewallContext(array(0 => new \Symfony\Component\Security\Http\Firewall\ChannelListener($k, new \Symfony\Component\Security\Http\EntryPoint\RetryAuthenticationEntryPoint(80, 443), $a), 1 => new \Symfony\Component\Security\Http\Firewall\ContextListener($b, array(0 => $this->get('fos_user.user_provider.username')), 'main', $a, $c), 2 => $m, 3 => new \Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener($b, $f, $this->get('security.authentication.session_strategy'), $l, 'main', $n, $o, array('check_path' => '/login_check', 'use_forward' => false, 'require_previous_session' => true, 'username_parameter' => '_username', 'password_parameter' => '_password', 'csrf_parameter' => '_csrf_token', 'intention' => 'authenticate', 'post_only' => true), $a, $c, $this->get('form.csrf_provider')), 4 => new \Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener($b, '54f261582df9e', $a, $f), 5 => new \Symfony\Component\Security\Http\Firewall\AccessListener($b, $this->get('security.access.decision_manager'), $k, $f)), new \Symfony\Component\Security\Http\Firewall\ExceptionListener($b, $this->get('security.authentication.trust_resolver'), $l, 'main', new \Symfony\Component\Security\Http\EntryPoint\FormAuthenticationEntryPoint($e, $l, '/login', false), NULL, NULL, $a));
+        return $this->services['security.firewall.map.context.main'] = new \Symfony\Bundle\SecurityBundle\Security\FirewallContext(array(0 => new \Symfony\Component\Security\Http\Firewall\ChannelListener($k, new \Symfony\Component\Security\Http\EntryPoint\RetryAuthenticationEntryPoint(80, 443), $a), 1 => new \Symfony\Component\Security\Http\Firewall\ContextListener($b, array(0 => $this->get('fos_user.user_provider.username')), 'main', $a, $c), 2 => $m, 3 => new \Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener($b, $f, $this->get('security.authentication.session_strategy'), $l, 'main', $n, $o, array('check_path' => '/login_check', 'use_forward' => false, 'require_previous_session' => true, 'username_parameter' => '_username', 'password_parameter' => '_password', 'csrf_parameter' => '_csrf_token', 'intention' => 'authenticate', 'post_only' => true), $a, $c, $this->get('form.csrf_provider')), 4 => new \Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener($b, '54f68d6c2b053', $a, $f), 5 => new \Symfony\Component\Security\Http\Firewall\AccessListener($b, $this->get('security.access.decision_manager'), $k, $f)), new \Symfony\Component\Security\Http\Firewall\ExceptionListener($b, $this->get('security.authentication.trust_resolver'), $l, 'main', new \Symfony\Component\Security\Http\EntryPoint\FormAuthenticationEntryPoint($e, $l, '/login', false), NULL, NULL, $a));
     }
 
     /**
@@ -3583,6 +3958,17 @@ class appDevDebugProjectContainer extends Container
         $instance->addResource('yml', ($this->targetDirs[3].'/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.uk.yml'), 'uk', 'validators');
         $instance->addResource('yml', ($this->targetDirs[3].'/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.vi.yml'), 'vi', 'validators');
         $instance->addResource('yml', ($this->targetDirs[3].'/vendor/friendsofsymfony/user-bundle/Resources/translations/validators.zh_CN.yml'), 'zh_CN', 'validators');
+        $instance->addResource('yml', ($this->targetDirs[3].'/vendor/lexik/form-filter-bundle/Lexik/Bundle/FormFilterBundle/Resources/translations/LexikFormFilterBundle.de.yml'), 'de', 'LexikFormFilterBundle');
+        $instance->addResource('yml', ($this->targetDirs[3].'/vendor/lexik/form-filter-bundle/Lexik/Bundle/FormFilterBundle/Resources/translations/LexikFormFilterBundle.en.yml'), 'en', 'LexikFormFilterBundle');
+        $instance->addResource('yml', ($this->targetDirs[3].'/vendor/lexik/form-filter-bundle/Lexik/Bundle/FormFilterBundle/Resources/translations/LexikFormFilterBundle.es.yml'), 'es', 'LexikFormFilterBundle');
+        $instance->addResource('yml', ($this->targetDirs[3].'/vendor/lexik/form-filter-bundle/Lexik/Bundle/FormFilterBundle/Resources/translations/LexikFormFilterBundle.fr.yml'), 'fr', 'LexikFormFilterBundle');
+        $instance->addResource('yml', ($this->targetDirs[3].'/vendor/lexik/form-filter-bundle/Lexik/Bundle/FormFilterBundle/Resources/translations/LexikFormFilterBundle.it.yml'), 'it', 'LexikFormFilterBundle');
+        $instance->addResource('yml', ($this->targetDirs[3].'/vendor/lexik/form-filter-bundle/Lexik/Bundle/FormFilterBundle/Resources/translations/LexikFormFilterBundle.nl.yml'), 'nl', 'LexikFormFilterBundle');
+        $instance->addResource('yml', ($this->targetDirs[3].'/vendor/jordillonch/crud-generator/JordiLlonch/Bundle/CrudGeneratorBundle/Resources/translations/JordiLlonchCrudGeneratorBundle.ca.yml'), 'ca', 'JordiLlonchCrudGeneratorBundle');
+        $instance->addResource('yml', ($this->targetDirs[3].'/vendor/jordillonch/crud-generator/JordiLlonch/Bundle/CrudGeneratorBundle/Resources/translations/JordiLlonchCrudGeneratorBundle.en.yml'), 'en', 'JordiLlonchCrudGeneratorBundle');
+        $instance->addResource('yml', ($this->targetDirs[3].'/vendor/jordillonch/crud-generator/JordiLlonch/Bundle/CrudGeneratorBundle/Resources/translations/JordiLlonchCrudGeneratorBundle.es.yml'), 'es', 'JordiLlonchCrudGeneratorBundle');
+        $instance->addResource('yml', ($this->targetDirs[3].'/vendor/jordillonch/crud-generator/JordiLlonch/Bundle/CrudGeneratorBundle/Resources/translations/JordiLlonchCrudGeneratorBundle.fr.yml'), 'fr', 'JordiLlonchCrudGeneratorBundle');
+        $instance->addResource('yml', ($this->targetDirs[3].'/vendor/jordillonch/crud-generator/JordiLlonch/Bundle/CrudGeneratorBundle/Resources/translations/JordiLlonchCrudGeneratorBundle.pl.yml'), 'pl', 'JordiLlonchCrudGeneratorBundle');
 
         return $instance;
     }
@@ -3610,7 +3996,7 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getTwigService()
     {
-        $this->services['twig'] = $instance = new \Twig_Environment($this->get('twig.loader'), array('debug' => true, 'strict_variables' => true, 'exception_controller' => 'twig.controller.exception:showAction', 'form_themes' => array(0 => 'form_div_layout.html.twig'), 'autoescape' => array(0 => 'Symfony\\Bundle\\TwigBundle\\TwigDefaultEscapingStrategy', 1 => 'guess'), 'cache' => (__DIR__.'/twig'), 'charset' => 'UTF-8', 'paths' => array()));
+        $this->services['twig'] = $instance = new \Twig_Environment($this->get('twig.loader'), array('debug' => true, 'strict_variables' => true, 'exception_controller' => 'twig.controller.exception:showAction', 'form_themes' => array(0 => 'form_div_layout.html.twig', 1 => 'LexikFormFilterBundle:Form:form_div_layout.html.twig'), 'autoescape' => array(0 => 'Symfony\\Bundle\\TwigBundle\\TwigDefaultEscapingStrategy', 1 => 'guess'), 'cache' => (__DIR__.'/twig'), 'charset' => 'UTF-8', 'paths' => array()));
 
         $instance->addExtension(new \Symfony\Bundle\SecurityBundle\Twig\Extension\LogoutUrlExtension($this->get('templating.helper.logout_url')));
         $instance->addExtension(new \Symfony\Bridge\Twig\Extension\SecurityExtension($this->get('security.context', ContainerInterface::NULL_ON_INVALID_REFERENCE)));
@@ -3623,7 +4009,7 @@ class appDevDebugProjectContainer extends Container
         $instance->addExtension(new \Symfony\Bridge\Twig\Extension\StopwatchExtension($this->get('debug.stopwatch', ContainerInterface::NULL_ON_INVALID_REFERENCE), true));
         $instance->addExtension(new \Symfony\Bridge\Twig\Extension\ExpressionExtension());
         $instance->addExtension(new \Symfony\Bridge\Twig\Extension\HttpKernelExtension($this->get('fragment.handler')));
-        $instance->addExtension(new \Symfony\Bridge\Twig\Extension\FormExtension(new \Symfony\Bridge\Twig\Form\TwigRenderer(new \Symfony\Bridge\Twig\Form\TwigRendererEngine(array(0 => 'form_div_layout.html.twig')), $this->get('form.csrf_provider', ContainerInterface::NULL_ON_INVALID_REFERENCE))));
+        $instance->addExtension(new \Symfony\Bridge\Twig\Extension\FormExtension(new \Symfony\Bridge\Twig\Form\TwigRenderer(new \Symfony\Bridge\Twig\Form\TwigRendererEngine(array(0 => 'form_div_layout.html.twig', 1 => 'LexikFormFilterBundle:Form:form_div_layout.html.twig')), $this->get('form.csrf_provider', ContainerInterface::NULL_ON_INVALID_REFERENCE))));
         $instance->addExtension(new \Twig_Extension_Debug());
         $instance->addExtension(new \Symfony\Bundle\AsseticBundle\Twig\AsseticExtension($this->get('assetic.asset_factory'), $this->get('templating.name_parser'), true, array(), array(), new \Symfony\Bundle\AsseticBundle\DefaultValueSupplier($this)));
         $instance->addExtension(new \Doctrine\Bundle\DoctrineBundle\Twig\DoctrineExtension());
@@ -3693,6 +4079,8 @@ class appDevDebugProjectContainer extends Container
         $instance->addPath(($this->targetDirs[3].'/vendor/doctrine/doctrine-bundle/Resources/views'), 'Doctrine');
         $instance->addPath(($this->targetDirs[3].'/vendor/friendsofsymfony/user-bundle/Resources/views'), 'FOSUser');
         $instance->addPath(($this->targetDirs[3].'/src/UsersBundle/Resources/views'), 'Users');
+        $instance->addPath(($this->targetDirs[3].'/vendor/lexik/form-filter-bundle/Lexik/Bundle/FormFilterBundle/Resources/views'), 'LexikFormFilter');
+        $instance->addPath(($this->targetDirs[3].'/vendor/jordillonch/crud-generator/JordiLlonch/Bundle/CrudGeneratorBundle/Resources/views'), 'JordiLlonchCrudGenerator');
         $instance->addPath(($this->targetDirs[3].'/vendor/symfony/symfony/src/Symfony/Bundle/DebugBundle/Resources/views'), 'Debug');
         $instance->addPath(($this->targetDirs[3].'/src/Acme/DemoBundle/Resources/views'), 'AcmeDemo');
         $instance->addPath(($this->targetDirs[3].'/vendor/symfony/symfony/src/Symfony/Bundle/WebProfilerBundle/Resources/views'), 'WebProfiler');
@@ -4003,7 +4391,7 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getSecurity_Authentication_ManagerService()
     {
-        $this->services['security.authentication.manager'] = $instance = new \Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager(array(0 => new \Symfony\Component\Security\Core\Authentication\Provider\DaoAuthenticationProvider($this->get('fos_user.user_provider.username'), $this->get('security.user_checker'), 'main', $this->get('security.encoder_factory'), true), 1 => new \Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider('54f261582df9e')), true);
+        $this->services['security.authentication.manager'] = $instance = new \Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager(array(0 => new \Symfony\Component\Security\Core\Authentication\Provider\DaoAuthenticationProvider($this->get('fos_user.user_provider.username'), $this->get('security.user_checker'), 'main', $this->get('security.encoder_factory'), true), 1 => new \Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider('54f68d6c2b053')), true);
 
         $instance->setEventDispatcher($this->get('debug.event_dispatcher'));
 
@@ -4216,6 +4604,8 @@ class appDevDebugProjectContainer extends Container
                 'AppBundle' => 'AppBundle\\AppBundle',
                 'FOSUserBundle' => 'FOS\\UserBundle\\FOSUserBundle',
                 'UsersBundle' => 'UsersBundle\\UsersBundle',
+                'LexikFormFilterBundle' => 'Lexik\\Bundle\\FormFilterBundle\\LexikFormFilterBundle',
+                'JordiLlonchCrudGeneratorBundle' => 'JordiLlonch\\Bundle\\CrudGeneratorBundle\\JordiLlonchCrudGeneratorBundle',
                 'DebugBundle' => 'Symfony\\Bundle\\DebugBundle\\DebugBundle',
                 'AcmeDemoBundle' => 'Acme\\DemoBundle\\AcmeDemoBundle',
                 'WebProfilerBundle' => 'Symfony\\Bundle\\WebProfilerBundle\\WebProfilerBundle',
@@ -4526,6 +4916,7 @@ class appDevDebugProjectContainer extends Container
             'twig.exception_listener.controller' => 'twig.controller.exception:showAction',
             'twig.form.resources' => array(
                 0 => 'form_div_layout.html.twig',
+                1 => 'LexikFormFilterBundle:Form:form_div_layout.html.twig',
             ),
             'debug.templating.engine.twig.class' => 'Symfony\\Bundle\\TwigBundle\\Debug\\TimedTwigEngine',
             'twig.options' => array(
@@ -4534,6 +4925,7 @@ class appDevDebugProjectContainer extends Container
                 'exception_controller' => 'twig.controller.exception:showAction',
                 'form_themes' => array(
                     0 => 'form_div_layout.html.twig',
+                    1 => 'LexikFormFilterBundle:Form:form_div_layout.html.twig',
                 ),
                 'autoescape' => array(
                     0 => 'Symfony\\Bundle\\TwigBundle\\TwigDefaultEscapingStrategy',
@@ -4836,6 +5228,33 @@ class appDevDebugProjectContainer extends Container
                 0 => 'ResetPassword',
                 1 => 'Default',
             ),
+            'lexik_form_filter.query_builder_updater.class' => 'Lexik\\Bundle\\FormFilterBundle\\Filter\\FilterBuilderUpdater',
+            'lexik_form_filter.form_data_extractor.class' => 'Lexik\\Bundle\\FormFilterBundle\\Filter\\DataExtractor\\FormDataExtractor',
+            'lexik_form_filter.data_extraction_method.default.class' => 'Lexik\\Bundle\\FormFilterBundle\\Filter\\DataExtractor\\Method\\DefaultExtractionMethod',
+            'lexik_form_filter.data_extraction_method.text.class' => 'Lexik\\Bundle\\FormFilterBundle\\Filter\\DataExtractor\\Method\\TextExtractionMethod',
+            'lexik_form_filter.data_extraction_method.key_values.class' => 'Lexik\\Bundle\\FormFilterBundle\\Filter\\DataExtractor\\Method\\ValueKeysExtractionMethod',
+            'lexik_form_filter.type.filter_field.class' => 'Lexik\\Bundle\\FormFilterBundle\\Filter\\Extension\\Type\\FieldFilterType',
+            'lexik_form_filter.type.filter.class' => 'Lexik\\Bundle\\FormFilterBundle\\Filter\\Extension\\Type\\FilterType',
+            'lexik_form_filter.type.filter_text.class' => 'Lexik\\Bundle\\FormFilterBundle\\Filter\\Extension\\Type\\TextFilterType',
+            'lexik_form_filter.type.filter_number.class' => 'Lexik\\Bundle\\FormFilterBundle\\Filter\\Extension\\Type\\NumberFilterType',
+            'lexik_form_filter.type.filter_number_range.class' => 'Lexik\\Bundle\\FormFilterBundle\\Filter\\Extension\\Type\\NumberRangeFilterType',
+            'lexik_form_filter.type.filter_checkbox.class' => 'Lexik\\Bundle\\FormFilterBundle\\Filter\\Extension\\Type\\CheckboxFilterType',
+            'lexik_form_filter.type.filter_boolean.class' => 'Lexik\\Bundle\\FormFilterBundle\\Filter\\Extension\\Type\\BooleanFilterType',
+            'lexik_form_filter.type.filter_choice.class' => 'Lexik\\Bundle\\FormFilterBundle\\Filter\\Extension\\Type\\ChoiceFilterType',
+            'lexik_form_filter.type.filter_entity.class' => 'Lexik\\Bundle\\FormFilterBundle\\Filter\\Extension\\Type\\EntityFilterType',
+            'lexik_form_filter.type.filter_date.class' => 'Lexik\\Bundle\\FormFilterBundle\\Filter\\Extension\\Type\\DateFilterType',
+            'lexik_form_filter.type.filter_date_range.class' => 'Lexik\\Bundle\\FormFilterBundle\\Filter\\Extension\\Type\\DateRangeFilterType',
+            'lexik_form_filter.type.filter_datetime.class' => 'Lexik\\Bundle\\FormFilterBundle\\Filter\\Extension\\Type\\DateTimeFilterType',
+            'lexik_form_filter.type.filter_datetime_range.class' => 'Lexik\\Bundle\\FormFilterBundle\\Filter\\Extension\\Type\\DateTimeRangeFilterType',
+            'lexik_form_filter.type.filter_collection_adapter.class' => 'Lexik\\Bundle\\FormFilterBundle\\Filter\\Extension\\Type\\CollectionAdapterFilterType',
+            'lexik_form_filter.type.filter_sharedable.class' => 'Lexik\\Bundle\\FormFilterBundle\\Filter\\Extension\\Type\\SharedableFilterType',
+            'lexik_form_filter.type_extension.filter_extension.class' => 'Lexik\\Bundle\\FormFilterBundle\\Filter\\Extension\\FilterTypeExtension',
+            'lexik_form_filter.filter_prepare.class' => 'Lexik\\Bundle\\FormFilterBundle\\Event\\Listener\\PrepareListener',
+            'lexik_form_filter.get_filter.doctrine_orm.class' => 'Lexik\\Bundle\\FormFilterBundle\\Event\\Subscriber\\DoctrineORMSubscriber',
+            'lexik_form_filter.get_filter.doctrine_dbal.class' => 'Lexik\\Bundle\\FormFilterBundle\\Event\\Subscriber\\DoctrineDBALSubscriber',
+            'lexik_form_filter.apply_filter.doctrine_orm.class' => 'Lexik\\Bundle\\FormFilterBundle\\Event\\Listener\\DoctrineApplyFilterListener',
+            'lexik_form_filter.apply_filter.doctrine_dbal.class' => 'Lexik\\Bundle\\FormFilterBundle\\Event\\Listener\\DoctrineApplyFilterListener',
+            'lexik_form_filter.where_method' => NULL,
             'web_profiler.controller.profiler.class' => 'Symfony\\Bundle\\WebProfilerBundle\\Controller\\ProfilerController',
             'web_profiler.controller.router.class' => 'Symfony\\Bundle\\WebProfilerBundle\\Controller\\RouterController',
             'web_profiler.controller.exception.class' => 'Symfony\\Bundle\\WebProfilerBundle\\Controller\\ExceptionController',

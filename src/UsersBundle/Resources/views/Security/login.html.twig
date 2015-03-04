@@ -18,7 +18,7 @@
        {% endif %}
 
 
-
+       <div class="col-sm-6">
        <form action="{{ path("fos_user_security_check") }}" method="post">
          <div class="row-fluid">
              <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
@@ -39,8 +39,9 @@
              <input class="form-control btn btn-success" type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}" />
          </div>
        </form>
+      </div>
 
-       <div class="js-css-import">
+      <div class="js-css-import">
          <link href="{{ asset('bootstrap/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" />
          <script src="{{ asset('js/jquery.min.js') }}"></script>
          <script src="{{ asset('bootstrap/boostrap.min.js') }}"></script>

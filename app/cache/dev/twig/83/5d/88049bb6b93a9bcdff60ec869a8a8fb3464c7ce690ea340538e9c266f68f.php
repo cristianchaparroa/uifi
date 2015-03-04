@@ -78,7 +78,7 @@ class __TwigTemplate_835d88049bb6b93a9bcdff60ec869a8a8fb3464c7ce690ea340538e9c26
         // line 19
         echo "
 
-
+       <div class=\"col-sm-6\">
        <form action=\"";
         // line 22
         echo $this->env->getExtension('routing')->getPath("fos_user_security_check");
@@ -120,7 +120,7 @@ class __TwigTemplate_835d88049bb6b93a9bcdff60ec869a8a8fb3464c7ce690ea340538e9c26
         echo "\" />
          </div>
        </form>
-
+      </div>
        <div class=\"js-css-import\">
          <link href=\"";
         // line 44
