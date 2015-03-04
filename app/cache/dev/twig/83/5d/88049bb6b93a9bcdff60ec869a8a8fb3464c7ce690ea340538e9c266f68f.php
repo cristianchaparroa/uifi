@@ -47,7 +47,7 @@ class __TwigTemplate_835d88049bb6b93a9bcdff60ec869a8a8fb3464c7ce690ea340538e9c26
         // line 7
         echo "    ";
         $this->displayBlock('fos_user_content', $context, $blocks);
-        // line 51
+        // line 52
         echo "
 
 
@@ -121,23 +121,24 @@ class __TwigTemplate_835d88049bb6b93a9bcdff60ec869a8a8fb3464c7ce690ea340538e9c26
          </div>
        </form>
       </div>
-       <div class=\"js-css-import\">
+
+      <div class=\"js-css-import\">
          <link href=\"";
-        // line 44
+        // line 45
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bootstrap/css/bootstrap.min.css"), "html", null, true);
         echo "\" type=\"text/css\" rel=\"stylesheet\" />
          <script src=\"";
-        // line 45
+        // line 46
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("js/jquery.min.js"), "html", null, true);
         echo "\"></script>
          <script src=\"";
-        // line 46
+        // line 47
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bootstrap/boostrap.min.js"), "html", null, true);
         echo "\"></script>
        </div>
 
      </div> ";
-        // line 50
+        // line 51
         echo "    ";
     }
 
@@ -153,6 +154,6 @@ class __TwigTemplate_835d88049bb6b93a9bcdff60ec869a8a8fb3464c7ce690ea340538e9c26
 
     public function getDebugInfo()
     {
-        return array (  141 => 50,  135 => 46,  131 => 45,  127 => 44,  119 => 39,  114 => 37,  106 => 32,  99 => 28,  95 => 27,  89 => 24,  84 => 22,  79 => 19,  73 => 17,  71 => 16,  61 => 8,  58 => 7,  51 => 51,  48 => 7,  45 => 6,  38 => 3,  11 => 1,);
+        return array (  142 => 51,  136 => 47,  132 => 46,  128 => 45,  119 => 39,  114 => 37,  106 => 32,  99 => 28,  95 => 27,  89 => 24,  84 => 22,  79 => 19,  73 => 17,  71 => 16,  61 => 8,  58 => 7,  51 => 52,  48 => 7,  45 => 6,  38 => 3,  11 => 1,);
     }
 }
