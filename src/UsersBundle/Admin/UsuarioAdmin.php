@@ -17,7 +17,7 @@ class UsuarioAdmin extends Admin
         $formMapper
             ->add('email')
             ->add('username')
-            ->add('roles')
+            ->add('roles','choice',array('choices'=>$this->getConfigurationPool()->getContainer()->getParameter('security.role_hierarchy.roles'),'multiple'=>true ))
         ;
     }
 
@@ -37,7 +37,8 @@ class UsuarioAdmin extends Admin
         $listMapper
             ->addIdentifier('email')
             ->add('username')
-            ->add('roles')
+            //Llama al método getRolesAsString en UsersBudle\Entity\Usuario
+            ->add('rolesAsString', 'string')
         ;
     }
 }
