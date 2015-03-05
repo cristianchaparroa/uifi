@@ -11,7 +11,7 @@ security:
 
     providers:
         user:
-            entity: { class: UsersBundle\Entity\Usuario, property: username}
+            entity: { class: UsersBundle\Entity\Usuario, property: email}
 
     firewalls:
         main:

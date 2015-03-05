@@ -8,7 +8,7 @@ sonata_block:
             contexts:   [admin]
 
 sonata_admin:
-    title:     UIFI - Panel de Administracion 
+    title:     UIFI - Panel de Administracion
 sonata_doctrine_orm_admin:
     # default value is null, so doctrine uses the value defined in the configuration
     entity_manager: ~
