@@ -3,24 +3,29 @@ security:
         FOS\UserBundle\Model\UserInterface: sha512
 
     role_hierarchy:
-        ROLE_ADMIN:       ROLE_USER
-        ROLE_SUPER_ADMIN: ROLE_ADMIN
+        ROLE_ADMIN:       [ROLE_USER, ROLE_PROVIDER]
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_PROVIDER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
 
     providers:
-        fos_userbundle:
-            id: fos_user.user_provider.username
+        user:
+            entity: { class: UsersBundle\Entity\Usuario, property: username}
 
     firewalls:
         main:
             pattern: ^/
             form_login:
-                provider: fos_userbundle
+                provider: user
                 csrf_provider: form.csrf_provider
+                success_handler: users.handler.login_success_handler
             logout:       true
             anonymous:    true
+
 
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: ^/integrantes/, role: ROLE_INTEGRANTE }
+        - { path: ^/director/, role: ROLE_DIRECTOR }

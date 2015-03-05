@@ -16,6 +16,8 @@ class UsuarioAdmin extends Admin
     {
         $formMapper
             ->add('email')
+            ->add('username')
+            ->add('roles')
         ;
     }
 
@@ -24,6 +26,8 @@ class UsuarioAdmin extends Admin
     {
         $datagridMapper
             ->add('email')
+            ->add('username')
+            ->add('roles')
         ;
     }
 
@@ -32,6 +36,8 @@ class UsuarioAdmin extends Admin
     {
         $listMapper
             ->addIdentifier('email')
+            ->add('username')
+            ->add('roles')
         ;
     }
 }

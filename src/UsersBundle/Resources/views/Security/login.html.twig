@@ -13,12 +13,15 @@
            </div>
        </header>
 
-       {% if error %}
-         <div>{{ error|trans({}, 'FOSUserBundle') }}</div>
-       {% endif %}
-
 
        <div class="col-sm-6">
+
+        {% if error %}
+        <div class="alert alert-danger">
+            {{ error.messageKey|trans(error.messageData, 'security') }}
+        </div>
+        {% endif %}
+
        <form action="{{ path("fos_user_security_check") }}" method="post">
          <div class="row-fluid">
              <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />

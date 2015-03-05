@@ -1,0 +1,6 @@
+parameters:
+  users.handler.login_success_handler.class: UsersBundle\Service\LoginSuccessHandler
+services:
+    users.handler.login_success_handler:
+        class: %users.handler.login_success_handler.class%
+        arguments: [@router, @security.context]
