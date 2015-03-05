@@ -80,3 +80,9 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: UsersBundle\Entity\Usuario
+
+
+uifi_grup_lac_scraper:
+    proxy:
+      enable: false
+      url: 'http://proxy.udistrital.edu.co:3128'
