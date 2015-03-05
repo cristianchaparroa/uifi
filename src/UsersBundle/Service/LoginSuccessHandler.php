@@ -35,6 +35,9 @@ class LoginSuccessHandler implements AuthenticationSuccessHandlerInterface
         {
             $response = new RedirectResponse($this->router->generate('integrantes_home'));
         }
+        else{
+            $response = new RedirectResponse($this->router->generate('login'));
+        }
         return $response;
     }
 }
