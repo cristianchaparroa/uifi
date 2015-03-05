@@ -1,3 +1,8 @@
+uifi_grup_lac_scraper:
+    resource: "@UIFIGrupLACScraperBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 uifi_integrantes:
     resource: "@UIFIIntegrantesBundle/Controller/"
     type:     annotation
