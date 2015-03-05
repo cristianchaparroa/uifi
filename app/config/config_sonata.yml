@@ -9,6 +9,11 @@ sonata_block:
 
 sonata_admin:
     title:     UIFI - Panel de Administracion
+    templates:
+            user_block:                     UsersBundle:Sonata:user_block.html.twig
+
+
+
 sonata_doctrine_orm_admin:
     # default value is null, so doctrine uses the value defined in the configuration
     entity_manager: ~

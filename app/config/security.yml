@@ -20,7 +20,6 @@ security:
                 provider: user
                 csrf_provider: form.csrf_provider
                 success_handler: users.handler.login_success_handler
-            logout:       true
             anonymous:    true
 
 

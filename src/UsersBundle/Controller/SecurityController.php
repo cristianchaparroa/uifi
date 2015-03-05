@@ -30,4 +30,15 @@ class SecurityController extends  BaseController
         }
         return $response;
     }
+
+    /**
+     * @Route("/logout",name="logout")
+     */
+    public function logoutAction()
+    {
+        //clear the token, cancel session and redirect
+        $this->get('security.context')->setToken(null);
+        $this->get('request')->getSession()->invalidate();
+        return $this->redirect($this->generateUrl('login'));
+    }
 }
