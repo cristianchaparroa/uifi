@@ -9,7 +9,7 @@ web/bundles/*
 web/css/*
 web/js/*
 web/uploads/*
-
+src/*.php~
 # -- Composer -----------------------------------------
 composer.phar
 composer.lock
