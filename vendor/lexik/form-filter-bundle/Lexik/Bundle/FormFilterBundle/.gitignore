@@ -1,6 +1,0 @@
-phpunit.xml
-.directory
-vendor
-composer.phar
-composer.lock
-bin
