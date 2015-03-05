@@ -44,6 +44,8 @@ class Usuario extends BaseUser
         return $this->id;
     }
     /**
+     * Método que se encarga de mostrar los nombres de los roles que tiene
+     * asignado un usuario en el sistema separados por comas.
      * @return string
      */
      public function getRolesAsString()
