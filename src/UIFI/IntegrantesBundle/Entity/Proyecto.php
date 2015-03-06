@@ -36,6 +36,12 @@ class Proyecto
       */
      protected $facultad;
 
+     /**
+      * Estudiantes que pertenecen a un proyecto curricular.
+      * @ORM\OneToMany( targetEntity="Integrante", mappedBy="proyecto")
+     */
+     protected $integrantes;
+
     /**
      * Get id
      *
@@ -85,10 +91,50 @@ class Proyecto
     /**
      * Get facultad
      *
-     * @return \UIFI\IntegrantesBundle\Entity\Facultad 
+     * @return \UIFI\IntegrantesBundle\Entity\Facultad
      */
     public function getFacultad()
     {
         return $this->facultad;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->integrantes = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add integrantes
+     *
+     * @param \UIFI\IntegrantesBundle\Entity\Integrante $integrantes
+     * @return Proyecto
+     */
+    public function addIntegrante(\UIFI\IntegrantesBundle\Entity\Integrante $integrantes)
+    {
+        $this->integrantes[] = $integrantes;
+
+        return $this;
+    }
+
+    /**
+     * Remove integrantes
+     *
+     * @param \UIFI\IntegrantesBundle\Entity\Integrante $integrantes
+     */
+    public function removeIntegrante(\UIFI\IntegrantesBundle\Entity\Integrante $integrantes)
+    {
+        $this->integrantes->removeElement($integrantes);
+    }
+
+    /**
+     * Get integrantes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIntegrantes()
+    {
+        return $this->integrantes;
     }
 }

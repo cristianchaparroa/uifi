@@ -76,6 +76,14 @@ class Integrante
      * @ORM\Column(name="correo_personal", type="string", length=255)
      */
     private $correoPersonal;
+
+    /**
+     * Proyecto curricular al que pertence un integrante un grupo de investigación.
+     *
+     * @ORM\ManyToOne(targetEntity="Proyecto", inversedBy="integrantes" )
+     * @ORM\JoinColumn(name="integrante_id" ,referencedColumnName="id")
+    */
+    protected $proyecto;
     /**
      * Contructor de la clase Usuario.
      */
@@ -253,5 +261,28 @@ class Integrante
     public function getCorreoPersonal()
     {
         return $this->correoPersonal;
+    }
+
+    /**
+     * Set proyecto
+     *
+     * @param \UIFI\IntegrantesBundle\Entity\Proyecto $proyecto
+     * @return Integrante
+     */
+    public function setProyecto(\UIFI\IntegrantesBundle\Entity\Proyecto $proyecto = null)
+    {
+        $this->proyecto = $proyecto;
+
+        return $this;
+    }
+
+    /**
+     * Get proyecto
+     *
+     * @return \UIFI\IntegrantesBundle\Entity\Proyecto 
+     */
+    public function getProyecto()
+    {
+        return $this->proyecto;
     }
 }
