@@ -29,6 +29,7 @@ class AppKernel extends Kernel
             new Sonata\AdminBundle\SonataAdminBundle(),
             new UIFI\IntegrantesBundle\UIFIIntegrantesBundle(),
             new UIFI\GrupLACScraperBundle\UIFIGrupLACScraperBundle(),
+            new UIFI\ProductosBundle\UIFIProductosBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
