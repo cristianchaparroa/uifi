@@ -41,6 +41,21 @@ class Integrante
     private $documento;
 
     /**
+     * Nombres del integrante del grupo de investigación.
+     * @var string
+     *
+     * @ORM\Column(name="nombres", type="string", length=255)
+     */
+    private $nombres;
+
+    /**
+     * Apellidos del integrante del grupo de investigación.
+     * @var string
+     *
+     * @ORM\Column(name="apellidos", type="string", length=255)
+     */
+    private $apellidos;
+    /**
      * Código del Integrante del grupo de investigación
      * @var string
      * @ORM\Column(name="propietario", type="string", length=12)
@@ -323,10 +338,56 @@ class Integrante
     /**
      * Get articulos
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getArticulos()
     {
         return $this->articulos;
+    }
+
+    /**
+     * Set nombres
+     *
+     * @param string $nombres
+     * @return Integrante
+     */
+    public function setNombres($nombres)
+    {
+        $this->nombres = $nombres;
+
+        return $this;
+    }
+
+    /**
+     * Get nombres
+     *
+     * @return string
+     */
+    public function getNombres()
+    {
+        return $this->nombres;
+    }
+
+    /**
+     * Set apellidos
+     *
+     * @param string $apellidos
+     * @return Integrante
+     */
+    public function setApellidos($apellidos)
+    {
+        $this->apellidos = $apellidos;
+
+        return $this;
+    }
+
+    /**
+     * Get apellidos
+     *
+     * @return string
+     */
+    public function getApellidos()
+    {
+        return $this->apellidos;
     }
 }
