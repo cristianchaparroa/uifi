@@ -38,7 +38,7 @@ class UsuarioAdmin extends Admin
             ->addIdentifier('email')
             ->add('username')
             //Llama al método getRolesAsString en UsersBudle\Entity\Usuario
-            ->add('rolesAsString', 'string')
+            ->add('rolesAsString','string', array('label' => 'Role'))
         ;
     }
 }

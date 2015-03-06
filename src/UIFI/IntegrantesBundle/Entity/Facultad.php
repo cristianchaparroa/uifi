@@ -108,4 +108,7 @@ class Facultad
     {
         return $this->proyectos;
     }
+    public function __toString(){
+        return $this->getNombre();
+    }
 }

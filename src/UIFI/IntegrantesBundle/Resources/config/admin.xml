@@ -3,7 +3,7 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
        <service id="sonata.admin.integrante" class="UIFI\IntegrantesBundle\Admin\IntegranteAdmin">
-          <tag name="sonata.admin" manager_type="orm" group="Content" label="Integrante"/>
+          <tag name="sonata.admin" manager_type="orm" group="Content" label="Integrantes"/>
           <argument />
           <argument>UIFI\IntegrantesBundle\Entity\Integrante</argument>
           <argument />
@@ -11,5 +11,26 @@
               <argument>UsersBundle</argument>
           </call>
       </service>
+
+      <service id="sonata.admin.facultad" class="UIFI\IntegrantesBundle\Admin\FacultadAdmin">
+         <tag name="sonata.admin" manager_type="orm" group="Content" label="Facultades"/>
+         <argument />
+         <argument>UIFI\IntegrantesBundle\Entity\Facultad</argument>
+         <argument />
+         <call method="setTranslationDomain">
+             <argument>UIFI\IntegrantesBundle</argument>
+         </call>
+     </service>
+
+     <service id="sonata.admin.proyecto" class="UIFI\IntegrantesBundle\Admin\ProyectoAdmin">
+        <tag name="sonata.admin" manager_type="orm" group="Content" label="Proyecto Curricular"/>
+        <argument />
+        <argument>UIFI\IntegrantesBundle\Entity\Proyecto</argument>
+        <argument />
+        <call method="setTranslationDomain">
+            <argument>UIFI\IntegrantesBundle</argument>
+        </call>
+    </service>
+
    </services>
 </container>
