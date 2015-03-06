@@ -85,6 +85,17 @@ class Integrante
     */
     protected $proyecto;
     /**
+     * Artículos de investigación publicados por uno o varios integrantes de un grupo de
+     * Investigación.
+     *
+     * @ORM\ManyToMany( targetEntity="UIFI\ProductosBundle\Entity\Articulo" , inversedBy="integrantes")
+     * @ORM\JoinTable( name="integrantes_articulos",
+     *             joinColumns={@ORM\JoinColumn(name="integrante_id", referencedColumnName="id")},
+     *             inverseJoinColumns={@ORM\JoinColumn(name="articulo_id",referencedColumnName="id")}
+     *  )
+    */
+    protected $articulos;
+    /**
      * Contructor de la clase Usuario.
      */
     public function __construct()
@@ -279,10 +290,43 @@ class Integrante
     /**
      * Get proyecto
      *
-     * @return \UIFI\IntegrantesBundle\Entity\Proyecto 
+     * @return \UIFI\IntegrantesBundle\Entity\Proyecto
      */
     public function getProyecto()
     {
         return $this->proyecto;
+    }
+
+    /**
+     * Add articulos
+     *
+     * @param \UIFI\ProductosBundle\Entity\Articulo $articulos
+     * @return Integrante
+     */
+    public function addArticulo(\UIFI\ProductosBundle\Entity\Articulo $articulos)
+    {
+        $this->articulos[] = $articulos;
+
+        return $this;
+    }
+
+    /**
+     * Remove articulos
+     *
+     * @param \UIFI\ProductosBundle\Entity\Articulo $articulos
+     */
+    public function removeArticulo(\UIFI\ProductosBundle\Entity\Articulo $articulos)
+    {
+        $this->articulos->removeElement($articulos);
+    }
+
+    /**
+     * Get articulos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getArticulos()
+    {
+        return $this->articulos;
     }
 }
