@@ -56,10 +56,16 @@ class Articulo
     /**
      * Integrantes de un grupo de un investigacion que publicaron el articulo.
      *
-     * @ORM\ManyToMany(targetEntity="Integrante", mappedBy="articulos")
+     * @ORM\ManyToMany(targetEntity="UIFI\IntegrantesBundle\Entity\Integrante", mappedBy="articulos")
     */
     private $integrantes;
-
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->integrantes = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -163,20 +169,22 @@ class Articulo
         return $this->fecha;
     }
     /**
-     * Constructor
+     * Get integrantes
+     *
+     * @return \Doctrine\Common\Collections\Collection
      */
-    public function __construct()
+    public function getIntegrantes()
     {
-        $this->integrantes = new \Doctrine\Common\Collections\ArrayCollection();
+        return $this->integrantes;
     }
 
     /**
      * Add integrantes
      *
-     * @param \UIFI\ProductosBundle\Entity\Integrante $integrantes
+     * @param \UIFI\IntegrantesBundle\Entity\Integrante $integrantes
      * @return Articulo
      */
-    public function addIntegrante(\UIFI\ProductosBundle\Entity\Integrante $integrantes)
+    public function addIntegrante(\UIFI\IntegrantesBundle\Entity\Integrante $integrantes)
     {
         $this->integrantes[] = $integrantes;
 
@@ -186,20 +194,10 @@ class Articulo
     /**
      * Remove integrantes
      *
-     * @param \UIFI\ProductosBundle\Entity\Integrante $integrantes
+     * @param \UIFI\IntegrantesBundle\Entity\Integrante $integrantes
      */
-    public function removeIntegrante(\UIFI\ProductosBundle\Entity\Integrante $integrantes)
+    public function removeIntegrante(\UIFI\IntegrantesBundle\Entity\Integrante $integrantes)
     {
         $this->integrantes->removeElement($integrantes);
-    }
-
-    /**
-     * Get integrantes
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getIntegrantes()
-    {
-        return $this->integrantes;
     }
 }
