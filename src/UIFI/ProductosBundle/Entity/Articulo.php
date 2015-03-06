@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Clase que mapea un Artículo de investigación
  *
- * @ORM\Table()
+ * @ORM\Table(name="articulo")
  * @ORM\Entity
  */
 class Articulo

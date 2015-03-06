@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Facultad
  *
- * @ORM\Table()
+ * @ORM\Table( "facultad" )
  * @ORM\Entity
  */
 class Facultad
@@ -102,7 +102,7 @@ class Facultad
     /**
      * Get proyectos
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getProyectos()
     {

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Proyecto
  *
- * @ORM\Table()
+ * @ORM\Table(name="proyecto")
  * @ORM\Entity
  */
 class Proyecto
@@ -131,7 +131,7 @@ class Proyecto
     /**
      * Get integrantes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getIntegrantes()
     {
