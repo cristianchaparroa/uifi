@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Facultad
  *
- * @ORM\Table()
+ * @ORM\Table( "facultad" )
  * @ORM\Entity
  */
 class Facultad
@@ -31,9 +31,9 @@ class Facultad
 
     /**
       * Proyectos curriculares que tiene una facultad.
-      * @ORM\OneToMany(targetEntity="Proyecto", mappedBy="facultad")
+      * @ORM\OneToMany(targetEntity="Grupo", mappedBy="facultad")
       */
-    protected $proyectos;
+    protected $grupos;
 
 
     /**
@@ -67,5 +67,50 @@ class Facultad
     public function getNombre()
     {
         return $this->nombre;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+
+    }
+
+    public function __toString(){
+        return $this->getNombre();
+    }
+
+
+    /**
+     * Add grupos
+     *
+     * @param \UIFI\IntegrantesBundle\Entity\Grupo $grupos
+     * @return Facultad
+     */
+    public function addGrupo(\UIFI\IntegrantesBundle\Entity\Grupo $grupos)
+    {
+        $this->grupos[] = $grupos;
+
+        return $this;
+    }
+
+    /**
+     * Remove grupos
+     *
+     * @param \UIFI\IntegrantesBundle\Entity\Grupo $grupos
+     */
+    public function removeGrupo(\UIFI\IntegrantesBundle\Entity\Grupo $grupos)
+    {
+        $this->grupos->removeElement($grupos);
+    }
+
+    /**
+     * Get grupos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGrupos()
+    {
+        return $this->grupos;
     }
 }

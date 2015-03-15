@@ -33,15 +33,31 @@ class Articulo
      * Contenido generado por el Scraper desde el CVLAC
      * @var string
      *
-     * @ORM\Column(name="contenido", type="string", length=255)
+     * @ORM\Column(name="contenido", type="string", length=255,nullable=true)
      */
     private $contenido;
+
+    /**
+     * Contenido generado por el Scraper desde el CVLAC
+     * @var string
+     *
+     * @ORM\Column(name="editorial", type="string", length=255)
+     */
+    private $editorial;
+
+    /**
+     * Contenido generado por el Scraper desde el CVLAC
+     * @var string
+     *
+     * @ORM\Column(name="ISSN", type="string", length=255)
+     */
+    private $ISSN;
 
     /**
      * Categoria del articulo de investigacion
      * @var string
      *
-     * @ORM\Column(name="categoria", type="string", length=255)
+     * @ORM\Column(name="categoria", type="string", length=255,nullable=true)
      */
     private $categoria;
 
@@ -49,7 +65,7 @@ class Articulo
      * fecha en que fue publicado el articulo
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha", type="date")
+     * @ORM\Column(name="fecha", type="date",nullable=true)
      */
     private $fecha;
 
@@ -199,5 +215,51 @@ class Articulo
     public function removeIntegrante(\UIFI\IntegrantesBundle\Entity\Integrante $integrantes)
     {
         $this->integrantes->removeElement($integrantes);
+    }
+
+    /**
+     * Set editorial
+     *
+     * @param string $editorial
+     * @return Articulo
+     */
+    public function setEditorial($editorial)
+    {
+        $this->editorial = $editorial;
+
+        return $this;
+    }
+
+    /**
+     * Get editorial
+     *
+     * @return string
+     */
+    public function getEditorial()
+    {
+        return $this->editorial;
+    }
+
+    /**
+     * Set ISSN
+     *
+     * @param string $iSSN
+     * @return Articulo
+     */
+    public function setISSN($iSSN)
+    {
+        $this->ISSN = $iSSN;
+
+        return $this;
+    }
+
+    /**
+     * Get ISSN
+     *
+     * @return string
+     */
+    public function getISSN()
+    {
+        return $this->ISSN;
     }
 }

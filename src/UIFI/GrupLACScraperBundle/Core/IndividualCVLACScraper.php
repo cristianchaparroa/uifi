@@ -1,6 +1,6 @@
 <?php
 
-namespace UIFI\GrupLACScraperBundle\Core
+namespace UIFI\GrupLACScraperBundle\Core;
 /**
   *@file
   *
@@ -12,6 +12,7 @@ namespace UIFI\GrupLACScraperBundle\Core
 
 class IndividualCVLACScraper extends GrupLACScraper
 {
+  const URL_BASE = 'http://scienti1.colciencias.gov.co:8081/cvlac/visualizador/generarCurriculoCv.do?cod_rh=';
   /**
    * Código del  CvLAC de una paresona en el grupo de investigación Especificado.
    */
@@ -23,7 +24,7 @@ class IndividualCVLACScraper extends GrupLACScraper
 	public function __construct( $url )
 	{
       $this->code = $url;
-      CVLACScraper::__construct( $url );
+      GrupLACScraper::__construct( $url  );
 	}
   private function extraerValor($query){
       $resultados = $this->xpath->query( $query );
@@ -63,7 +64,7 @@ class IndividualCVLACScraper extends GrupLACScraper
       {
           $nodeList =  $element->getElementsByTagName( 'td' );
           foreach( $nodeList as $node ){
-              $doc = new DOMDocument();
+              $doc = new \DOMDocument();
               $doc->appendChild($doc->importNode($node, true));
               $value =  $doc->saveHTML() ;
               $value = str_replace('<li>&nbsp;</li>', '', $value );
@@ -118,7 +119,7 @@ class IndividualCVLACScraper extends GrupLACScraper
     $items = array();
     foreach( $array as $item )
     {
-      $doc = new DOMDocument();
+      $doc = new \DOMDocument();
       $doc->loadHTML( $item );
       $list = $doc->getElementsByTagName('strong');
       foreach( $list as $node )
@@ -134,14 +135,104 @@ class IndividualCVLACScraper extends GrupLACScraper
     }
     return $items;
   }
+  /**
+   * Función que se encarga de obtener los artículos publicados por un
+   * integrante de un grupo de investigiación.
+   *@return Array de Strings que contiene el parrafo completo de la información
+   * correspondiente a cada artículo.
+  */
+  public function getArticulos(){
+    $query = '/html/body/div[1]/div[3]/table/tr[29]/td/table';
+    return $this->extraer($query);
+  }
+  /**
+   * Función que se encarga de procesar los artículos de un integrante de un un
+   * grupo de investigación. De tal manera que genera por separado la información
+   * de cada artículo, título,contenido,categoria,fecha de publicacion,
+   * sectores, palabras clave
+   *
+   * @return Arreglo de Arreglos.
+  */
+  public function procesarArticulos()
+  {
+    $articles = array();
+    $articulos = $this->getArticulos();
+    $items = array();
+    foreach( $articulos as $articulo )
+    {
+      $article = array();
+      $article['titulo']    = '';
+      $article['ISSN']      = '';
+      $article['editorial'] = '';
+      $article['palabras']  = '';
+      $article['sectores']  = '';
+      $article['anual']     = '';
+
+      $doc = new \DOMDocument();
+      $doc->loadHTML($articulo);
+      $list = $doc->getElementsByTagName('i');
+
+      //obtieniendo el título del artículo.
+      if ( preg_match_all('`"([^"]*)"`', $articulo, $results) ) {
+          $article['titulo'] = $results[0][0];
+          $article['titulo'] = substr($article['titulo'], 1, -1);
+      }
+
+      //obteniendo el ISSN, editorial
+      foreach($list as $node)
+      {
+
+          if( $node->nodeValue == "ISSN:" ){
+            $article['ISSN'] = $node->nextSibling->textContent;
+          }
+          if( $node->nodeValue == "ed:" ){
+            $article['editorial'] = $node->nextSibling->textContent;
+          }
+          /**
+          * Obteniendo el año de publicación del artículo.
+          */
+          if( $node->nodeValue == "fasc." ){
+            $results = explode( ',', $node->nextSibling->textContent);
+            $anual = $results[ count($results)-1 ];
+            $article['anual']  = $anual;
+          }
+      }
+      //obteniendo sectores y palabras clave
+      $list = $doc->getElementsByTagName('strong');
+      foreach($list as $node)
+      {
+          if( $node->nodeValue == "Palabras: " )
+          {
+
+          }
+          if( $node->nodeValue == "Sectores: "){
+
+          }
+      }
+      /**
+       * Se verifica que tenga a lo menos algun valor para que
+       * se agrege la información necesaria.
+      */
+      if( !$this->isEmptyString( $article['titulo'] ) ||
+          !$this->isEmptyString( $article['ISSN'] ) ||
+          !$this->isEmptyString( $article['editorial'] ) ||
+          !$this->isEmptyString( $article['palabras'] ) ||
+          !$this->isEmptyString( $article['anual'] ) ||
+          !$this->isEmptyString( $article['sectores'] )
+      ){
+        $articles[] = $article;
+      }
+
+    }
+    return $articles;
+  }
+
   public function redesConocimientoEspecializado(){
     $query = '/html/body/div/div[3]/table/tr[25]/td/table';
     return $this->extraer($query);
   }
-  public function getArticulos(){
-    $query = '/html/body/div/div[3]/table/tr[34]/td/table';
-    return $this->extraer($query);
-  }
+
+
   public function getLibros(){
     $query = '/html/body/div/div[3]/table/tr[36]/td/table';
     return $this->extraer($query);
@@ -162,4 +253,11 @@ class IndividualCVLACScraper extends GrupLACScraper
     $query = '/html/body/div/div[3]/table/tr[86]/td/table';
     return $this->extraer($query);
   }
+  public function getURL(){
+    return  $this->code;
+  }
+  private function isEmptyString($str) {
+    return !(isset($str) && (strlen(trim($str)) > 0));
+  }
+
 }

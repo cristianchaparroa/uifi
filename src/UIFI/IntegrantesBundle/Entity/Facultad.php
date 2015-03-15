@@ -31,9 +31,9 @@ class Facultad
 
     /**
       * Proyectos curriculares que tiene una facultad.
-      * @ORM\OneToMany(targetEntity="Proyecto", mappedBy="facultad")
+      * @ORM\OneToMany(targetEntity="Grupo", mappedBy="facultad")
       */
-    protected $proyectos;
+    protected $grupos;
 
 
     /**
@@ -73,42 +73,44 @@ class Facultad
      */
     public function __construct()
     {
-        $this->proyectos = new \Doctrine\Common\Collections\ArrayCollection();
+
     }
 
+    public function __toString(){
+        return $this->getNombre();
+    }
+
+
     /**
-     * Add proyectos
+     * Add grupos
      *
-     * @param \UIFI\IntegrantesBundle\Entity\Proyecto $proyectos
+     * @param \UIFI\IntegrantesBundle\Entity\Grupo $grupos
      * @return Facultad
      */
-    public function addProyecto(\UIFI\IntegrantesBundle\Entity\Proyecto $proyectos)
+    public function addGrupo(\UIFI\IntegrantesBundle\Entity\Grupo $grupos)
     {
-        $this->proyectos[] = $proyectos;
+        $this->grupos[] = $grupos;
 
         return $this;
     }
 
     /**
-     * Remove proyectos
+     * Remove grupos
      *
-     * @param \UIFI\IntegrantesBundle\Entity\Proyecto $proyectos
+     * @param \UIFI\IntegrantesBundle\Entity\Grupo $grupos
      */
-    public function removeProyecto(\UIFI\IntegrantesBundle\Entity\Proyecto $proyectos)
+    public function removeGrupo(\UIFI\IntegrantesBundle\Entity\Grupo $grupos)
     {
-        $this->proyectos->removeElement($proyectos);
+        $this->grupos->removeElement($grupos);
     }
 
     /**
-     * Get proyectos
+     * Get grupos
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getProyectos()
+    public function getGrupos()
     {
-        return $this->proyectos;
-    }
-    public function __toString(){
-        return $this->getNombre();
+        return $this->grupos;
     }
 }

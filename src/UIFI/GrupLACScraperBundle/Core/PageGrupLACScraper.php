@@ -1,6 +1,6 @@
 <?php
 
-namespace UIFI\GrupLACScraperBundle\Core
+namespace UIFI\GrupLACScraperBundle\Core;
 /**
   * @file
   *
@@ -11,13 +11,77 @@ namespace UIFI\GrupLACScraperBundle\Core
   */
 class PageGrupLACScraper extends  GrupLACScraper
 {
+		const URL_BASE='http://scienti1.colciencias.gov.co:8080/gruplac/jsp/visualiza/visualizagr.jsp?nro=';
 	  /**
 	    * Constructor del objeto
 	    */
 	  public function __construct( $url )
 	  {
-       CVLACScraper::__construct( $url );
+       GrupLACScraper::__construct( self::URL_BASE . $url );
 	  }
+
+		/**
+		* Obtener todos los  nombres de los integrantes en
+		* el grupo de investigación.
+		* @return Arreglo clave valor {url cvlac, nombre del integrante}
+		*/
+		public function obtenerIntegrantes()
+		{
+				if( !$this->error )
+				{
+					//query que extraer la tabla con los integrantes del grupo
+					$query = '/html/body/table[6]';
+					$resultados = $this->xpath->query( $query );
+					$integrantes = Array();
+					foreach( $resultados as  $registro ){
+						$nodeList = $registro->childNodes ;
+						foreach(  $nodeList as $node )
+						{
+								$element =  $node->firstChild ;
+								$listLinks =  $element->getElementsByTagName('a');
+								foreach( $listLinks as $link ){
+									$urlCVLAC = $link->getAttribute('href');
+									$nombre = $link->nodeValue;
+									$integrantes[ $urlCVLAC ] = $nombre;
+								}
+						}
+					}
+					return $integrantes;
+				}
+				return array();
+		}
+		/**
+			*Función para extrer información de un query.
+			*@param Arreglo con el resultado del query.
+			*/
+		private function extraer($query){
+			$producciones = array();;
+			$listaNodos = $this->xpath->query( $query );
+			foreach( $listaNodos as $element ){
+					$elemento =  $element->getElementsByTagName( 'td' );
+					foreach ( $elemento as $node ){
+						$doc = new DOMDocument();
+						$doc->appendChild($doc->importNode($node, true));
+						$produccion =  $doc->saveHTML() ;
+						$producciones[ ] = $produccion;
+					}
+			}
+
+			$temp = array();
+			foreach( $producciones as $produccion ){
+				$arreglo = explode( '-', $produccion);
+					if( isset( $arreglo[1] ) ){
+							$produccion = '';
+							for( $var =1 ; $var<count($arreglo); $var++ )
+							{
+									$produccion  = $produccion .'-'.$arreglo[$var];
+							}
+
+							$temp [] =  substr($produccion,1) ;
+					}
+			}
+			return $temp;
+		}
     /**
      * Método que se encarga de extraer un valor a partir de un query
      * especifico.
@@ -117,64 +181,6 @@ class PageGrupLACScraper extends  GrupLACScraper
       $query =  '/html/body/table[1]/tr[11]/td[2]';
       return $this->extraerValue($query);
     }
- 	 /**
-	  * Obtener todos los  nombres de los integrantes en
-	  * el grupo de investigación.
-    * @return Arreglo clave valor {url cvlac, nombre del integrante}
-    */
-    public function obtenerIntegrantes()
-    {
-    	//query que extraer la tabla con los integrantes del grupo
-    	$query = '/html/body/table[5]';
-    	$resultados = $this->xpath->query( $query );
-      $integrantes = Array();
-    	foreach( $resultados as  $registro ){
-         $nodeList = $registro->childNodes ;
-         foreach(  $nodeList as $node )
-         {
-            $element =  $node->firstChild ;
-            $listLinks =  $element->getElementsByTagName('a');
-            foreach( $listLinks as $link ){
-              $urlCVLAC = $link->getAttribute('href');
-              $nombre = $link->nodeValue;
-              $integrantes[ $urlCVLAC ] = $nombre;
-            }
-         }
-      }
-      return $integrantes;
-    }
-    /**
-      *Función para extrer información de un query.
-      *@param Arreglo con el resultado del query.
-      */
-    private function extraer($query){
-      $producciones = array();;
-      $listaNodos = $this->xpath->query( $query );
-      foreach( $listaNodos as $element ){
-          $elemento =  $element->getElementsByTagName( 'td' );
-          foreach ( $elemento as $node ){
-            $doc = new DOMDocument();
-            $doc->appendChild($doc->importNode($node, true));
-            $produccion =  $doc->saveHTML() ;
-            $producciones[ ] = $produccion;
-          }
-      }
-
-      $temp = array();
-      foreach( $producciones as $produccion ){
-        $arreglo = explode( '-', $produccion);
-          if( isset( $arreglo[1] ) ){
-              $produccion = '';
-              for( $var =1 ; $var<count($arreglo); $var++ )
-              {
-                  $produccion  = $produccion .'-'.$arreglo[$var];
-              }
-
-              $temp [] =  substr($produccion,1) ;
-          }
-      }
-      return $temp;
-    }
     /**
      * extraer la instituciones a las cuales pertence el grupo de investigación.
      * @return Arreglo con el nombre de las instituciones.
@@ -255,7 +261,7 @@ class PageGrupLACScraper extends  GrupLACScraper
       return $this->extraer( $query );
     }
     /**
-     * Extraee la lista de capítulos publicados en libros por integrantes
+     * Extrae la lista de capítulos publicados en libros por integrantes
      * del grupo de investigación.
      * @return Arreglo con la lista de capitulos publicados
     */
@@ -263,4 +269,19 @@ class PageGrupLACScraper extends  GrupLACScraper
       $query = '/html/body/table[9]';
       return $this->extraer( $query );
     }
+		/**
+		 * Obtiene el nombre del grupo de investigación.
+		*  @return String Nombre del grupo
+		*/
+		public function getNombreGrupo(){
+			$query = '/html/body/span';
+			return $this->extraerValue($query) ;
+		}
+		/**
+		 * obtiene la url completa del gruplac del grupo de investigación.
+		 * @retunr String URL
+		*/
+		public function getURL(){
+			return  self::URL_BASE . $this->urlBase;
+		}
 }

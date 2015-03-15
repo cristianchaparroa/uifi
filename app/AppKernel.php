@@ -30,6 +30,9 @@ class AppKernel extends Kernel
             new UIFI\IntegrantesBundle\UIFIIntegrantesBundle(),
             new UIFI\GrupLACScraperBundle\UIFIGrupLACScraperBundle(),
             new UIFI\ProductosBundle\UIFIProductosBundle(),
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+            //corse bundle
+            new Nelmio\CorsBundle\NelmioCorsBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

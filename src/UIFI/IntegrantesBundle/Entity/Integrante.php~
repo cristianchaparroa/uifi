@@ -11,19 +11,18 @@ use Doctrine\ORM\Mapping as ORM;
  * @author Cristian Camilo Chaparro Africano <cristianchaparroa@gmail.com>
  * @package UIFIIntegrantesBundle
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="UIFI\IntegrantesBundle\Repository\IntegranteRepository")
  * @ORM\Table(name="integrante")
  */
 class Integrante
 {
     /**
-     * Identificador del Integrante.
-     *
+     * URL del cvlac del Integrante del grupo de investigación
+     * @var string
      * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(name="cvlac", type="string", length=255)
      */
-    protected $id;
+    private $cvlac;
 
     /**
      * @ORM\OneToOne(targetEntity="UsersBundle\Entity\Usuario")
@@ -36,29 +35,38 @@ class Integrante
      * Número de documento de identificación.
      * @var string
      *
-     * @ORM\Column(name="documento", type="string", length=10)
+     * @ORM\Column(name="documento", type="string", length=10,nullable=true)
      */
     private $documento;
 
     /**
+     * Nombres del integrante del grupo de investigación.
+     * @var string
+     *
+     * @ORM\Column(name="nombres", type="string", length=255)
+     */
+    private $nombres;
+    /**
      * Código del Integrante del grupo de investigación
      * @var string
-     * @ORM\Column(name="propietario", type="string", length=12)
+     * @ORM\Column(name="codigo", type="string", length=12,nullable=true)
      */
     private $codigo;
+
+
 
     /**
      * Telefono Fijo
      * @var string
      *
-     * @ORM\Column(name="telefono", type="string", length=255)
+     * @ORM\Column(name="telefono", type="string", length=255,nullable=true)
      */
     private $telefono;
     /**
      * Número celular del integrante del grupo de investigacion
      * @var string
      *
-     * @ORM\Column(name="celular", type="string", length=10)
+     * @ORM\Column(name="celular", type="string", length=10,nullable=true)
      */
     private $celular;
 
@@ -66,55 +74,65 @@ class Integrante
      * Correo institucional del integrnate del grupo de investigación.
      * @var string
      *
-     * @ORM\Column(name="correo_institucional", type="string", length=255)
+     * @ORM\Column(name="correo_institucional", type="string", length=255,nullable=true)
      */
     private $correoInstitucional;
     /**
      * Correo personal del integrnate del grupo de investigación.
      * @var string
      *
-     * @ORM\Column(name="correo_personal", type="string", length=255)
+     * @ORM\Column(name="correo_personal", type="string", length=255,nullable=true)
      */
     private $correoPersonal;
+
     /**
-     * Contructor de la clase Usuario.
+     * Artículos de investigación publicados por uno o varios integrantes de un grupo de
+     * Investigación.
+     *
+     * @ORM\ManyToMany( targetEntity="UIFI\ProductosBundle\Entity\Articulo" , inversedBy="integrantes")
+     * @ORM\JoinTable( name="integrantes_articulos",
+     *             joinColumns={@ORM\JoinColumn(name="integrante_id", referencedColumnName="cvlac")},
+     *             inverseJoinColumns={@ORM\JoinColumn(name="articulo_id",referencedColumnName="id")}
+     *  )
+    */
+    protected $articulos;
+    /**
+     * Proyecto curricular al que pertence  un grupo de investigación.
+     *
+     * @ORM\ManyToOne(targetEntity="Grupo", inversedBy="integrantes" )
+     * @ORM\JoinColumn(name="grupo_id" ,referencedColumnName="serial")
+    */
+    protected $grupo;
+
+    /**
+     * Constructor
      */
     public function __construct()
     {
-        parent::__construct();
+        $this->articulos = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
-     * Get id
+     * Set cvlac
      *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set usuario
-     *
-     * @param \UsersBundle\Entity\Usuario $usuario
+     * @param string $cvlac
      * @return Integrante
      */
-    public function setUsuario(\UsersBundle\Entity\Usuario $usuario = null)
+    public function setCvlac($cvlac)
     {
-        $this->usuario = $usuario;
+        $this->cvlac = $cvlac;
 
         return $this;
     }
 
     /**
-     * Get usuario
+     * Get cvlac
      *
-     * @return \UsersBundle\Entity\Usuario
+     * @return string
      */
-    public function getUsuario()
+    public function getCvlac()
     {
-        return $this->usuario;
+        return $this->cvlac;
     }
 
     /**
@@ -138,6 +156,52 @@ class Integrante
     public function getDocumento()
     {
         return $this->documento;
+    }
+
+    /**
+     * Set nombres
+     *
+     * @param string $nombres
+     * @return Integrante
+     */
+    public function setNombres($nombres)
+    {
+        $this->nombres = $nombres;
+
+        return $this;
+    }
+
+    /**
+     * Get nombres
+     *
+     * @return string
+     */
+    public function getNombres()
+    {
+        return $this->nombres;
+    }
+
+    /**
+     * Set apellidos
+     *
+     * @param string $apellidos
+     * @return Integrante
+     */
+    public function setApellidos($apellidos)
+    {
+        $this->apellidos = $apellidos;
+
+        return $this;
+    }
+
+    /**
+     * Get apellidos
+     *
+     * @return string
+     */
+    public function getApellidos()
+    {
+        return $this->apellidos;
     }
 
     /**
@@ -253,5 +317,84 @@ class Integrante
     public function getCorreoPersonal()
     {
         return $this->correoPersonal;
+    }
+
+    /**
+     * Set usuario
+     *
+     * @param \UsersBundle\Entity\Usuario $usuario
+     * @return Integrante
+     */
+    public function setUsuario(\UsersBundle\Entity\Usuario $usuario = null)
+    {
+        $this->usuario = $usuario;
+
+        return $this;
+    }
+
+    /**
+     * Get usuario
+     *
+     * @return \UsersBundle\Entity\Usuario
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
+    }
+
+    /**
+     * Add articulos
+     *
+     * @param \UIFI\ProductosBundle\Entity\Articulo $articulos
+     * @return Integrante
+     */
+    public function addArticulo(\UIFI\ProductosBundle\Entity\Articulo $articulos)
+    {
+        $this->articulos[] = $articulos;
+
+        return $this;
+    }
+
+    /**
+     * Remove articulos
+     *
+     * @param \UIFI\ProductosBundle\Entity\Articulo $articulos
+     */
+    public function removeArticulo(\UIFI\ProductosBundle\Entity\Articulo $articulos)
+    {
+        $this->articulos->removeElement($articulos);
+    }
+
+    /**
+     * Get articulos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getArticulos()
+    {
+        return $this->articulos;
+    }
+
+    /**
+     * Set grupo
+     *
+     * @param \UIFI\IntegrantesBundle\Entity\Grupo $grupo
+     * @return Integrante
+     */
+    public function setGrupo(\UIFI\IntegrantesBundle\Entity\Grupo $grupo = null)
+    {
+        $this->grupo = $grupo;
+
+        return $this;
+    }
+
+    /**
+     * Get grupo
+     *
+     * @return \UIFI\IntegrantesBundle\Entity\Grupo
+     */
+    public function getGrupo()
+    {
+        return $this->grupo;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace UIFI\GrupLACScraperBundle\Core
+namespace UIFI\GrupLACScraperBundle\Core;
 /**
   * Clase encargada de proporcionar las funciones básicas del Scraper del GrupLac
   * @author : Cristian Camilo Chaparro A.
@@ -24,6 +24,8 @@ class GrupLACScraper
 	  */
 	protected $html;
 
+	protected $error;
+
 	/**
 	  * Constructor de la clase CVLACScraper
 	  * @param url Url en la cual se va a realizar el web scraping
@@ -41,10 +43,29 @@ class GrupLACScraper
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_HEADER, 1);
 			$this->html = curl_exec($ch);
-			$this->dom = new DOMDocument();
-			libxml_use_internal_errors(true);
-			$this->dom->loadHTML($this->html);
-			$this->xpath = new DOMXPath($this->dom);
+			$this->html  = $this->convertToUTF8( $this->html );
+			if( $this->html !=='' )
+			{
+				$this->dom = new \DOMDocument();
+				libxml_use_internal_errors(true);
+				$this->dom->loadHTML($this->html);
+				$this->dom->encoding = 'utf8';
+				$this->xpath = new \DOMXPath($this->dom);
+				$this->xpath->registerNamespace('html','http://www.w3.org/1999/xhtml');
+			}
+			else{
+				$this->error = true;
+			}
 			curl_close($ch);
+	}
+	/**
+	 * Función que se encarcarga aplicar una codificación UTF-8 al contenido
+	 * obtendio desde la url especificada.
+	*/
+	public function convertToUTF8($html){
+		return preg_replace("@(^[\s\S]+?<meta[\s\S]+?charset=['\"]?)(.+?)(['\"]\s*/?>[\s\S]+$)@i","$1UTF-8$3",$html);
+	}
+	public function isError(){
+		return $this->error;
 	}
 }

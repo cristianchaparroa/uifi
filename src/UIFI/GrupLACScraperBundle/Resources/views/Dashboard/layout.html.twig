@@ -1,0 +1,30 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  {%block header%}
+  <header class="masthead">
+      <div class="row">
+        <h1>Framework de gestión grupos de investigación Facultad de Ingeniería
+        <p class="lead">Universidad Distrital Francisco José de Caldas</p></h1>
+      </div>
+  </header>
+ {%endblock%}
+
+ {% block content %}
+ {% endblock%}
+
+ {% block javascript %}
+ <div class="js-css-import-base">
+     <link href="{{ asset('bootstrap/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" />
+     <script src="{{ asset('js/jquery.min.js') }}"></script>
+     <script src="{{ asset('bootstrap/boostrap.min.js') }}"></script>
+ </div>
+ {% endblock %}
+
+</div>
+
+{% endblock %}
