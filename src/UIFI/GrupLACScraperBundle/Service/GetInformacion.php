@@ -23,8 +23,10 @@ class GetInformacion
    * Porcentaje del calculo del proceso de la importación de la información del
    * gruplac a la base del sistema.
    */
-  // private $porcentaje;
-
+   private $percent = 0;
+   /**
+    * Constructor
+   */
    public function __construct(Container $container)
    {
       $this->container = $container;
@@ -45,9 +47,11 @@ class GetInformacion
       * los diferentes scrapers.
      */
      $codes = array( '00000000002325' );
-
+     $total = count($codes);
+     $currentTask = 0;
      foreach( $codes as $code )
      {
+      // $this->percent = intval($currentTask/$total * 100)."%";
        $grupoScraper = new PageGrupLACScraper($code);
 
        /**
@@ -56,7 +60,7 @@ class GetInformacion
        $grupo  = new Grupo();
        $grupo->setSerial( $code );
        $grupo->setGruplac( $grupoScraper->getURL() );
-       echo  htmlspecialchars($grupoScraper->getNombreGrupo() ) ;
+
        $grupo->setNombre(   htmlspecialchars($grupoScraper->getNombreGrupo())  );
        $grupo->setEmail( $grupoScraper->extraerEmail() );
        $grupo->setClasificacion( $grupoScraper->extraerClasificacion() );
@@ -74,7 +78,7 @@ class GetInformacion
        */
        foreach( $integrantes as $codeIntegrante => $nombreIntegrante)
        {
-          echo $nombreIntegrante . "</br>";
+
           $integranteScraper = new IndividualCVLACScraper( $codeIntegrante );
           /**
            * Se crea al entitidad Integrante y se registra toda la información
@@ -108,12 +112,14 @@ class GetInformacion
             $article->setTitulo($articulo['titulo']);
             $article->setEditorial($articulo['editorial']);
             $article->setISSN($articulo['ISSN']);
+            $article->setPalabras($articulo['palabras']);
             $article->addIntegrante($entityIntegrante);
 
             $this->em->persist($article);
             $this->em->flush();
           }
        }
+       $currentTask++;
      }
      return true;
    }
@@ -122,13 +128,16 @@ class GetInformacion
     * @return Integer valor del progreso.
    */
    public function progress(){
-
+     $this->percent = $this->percent+1;
+     return $this->percent;
    }
    /**
     * Función que se encarga de eliminar todos los registros para inicializar
     * las tablas requeridas en el proceso de automatización.
    */
    public function initDrop(){
+     $articuloRepository = $this->em->getRepository('UIFIProductosBundle:Articulo');
+     $articuloRepository->deleteAll();
      $integranteRepository = $this->em->getRepository('UIFIIntegrantesBundle:Integrante');
      $integranteRepository->deleteAll();
      $grupoRepository = $this->em->getRepository('UIFIIntegrantesBundle:Grupo');

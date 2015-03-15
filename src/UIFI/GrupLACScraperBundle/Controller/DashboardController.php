@@ -33,4 +33,16 @@ class DashboardController extends Controller
         return new JsonResponse(array('success' =>  $success ));
     }
 
+    /**
+     *  Función que se encarga de crear el proceso de Scrap de información
+     *  de los diferentes grupos de investigación desde el GrupLAC de colciencias.
+     *
+     *  @Route( "/gruplac/getProgress", name="dasboard_get_progress", options={"expose"=true} )
+    */
+    public function getProgress()
+    {
+      $porcentaje = $this->get('uifi.gruplac.scrap.getinfo')->progress();
+      return new JsonResponse(array('porcentaje' =>  $porcentaje ));
+    }
+
 }

@@ -170,8 +170,16 @@ class IndividualCVLACScraper extends GrupLACScraper
 
       $doc = new \DOMDocument();
       $doc->loadHTML($articulo);
-      $list = $doc->getElementsByTagName('i');
 
+      //obteniendo las palabras
+      $xpath = new \DOMXPath($doc);
+      $query = '//strong[.="Palabras: "]/following-sibling::text()[normalize-space()][1]';
+      $palabras = '';
+      foreach ($xpath->query($query) as $node) {
+        $palabras = $palabras . $node->nodeValue;
+      }
+      $article['palabras']  = $palabras;
+      $list = $doc->getElementsByTagName('i');
       //obtieniendo el título del artículo.
       if ( preg_match_all('`"([^"]*)"`', $articulo, $results) ) {
           $article['titulo'] = $results[0][0];
@@ -195,18 +203,6 @@ class IndividualCVLACScraper extends GrupLACScraper
             $results = explode( ',', $node->nextSibling->textContent);
             $anual = $results[ count($results)-1 ];
             $article['anual']  = $anual;
-          }
-      }
-      //obteniendo sectores y palabras clave
-      $list = $doc->getElementsByTagName('strong');
-      foreach($list as $node)
-      {
-          if( $node->nodeValue == "Palabras: " )
-          {
-
-          }
-          if( $node->nodeValue == "Sectores: "){
-
           }
       }
       /**

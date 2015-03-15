@@ -1,32 +1,30 @@
-{% extends "UIFIGrupLACScraperBundle:Dashboard:layout.html.twig" %}
+{% extends "UIFIAdminBundle:Dashboard:index.html.twig" %}
 
-{% block title %} GrupLAC Dashboard {% endblock %}
-
-
-{% block content %}
+{% block  main_content %}
   <div class="well">
     <p> {{ 'uifi.gruplac.dashboard.statement'|trans }} </p>
   </div>
-  <form action="{{path('dasboard_get_informacion')}}">
-  <!-- <form id="dashboard"> -->
-    <button id="button-getInformacion-" class="btn btn-success">  {{ 'uifi.gruplac.dashboard.buttons.get'|trans }} </button>
-  </form>
 
   <div class="log-success alert alert-success">
   </div>
 
-  <div class="log-error alert alert-danger">
+  <div class="progress progress-striped active">
+    <div class="progress-bar progress-bar-danger" role="progressbar" data-transitiongoal="100"></div>
   </div>
 
-{% endblock %}
+  <!-- <form action="{{path('dasboard_get_informacion')}}"> -->
+  <form id="dashboard">
+    <button id="button-getInformacion" class="btn btn-success">  {{ 'uifi.gruplac.dashboard.buttons.get'|trans }} </button>
+  </form>
 
-{% block javascript %}
-<div class="js-css-import-base">
-    <link href="{{ asset('bootstrap/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" />
-    <script src="{{ asset('js/jquery.min.js') }}"></script>
-    <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
+
+  <div class="js-css-import">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-progressbar-3.3.0.min.css')}}">
+    <script src="{{ asset('js/bootstrap-progressbar.min.js') }}"></script>
     <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
     <script src="{{ asset('bundles/uifigruplacscraper/js/dashboard/progressbar.js') }}"></script>
-</div>
+
+
+  </div><!--  end js-css-import-->
 {% endblock %}

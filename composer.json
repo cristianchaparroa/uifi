@@ -25,7 +25,8 @@
         "sonata-project/doctrine-orm-admin-bundle": "~2.3",
         "sonata-project/block-bundle": "~2.2",
         "friendsofsymfony/jsrouting-bundle": "~1.5",
-        "nelmio/cors-bundle": "~1.4"
+        "nelmio/cors-bundle": "~1.4",
+	"lexik/form-filter-bundle": "~3.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

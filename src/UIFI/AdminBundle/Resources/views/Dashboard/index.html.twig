@@ -1,42 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>{{'admin.title'|trans}}</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </head>
-{% block body %}
+
 <body>
-<div class="container">
-
-  <header class="masthead">
+    <div class="container">
+      <header class="masthead">
+          <div class="row">
+            <h1>{{'uifi.title'|trans}}
+            <p class="lead">{{'uifi.universidad'|trans}}</p></h1>
+          </div>
+      </header>
+      <hr>
       <div class="row">
-        <h1>{{'uifi.title'|trans}}
-        <p class="lead">{{'uifi.universidad'|trans}}</p></h1>
-      </div>
-  </header>
-  <hr>
+            {% embed "UIFIAdminBundle::navbar.layout.html.twig" %}
+            {% endembed %}
 
+            <div class="col-sm-9">
+             {% block main_content %}
+             {% endblock %}
+            </div>
 
-  <div class="row">
-        {# Se incluye el menu principal del panel de administración#}
-        {% embed "UIFIAdminBundle::navbar.layout.html.twig" %}
-        {% endembed %}
+      </div><!--  endrow-->
 
-        <div class="col-sm-9">
-         {% block main_content %}
-         {% endblock %}
-        </div>
-
-  </div><!--  endrow-->
-
-</div><!-- end container -->
-<div class="js-css-import">
-   <link href="{{ asset('css/menu.css') }}" type="text/css" rel="stylesheet" />
- </div><!--  end js-css-import-->
+    </div><!-- end container -->
+    <div class="js-css-import">
+       <link href="{{ asset('css/menu.css') }}" type="text/css" rel="stylesheet" />
+    </div><!--  end js-css-import-->
 </body>
-{% endblock %}
 </html>

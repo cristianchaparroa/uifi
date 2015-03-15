@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Clase que mapea un Artículo de investigación
  *
  * @ORM\Table(name="articulo")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="UIFI\ProductosBundle\Repository\ArticuloRepository")
  */
 class Articulo
 {
@@ -52,6 +52,15 @@ class Articulo
      * @ORM\Column(name="ISSN", type="string", length=255)
      */
     private $ISSN;
+
+    /**
+     * Contenido generado por el Scraper desde el CVLAC
+     * @var string
+     *
+     * @ORM\Column(name="palabras", type="string", length=10000,nullable=true)
+     */
+    private $palabras;
+
 
     /**
      * Categoria del articulo de investigacion
@@ -261,5 +270,28 @@ class Articulo
     public function getISSN()
     {
         return $this->ISSN;
+    }
+
+    /**
+     * Set palabras
+     *
+     * @param string $palabras
+     * @return Articulo
+     */
+    public function setPalabras($palabras)
+    {
+        $this->palabras = $palabras;
+
+        return $this;
+    }
+
+    /**
+     * Get palabras
+     *
+     * @return string
+     */
+    public function getPalabras()
+    {
+        return $this->palabras;
     }
 }

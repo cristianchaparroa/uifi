@@ -35,6 +35,8 @@ class AppKernel extends Kernel
             new UIFI\AdminBundle\UIFIAdminBundle(),
             //corse bundle
             new Nelmio\CorsBundle\NelmioCorsBundle(),
+	    //Lexik Form filters	
+	    new Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle(),
 
         );
 
