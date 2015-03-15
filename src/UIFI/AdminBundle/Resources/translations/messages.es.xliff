@@ -1,0 +1,38 @@
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+          <trans-unit id="0">
+              <source>admin.title</source>
+              <target> Panel de Administración </target>
+          </trans-unit>
+            <trans-unit id="1">
+                <source>admin.menu.perfil</source>
+                <target> Perfil</target>
+            </trans-unit>
+
+            <trans-unit id="2">
+                <source>admin.menu.configuracion</source>
+                <target> Configuración</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>admin.menu.cambio.clave</source>
+                <target> Cambio de clave</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>admin.menu.cambio.correo</source>
+                <target> Cambio de correo</target>
+            </trans-unit>
+
+            <trans-unit id="5">
+                <source>admin.menu.productos</source>
+                <target> Productos </target>
+            </trans-unit>
+            <trans-unit id="6">
+                <source>admin.menu.productos.automatizado</source>
+                <target> Proceso automatizado </target>
+            </trans-unit>
+
+
+        </body>
+    </file>
+</xliff>

@@ -21,18 +21,21 @@ class AppKernel extends Kernel
             new UsersBundle\UsersBundle(),
 	          new Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle(),
 	          new JordiLlonch\Bundle\CrudGeneratorBundle\JordiLlonchCrudGeneratorBundle(),
-            //sonata admin bundles
-            new Sonata\CoreBundle\SonataCoreBundle(),
-            new Sonata\BlockBundle\SonataBlockBundle(),
-            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
-            new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
-            new Sonata\AdminBundle\SonataAdminBundle(),
+            // //sonata admin bundles
+            // new Sonata\CoreBundle\SonataCoreBundle(),
+            // new Sonata\BlockBundle\SonataBlockBundle(),
+            // new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            // new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
+            // new Sonata\AdminBundle\SonataAdminBundle(),
+            //UIFI Bundles
             new UIFI\IntegrantesBundle\UIFIIntegrantesBundle(),
             new UIFI\GrupLACScraperBundle\UIFIGrupLACScraperBundle(),
             new UIFI\ProductosBundle\UIFIProductosBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+            new UIFI\AdminBundle\UIFIAdminBundle(),
             //corse bundle
             new Nelmio\CorsBundle\NelmioCorsBundle(),
+
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
