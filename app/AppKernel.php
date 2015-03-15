@@ -35,9 +35,10 @@ class AppKernel extends Kernel
             new UIFI\AdminBundle\UIFIAdminBundle(),
             //corse bundle
             new Nelmio\CorsBundle\NelmioCorsBundle(),
-	    //Lexik Form filters	
-	    new Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle(),
 
+            new FOS\RestBundle\FOSRestBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle(),
+            new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -26,7 +26,10 @@
         "sonata-project/block-bundle": "~2.2",
         "friendsofsymfony/jsrouting-bundle": "~1.5",
         "nelmio/cors-bundle": "~1.4",
-	"lexik/form-filter-bundle": "~3.0"
+	"lexik/form-filter-bundle": "~3.0",
+        "friendsofsymfony/rest-bundle": "~1.5",
+        "jms/serializer-bundle": "@dev",
+        "nelmio/api-doc-bundle": "@dev"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

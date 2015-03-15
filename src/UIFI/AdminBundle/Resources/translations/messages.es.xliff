@@ -31,6 +31,10 @@
                 <source>admin.menu.productos.automatizado</source>
                 <target> Proceso automatizado </target>
             </trans-unit>
+            <trans-unit id="7">
+                <source>admin.menu.salir</source>
+                <target> Salir </target>
+            </trans-unit>
 
 
         </body>

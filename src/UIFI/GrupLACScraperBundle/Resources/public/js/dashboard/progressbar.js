@@ -9,6 +9,7 @@ var porcentaje = 0;
 var   $progressBar;
 
 $(function(){
+  jQuery.support.cors = true;
   $progressBar = $('.progress .progress-bar');
   $('.progress').hide();
 
@@ -16,28 +17,13 @@ $(function(){
   /**
    * se inicia el proceso de importación de información del gruplac.
   */
-  $( '#button-getInformacion' ).bind('click',function()
+  $( '#button-getInformacion' ).bind('click',function(event)
   {
       $('.progress').show();
       var baseUrl= location.protocol + "//" + location.host;
       var url = baseUrl +  Routing.generate('dasboard_get_informacion');
 
-      $.ajax({
-        url: url,
-        success: function(data)
-        {
-          console.log(data);
-          $progressBar.attr('data-transitiongoal', '100').progressbar({display_text: 'center'});
-        },
-        error: function(xhr, status, error)
-        {
-          console.log("error");
-        }
-      }).always(function() {
-        $('.progress').hide();
-      });//end ajax
-
-      setInterval(function(){
+      handlerCheckProgress = setInterval(function(){
         $progressBar.attr('data-transitiongoal', porcentaje ).progressbar({display_text: 'center'});
         porcentaje++;
 
@@ -49,8 +35,8 @@ $(function(){
           url: urlProgress,
           success: function(data)
           {
-            console.log(data);
-            porcentaje = data.porcentaje; 
+            console.log("procentaje"+data.porcentaje);
+            porcentaje = data.porcentaje;
           },
           error: function(xhr, status, error)
           {
@@ -58,5 +44,30 @@ $(function(){
           }
         });
       },1000);
+
+      $.ajax({
+        url: url,
+        async: true,
+        crossDomain: true,
+        success: function(data)
+        {
+          console.log(data);
+          $progressBar.attr('data-transitiongoal', '100').progressbar({display_text: 'center'});
+
+        },
+        error: function(xhr, status, error)
+        {
+          console.log( JSON.stringify(xhr) ) ;
+          console.log( JSON.stringify(status) ) ;
+          console.log( JSON.stringify(error) ) ;
+        }
+      }).always(function() {
+        $('.progress').hide();
+        clearInterval(handlerCheckProgress);
+        handlerCheckProgress = null;
+      });//end ajax
+
+      event.preventDefault();
+      event.stopPropagation();
   });//end bind
 });

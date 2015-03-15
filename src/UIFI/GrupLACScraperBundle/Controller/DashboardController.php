@@ -25,7 +25,7 @@ class DashboardController extends Controller
      *  Función que se encarga de crear el proceso de Scrap de información
      *  de los diferentes grupos de investigación desde el GrupLAC de colciencias.
      *
-     *  @Route( "/gruplac/getInformacion", name="dasboard_get_informacion", options={"expose"=true} )
+     *  @Route( "/api/gruplac/getInformacion", name="dasboard_get_informacion", options={"expose"=true} )
     */
     public function getInformacion()
     {
@@ -37,7 +37,7 @@ class DashboardController extends Controller
      *  Función que se encarga de crear el proceso de Scrap de información
      *  de los diferentes grupos de investigación desde el GrupLAC de colciencias.
      *
-     *  @Route( "/gruplac/getProgress", name="dasboard_get_progress", options={"expose"=true} )
+     *  @Route( "/api/gruplac/getProgress", name="dasboard_get_progress", options={"expose"=true} )
     */
     public function getProgress()
     {
