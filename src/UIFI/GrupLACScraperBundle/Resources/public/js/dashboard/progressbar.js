@@ -53,7 +53,8 @@ $(function(){
         {
           console.log(data);
           $progressBar.attr('data-transitiongoal', '100').progressbar({display_text: 'center'});
-
+          $( '.log-success' ).show();
+          $( '.log-success' ).append('El proceso ha terminado satisfactoriamente');
         },
         error: function(xhr, status, error)
         {
