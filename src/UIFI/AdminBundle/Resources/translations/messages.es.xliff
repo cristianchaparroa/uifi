@@ -36,6 +36,31 @@
                 <target> Salir </target>
             </trans-unit>
 
+            <trans-unit id="8">
+                <source>admin.menu.grupos</source>
+                <target> Grupos de Investigación </target>
+            </trans-unit>
+
+            <trans-unit id="9">
+                <source>admin.menu.reportes</source>
+                <target> Rerportes </target>
+            </trans-unit>
+
+            <trans-unit id="10">
+                <source>admin.menu.reportes.articulo</source>
+                <target> Rerportes de Artículos</target>
+            </trans-unit>
+
+            <trans-unit id="11">
+                <source>admin.menu.grupos.lista</source>
+                <target> Lista </target>
+            </trans-unit>
+
+            <trans-unit id="12">
+                <source>admin.menu.configuracion.gruplacs</source>
+                <target> GrupLACS </target>
+            </trans-unit>
+
 
         </body>
     </file>

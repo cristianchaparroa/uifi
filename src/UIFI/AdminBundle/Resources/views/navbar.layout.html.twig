@@ -1,40 +1,50 @@
+
 <div class="col-sm-3">
-  <div class="sidebar-nav">
-    <div class="navbar navbar-default" role="navigation">
+<ul class="nav nav-pills nav-stacked left-menu" id="stacked-menu">
+   <!-- GRUPOS -->
+   <li>
+     <a onclick="return false" href="#" data-target="#item1" data-toggle="collapse" data-parent="#stacked-menu">{{'admin.menu.grupos'|trans}}<span class="caret arrow"></span></a>
+     <ul class="nav nav-stacked collapse left-submenu" id="item1">
+       <li><a href="#">{{'admin.menu.grupos.lista'|trans}}</a></li>
+     </ul>
+   </li>
 
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <span class="visible-xs navbar-brand">Sidebar menu</span>
-      </div>
+   <!-- PRODUCTOS-->
+   <li>
+     <a onclick="return false" href="#" data-target="#item2" data-toggle="collapse" data-parent="#stacked-menu">
+       <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+       {{'admin.menu.productos'|trans}}
+       <span class="caret arrow"></span>
+     </a>
+     <ul class="nav nav-stacked collapse left-submenu" id="item2">
+       <li><a href="#">{{'admin.menu.productos.automatizado'|trans}}</a></li>
+     </ul>
+   </li>
 
-      <div class="navbar-collapse collapse sidebar-navbar-collapse">
-        <ul class="nav navbar-nav">
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> {{'admin.menu.productos'|trans}}  <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">{{'admin.menu.productos.automatizado'|trans}}</a></li>
-            </ul>
-          </li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> {{'admin.menu.configuracion'|trans}}  <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">Xpaths</a></li>
-              <li class="divider"></li>
-              <li class="dropdown-header">{{'admin.menu.perfil'|trans}}</li>
-              <li><a href="#"> {{'admin.menu.cambio.clave'|trans}}</a></li>
-              <li><a href="#"> {{'admin.menu.cambio.correo'|trans}}</a></li>
-              <li class="divider"></li>
-              <li><a href="/logout"> {{'admin.menu.salir'|trans}}</a></li>
-            </ul>
-          </li>
+   <!-- REPORTES -->
+   <li>
+     <a onclick="return false" href="#" data-target="#item3" data-toggle="collapse" data-parent="#stacked-menu">
+       <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+        {{'admin.menu.reportes'|trans}}
+        <span class="caret arrow"></span>
+     </a>
+     <ul class="nav nav-stacked collapse left-submenu" id="item3">
+       <li><a href="#"> {{'admin.menu.reportes.articulo'|trans}}</a></li>
+     </ul>
+   </li>
 
-        </ul>
-      </div><!--/.nav-collapse -->
-    </div>
-  </div>
+   <!-- CONFIGURACIÓN -->
+   <li>
+     <a href="#" data-target="#item4" data-toggle="collapse" data-parent="#stacked-menu">
+       <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+       {{'admin.menu.configuracion'|trans}}<span class="caret arrow"></span>
+     </a>
+     <ul class="nav nav-pills nav-stacked collapse" id="item4">
+       <!--  configuracion de grupos de investigación-->
+
+       <li><a href="#"> {{'admin.menu.configuracion.gruplacs'|trans}}</a></li>
+       <li><a href="/logout"> {{'admin.menu.salir'|trans}}</a></li> </ul>
+   </li>
+   <li><a href="/logout"> {{'admin.menu.salir'|trans}}</a></li>
+</ul>
 </div>
