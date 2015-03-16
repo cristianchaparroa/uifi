@@ -275,13 +275,15 @@ class PageGrupLACScraper extends  GrupLACScraper
 		*/
 		public function getNombreGrupo(){
 			$query = '/html/body/span';
-			return $this->extraerValue($query) ;
+			$nombre  = $this->extraerValue($query) ;
+			$nombre = utf8_encode ( $nombre );
+			return $nombre;
 		}
 		/**
 		 * obtiene la url completa del gruplac del grupo de investigación.
 		 * @retunr String URL
 		*/
 		public function getURL(){
-			return  self::URL_BASE . $this->urlBase;
+			return   $this->urlBase;
 		}
 }

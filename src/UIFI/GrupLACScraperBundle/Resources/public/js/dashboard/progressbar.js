@@ -19,6 +19,7 @@ $(function(){
   */
   $( '#button-getInformacion' ).bind('click',function(event)
   {
+      $( '.log-success' ).hide();
       $('.progress').show();
       var baseUrl= location.protocol + "//" + location.host;
       var url = baseUrl +  Routing.generate('dasboard_get_informacion');

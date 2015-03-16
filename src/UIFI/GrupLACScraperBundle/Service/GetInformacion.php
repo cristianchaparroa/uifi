@@ -60,8 +60,8 @@ class GetInformacion
        $grupo  = new Grupo();
        $grupo->setSerial( $code );
        $grupo->setGruplac( $grupoScraper->getURL() );
-
-       $grupo->setNombre(   htmlspecialchars($grupoScraper->getNombreGrupo())  );
+       $nombreGrupo =  "". $grupoScraper->getNombreGrupo();
+       $grupo->setNombre( $nombreGrupo );
        $grupo->setEmail( $grupoScraper->extraerEmail() );
        $grupo->setClasificacion( $grupoScraper->extraerClasificacion() );
        $this->em->persist( $grupo );
