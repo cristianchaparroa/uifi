@@ -38,7 +38,7 @@
 
             <trans-unit id="8">
                 <source>admin.menu.grupos</source>
-                <target> Grupos de Investigación </target>
+                <target>Grupos Investigación</target>
             </trans-unit>
 
             <trans-unit id="9">

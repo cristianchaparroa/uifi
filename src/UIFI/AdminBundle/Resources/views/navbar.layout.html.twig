@@ -3,7 +3,12 @@
 <ul class="nav nav-pills nav-stacked left-menu" id="stacked-menu">
    <!-- GRUPOS -->
    <li>
-     <a onclick="return false" href="#" data-target="#item1" data-toggle="collapse" data-parent="#stacked-menu">{{'admin.menu.grupos'|trans}}<span class="caret arrow"></span></a>
+
+    
+     <a onclick="return false" href="#" data-target="#item1" data-toggle="collapse" data-parent="#stacked-menu">
+       <i class="fa fa-users"></i>
+        {{'admin.menu.grupos'|trans}}<span class="caret arrow"></span>
+      </a>
      <ul class="nav nav-stacked collapse left-submenu" id="item1">
        <li><a href="#">{{'admin.menu.grupos.lista'|trans}}</a></li>
      </ul>
@@ -17,7 +22,10 @@
        <span class="caret arrow"></span>
      </a>
      <ul class="nav nav-stacked collapse left-submenu" id="item2">
-       <li><a href="#">{{'admin.menu.productos.automatizado'|trans}}</a></li>
+       <li>
+           <a href="#"><i class="glyphicon glyphicon-cloud-download"></i>
+           {{'admin.menu.productos.automatizado'|trans}}</a>
+       </li>
      </ul>
    </li>
 
@@ -43,8 +51,8 @@
        <!--  configuracion de grupos de investigación-->
 
        <li><a href="#"> {{'admin.menu.configuracion.gruplacs'|trans}}</a></li>
-       <li><a href="/logout"> {{'admin.menu.salir'|trans}}</a></li> </ul>
-   </li>
-   <li><a href="/logout"> {{'admin.menu.salir'|trans}}</a></li>
+    </ul>
+  </li>
+  <li> <a href="/logout"> <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>{{'admin.menu.salir'|trans}}</a></li>
 </ul>
 </div>
