@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class DashboardController extends Controller
 {
     /**
-     * @Route("/gruplac/dashboard")
+     * @Route("/gruplac/dashboard", name="gruplac_dashboard")
      */
     public function indexAction()
     {

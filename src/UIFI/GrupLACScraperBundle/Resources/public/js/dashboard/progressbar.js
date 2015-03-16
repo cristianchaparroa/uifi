@@ -19,6 +19,7 @@ $(function(){
   */
   $( '#button-getInformacion' ).bind('click',function(event)
   {
+      porcentaje = 0;
       $( '.log-success' ).hide();
       $('.progress').show();
       var baseUrl= location.protocol + "//" + location.host;
@@ -26,24 +27,27 @@ $(function(){
 
       handlerCheckProgress = setInterval(function(){
         $progressBar.attr('data-transitiongoal', porcentaje ).progressbar({display_text: 'center'});
-        porcentaje++;
+        if(porcentaje!=99){
+          porcentaje++;
+        }
+
 
         var base_url= location.protocol + "//" + location.host;
         var urlProgress = base_url +  Routing.generate('dasboard_get_progress');
 
-        console.log(urlProgress);
-        $.ajax({
-          url: urlProgress,
-          success: function(data)
-          {
-            console.log("procentaje"+data.porcentaje);
-            porcentaje = data.porcentaje;
-          },
-          error: function(xhr, status, error)
-          {
-            console.log("error-checkprogress");
-          }
-        });
+        // console.log(urlProgress);
+        // $.ajax({
+        //   url: urlProgress,
+        //   success: function(data)
+        //   {
+        //     console.log("procentaje"+data.porcentaje);
+        //     porcentaje = data.porcentaje;
+        //   },
+        //   error: function(xhr, status, error)
+        //   {
+        //     console.log("error-checkprogress");
+        //   }
+        // });
       },1000);
 
       $.ajax({
@@ -54,8 +58,10 @@ $(function(){
         {
           console.log(data);
           $progressBar.attr('data-transitiongoal', '100').progressbar({display_text: 'center'});
+
           $( '.log-success' ).show();
-          $( '.log-success' ).append('El proceso ha terminado satisfactoriamente');
+          $( '.message').remove();
+          $( '.log-success' ).append('<p class="message">El proceso ha terminado satisfactoriamente</p>');
         },
         error: function(xhr, status, error)
         {
@@ -63,10 +69,15 @@ $(function(){
           console.log( JSON.stringify(status) ) ;
           console.log( JSON.stringify(error) ) ;
         }
-      }).always(function() {
-        $('.progress').hide();
-        clearInterval(handlerCheckProgress);
-        handlerCheckProgress = null;
+      }).always(function()
+      {
+          $progressBar.attr('data-transitiongoal', '100').progressbar({display_text: 'center'});
+          clearInterval(handlerCheckProgress);
+          handlerCheckProgress = null;
+          setTimeout(function(){
+            $('.progress').hide();
+          },4000);
+
       });//end ajax
 
       event.preventDefault();

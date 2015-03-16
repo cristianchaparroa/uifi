@@ -4,7 +4,7 @@
    <!-- GRUPOS -->
    <li>
 
-    
+
      <a onclick="return false" href="#" data-target="#item1" data-toggle="collapse" data-parent="#stacked-menu">
        <i class="fa fa-users"></i>
         {{'admin.menu.grupos'|trans}}<span class="caret arrow"></span>
@@ -23,7 +23,7 @@
      </a>
      <ul class="nav nav-stacked collapse left-submenu" id="item2">
        <li>
-           <a href="#"><i class="glyphicon glyphicon-cloud-download"></i>
+           <a href="{{path('gruplac_dashboard')}}"><i class="glyphicon glyphicon-cloud-download"></i>
            {{'admin.menu.productos.automatizado'|trans}}</a>
        </li>
      </ul>
@@ -37,7 +37,7 @@
         <span class="caret arrow"></span>
      </a>
      <ul class="nav nav-stacked collapse left-submenu" id="item3">
-       <li><a href="#"> {{'admin.menu.reportes.articulo'|trans}}</a></li>
+       <li><a href="{{path('reportes_articulos')}}"> {{'admin.menu.reportes.articulo'|trans}}</a></li>
      </ul>
    </li>
 

@@ -239,4 +239,8 @@ class Grupo
     {
         return $this->integrantes;
     }
+
+    public function __toString(){
+      return $this->nombre;
+    }
 }
