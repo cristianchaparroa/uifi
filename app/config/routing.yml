@@ -1,3 +1,8 @@
+uifi_reportes:
+    resource: "@UIFIReportesBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 uifi_admin:
     resource: "@UIFIAdminBundle/Controller/"
     type:     annotation
