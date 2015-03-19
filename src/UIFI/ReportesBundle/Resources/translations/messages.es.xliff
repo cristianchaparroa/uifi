@@ -18,7 +18,7 @@
 
           <trans-unit id="3">
                 <source>reportes.articulos.ytitle.produccion</source>
-                <target>Número de Artículos </target>
+                <target>Producción </target>
           </trans-unit>
 
           <trans-unit id="4">

@@ -3,13 +3,12 @@
 namespace UIFI\ReportesBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use UIFI\ReportesBundle\Form\ArticuloReportesType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-
-use Ob\HighchartsBundle\Highcharts\Highchart;
 
 /**
  * Controllador que se encarga de mostrar los reportes referentes a los artículos.
@@ -33,81 +32,44 @@ class ArticuloReportesControllerController extends Controller
     }
 
     /**
-     * Función que se encarga de filtrar la información de acuerdo de los parametros
+     * Función que se encarga de generar el reporte de acuerdo de los parámetros
      * seleccionados por el usuario.
      *
-     * @Route("/reportes/articulos/filtro",name="reportes_articulos_filtro", options={"expose":true} )
+     * @Route("/reportes/articulos/graficar",name="reportes_articulos_graficar")
      * @param Request
-     * @return JsonResponse
+     * @return Template
     */
-    public function filterAction(Request $request)
+    public function graficarAction()
     {
         $this->em = $this->getDoctrine()->getManager();
         $parameters = $this->getRequest()->request->all();
         $mapParameters = $parameters['uifi_reportes_articulo'];
-        $ob = $this->generarGrafica( $mapParameters );
+
+        $ob =  $this->get('uifi.reportes.articulos')->generarGrafica( $mapParameters );
         return $this->render('UIFIReportesBundle:ArticuloReportes:reporte.html.twig', array(
             'chart' => $ob
         ));
     }
     /**
-     * Función que se encarga de configurar la gráfica de acuerdo de los
-     * párametros seleccionados por el usuario.
+     * Función que se encarga de filtrar la información de acuerdo de los
+     * parámetros seleccionados por el usuario.
      *
-     * @param $mapParameters Mapa de parámetros generados por la petición generada
-     *  por el formulario.
+     * @Route(name="reportes_articulos_filtrar", options={"expose":true} )
+     * @Method("GET")
+     * @param Request
+     * @return JsonResponse
     */
-    private function configurarGrafica($mapParameters)
+    public function filterAction()
     {
-        $series = array();
-        $categorias = array();
-        $grupo = $mapParameters['grupo'];
-        $repositoryGrupo= $this->em->getRepository('UIFIIntegrantesBundle:Grupo');
-        /**
-         *  Significa que no se seleccionó ningún grupo de Investigación.
-        */
-        $grupos = array();
-        if( $grupo === ''){
-          $grupos = $repositoryGrupo->findAll();
+
+        $params = $this->getRequest()->query->all();
+        $codeGrupo = $params['grupo'];
+        if($codeGrupo!=='')
+        {
+            $integrantes =  $this->get('uifi.reportes.articulos')->getIntegrantes( $codeGrupo );
+            return new JSONResponse( array('success' => true, 'integrantes'=>$integrantes)  );
         }
-        else{
-          $grupo = $repositoryGrupo->find($code);
-          $grupos[] = $grupo;
-        }
-        $translator = $this->get('translator');
-        foreach( $grupos as $grupo ){
-          $code = $grupo->getId();
-          $articulosGrupo  = $repositoryGrupo->getCountArticulosByGrupo($code);
-          $data = array(
-              "name" => $grupo->getNombre(),
-              "data" =>array($articulosGrupo)
-          );
-          $series[] = $data;
-          $categorias[] = $grupo->getNombre();
-        }
-        return array( 'series'=> $series, 'categorias' => $categorias );
+        return new JSONResponse( array('success'=>false) );
     }
-    /**
-     * Función que se encarga de generar el reporte de acuerdo a los parámetros
-     * selecionados por el usuario.
-     *
-     * @return Gráfico ObHighchart configurado.
-    */
-    public function generarGrafica( $mapParameters )
-    {
-        $configuracion  = $this->configurarGrafica($mapParameters);
-        $series = $configuracion['series'];
-        $categorias = $configuracion['categorias'];
-        $translator = $this->get('translator');
-        $ob = new Highchart();
-        $ob->chart->renderTo('linechart');  // The #id of the div where to render the chart
-        $ob->chart->type('column');
-        // $ob->xAxis->categories($categorias);
-        $title = $translator->trans('reportes.articulos.title.grupos');
-        $yTitle = $translator->trans('reportes.articulos.ytitle.produccion');
-        $ob->title->text( $title  );
-        $ob->yAxis->title(array('text'  => $yTitle ));
-        $ob->series($series);
-        return $ob;
-    }
+
 }

@@ -26,19 +26,26 @@ class ArticuloReportesType extends AbstractType
     //         ->add('operador', 'filter_entity', array('class'=>'controlidActivosBundle:OperadorActivos', 'choices'=>$this->choicesOperadores))
     //         ->add('categoria', 'filter_entity', array('class'=>'controlidActivosBundle:Categoria', 'choices'=>$this->choicesCategorias))
     //         ->add('activo', 'filter_entity', array('class'=>'controlidActivosBundle:Activo', 'choices'=>$this->choicesActivos))
-    //         ->add('fecha', 'filter_date_range', array(
-    //             'left_date_options' => array(
-    //                 'widget' => 'single_text',
-    //                 'format' => 'dd-MM-yyyy',
-    //                 'attr' => array('class' => 'date form-box'),
-    //             ),
-    //             'right_date_options' => array(
-    //                'widget' => 'single_text',
-    //                 'format' => 'dd-MM-yyyy',
-    //                 'attr' => array('class' => 'date form-box'),
-    //             ),
-    //         ));
+
         $builder->add('grupo',   'filter_entity', array( 'class'=>'UIFIIntegrantesBundle:Grupo', 'choices' => $this->choicesGrupos ) );
+
+        $builder->add('discriminar','choice' ,
+          array( 'expanded' => true,
+                 'multiple' => false,
+                 'choices' => array('fecha' => 'Fecha', 'integrante' => 'Integrante'))  );
+        $builder->add('integrantes','filter_entity', array( 'class'=>'UIFIIntegrantesBundle:Integrante' ) );
+        $builder->add('fecha', 'filter_date_range', array(
+            'left_date_options' => array(
+                'widget' => 'single_text',
+                'format' => 'dd-MM-yyyy',
+                'attr' => array('class' => 'date form-control'),
+            ),
+            'right_date_options' => array(
+               'widget' => 'single_text',
+                'format' => 'dd-MM-yyyy',
+                'attr' => array('class' => 'date form-control'),
+            ),
+        ));
 
     }
 

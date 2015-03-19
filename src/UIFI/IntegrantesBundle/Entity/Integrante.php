@@ -371,4 +371,8 @@ class Integrante
     {
         return $this->grupo;
     }
+
+    public function __toString(){
+      return $this->nombres;
+    }
 }
