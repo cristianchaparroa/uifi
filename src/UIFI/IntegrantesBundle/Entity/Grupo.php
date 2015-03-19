@@ -16,10 +16,10 @@ class Grupo
      * @var string
      * Identificador del grupo de investigacion.
      *
-     * @ORM\Column(name="serial", type="string", length=255)
+     * @ORM\Column(name="id", type="string", length=255)
      * @ORM\Id
      */
-    private $serial;
+    private $id;
 
     /**
      * @var string
@@ -69,27 +69,33 @@ class Grupo
         $this->integrantes = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+
+
+    public function __toString(){
+      return $this->nombre;
+    }
+
     /**
-     * Set serial
+     * Set id
      *
-     * @param integer $serial
+     * @param string $id
      * @return Grupo
      */
-    public function setSerial($serial)
+    public function setId($id)
     {
-        $this->serial = $serial;
+        $this->id = $id;
 
         return $this;
     }
 
     /**
-     * Get serial
+     * Get id
      *
-     * @return integer
+     * @return string
      */
-    public function getSerial()
+    public function getId()
     {
-        return $this->serial;
+        return $this->id;
     }
 
     /**
@@ -238,9 +244,5 @@ class Grupo
     public function getIntegrantes()
     {
         return $this->integrantes;
-    }
-
-    public function __toString(){
-      return $this->nombre;
     }
 }

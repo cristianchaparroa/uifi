@@ -252,6 +252,11 @@ class IndividualCVLACScraper extends GrupLACScraper
   public function getURL(){
     return  $this->code;
   }
+
+  public function getCode(){
+    $array = explode("=",$this->code);
+    return $array[1];
+  }
   private function isEmptyString($str) {
     return !(isset($str) && (strlen(trim($str)) > 0));
   }

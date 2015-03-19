@@ -7,11 +7,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use controlid\Bundle\ActivosBundle\Entity\Lista;
 
-class ArticuloReportesFilterType extends AbstractType
+class ArticuloReportesType extends AbstractType
 {
 
   /**
-   * Constructor del friltro
+   * Constructor del Formulario
    *
    * @param $grupos grupos de investigación
   */
@@ -44,7 +44,7 @@ class ArticuloReportesFilterType extends AbstractType
 
     public function getName()
     {
-        return 'uifi_reportes_articulo_filer';
+        return 'uifi_reportes_articulo';
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

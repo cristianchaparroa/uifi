@@ -15,9 +15,8 @@ class Articulo
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="id", type="string", length=255)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
@@ -92,15 +91,7 @@ class Articulo
         $this->integrantes = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+
 
     /**
      * Set titulo
@@ -293,5 +284,28 @@ class Articulo
     public function getPalabras()
     {
         return $this->palabras;
+    }
+
+    /**
+     * Set id
+     *
+     * @param integer $id
+     * @return Articulo
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 }

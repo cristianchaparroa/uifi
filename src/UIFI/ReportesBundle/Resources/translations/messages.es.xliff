@@ -5,11 +5,26 @@
               <source>reportes.articulos.title</source>
               <target> Reportes de artículos </target>
           </trans-unit>
-            <trans-unit id="1">
+          <trans-unit id="1">
                 <source>reportes.articulos.enunciado</source>
                 <target> Seleccione la información por la que desea filtrar, recuerde que ningún
                 campo es obligatorio.</target>
-            </trans-unit>
+          </trans-unit>
+
+          <trans-unit id="2">
+                <source>reportes.articulos.title.grupos</source>
+                <target> Producción de Artículos por grupos de Investigación </target>
+          </trans-unit>
+
+          <trans-unit id="3">
+                <source>reportes.articulos.ytitle.produccion</source>
+                <target>Número de Artículos </target>
+          </trans-unit>
+
+          <trans-unit id="4">
+                <source>reportes.articulos.numeroArticulos</source>
+                <target> Número de Artículos Publicados </target>
+          </trans-unit>
 
 
         </body>

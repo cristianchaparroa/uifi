@@ -35,11 +35,12 @@ class AppKernel extends Kernel
             new UIFI\AdminBundle\UIFIAdminBundle(),
             //corse bundle
             new Nelmio\CorsBundle\NelmioCorsBundle(),
-
             new FOS\RestBundle\FOSRestBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
             new UIFI\ReportesBundle\UIFIReportesBundle(),
+            //Charts
+            new Ob\HighchartsBundle\ObHighchartsBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -20,9 +20,9 @@ class Integrante
      * URL del cvlac del Integrante del grupo de investigación
      * @var string
      * @ORM\Id
-     * @ORM\Column(name="cvlac", type="string", length=255)
+     * @ORM\Column(name="id", type="string", length=255)
      */
-    private $cvlac;
+    private $id;
 
     /**
      * @ORM\OneToOne(targetEntity="UsersBundle\Entity\Usuario")
@@ -89,18 +89,15 @@ class Integrante
      * Artículos de investigación publicados por uno o varios integrantes de un grupo de
      * Investigación.
      *
-     * @ORM\ManyToMany( targetEntity="UIFI\ProductosBundle\Entity\Articulo" , inversedBy="integrantes")
-     * @ORM\JoinTable( name="integrantes_articulos",
-     *             joinColumns={@ORM\JoinColumn(name="integrante_id", referencedColumnName="cvlac")},
-     *             inverseJoinColumns={@ORM\JoinColumn(name="articulo_id",referencedColumnName="id")}
-     *  )
+     * @ORM\ManyToMany( targetEntity="UIFI\ProductosBundle\Entity\Articulo" , inversedBy="integrantes",cascade={"remove", "persist"})
+     * @ORM\JoinTable( name="integrantes_articulos")
     */
     protected $articulos;
     /**
      * Proyecto curricular al que pertence  un grupo de investigación.
      *
      * @ORM\ManyToOne(targetEntity="Grupo", inversedBy="integrantes" )
-     * @ORM\JoinColumn(name="grupo_id" ,referencedColumnName="serial")
+     * @ORM\JoinColumn(name="grupo_id" ,referencedColumnName="id")
     */
     protected $grupo;
 
@@ -113,26 +110,26 @@ class Integrante
     }
 
     /**
-     * Set cvlac
+     * Set id
      *
-     * @param string $cvlac
+     * @param string $id
      * @return Integrante
      */
-    public function setCvlac($cvlac)
+    public function setId($id)
     {
-        $this->cvlac = $cvlac;
+        $this->id = $id;
 
         return $this;
     }
 
     /**
-     * Get cvlac
+     * Get id
      *
      * @return string
      */
-    public function getCvlac()
+    public function getId()
     {
-        return $this->cvlac;
+        return $this->id;
     }
 
     /**
@@ -179,29 +176,6 @@ class Integrante
     public function getNombres()
     {
         return $this->nombres;
-    }
-
-    /**
-     * Set apellidos
-     *
-     * @param string $apellidos
-     * @return Integrante
-     */
-    public function setApellidos($apellidos)
-    {
-        $this->apellidos = $apellidos;
-
-        return $this;
-    }
-
-    /**
-     * Get apellidos
-     *
-     * @return string
-     */
-    public function getApellidos()
-    {
-        return $this->apellidos;
     }
 
     /**

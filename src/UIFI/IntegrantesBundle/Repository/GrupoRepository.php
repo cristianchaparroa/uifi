@@ -20,4 +20,29 @@ class GrupoRepository extends EntityRepository
     $em = $this->getEntityManager();
     return $em->createQuery('DELETE FROM UIFIIntegrantesBundle:Grupo')->execute();
   }
+
+  /**
+   * Función que se encarga de contar el número de artículos que tiene publicado
+   * un grupo de investigación de acuerdo de las publicaciones realizadas por
+   * cada uno de los integrantes del grupo de Investigación.
+   *
+   * @param $code Código del grupo de investigación.
+   * @return Integer con la cuenta de artículos por grupo.
+   *
+  */
+  public function getCountArticulosByGrupo( $code ){
+    $em = $this->getEntityManager();
+    $connection = $em->getConnection();
+    $sql = "SELECT count(*) as cantidad FROM  grupo g, integrante i, articulo a, integrantes_articulos ia WHERE g.id = :code AND g.id = i.grupo_id AND ia.integrante_id = i.id AND ia.articulo_id  = a.id";
+    $statement = $connection->prepare($sql);
+    $statement->bindValue('code', $code);
+    $statement->execute();
+    $results = $statement->fetchAll();
+    if( count($results)>0){
+        $value = $results[0];
+        $value = intval($value['cantidad']);
+        return $value;
+    }
+    return 0;
+  }
 }

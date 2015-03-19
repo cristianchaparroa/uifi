@@ -65,7 +65,7 @@ class GetInformacion
         * Registro el grupo de investigación en el sistema
        */
        $grupo  = new Grupo();
-       $grupo->setSerial( $code );
+       $grupo->setId( $code );
        $grupo->setGruplac( $grupoScraper->getURL() );
        $nombreGrupo =  "". $grupoScraper->getNombreGrupo();
        $grupo->setNombre( $nombreGrupo );
@@ -100,7 +100,7 @@ class GetInformacion
           //$integrante->setUsuario();
           $cvlacIntegrante = $integranteScraper->getURL();
           $integrante->setGrupo( $entityGrupo );
-          $integrante->setCvlac( $cvlacIntegrante );
+          $integrante->setId( $cvlacIntegrante );
           $integrante->setNombres( $nombreIntegrante );
           //se setea la demas información posible.
           $this->em->persist( $integrante );
@@ -114,8 +114,12 @@ class GetInformacion
            *se registran los articulos asociados a un integrante.
            */
           $articulos =  $integranteScraper->procesarArticulos();
+          $index = 0;
           foreach( $articulos as $articulo){
             $article = new Articulo();
+            //$code=codigo del grupo
+            $codeArticulo = $code ."-". $integranteScraper->getCode() ."-". $index;
+            $article->setId($codeArticulo );
             $article->setTitulo($articulo['titulo']);
             $article->setEditorial($articulo['editorial']);
             $article->setISSN($articulo['ISSN']);
@@ -124,6 +128,13 @@ class GetInformacion
 
             $this->em->persist($article);
             $this->em->flush();
+
+            $repositoryArticulo = $this->em->getRepository('UIFIProductosBundle:Articulo');
+            $entityArticulo = $repositoryArticulo->find($codeArticulo);
+            $entityIntegrante->addArticulo($article);
+            $this->em->persist($entityIntegrante);
+            $this->em->flush();
+            $index++;
           }
        }
        $currentTask++;
@@ -147,6 +158,7 @@ class GetInformacion
      $articuloRepository->deleteAll();
      $integranteRepository = $this->em->getRepository('UIFIIntegrantesBundle:Integrante');
      $integranteRepository->deleteAll();
+
      $grupoRepository = $this->em->getRepository('UIFIIntegrantesBundle:Grupo');
      $grupoRepository->deleteAll();
    }
