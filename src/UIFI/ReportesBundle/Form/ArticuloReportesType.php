@@ -32,6 +32,7 @@ class ArticuloReportesType extends AbstractType
         $builder->add('discriminar','choice' ,
           array( 'expanded' => true,
                  'multiple' => false,
+                 'required' => false,
                  'choices' => array('fecha' => 'Fecha', 'integrante' => 'Integrante'))  );
         $builder->add('integrantes','filter_entity', array( 'class'=>'UIFIIntegrantesBundle:Integrante' ) );
         $builder->add('fecha', 'filter_date_range', array(

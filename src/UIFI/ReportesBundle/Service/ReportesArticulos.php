@@ -33,7 +33,8 @@ class ReportesArticulos
     */
     private function configurarGrafica($mapParameters)
     {
-        
+        var_dump($mapParameters);
+
         $series = array();
         $categorias = array();
         $grupo = $mapParameters['grupo'];
