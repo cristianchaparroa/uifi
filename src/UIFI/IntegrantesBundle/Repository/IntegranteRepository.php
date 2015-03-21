@@ -20,4 +20,53 @@ class IntegranteRepository extends EntityRepository
     $em = $this->getEntityManager();
     return $em->createQuery('DELETE FROM UIFIIntegrantesBundle:Integrante')->execute();
   }
+  /**
+   * Se obtienen la cantidad de artículos ppublicados por integrante en un
+   * grupo de investigación especificado.
+   *
+   * @param $code Código del integrante.
+   * @param $idGrupo identificador del grupo de investigación.
+   * @return Integer: Número de artículos publicados.
+  */
+  public function getCantidadArticulos($code,$idGrupo){
+    $em = $this->getEntityManager();
+    $connection = $em->getConnection();
+    $query = "SELECT  count(*) as numeroArticulos
+      FROM integrante i , grupo g, grupo_integrante gi, articulo a, integrantes_articulos ia
+      WHERE i.id= :code AND gi.grupo_id = g.id AND g.id = :idGrupo AND gi.integrante_id = i.id
+      AND ia.integrante_id = i.id  AND ia.articulo_id = a.id";
+      $statement = $connection->prepare($query);
+      $statement->bindValue('code', $code);
+      $statement->bindValue('idGrupo', $idGrupo);
+      $statement->execute();
+      $results = $statement->fetchAll();
+      if( count($results)>0){
+        $numeroArticulos = $results[0];
+        $numeroArticulos = intval($numeroArticulos['numeroArticulos']);
+        return $numeroArticulos;
+      }
+      return 0;
+  }
+  /**
+   * Función que se encarga de contar la cantidad de artículos publicados por año
+   * por un integrante especificado , en un grupo especificado
+   * @param $code Código del integrante.
+   * @param $idGrupo identificador del grupo de investigación.
+   * @return  arreglo de arreglos con [cantidad,anual]
+  */
+  public function getCantidadArticulosAnual($code,$idGrupo){
+    $em = $this->getEntityManager();
+    $connection = $em->getConnection();
+    $query = 'SELECT COUNT(*) as cantidad, YEAR(a.fecha) as anual
+        FROM grupo g, integrante i , grupo_integrante gi, articulo a, integrantes_articulos ia
+        WHERE g.id= :idGrupo AND i.id= :code AND gi.grupo_id = g.id  AND gi.integrante_id = i.id
+          AND ia.integrante_id = i.id AND ia.articulo_id = a.id
+        GROUP BY a.fecha';
+    $statement = $connection->prepare($query);
+    $statement->bindValue('code', $code);
+    $statement->bindValue('idGrupo', $idGrupo);
+    $statement->execute();
+    $results = $statement->fetchAll();
+    return $results;
+  }
 }

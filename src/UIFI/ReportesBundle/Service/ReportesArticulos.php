@@ -37,18 +37,16 @@ class ReportesArticulos
         $series = array();
         $categorias = array();
         $grupo = $mapParameters['grupo'];
-        $repositoryGrupo= $this->em->getRepository('UIFIIntegrantesBundle:Grupo');
         $repositoryGrupo = $this->em->getRepository('UIFIIntegrantesBundle:Grupo');
+        $repositoryIntegrante = $this->em->getRepository('UIFIIntegrantesBundle:Integrante');
         /**
          * Si el usuario NO selecciono ningún grupo de la lista de grupos de
          * investigación,se deben generar reportes  para todos los grupos,
          * discriminados por años o por grupo.
         */
-
-
         if( $grupo == '' )
         {
-             $repositoryGrupo = $this->em->getRepository('UIFIIntegrantesBundle:Grupo');
+             $title = $this->translator->trans('reportes.articulos.title.grupos');
              $discriminarGrupo = $mapParameters['discriminarGrupo'];
              $grupos = $repositoryGrupo->findAll();
              if(  $discriminarGrupo == 'grupo' ){
@@ -57,7 +55,7 @@ class ReportesArticulos
                   $series[] = array( 'name'=> $group->getNombre(), 'data'=> array($articulosGrupo) );
                }
              }
-             if( $discriminarGrupo == 'fecha' )
+             if( $discriminarGrupo == 'fechaGrupo' )
              {
                $grafica = array();
                foreach( $grupos as $group )
@@ -73,8 +71,72 @@ class ReportesArticulos
                $categorias = $normalizacion['categorias'];
                $series = $normalizacion['series'];
              }
+             if($discriminarGrupo =='anual' ){
+
+             }
         }
-        return array( 'series'=> $series, 'categorias' =>  $categorias );
+        /**
+        * Significa que se selecciono un grupo de investigación
+        */
+        else{
+          $grupo =  $repositoryGrupo->find($grupo);
+
+          $seleccionaIntegrante = $mapParameters['integrantes'];
+          if( $seleccionaIntegrante=='' )
+          {
+              $title = $this->translator->trans('reportes.articulos.title.porgrupo') . $grupo->getNombre();
+              /**
+               * Si el grupo tiene integrantes.
+              */
+              $discriminarIntegrante = $mapParameters['discriminarIntegrante'];
+              if($discriminarIntegrante=='integrante')
+              {
+                $integrantes = $grupo->getIntegrantes();
+                if($integrantes){
+                  $integrantes = $integrantes->toArray();
+                  foreach($integrantes as $integrante ){
+                    $articulosPublicados = $repositoryIntegrante->getCantidadArticulos( $integrante->getId(),$grupo->getId() );
+                    if($articulosPublicados>0){
+
+                      $series[] = array( 'name'=> $integrante->getNombres(), 'data'=> array($articulosPublicados) );
+                    }
+                  }
+                  $categorias[] = 'Integrantes';
+                }
+
+              }
+              if($discriminarIntegrante=='fecha')
+              {
+                $grupos [] = $grupo;
+                foreach( $grupos as $group )
+                {
+                    $results = $repositoryGrupo->getCountArticulosByYear( $group->getId() );
+                    $categoriesGroup = array();
+                    $dataGroup = array();
+                    foreach($results as $result)
+                    {
+                      $categorias[] = $result['anual'];
+                      $dataGroup[] = intval($result['cantidad']) ;
+                    }
+                    $series[] = array( 'name'=> $group->getNombre(), 'data'=> $dataGroup );
+                }
+              }
+          }
+          else{
+            $entityIntegrante = $repositoryIntegrante->find($seleccionaIntegrante);
+            $title = "Articulos publicados por " . $entityIntegrante->getNombres();
+            $results = $repositoryIntegrante
+              ->getCantidadArticulosAnual($entityIntegrante->getId(),$grupo->getId() );
+
+            $dataGroup = array();
+            foreach( $results as $result ){
+                $dataGroup[] = intval( $result['cantidad'] );
+                $categorias[] = $result['anual'];
+            }
+            $series[] = array( 'name'=> $entityIntegrante ->getNombres(), 'data'=> $dataGroup );
+          }
+        }
+        return array( 'series'=> $series, 'categorias' =>  $categorias, 'title'=>$title );
     }
     /**
     * Normalización de series, cuando no se selecciona un grupo de investigación
@@ -138,12 +200,13 @@ class ReportesArticulos
         $configuracion  = $this->configurarGrafica($mapParameters);
         $series = $configuracion['series'];
         $categorias = $configuracion['categorias'];
+        $title = $configuracion['title'];
         $ob = new Highchart();
         $ob->chart->renderTo('linechart');  // The #id of the div where to render the chart
         $ob->chart->type('column');
 
         $ob->xAxis->categories($categorias);
-        $title = $this->translator->trans('reportes.articulos.title.grupos');
+
         $yTitle = $this->translator->trans('reportes.articulos.ytitle.produccion');
         $ob->title->text( $title  );
         $ob->yAxis->title(array('text'  => $yTitle ));

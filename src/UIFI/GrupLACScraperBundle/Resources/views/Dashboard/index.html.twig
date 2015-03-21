@@ -9,16 +9,26 @@
     <p class="message"></p>
   </div>
 
+  <div class="log-fail alert alert-danger">
+    <p class="messageFail"></p>
+  </div>
+
   <div class="progress progress-striped active">
     <div class="progress-bar progress-bar-danger" role="progressbar" data-transitiongoal="100"></div>
   </div>
 
-  <!-- <form action="{{path('dasboard_get_informacion')}}"> -->
-  <form id="dashboard">
-    <button id="button-getInformacion" class="btn btn-success">  {{ 'uifi.gruplac.dashboard.buttons.get'|trans }} </button>
-  </form>
+  <div class="row">
+    <div class="col-md-2">
+      <button id="cancelar-proceso" class="btn btn-danger">  Cancelar Proceso </button>
+    </div>
+         <div class="col-md-3">
+           <!-- <form action="{{path('dasboard_get_informacion')}}"> -->
+           <!-- <form id="dashboard"> -->
+             <button  id="button-getInformacion" class="btn btn-success">  {{ 'uifi.gruplac.dashboard.buttons.get'|trans }} </button>
+           <!-- </form> -->
+         </div>
 
-
+  </div>
   <div class="js-css-import">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-progressbar-3.3.0.min.css')}}">
     <script src="{{ asset('js/bootstrap-progressbar.min.js') }}"></script>

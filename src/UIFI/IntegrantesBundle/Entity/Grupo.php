@@ -58,7 +58,8 @@ class Grupo
     protected $facultad;
     /**
      * Estudiantes que pertenecen a un grupo de investigacion.
-     * @ORM\OneToMany( targetEntity="Integrante", mappedBy="grupo")
+     * @ORM\ManyToMany( targetEntity="Integrante", inversedBy="grupos", cascade={"remove","persist"})
+     * @ORM\JoinTable(name="grupo_integrante")
     */
     protected $integrantes;
     /**
@@ -68,9 +69,6 @@ class Grupo
     {
         $this->integrantes = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
-
-
     public function __toString(){
       return $this->nombre;
     }
@@ -91,7 +89,7 @@ class Grupo
     /**
      * Get id
      *
-     * @return string
+     * @return string 
      */
     public function getId()
     {
@@ -114,7 +112,7 @@ class Grupo
     /**
      * Get nombre
      *
-     * @return string
+     * @return string 
      */
     public function getNombre()
     {
@@ -137,7 +135,7 @@ class Grupo
     /**
      * Get gruplac
      *
-     * @return string
+     * @return string 
      */
     public function getGruplac()
     {
@@ -160,7 +158,7 @@ class Grupo
     /**
      * Get email
      *
-     * @return string
+     * @return string 
      */
     public function getEmail()
     {
@@ -183,7 +181,7 @@ class Grupo
     /**
      * Get clasificacion
      *
-     * @return string
+     * @return string 
      */
     public function getClasificacion()
     {
@@ -206,7 +204,7 @@ class Grupo
     /**
      * Get facultad
      *
-     * @return \UIFI\IntegrantesBundle\Entity\Facultad
+     * @return \UIFI\IntegrantesBundle\Entity\Facultad 
      */
     public function getFacultad()
     {
@@ -239,7 +237,7 @@ class Grupo
     /**
      * Get integrantes
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getIntegrantes()
     {

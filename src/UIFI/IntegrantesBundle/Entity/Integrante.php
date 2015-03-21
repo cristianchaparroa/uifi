@@ -96,10 +96,9 @@ class Integrante
     /**
      * Proyecto curricular al que pertence  un grupo de investigación.
      *
-     * @ORM\ManyToOne(targetEntity="Grupo", inversedBy="integrantes" )
-     * @ORM\JoinColumn(name="grupo_id" ,referencedColumnName="id")
+     * @ORM\ManyToMany(targetEntity="Grupo", mappedBy="integrantes" )
     */
-    protected $grupo;
+    protected $grupos;
 
     /**
      * Constructor
@@ -108,6 +107,10 @@ class Integrante
     {
         $this->articulos = new \Doctrine\Common\Collections\ArrayCollection();
     }
+    public function __toString(){
+      return $this->nombres;
+    }
+  
 
     /**
      * Set id
@@ -125,7 +128,7 @@ class Integrante
     /**
      * Get id
      *
-     * @return string
+     * @return string 
      */
     public function getId()
     {
@@ -148,7 +151,7 @@ class Integrante
     /**
      * Get documento
      *
-     * @return string
+     * @return string 
      */
     public function getDocumento()
     {
@@ -171,7 +174,7 @@ class Integrante
     /**
      * Get nombres
      *
-     * @return string
+     * @return string 
      */
     public function getNombres()
     {
@@ -194,7 +197,7 @@ class Integrante
     /**
      * Get codigo
      *
-     * @return string
+     * @return string 
      */
     public function getCodigo()
     {
@@ -217,7 +220,7 @@ class Integrante
     /**
      * Get telefono
      *
-     * @return string
+     * @return string 
      */
     public function getTelefono()
     {
@@ -240,7 +243,7 @@ class Integrante
     /**
      * Get celular
      *
-     * @return string
+     * @return string 
      */
     public function getCelular()
     {
@@ -263,7 +266,7 @@ class Integrante
     /**
      * Get correoInstitucional
      *
-     * @return string
+     * @return string 
      */
     public function getCorreoInstitucional()
     {
@@ -286,7 +289,7 @@ class Integrante
     /**
      * Get correoPersonal
      *
-     * @return string
+     * @return string 
      */
     public function getCorreoPersonal()
     {
@@ -309,7 +312,7 @@ class Integrante
     /**
      * Get usuario
      *
-     * @return \UsersBundle\Entity\Usuario
+     * @return \UsersBundle\Entity\Usuario 
      */
     public function getUsuario()
     {
@@ -342,7 +345,7 @@ class Integrante
     /**
      * Get articulos
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getArticulos()
     {
@@ -350,29 +353,35 @@ class Integrante
     }
 
     /**
-     * Set grupo
+     * Add grupos
      *
-     * @param \UIFI\IntegrantesBundle\Entity\Grupo $grupo
+     * @param \UIFI\IntegrantesBundle\Entity\Grupo $grupos
      * @return Integrante
      */
-    public function setGrupo(\UIFI\IntegrantesBundle\Entity\Grupo $grupo = null)
+    public function addGrupo(\UIFI\IntegrantesBundle\Entity\Grupo $grupos)
     {
-        $this->grupo = $grupo;
+        $this->grupos[] = $grupos;
 
         return $this;
     }
 
     /**
-     * Get grupo
+     * Remove grupos
      *
-     * @return \UIFI\IntegrantesBundle\Entity\Grupo
+     * @param \UIFI\IntegrantesBundle\Entity\Grupo $grupos
      */
-    public function getGrupo()
+    public function removeGrupo(\UIFI\IntegrantesBundle\Entity\Grupo $grupos)
     {
-        return $this->grupo;
+        $this->grupos->removeElement($grupos);
     }
 
-    public function __toString(){
-      return $this->nombres;
+    /**
+     * Get grupos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getGrupos()
+    {
+        return $this->grupos;
     }
 }

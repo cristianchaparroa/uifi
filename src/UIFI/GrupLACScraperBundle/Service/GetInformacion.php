@@ -16,6 +16,8 @@ use UIFI\ProductosBundle\Entity\Articulo;
 /**
  * Servicio que obtiene la información del GrupLAC de Colciencias de los grupos
  * de investigación  y los guarda en la base de datos del sistema.
+ *
+ * @author Cristian Camilo Chaparro Africano <cristianchaparroa@gmail.com>
 */
 class GetInformacion
 {
@@ -49,20 +51,28 @@ class GetInformacion
     //  $codes = array(   '00000000002325', '00000000008915' ,
     //  '00000000000883', '00000000013666', '00000000000902', '00000000005998',
     //  '00000000000891', '00000000009042', '00000000000877', '00000000013887',
-    //  '00000000001394', '00000000006950', '00000000006950', '00000000013573' ,
+    //   '00000000001394',);
+    // '00000000006950', '00000000013573' ,
     //  '00000000000871', '00000000005315', '00000000000879', '00000000006176' ,
     //  '00000000000858', '00000000000888', '00000000006360', '00000000003328');
 
-     $codes = array(   '00000000002325','00000000008915','00000000000883', '00000000013666',);
-     //$codes = array( '00000000002325' );
 
+     //$codes = array(   '00000000002325','00000000008915','00000000000883', '00000000013666',);
+    // $codes = array( '00000000001394' );
+
+     $codes = array( '00000000000871', '00000000005315', '00000000000879', '00000000006176' ,
+     '00000000000858', '00000000000888', '00000000006360', '00000000003328');
+     $codes = array_unique($codes);
      $total = count($codes);
      $currentTask = 0;
+     $codesIntegrantes = array();
+     $repositoryIntegrante = $this->em->getRepository('UIFIIntegrantesBundle:Integrante');
+     $repositoryGrupo = $this->em->getRepository('UIFIIntegrantesBundle:Grupo');
+     $repositoryArticulo = $this->em->getRepository('UIFIProductosBundle:Articulo');
+
      foreach( $codes as $code )
      {
-      // $this->percent = intval($currentTask/$total * 100)."%";
        $grupoScraper = new PageGrupLACScraper($code);
-
        /**
         * Registro el grupo de investigación en el sistema
        */
@@ -74,44 +84,38 @@ class GetInformacion
        $grupo->setEmail( $grupoScraper->extraerEmail() );
        $grupo->setClasificacion( $grupoScraper->extraerClasificacion() );
        $this->em->persist( $grupo );
-       $this->em->flush();
+       //$this->em->flush();
 
-       //Se obtiene el grupo recién generado de la base de datos
-       $repositoryGrupo = $this->em->getRepository('UIFIIntegrantesBundle:Grupo');
-       $entityGrupo = $repositoryGrupo->find($code);
-
+       $entityGrupo = $grupo;
        $integrantes = $grupoScraper->obtenerIntegrantes();
-
        /**
         * Se obtiene la información de cada integrante
        */
        foreach( $integrantes as $codeIntegrante => $nombreIntegrante)
        {
-
           $integranteScraper = new IndividualCVLACScraper( $codeIntegrante );
-          /**
-           * Se crea al entitidad Integrante y se registra toda la información
-           * asociada.
-          */
-          $integrante = new Integrante();
-          /**
-           * se debe establecer alguna manera para que el usuario tenga acceso a
-           * su usuario y por ende a su plataforma para verificar la
-           * información en el sistema.
-          */
-          //$integrante->setUsuario();
-          $cvlacIntegrante = $integranteScraper->getURL();
-          $integrante->setGrupo( $entityGrupo );
-          $integrante->setId( $cvlacIntegrante );
-          $integrante->setNombres( $nombreIntegrante );
-          //se setea la demas información posible.
-          $this->em->persist( $integrante );
-          $this->em->flush();
-          //Se obtiene el estudiante recien generado de la base de datos
+           //si existe el integrante,significa que pertenece a varios grupos
+          $existIntegrante = $repositoryIntegrante->find($codeIntegrante);
+          if($existIntegrante){
+              $entityIntegrante = $existIntegrante;
+          }
+          else{
 
+             $integrante = new Integrante();
+             $cvlacIntegrante = $integranteScraper->getURL();
+             $integrante->addGrupo( $entityGrupo );
+             $integrante->setId( $cvlacIntegrante );
+             $integrante->setNombres( $nombreIntegrante );
+             //se setea la demas información posible.
+             $this->em->persist( $integrante );
+             $this->em->flush();
+             $entityIntegrante = $repositoryIntegrante->find($codeIntegrante);
+          }
 
-          $repositoryIntegrante = $this->em->getRepository('UIFIIntegrantesBundle:Integrante');
-          $entityIntegrante = $repositoryIntegrante->find($codeIntegrante);
+          $entityGrupo->addIntegrante($entityIntegrante);
+          $this->em->persist($entityGrupo);
+          //$this->em->flush();
+
           /**
            *se registran los articulos asociados a un integrante.
            */
@@ -119,7 +123,6 @@ class GetInformacion
           $index = 0;
           foreach( $articulos as $articulo){
             $article = new Articulo();
-            //$code=codigo del grupo
             $codeArticulo = $code ."-". $integranteScraper->getCode() ."-". $index;
             $article->setId($codeArticulo );
             $article->setTitulo($articulo['titulo']);
@@ -129,33 +132,20 @@ class GetInformacion
             $article->addIntegrante($entityIntegrante);
             $anual = str_replace(' ', '', $articulo['anual']);
             $anual = '01/01/'.$anual;
-
-
             $fecha = new \DateTime($anual);
             $article->setFecha($fecha);
-
             $this->em->persist($article);
-            $this->em->flush();
 
-            $repositoryArticulo = $this->em->getRepository('UIFIProductosBundle:Articulo');
-            $entityArticulo = $repositoryArticulo->find($codeArticulo);
             $entityIntegrante->addArticulo($article);
-            $this->em->persist($entityIntegrante);
-            $this->em->flush();
+            $this->em->persist($article);
+
             $index++;
           }
        }
        $currentTask++;
      }
+     $this->em->flush();
      return true;
-   }
-   /**
-    * Función que retorna el progreso de processo
-    * @return Integer valor del progreso.
-   */
-   public function progress(){
-     $this->percent = $this->percent+1;
-     return $this->percent;
    }
    /**
     * Función que se encarga de eliminar todos los registros para inicializar

@@ -26,6 +26,11 @@
                 <target> Número de Artículos Publicados </target>
           </trans-unit>
 
+          <trans-unit id="5">
+                <source>reportes.articulos.title.porgrupo</source>
+                <target> Produción de artículos en el grupo  </target>
+          </trans-unit>
+
 
         </body>
     </file>

@@ -5,6 +5,7 @@
 
 var isInProgress = false;
 var handlerCheckProgress;
+var handlerGetInformation;
 var porcentaje = 0;
 var   $progressBar;
 
@@ -12,13 +13,16 @@ $(function(){
   jQuery.support.cors = true;
   $progressBar = $('.progress .progress-bar');
   $('.progress').hide();
-
   $( '.log-success' ).hide();
+  $( '.log-fail' ).hide();
+
+  $('#cancelar-proceso').prop('disabled',true);
   /**
    * se inicia el proceso de importación de información del gruplac.
   */
   $( '#button-getInformacion' ).bind('click',function(event)
   {
+      $('#cancelar-proceso').prop('disabled',false);
       porcentaje = 0;
       $( '.log-success' ).hide();
       $('.progress').show();
@@ -27,30 +31,13 @@ $(function(){
 
       handlerCheckProgress = setInterval(function(){
         $progressBar.attr('data-transitiongoal', porcentaje ).progressbar({display_text: 'center'});
-        if(porcentaje!=99){
+        if(porcentaje!=90){
           porcentaje++;
         }
 
-
-        var base_url= location.protocol + "//" + location.host;
-        var urlProgress = base_url +  Routing.generate('dasboard_get_progress');
-
-        // console.log(urlProgress);
-        // $.ajax({
-        //   url: urlProgress,
-        //   success: function(data)
-        //   {
-        //     console.log("procentaje"+data.porcentaje);
-        //     porcentaje = data.porcentaje;
-        //   },
-        //   error: function(xhr, status, error)
-        //   {
-        //     console.log("error-checkprogress");
-        //   }
-        // });
       },1000);
 
-      $.ajax({
+      handlerGetInformation = $.ajax({
         url: url,
         async: true,
         crossDomain: true,
@@ -68,6 +55,11 @@ $(function(){
           console.log( JSON.stringify(xhr) ) ;
           console.log( JSON.stringify(status) ) ;
           console.log( JSON.stringify(error) ) ;
+
+          $( '.log-fail' ).show();
+          $( '.messageFail').remove();
+          $( '.log-fail' ).append('<p class="messageFail">El proceso Fallo</p>');
+
         }
       }).always(function()
       {
@@ -83,4 +75,18 @@ $(function(){
       event.preventDefault();
       event.stopPropagation();
   });//end bind
+
+
+  $('#cancelar-proceso').bind('click',function(){
+    if( handlerGetInformation!=undefined){
+      handlerGetInformation.abort();
+      $( '.log-fail' ).show();
+      $( '.messageFail').remove();
+      $( '.log-fail' ).append('<p class="messageFail">El proceso se cancelo,La información pudo haber quedado incompleta.</p>');
+
+      setTimeout(function(){
+        $('.log-fail').hide();
+      },6000);
+    }
+  });//end bind cancelar-proceso
 });

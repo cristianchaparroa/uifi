@@ -33,7 +33,7 @@ class ArticuloReportesType extends AbstractType
           array( 'expanded' => true,
                  'multiple' => false,
                  'required' => false,
-                 'choices' => array('fecha' => 'Fecha', 'grupo' => 'Grupo'))  );
+                 'choices' => array( 'fechaGrupo' => 'Fecha y Grupo', 'grupo' => 'Grupo', 'anual' => 'Año' ))  );
 
         $builder->add('discriminarIntegrante','choice' ,
           array( 'expanded' => true,

@@ -21,10 +21,10 @@ class Articulo
     private $id;
 
     /**
-    * Titulo del articulo de investigacion
+    * Titulo del artículo de investigación
      * @var string
      *
-     * @ORM\Column(name="titulo", type="string", length=255)
+     * @ORM\Column(name="titulo", type="string", length=10000)
      */
     private $titulo;
 

@@ -19,16 +19,17 @@
          <!--  DISCRIMINAR REPORTE POR AÑO O POR GRUPOS DE INVESTIGACION
                  EN LA SELECCION DE GRUPOS -->
          <div id="discriminarGrupo"  class="form-group">
-           <div class="fecha">
-               <label style="font-weight: normal !important;">Discriminar por Año</label>
-               {{ form_errors(form.discriminarGrupo[0]) }}
-               {{ form_widget(form.discriminarGrupo[0]) }}
-            </div>
+
             <div class="integrante">
                 <label style="  font-weight: normal !important;">Discrimininar por Grupo</label>
                 {{ form_errors(form.discriminarGrupo[1]) }}
                 {{ form_widget(form.discriminarGrupo[1]) }}
              </div>
+             <div class="fecha">
+                 <label style="font-weight: normal !important;">Discriminar por Grupo y Año</label>
+                 {{ form_errors(form.discriminarGrupo[0]) }}
+                 {{ form_widget(form.discriminarGrupo[0]) }}
+              </div>
          </div>
 
          <div id="investigador" class="form-group">
