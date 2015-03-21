@@ -10,6 +10,9 @@ use UIFI\ReportesBundle\Form\ArticuloReportesType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
+use Ob\HighchartsBundle\Highcharts\Highchart;
+use Zend\Json\Expr;
+
 /**
  * Controllador que se encarga de mostrar los reportes referentes a los artículos.
 */
@@ -44,7 +47,6 @@ class ArticuloReportesControllerController extends Controller
         $this->em = $this->getDoctrine()->getManager();
         $parameters = $this->getRequest()->request->all();
         $mapParameters = $parameters['uifi_reportes_articulo'];
-
         $ob =  $this->get('uifi.reportes.articulos')->generarGrafica( $mapParameters );
         return $this->render('UIFIReportesBundle:ArticuloReportes:reporte.html.twig', array(
             'chart' => $ob

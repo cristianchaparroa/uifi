@@ -26,14 +26,17 @@ class GrupoRepository extends EntityRepository
    * un grupo de investigación de acuerdo de las publicaciones realizadas por
    * cada uno de los integrantes del grupo de Investigación.
    *
-   * @param $code Código del grupo de investigación.
+   * @FIXME: ¿Que ocurre si  un artículo tiene varios autores en el mismo grupo?
+   *
+   * @param $code Id del grupo de investigación.
    * @return Integer con la cuenta de artículos por grupo.
    *
   */
   public function getCountArticulosByGrupo( $code ){
     $em = $this->getEntityManager();
     $connection = $em->getConnection();
-    $sql = "SELECT count(*) as cantidad FROM  grupo g, integrante i, articulo a, integrantes_articulos ia WHERE g.id = :code AND g.id = i.grupo_id AND ia.integrante_id = i.id AND ia.articulo_id  = a.id";
+    $sql = "SELECT count(DISTINCT a.id) as cantidad FROM  grupo g, integrante i, articulo a,
+      integrantes_articulos ia WHERE g.id = :code AND g.id = i.grupo_id AND ia.integrante_id = i.id AND ia.articulo_id  = a.id";
     $statement = $connection->prepare($sql);
     $statement->bindValue('code', $code);
     $statement->execute();
@@ -44,5 +47,26 @@ class GrupoRepository extends EntityRepository
         return $value;
     }
     return 0;
+  }
+
+  /**
+   * Función que se encarge de contar el número de artículos que tiene publicado
+   * un grupo de investigación de acuerdo a las publicaciones realizadas por los
+   * integrantes , discriminado por año.
+   *
+   * @param $code Código del grupo de investigación.
+   * @return Integer con la cuenta de artículos por grupo.
+  */
+  public function getCountArticulosByYear($code){
+    $em = $this->getEntityManager();
+    $connection = $em->getConnection();
+    $sql = 'SELECT  COUNT(DISTINCT (a.id)) as cantidad, g.nombre, YEAR(a.fecha) as anual  FROM  articulo a, integrantes_articulos  ia, integrante i, grupo g
+        WHERE  g.id = :code AND ia.articulo_id = a.id AND ia.integrante_id = i.id
+        AND g.id = i.grupo_id GROUP BY g.id,a.fecha ORDER BY a.fecha,g.nombre';
+    $statement = $connection->prepare($sql);
+    $statement->bindValue('code', $code);
+    $statement->execute();
+    $results = $statement->fetchAll();
+    return $results;
   }
 }

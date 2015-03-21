@@ -53,7 +53,9 @@ class GetInformacion
     //  '00000000000871', '00000000005315', '00000000000879', '00000000006176' ,
     //  '00000000000858', '00000000000888', '00000000006360', '00000000003328');
 
-    $codes = array(   '00000000002325','00000000008915','00000000000883', '00000000013666',);
+     $codes = array(   '00000000002325','00000000008915','00000000000883', '00000000013666',);
+     //$codes = array( '00000000002325' );
+
      $total = count($codes);
      $currentTask = 0;
      foreach( $codes as $code )
@@ -125,6 +127,12 @@ class GetInformacion
             $article->setISSN($articulo['ISSN']);
             $article->setPalabras($articulo['palabras']);
             $article->addIntegrante($entityIntegrante);
+            $anual = str_replace(' ', '', $articulo['anual']);
+            $anual = '01/01/'.$anual;
+
+
+            $fecha = new \DateTime($anual);
+            $article->setFecha($fecha);
 
             $this->em->persist($article);
             $this->em->flush();

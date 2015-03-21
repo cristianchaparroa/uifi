@@ -29,7 +29,13 @@ class ArticuloReportesType extends AbstractType
 
         $builder->add('grupo',   'filter_entity', array( 'class'=>'UIFIIntegrantesBundle:Grupo', 'choices' => $this->choicesGrupos ) );
 
-        $builder->add('discriminar','choice' ,
+        $builder->add('discriminarGrupo','choice' ,
+          array( 'expanded' => true,
+                 'multiple' => false,
+                 'required' => false,
+                 'choices' => array('fecha' => 'Fecha', 'grupo' => 'Grupo'))  );
+
+        $builder->add('discriminarIntegrante','choice' ,
           array( 'expanded' => true,
                  'multiple' => false,
                  'required' => false,

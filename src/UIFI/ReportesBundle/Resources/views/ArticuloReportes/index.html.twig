@@ -11,29 +11,43 @@
   <div class="fields-form ">
     <form id"form-filtro" method="POST" action="{{path('reportes_articulos_graficar')}}">
 
-        <div class="form-group ">
+        <div id="grupo" class="form-group ">
           {{ form_label(form.grupo,'Seleccione un grupo de Investigación') }}
           {{ form_errors(form.grupo) }}
           {{ form_widget(form.grupo,  { 'attr': {'class': 'form-control' }} ) }}
          </div>
+         <!--  DISCRIMINAR REPORTE POR AÑO O POR GRUPOS DE INVESTIGACION
+                 EN LA SELECCION DE GRUPOS -->
+         <div id="discriminarGrupo"  class="form-group">
+           <div class="fecha">
+               <label style="font-weight: normal !important;">Discriminar por Año</label>
+               {{ form_errors(form.discriminarGrupo[0]) }}
+               {{ form_widget(form.discriminarGrupo[0]) }}
+            </div>
+            <div class="integrante">
+                <label style="  font-weight: normal !important;">Discrimininar por Grupo</label>
+                {{ form_errors(form.discriminarGrupo[1]) }}
+                {{ form_widget(form.discriminarGrupo[1]) }}
+             </div>
+         </div>
 
-
-         <div class="form-group">
+         <div id="investigador" class="form-group">
              {{ form_label(form.integrantes,'Seleccione un Investigador') }}
              {{ form_errors(form.integrantes) }}
              {{ form_widget(form.integrantes,  { 'attr': {'class': 'form-control' }} ) }}
           </div>
 
-          <div id="discriminar"  class="form-group">
+          <!--  DISCRIMINAR EL REPORTE POR INTEGRANTES-->
+          <div id="discriminarIntegrante"  class="form-group">
             <div class="fecha">
-                <label style="font-weight: normal !important;">Discriminar por Fecha</label>
-                {{ form_errors(form.discriminar[0]) }}
-                {{ form_widget(form.discriminar[0]) }}
+                <label style="font-weight: normal !important;">Discriminar por Año</label>
+                {{ form_errors(form.discriminarIntegrante[0]) }}
+                {{ form_widget(form.discriminarIntegrante[0]) }}
              </div>
              <div class="integrante">
                  <label style="  font-weight: normal !important;">Discrimininar por Investigador</label>
-                 {{ form_errors(form.discriminar[1]) }}
-                 {{ form_widget(form.discriminar[1]) }}
+                 {{ form_errors(form.discriminarIntegrante[1]) }}
+                 {{ form_widget(form.discriminarIntegrante[1]) }}
               </div>
           </div>
 

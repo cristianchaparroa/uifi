@@ -9,8 +9,9 @@ $(function()
     $integrantes = $("#uifi_reportes_articulo_integrantes");
     $integrantes.append($('<option>',{value: '',text: 'Seleccione...',selected: true,}));
 
-    $('#discriminar').hide();
-
+    $('#investigador').hide();
+    $('#discriminarIntegrante').hide();
+    $('#uifi_reportes_articulo_discriminarGrupo_1').prop('checked', true);
     /**
      * Si se selecciona algún grupo de investigación se  muestran solo los
      * integrantes que pertenecen a ese grupo.
@@ -29,7 +30,10 @@ $(function()
         success: function(data)
         {
           if(data.success){
-            $('#discriminar').show();
+            $('#investigador').show();
+            $('#discriminarGrupo').hide();
+            $('#discriminarIntegrante').show();
+            $('#uifi_reportes_articulo_discriminarIntegrante_1').prop('checked', true);
             $integrantesSelect = $("#uifi_reportes_articulo_integrantes");
             $integrantesSelect.empty();
             $integrantesSelect.append($('<option>',{value: '',text: 'Seleccione...',selected: true,}));
@@ -61,13 +65,13 @@ $(function()
         $integrante =  $( "#uifi_reportes_articulo_integrantes option:selected" ).val();
         if( $integrante!=='' ){
           //$('#discriminar').hide();
-          $('#uifi_reportes_articulo_discriminar_0').prop('checked', true);
-          $('#uifi_reportes_articulo_discriminar_0').prop('disabled', true);
-          $('#uifi_reportes_articulo_discriminar_1').prop('disabled', true);
+          $('#uifi_reportes_articulo_discriminarIntegrante_0').prop('checked', true);
+          $('#uifi_reportes_articulo_discriminarIntegrante_0').prop('disabled', true);
+          $('#uifi_reportes_articulo_discriminarIntegrante_1').prop('disabled', true);
         }
         else{
-          $('#uifi_reportes_articulo_discriminar_0').prop('disabled', false);
-          $('#uifi_reportes_articulo_discriminar_1').prop('disabled', false);
+          $('#uifi_reportes_articulo_discriminarIntegrante_0').prop('disabled', false);
+          $('#uifi_reportes_articulo_discriminarIntegrante_1').prop('disabled', false);
         }
     });
 });

@@ -61,6 +61,15 @@
                 <target> GrupLACS </target>
             </trans-unit>
 
+            <trans-unit id="13">
+                <source>admin.menu.reportes.libros</source>
+                <target> Rerportes de Libros</target>
+            </trans-unit>
+            <trans-unit id="14">
+                <source>admin.menu.configuracion.proxy</source>
+                <target> Configurar proxy</target>
+            </trans-unit>
+
 
         </body>
     </file>
