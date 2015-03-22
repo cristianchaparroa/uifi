@@ -74,4 +74,6 @@ $(function()
           $('#uifi_reportes_articulo_discriminarIntegrante_1').prop('disabled', false);
         }
     });
+
+    ;
 });

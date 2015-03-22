@@ -4,8 +4,15 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
+
         <service class="UIFI\GrupLACScraperBundle\Service\GetInformacion" id="uifi.gruplac.scrap.getinfo">
           <argument type="service" id="service_container" />
         </service>
+
+        <service class="UIFI\GrupLACScraperBundle\Service\GruplacService" id="uifi.gruplac.scrap.gruplac">
+          <argument type="service" id="service_container" />
+        </service>
+
+
     </services>
 </container>

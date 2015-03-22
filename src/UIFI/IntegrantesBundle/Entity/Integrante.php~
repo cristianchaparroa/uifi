@@ -111,4 +111,277 @@ class Integrante
       return $this->nombres;
     }
   
+
+    /**
+     * Set id
+     *
+     * @param string $id
+     * @return Integrante
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get id
+     *
+     * @return string 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set documento
+     *
+     * @param string $documento
+     * @return Integrante
+     */
+    public function setDocumento($documento)
+    {
+        $this->documento = $documento;
+
+        return $this;
+    }
+
+    /**
+     * Get documento
+     *
+     * @return string 
+     */
+    public function getDocumento()
+    {
+        return $this->documento;
+    }
+
+    /**
+     * Set nombres
+     *
+     * @param string $nombres
+     * @return Integrante
+     */
+    public function setNombres($nombres)
+    {
+        $this->nombres = $nombres;
+
+        return $this;
+    }
+
+    /**
+     * Get nombres
+     *
+     * @return string 
+     */
+    public function getNombres()
+    {
+        return $this->nombres;
+    }
+
+    /**
+     * Set codigo
+     *
+     * @param string $codigo
+     * @return Integrante
+     */
+    public function setCodigo($codigo)
+    {
+        $this->codigo = $codigo;
+
+        return $this;
+    }
+
+    /**
+     * Get codigo
+     *
+     * @return string 
+     */
+    public function getCodigo()
+    {
+        return $this->codigo;
+    }
+
+    /**
+     * Set telefono
+     *
+     * @param string $telefono
+     * @return Integrante
+     */
+    public function setTelefono($telefono)
+    {
+        $this->telefono = $telefono;
+
+        return $this;
+    }
+
+    /**
+     * Get telefono
+     *
+     * @return string 
+     */
+    public function getTelefono()
+    {
+        return $this->telefono;
+    }
+
+    /**
+     * Set celular
+     *
+     * @param string $celular
+     * @return Integrante
+     */
+    public function setCelular($celular)
+    {
+        $this->celular = $celular;
+
+        return $this;
+    }
+
+    /**
+     * Get celular
+     *
+     * @return string 
+     */
+    public function getCelular()
+    {
+        return $this->celular;
+    }
+
+    /**
+     * Set correoInstitucional
+     *
+     * @param string $correoInstitucional
+     * @return Integrante
+     */
+    public function setCorreoInstitucional($correoInstitucional)
+    {
+        $this->correoInstitucional = $correoInstitucional;
+
+        return $this;
+    }
+
+    /**
+     * Get correoInstitucional
+     *
+     * @return string 
+     */
+    public function getCorreoInstitucional()
+    {
+        return $this->correoInstitucional;
+    }
+
+    /**
+     * Set correoPersonal
+     *
+     * @param string $correoPersonal
+     * @return Integrante
+     */
+    public function setCorreoPersonal($correoPersonal)
+    {
+        $this->correoPersonal = $correoPersonal;
+
+        return $this;
+    }
+
+    /**
+     * Get correoPersonal
+     *
+     * @return string 
+     */
+    public function getCorreoPersonal()
+    {
+        return $this->correoPersonal;
+    }
+
+    /**
+     * Set usuario
+     *
+     * @param \UsersBundle\Entity\Usuario $usuario
+     * @return Integrante
+     */
+    public function setUsuario(\UsersBundle\Entity\Usuario $usuario = null)
+    {
+        $this->usuario = $usuario;
+
+        return $this;
+    }
+
+    /**
+     * Get usuario
+     *
+     * @return \UsersBundle\Entity\Usuario 
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
+    }
+
+    /**
+     * Add articulos
+     *
+     * @param \UIFI\ProductosBundle\Entity\Articulo $articulos
+     * @return Integrante
+     */
+    public function addArticulo(\UIFI\ProductosBundle\Entity\Articulo $articulos)
+    {
+        $this->articulos[] = $articulos;
+
+        return $this;
+    }
+
+    /**
+     * Remove articulos
+     *
+     * @param \UIFI\ProductosBundle\Entity\Articulo $articulos
+     */
+    public function removeArticulo(\UIFI\ProductosBundle\Entity\Articulo $articulos)
+    {
+        $this->articulos->removeElement($articulos);
+    }
+
+    /**
+     * Get articulos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getArticulos()
+    {
+        return $this->articulos;
+    }
+
+    /**
+     * Add grupos
+     *
+     * @param \UIFI\IntegrantesBundle\Entity\Grupo $grupos
+     * @return Integrante
+     */
+    public function addGrupo(\UIFI\IntegrantesBundle\Entity\Grupo $grupos)
+    {
+        $this->grupos[] = $grupos;
+
+        return $this;
+    }
+
+    /**
+     * Remove grupos
+     *
+     * @param \UIFI\IntegrantesBundle\Entity\Grupo $grupos
+     */
+    public function removeGrupo(\UIFI\IntegrantesBundle\Entity\Grupo $grupos)
+    {
+        $this->grupos->removeElement($grupos);
+    }
+
+    /**
+     * Get grupos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getGrupos()
+    {
+        return $this->grupos;
+    }
 }

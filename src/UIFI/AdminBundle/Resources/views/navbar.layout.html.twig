@@ -32,13 +32,13 @@
    <!-- REPORTES -->
    <li>
      <a onclick="return false" href="#" data-target="#item3" data-toggle="collapse" data-parent="#stacked-menu">
-       <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+       <span class="fa fa-bar-chart" aria-hidden="true"></span>
         {{'admin.menu.reportes'|trans}}
         <span class="caret arrow"></span>
      </a>
      <ul class="nav nav-stacked collapse left-submenu" id="item3">
-       <li><a href="{{path('reportes_articulos')}}"> {{'admin.menu.reportes.articulo'|trans}}</a></li>
-       <li><a href="#"> {{'admin.menu.reportes.libros'|trans}}</a></li>
+       <li><a href="{{path('reportes_articulos')}}"> <i class="fa fa-file-text-o"></i> {{'admin.menu.reportes.articulo'|trans}}</a></li>
+       <li><a href="#"> <i class="fa fa-book"></i> {{'admin.menu.reportes.libros'|trans}}</a></li>
      </ul>
    </li>
 
@@ -51,7 +51,7 @@
      <ul class="nav nav-pills nav-stacked collapse" id="item4">
        <!--  configuracion de grupos de investigación-->
 
-       <li><a href="#"> {{'admin.menu.configuracion.gruplacs'|trans}}</a></li>
+       <li> <a href="{{path('admin_configuration_gruplac')}}"> <i class="fa fa-list-alt"></i>{{'admin.menu.configuracion.gruplacs'|trans}}</a></li>
        <li><a href="#"> {{'admin.menu.configuracion.proxy'|trans}}</a></li>
     </ul>
 

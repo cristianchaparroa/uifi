@@ -1,0 +1,64 @@
+{% extends "UIFIAdminBundle:Dashboard:index.html.twig" %}
+
+{% block  main_content %}
+    <h4>Configuración GrupLAC's</h4>
+    <hr>
+
+    <div class="well">
+      En este panel puede agregar/modificar los códigos de los GrupLACS de los
+      grupos de Investigación.Estos se emplean al obtener los productos de
+      Investigación en el proceso automatizado.
+    </div>
+
+    <div class="table">
+    {% if entities  %}
+
+    <p>A continuación se muestra la lista de Gruplacs registrados en el sistema.</p>
+    <table class="records_list"data-pagination="true" data-search="true"   data-toggle="table">
+        <thead>
+            <tr>
+                <th>Gruplac</th>
+                <th>Nombre</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td> {{ entity.id }} </td>
+                <td>{{ entity.nombre }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+    </div>
+
+  <div class="buttons">
+      <div  id="crear-msuccess" class="alert alert-success">
+      </div>
+
+      <button id="btn-agregar-gruplac"class="btn btn-success" data-toggle="modal" data-target="#agregarGruplacDialogo">
+        Agregar GrupLAC
+     </button>
+    </div>
+
+     <div  style="display: none;"  class="modal fade" id="agregarGruplacDialogo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"  aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+               <div class="modal-header">
+                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                 <h4 class="modal-title" id="myModalLabel">Agregar GrupLAC</h4>
+               </div>
+               <div class="modal-body">
+                     {% embed "UIFIGrupLACScraperBundle:Gruplac:new.html.twig"  %}
+                     {% endembed %}
+               </div>
+         </div>
+       </div>
+     </div>
+
+
+     <div class="js-css-import">
+        <script src="{{ asset('bundles/uifigruplacscraper/js/gruplac/index.js') }}"></script>
+     </div>
+{% endblock %}
