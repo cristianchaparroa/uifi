@@ -32,7 +32,6 @@ class GruplacService
      * @return Estado del proceso {false,true}
     */
     public function newGruplac($code){
-      if( !$this->existe($code) ){
         $grupoScraper = new PageGrupLACScraper($code);
         $nombre = $grupoScraper->getNombreGrupo();
         $gruplac = new Gruplac();
@@ -41,9 +40,6 @@ class GruplacService
         $this->em->persist($gruplac);
         $this->em->flush();
         return true;
-      }
-      return false;
-
     }
     /**
     * Función que se encarga de verificar si existe el código de un gruplac en
@@ -62,7 +58,17 @@ class GruplacService
       if($entity){
         $success = true;
       }
-      $success = false;
+      else{
+        $success = false;
+      }
       return $success;
+    }
+
+    /**
+     * Función que se encarga de eliminar un gruplac del sistema.
+     * @param $code Código del gruplac a eliminar.
+    */
+    public function delete($code){
+
     }
 }

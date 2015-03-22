@@ -17,14 +17,16 @@
     <table class="records_list"data-pagination="true" data-search="true"   data-toggle="table">
         <thead>
             <tr>
+                <th data-field="state" data-checkbox="true"></th>
                 <th>Gruplac</th>
                 <th>Nombre</th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
-            <tr>
-                <td> {{ entity.id }} </td>
+            <tr data-index="{{loop.index}}">
+                <td data-field="id"> {{ entity.id }} </td>
+                <td > {{ entity.id }} </td>
                 <td>{{ entity.nombre }}</td>
             </tr>
         {% endfor %}

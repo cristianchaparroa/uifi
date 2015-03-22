@@ -35,6 +35,9 @@ class GruplacController extends Controller
      * Función que se encarga de verificar si existe un gruplac en el sistema
      * @Route( "/admin/configuration/gruplac/check", name="admin_configuration_gruplac_check", options={"expose"=true} )
      * @Method("POST")
+     *
+     * @param Codigo  del gruplac a verificar
+     * @return JsonResponse
     */
     public function checkGrupLac()
     {
@@ -48,12 +51,31 @@ class GruplacController extends Controller
      * Función que se encarga de verificar si existe un gruplac en el sistema
      * @Route( "/admin/configuration/gruplac/new", name="admin_configuration_gruplac_new", options={"expose"=true} )
      * @Method("POST")
+     *
+     * @param Código  del gruplac a crear
+     * @return JsonResponse
     */
     public function newGruplac(){
       $parameters = $this->getRequest()->request->all();
       $code = $parameters['code'];
       $success =  $this->get('uifi.gruplac.scrap.gruplac')->newGruplac($code);
-      return new JsonResponse(array('success' =>$success));
+      return new JsonResponse(array('success' =>  $success, 'data'=>$code ));
+    }
+
+    /**
+     * Función que se encarga de eliminar un gruplac del sistema.
+     *
+     * @Route( "/admin/configuration/gruplac/delete", name="admin_configuration_gruplac_delete", options={"expose"=true} )
+     * @Method("POST")
+     *
+     * @param Codigo  del gruplac a eliminar
+     * @return JsonResponse
+    */
+    public function delete(){
+      $parameters = $this->getRequest()->request->all();
+      $code = $parameters['code'];
+      $success =  $this->get('uifi.gruplac.scrap.gruplac')->delete($code);
+      return new JsonResponse(array('success' =>  $success));
     }
 
 }
