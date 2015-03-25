@@ -26,8 +26,7 @@ class GruplacController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository('UIFIGrupLACScraperBundle:Gruplac')->findAll();
+        $entities =  $this->get('uifi.gruplac.scrap.gruplac')->getGruplacs();
         return $this->render('UIFIGrupLACScraperBundle:Gruplac:index.html.twig'
           ,array('entities' => $entities));
     }
@@ -59,7 +58,8 @@ class GruplacController extends Controller
       $parameters = $this->getRequest()->request->all();
       $code = $parameters['code'];
       $success =  $this->get('uifi.gruplac.scrap.gruplac')->newGruplac($code);
-      return new JsonResponse(array('success' =>  $success, 'data'=>$code ));
+      $entities =  $this->get('uifi.gruplac.scrap.gruplac')->getGruplacsJSON();
+      return new JsonResponse(array('success' =>  $success, 'entities'=>$entities ));
     }
 
     /**

@@ -148,17 +148,22 @@ class ReportesArticulos
     {
         $mayor =  0;
         $idGrupo = 0;
+        $arrayFirst = array();
+
         foreach( $grafica as $key=>$value){
-          if( $mayor < count($value) ){
-             $mayor = count($value);
+          $cantidad = count($value);
+          if( $mayor < $cantidad ){
+             $mayor = $cantidad;
              $idGrupo = $key;
           }
         }
         $grupoSerie = $grafica[$idGrupo];
         $grafic = array();
 
-        foreach( $grafica as $codeGrupo => $serieGrupo ){
+        foreach( $grafica as $codeGrupo => $serieGrupo )
+        {
           $dataGroup = array();
+
           foreach($grupoSerie as $anualSerie => $value )
           {
             $existeAnual = array_key_exists( $anualSerie, $serieGrupo );
@@ -166,6 +171,7 @@ class ReportesArticulos
               $dataGroup[$anualSerie] = 0;
             }
           }
+
           foreach($serieGrupo as $anualSerie => $numeroArticulos){
             $dataGroup[$anualSerie] = $numeroArticulos;
             $existeAnual = array_key_exists( $anualSerie,$grupoSerie);
@@ -176,18 +182,39 @@ class ReportesArticulos
           ksort($dataGroup);
           $grafic[$codeGrupo] = $dataGroup;
         }
-        $categorias = array();
-        $series = array();
-        foreach($grafic as $codigoGrupo => $sucesion ){
-          $dataGroup = array();
-          foreach($sucesion as $anual=>$numeroArticulos){
-            $dataGroup[] = $numeroArticulos;
-            $categorias[] = $anual;
-          }
-          $series[] = array( 'name'=> $codigoGrupo, 'data'=> $dataGroup );
+        //al finalizar esta primera normalizacion aún pueden quedar sin normalizar
+        // hay que normalizar hasta que todos las series tengan el mismo tamano
+        //
+        $iguales = $this->allSameSize($grafic);
+        if( $iguales ){
+          return $this->generateSeriesAndCategories($grafic);
         }
-        $categorias = array_unique( $categorias);
-        return array( 'series'=> $series, 'categorias' =>  $categorias );
+        else
+        {
+          return $this->normalizarGraficaGruposAnual( $grafic );
+        }
+    }
+    private function allSameSize($grafic)
+    {
+      $sizes = array();
+      foreach( $grafic as $key=>$value){
+        $sizes[] = count($value);
+      }
+      return (   (count(array_unique($sizes)) === 1) ? true: false );
+    }
+    private function generateSeriesAndCategories($grafic){
+      $categorias = array();
+      $series = array();
+      foreach($grafic as $codigoGrupo => $sucesion ){
+        $dataGroup = array();
+        foreach($sucesion as $anual=>$numeroArticulos){
+          $dataGroup[] = $numeroArticulos;
+          $categorias[] = $anual;
+        }
+        $series[] = array( 'name'=> $codigoGrupo, 'data'=> $dataGroup );
+      }
+      $categorias = array_unique( $categorias);
+      return array( 'series'=> $series, 'categorias' =>  $categorias );
     }
     /**
      * Función que se encarga de generar el reporte de acuerdo a los parámetros
@@ -199,20 +226,23 @@ class ReportesArticulos
     {
         $configuracion  = $this->configurarGrafica($mapParameters);
         $series = $configuracion['series'];
+
         $categorias = $configuracion['categorias'];
         $title = $configuracion['title'];
         $ob = new Highchart();
         $ob->chart->renderTo('linechart');  // The #id of the div where to render the chart
         $ob->chart->type('column');
-
+        $ob->chart->zoomType ('xy');
+        $ob->chart->pinchType('xy');
         $ob->xAxis->categories($categorias);
 
         $yTitle = $this->translator->trans('reportes.articulos.ytitle.produccion');
         $ob->title->text( $title  );
         $ob->yAxis->title(array('text'  => $yTitle ));
         $ob->series($series);
-        $func = new \Zend\Json\Expr("function(){return 'Número de Artículos: <b>'+ this.y +'</b>';}");
-        $ob->tooltip->formatter($func);
+        //$func = new \Zend\Json\Expr("function(){return 'Número de Artículos: <b>'+ this +'</b>';}");
+        //$ob->tooltip->formatter($func);
+        //echo json_encode($ob);
         return $ob;
     }
     /**
@@ -230,4 +260,6 @@ class ReportesArticulos
       }
       return $result;
     }
+
+
 }

@@ -1,33 +1,49 @@
 {% extends "UIFIAdminBundle:Dashboard:index.html.twig" %}
 
 {% block  main_content %}
-    <h4>Configuración GrupLAC's</h4>
+    <h4>{{'uifi.gruplac.configuracion.gruplac.title'|trans}}</h4>
     <hr>
 
     <div class="well">
-      En este panel puede agregar/modificar los códigos de los GrupLACS de los
-      grupos de Investigación.Estos se emplean al obtener los productos de
-      Investigación en el proceso automatizado.
+      {{'uifi.gruplac.configuracion.gruplac.panel'|trans}}
+    </div>
+
+    <div  id="crear-msuccess" class="alert alert-success">
     </div>
 
     <div class="table">
     {% if entities  %}
 
-    <p>A continuación se muestra la lista de Gruplacs registrados en el sistema.</p>
-    <table class="records_list"data-pagination="true" data-search="true"   data-toggle="table">
+    <p> {{'uifi.gruplac.configuracion.gruplac.enunciado'|trans}}</p>
+
+    <div id="toolbar">
+      <button id="remove" class="btn btn-danger" disabled>
+      <i class="glyphicon glyphicon-remove"></i> Delete
+      </button>
+    </div>
+    <table id="gruplac-table"
+        data-toggle="table"
+        data-toolbar="#toolbar"
+        data-search="true"
+        data-show-refresh="true"
+        data-show-toggle="true"
+        data-show-columns="true"
+        data-show-export="true"
+        data-show-pagination-switch="true"
+        data-pagination="true">
         <thead>
             <tr>
-                <th data-field="state" data-checkbox="true"></th>
-                <th>Gruplac</th>
-                <th>Nombre</th>
+              <th data-field="state" data-checkbox="true"></th>
+              <th data-field="id" data-sortable="true">Código Gruplac </th>
+              <th>Nombre</th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr data-index="{{loop.index}}">
-                <td data-field="id"> {{ entity.id }} </td>
-                <td > {{ entity.id }} </td>
-                <td>{{ entity.nombre }}</td>
+                <td class="bs-checkbox"><input type="checkbox" name="btSelectItem" data-index="{{loop.index}}"></td>
+                <td >{{entity.id}}</td>
+                <td>{{entity.nombre}}</td>
             </tr>
         {% endfor %}
         </tbody>
@@ -36,12 +52,11 @@
     </div>
 
   <div class="buttons">
-      <div  id="crear-msuccess" class="alert alert-success">
-      </div>
 
       <button id="btn-agregar-gruplac"class="btn btn-success" data-toggle="modal" data-target="#agregarGruplacDialogo">
-        Agregar GrupLAC
-     </button>
+       {{'uifi.gruplac.dashboard.buttons.agregargruplac'|trans}}
+      </button>
+
     </div>
 
      <div  style="display: none;"  class="modal fade" id="agregarGruplacDialogo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"  aria-hidden="true">
@@ -61,6 +76,7 @@
 
 
      <div class="js-css-import">
+        <script src="{{ asset('js/jstranslate.js') }}"></script>
         <script src="{{ asset('bundles/uifigruplacscraper/js/gruplac/index.js') }}"></script>
      </div>
 {% endblock %}

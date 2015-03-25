@@ -1,5 +1,5 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-    <file source-language="en" datatype="plaintext" original="file.ext">
+    <file source-language="es" datatype="plaintext" original="file.ext">
         <body>
             <trans-unit id="1">
                 <source>uifi.gruplac.dashboard.statement</source>
@@ -10,6 +10,67 @@
             <trans-unit id="2">
                 <source>uifi.gruplac.dashboard.buttons.get</source>
                 <target>Obtener Información</target>
+            </trans-unit>
+
+            <trans-unit id="3">
+                <source>uifi.gruplac.configuracion.gruplac.panel</source>
+                <target>
+                  En este panel puede agregar/modificar los códigos de los GrupLACS de los
+                  grupos de Investigación.Estos se emplean al obtener los productos de
+                  Investigación en el proceso automatizado.
+                </target>
+            </trans-unit>
+
+            <trans-unit id="4">
+                <source>uifi.gruplac.configuracion.gruplac.enunciado</source>
+                <target> A continuación se muestra la lista de Gruplacs registrados en el sistema. </target>
+            </trans-unit>
+
+            <trans-unit id="5">
+                <source>uifi.gruplac.dashboard.buttons.agregargruplac</source>
+                <target>Agregar GrupLAC</target>
+            </trans-unit>
+
+
+            <trans-unit id="6">
+                <source>uifi.gruplac.configuracion.gruplac.title</source>
+                <target> Configuración GrupLAC's  </target>
+            </trans-unit>
+
+            <trans-unit id="7">
+                <source>uifi.gruplac.configuracion.gruplac.new.info</source>
+                <target> El GrupLAC de un grupo de investigación tiene un formato como el siguiente
+                 http://scienti1.colciencias.gov.co:8080/gruplac/jsp/visualiza/visualizagr.jsp?nro=</target>
+            </trans-unit>
+            <trans-unit id="8">
+                <source>uifi.gruplac.configuracion.gruplac.new.code</source>
+                <target>0000000000XXXX</target>
+            </trans-unit>
+
+            <trans-unit id="9">
+                <source>uifi.gruplac.configuracion.gruplac.new.codeinfo</source>
+                <target>El código corresponde al número con el formato resaltado arriba.</target>
+            </trans-unit>
+
+
+            <trans-unit id="10">
+                <source>uifi.gruplac.dashboard.buttons.creargruplac</source>
+                <target>Crear GrupLAC</target>
+            </trans-unit>
+
+            <trans-unit id="11">
+                <source>uifi.gruplac.configuracion.gruplac.new.placeholder</source>
+                <target>Ingrese el código GrupLAC del grupo de investigación </target>
+            </trans-unit>
+
+            <trans-unit id="12">
+                <source>uifi.configuracion.gruplac.errorcodigo</source>
+                <target> El Gruplac con este código ya existe  </target>
+            </trans-unit>
+
+            <trans-unit id="13">
+                <source>uifi.configuracion.gruplac.errorsolonumeros</source>
+                <target> El código consta de solo números </target>
             </trans-unit>
 
         </body>

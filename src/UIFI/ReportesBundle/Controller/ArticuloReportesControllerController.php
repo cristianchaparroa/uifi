@@ -63,7 +63,6 @@ class ArticuloReportesControllerController extends Controller
     */
     public function filterAction()
     {
-
         $params = $this->getRequest()->query->all();
         $codeGrupo = $params['grupo'];
         if($codeGrupo!=='')

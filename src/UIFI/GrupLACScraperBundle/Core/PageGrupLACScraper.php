@@ -88,11 +88,11 @@ class PageGrupLACScraper extends  GrupLACScraper
      * @return valor
     */
     public function extraerValue($query){
-      $listaNodos = $this->xpath->query( $query );
-      foreach( $listaNodos as $nodo ){
-        $value =  $nodo->nodeValue;
-      }
-      return $value;
+	      $listaNodos = $this->xpath->query( $query );
+	      foreach( $listaNodos as $nodo ){
+	        $value =  $nodo->nodeValue;
+	      }
+				return isset( $value) ? $value : "";
     }
     /**
      * Método que extrae la fecha(año y mes) de formación del

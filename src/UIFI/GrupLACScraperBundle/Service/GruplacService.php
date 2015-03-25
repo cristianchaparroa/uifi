@@ -27,6 +27,30 @@ class GruplacService
     }
 
     /**
+    * Función que se encarga de obtener todos los gruplacs
+    *
+    * @return Arreglo con los gruplacs en el sistema.
+    */
+    public function getGruplacs(){
+      $entities = $this->em->getRepository('UIFIGrupLACScraperBundle:Gruplac')->findAll();
+      return $entities;
+    }
+
+    /**
+    * Función que se encarga de obtener todos los gruplacs en formato JSON
+    *
+    * @return Arreglo con los gruplacs en el sistema.
+    */
+    public function getGruplacsJSON(){
+      $entities = $this->em->getRepository('UIFIGrupLACScraperBundle:Gruplac')->findAll();
+
+      $entidades = array();
+      foreach( $entities as $gruplac ){
+        $entidades[] = array( 'id'=> $gruplac->getId(), 'nombre'=>$gruplac->getNombre() );
+      }
+      return $entidades ;
+    }
+    /**
      * Función que se encarga de crear un gruplac
      * @param Código del gruplac del grupo Investigación
      * @return Estado del proceso {false,true}

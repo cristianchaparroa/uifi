@@ -1,21 +1,22 @@
 
   <div class="well">
-  <p>  El GrupLAC de un grupo de investigación tiene un formato como el siguiente</p>
-   http://scienti1.colciencias.gov.co:8080/gruplac/jsp/visualiza/visualizagr.jsp?nro=<b>0000000000XXXX </b>
+  <p> {{'uifi.gruplac.configuracion.gruplac.new.info'|trans}} <b> {{'uifi.gruplac.configuracion.gruplac.new.code'|trans}}</b>
   </div>
   <div class="alert alert-info">
-    <p> El código corresponde al número con el formato resaltado arriba. </p>
+    <p> {{'uifi.gruplac.configuracion.gruplac.new.codeinfo'|trans}} </p>
   </div>
   <form>
     <div class="form-group">
-      <input id="gruplac" type="number" class="form-control" placeholder="Ingrese el código GrupLAC del grupo de investigación"></input>
+      <input id="gruplac" type="number" class="form-control"
+        placeholder="{{'uifi.gruplac.configuracion.gruplac.new.placeholder'|trans}}"></input>
       <div id="fail" class="alert alert-danger"></div>
     </div>
-      <button id="crear" class="btn btn-success">Crear GrupLAC</button>
+      <button id="crear" class="btn btn-success"> {{'uifi.gruplac.dashboard.buttons.creargruplac'|trans}}</button>
   </form>
 
 <div class="js-css-import">
   <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
   <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+  <script src="{{ asset('js/jstranslate.js') }}"></script>
   <script src="{{ asset('bundles/uifigruplacscraper/js/gruplac/index.js') }}"></script>
 </div>

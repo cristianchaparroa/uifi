@@ -1,7 +1,10 @@
 /**
- *@file index.js
- *@author: Cristian Camilo Chaparro Africano.
+ * @file index.js
+ * @author: Cristian Camilo Chaparro Africano.
 */
+
+var $table = $('#gruplac-table');
+var $remove = $('#remove');
 
 $(function(){
   /**
@@ -17,17 +20,8 @@ $(function(){
    *
    * Its happening in the new view
   */
-
   $('#fail').hide();
   $( '#crear').prop('disabled', true);
-
-  $('#gruplac').keypress(function(e){
-    check();
-  });//end keypress gruplac
-
-  $('#gruplac').keyup(function(e){
-    check();
-  });
   $('#gruplac').donetyping(function(){
     check();
   });
@@ -39,9 +33,10 @@ $(function(){
     var url = baseUrl +  Routing.generate('admin_configuration_gruplac_new');
     var data = { 'code':$('#gruplac').val()};
     console.log( JSON.stringify(data) ) ;
+
     $.ajax({
       url: url,
-      async: true,
+      async: false,
       crossDomain: true,
       method:'POST',
       data:data,
@@ -54,6 +49,9 @@ $(function(){
           $('#crear-msuccess').show();
           $('#messageSuccess').remove();
           $('#crear-msuccess').append('<p id="messageSuccess">El gruplac se creo satisfactoriamente </p>');
+
+          var entities= data.entities;
+          updateTable(entities);
         }
         else{
           $('#fail').show();
@@ -72,7 +70,28 @@ $(function(){
     event.stopPropagation();
   });
 
-});
+
+
+
+  $table.on('check.bs.table uncheck.bs.table check-all.bs.table uncheck-all.bs.table', function () {
+    $remove.prop('disabled', !$table.bootstrapTable('getSelections').length);
+  });
+  $remove.click(function ()
+  {
+      var ids = $.map($table.bootstrapTable('getSelections'), function (row) {
+        return row.id
+      });
+      
+      $table.bootstrapTable('remove', {
+        field: 'id',
+        values: ids
+      });
+
+      $remove.prop('disabled', true);
+  });
+
+
+}); //jquery init
 
 /**
  * ___________________________________________________________________________
@@ -89,13 +108,12 @@ function check(){
   if( $.isNumeric($code)  ){
     $('#fail').hide();
 
-     if( $code.length >= 13 )
-     {
-       $( '#crear').prop('disabled', false);
+    if( $code.length >= 13 )
+    {
+      $( '#crear').prop('disabled', false);
       var baseUrl= location.protocol + "//" + location.host;
       var url = baseUrl +  Routing.generate('admin_configuration_gruplac_check');
       var data = { 'code':$('#gruplac').val()};
-
       $.ajax({
         url: url,
         async: true,
@@ -106,9 +124,7 @@ function check(){
         {
           console.log( JSON.stringify(data) ) ;
           if( data.success===true){
-            $('#fail').show();
-            $( '#messageFail').remove();
-            $( '#fail' ).append('<p id="messageFail">El Gruplac con este código ya existe </p>');
+            showError('uifi.configuracion.gruplac.errorcodigo');
             $( '#crear').prop('disabled', true);
           }
           else{
@@ -126,8 +142,40 @@ function check(){
 
   }
   else{
+    showError('uifi.configuracion.gruplac.errorsolonumeros');
+  }
+}
+
+/**
+ * Función que muestra un mensaje de error bajo el codigo ingresado
+ * por el usuario.
+ *
+ * @param error, pathID del error a renderizar.
+*/
+function showError(error){
+  if( !$('#fail').is(":visible")){
     $('#fail').show();
     $( '#messageFail').remove();
-    $( '#fail' ).append('<p id="messageFail">El código consta de solo números</p>');
+    $( '#fail' ).append('<p id="messageFail">'+translate(error)+'</p>');
   }
+}
+/**
+ * Función que se encarga de actualizar la tabla del gruplac.
+ * @param entities, las nuevas entidades que se van a emplear para reemplazar el
+ *   contenido de la tabla actual.
+*/
+function updateTable(entities){
+  $rows =  $('#gruplac-table > tbody > tr');
+  $rows.each(function(){
+    $(this).remove();
+  });
+  $table = $('#gruplac-table');
+//;
+  $(entities).each(function(index){
+    var entity = $(this)[0] ;
+    var id =  entity['id'] ;
+    var nombre = entity['nombre'];
+    $row = '<tr data-index="'+index+'"> <td> <button id="btnDelete" href="">delete</button> </td><td>'+nombre+'</td></tr>';
+    $table.append( $row );
+  });
 }
