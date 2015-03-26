@@ -76,19 +76,56 @@ $(function(){
   $table.on('check.bs.table uncheck.bs.table check-all.bs.table uncheck-all.bs.table', function () {
     $remove.prop('disabled', !$table.bootstrapTable('getSelections').length);
   });
-  $remove.click(function ()
+  $remove.click(function (event)
   {
-      var ids = $.map($table.bootstrapTable('getSelections'), function (row) {
-        return row.id
-      });
-      
-      $table.bootstrapTable('remove', {
-        field: 'id',
-        values: ids
+      var $codes = [];
+      var $nombres = "";
+      $.each( $('input[name="btSelectItem"]:checkbox:checked').closest("td").siblings("td") ,function(){
+        if( $(this).attr('class') ==='id' ) {
+          $codes.push( $(this).text() );
+        }
+        else{
+          $nombres += $(this).text() + ",  ";
+        }
       });
 
+      var message = "Desea eliminar los GrupLAC's de los grupos: " +$nombres;
+
+      $table.bootstrapTable('remove', {
+            field: 'id',
+            values: $codes
+      });
       $remove.prop('disabled', true);
-  });
+
+      var baseUrl= location.protocol + "//" + location.host;
+      var url = baseUrl +  Routing.generate('admin_configuration_gruplac_delete');
+      var data = { 'codes': $codes };
+      console.log(   console.log(JSON.stringify(data)) );
+      $.ajax({
+        url: url,
+        async: false,
+        crossDomain: true,
+        method:'POST',
+        data:data,
+        success: function(data)
+        {
+          if(data.success){
+            $('#crear-msuccess').show();
+            $('#messageSuccess').remove();
+            $('#crear-msuccess').append('<p id="messageSuccess">Se eliminaron correctamente los GrupLac\'s </p>');
+          }
+        },
+        error: function(xhr, status, error)
+        {
+          console.log(JSON.stringify(xhr));
+          console.log(JSON.stringify(status));
+          console.log(JSON.stringify(error));
+        }
+      }).always(function(){});//end ajax
+
+      event.preventDefault();
+      event.stopPropagation();
+  });//remove onclick
 
 
 }); //jquery init
@@ -175,7 +212,7 @@ function updateTable(entities){
     var entity = $(this)[0] ;
     var id =  entity['id'] ;
     var nombre = entity['nombre'];
-    $row = '<tr data-index="'+index+'"> <td> <button id="btnDelete" href="">delete</button> </td><td>'+nombre+'</td></tr>';
+    $row = '<tr data-index="'+index+'"><td class="bs-checkbox"><input type="checkbox" name="btSelectItem" data-index="'+index+'"></td><td class="id">'+id+'</td><td>'+nombre+'</td></tr>';
     $table.append( $row );
   });
 }

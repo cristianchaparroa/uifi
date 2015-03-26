@@ -92,7 +92,14 @@ class GruplacService
      * Función que se encarga de eliminar un gruplac del sistema.
      * @param $code Código del gruplac a eliminar.
     */
-    public function delete($code){
-
+    public function delete($codes){
+      foreach($codes as $code){
+        $gruplac = $this->em->getRepository('UIFIGrupLACScraperBundle:Gruplac')->find($code);
+        if($gruplac){
+          $this->em->remove($gruplac);
+          $this->em->flush();
+        }
+      }
+      return true;
     }
 }

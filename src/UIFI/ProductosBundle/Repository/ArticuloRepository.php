@@ -20,4 +20,20 @@ class ArticuloRepository extends EntityRepository
     $em = $this->getEntityManager();
     return $em->createQuery('DELETE FROM UIFIProductosBundle:Articulo')->execute();
   }
+
+  /**
+  * Cuenta el número de articulos publicados por año en la facultad
+  *
+  */
+  public function getCountByYear(){
+    $em = $this->getEntityManager();
+    $connection = $em->getConnection();
+    $sql = 'SELECT COUNT(a.fecha) AS cantidad, YEAR(a.fecha) AS fecha FROM  articulo a
+            GROUP BY a.fecha';
+    $em = $this->getEntityManager();
+    $statement = $connection->prepare($sql);
+    $statement->execute();
+    $results = $statement->fetchAll();
+    return $results;
+  }
 }

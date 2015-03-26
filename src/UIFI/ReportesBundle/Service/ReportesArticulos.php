@@ -71,7 +71,19 @@ class ReportesArticulos
                $categorias = $normalizacion['categorias'];
                $series = $normalizacion['series'];
              }
-             if($discriminarGrupo =='anual' ){
+             if($discriminarGrupo =='totalFecha' )
+             {
+               $titulo = "Produccion de Artículos en la Facultad por Año";
+               $repositoryArticulo = $this->em->getRepository('UIFIProductosBundle:Articulo');
+               $results = $repositoryArticulo->getCountByYear();
+               $data = array();
+
+               foreach($results as $result ){
+                 $anual = $result['fecha'];
+                 $cantidad = intval($result['cantidad']);
+                 $series[] = array( 'name'=> $anual , 'data'=> array($cantidad) );
+                 $categorias[] = $anual;
+               }
 
              }
         }
@@ -194,6 +206,9 @@ class ReportesArticulos
           return $this->normalizarGraficaGruposAnual( $grafic );
         }
     }
+    /**
+    * Función que se encarga de verificar si todos las series tiene el mismo tamaño
+    */
     private function allSameSize($grafic)
     {
       $sizes = array();
@@ -226,7 +241,6 @@ class ReportesArticulos
     {
         $configuracion  = $this->configurarGrafica($mapParameters);
         $series = $configuracion['series'];
-
         $categorias = $configuracion['categorias'];
         $title = $configuracion['title'];
         $ob = new Highchart();
@@ -240,7 +254,9 @@ class ReportesArticulos
         $ob->title->text( $title  );
         $ob->yAxis->title(array('text'  => $yTitle ));
         $ob->series($series);
-        //$func = new \Zend\Json\Expr("function(){return 'Número de Artículos: <b>'+ this +'</b>';}");
+        $ob->tooltip->headerFormat('<span style="font-size:11px">{series.name}</span><br>');
+        //$ob->legend->enabled(false);
+        //$func = new \Zend\Json\Expr("function(){return ' Número de Artículos: <b>'+ {this.y +'</b>';}");
         //$ob->tooltip->formatter($func);
         //echo json_encode($ob);
         return $ob;

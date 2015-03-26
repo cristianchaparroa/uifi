@@ -73,8 +73,8 @@ class GruplacController extends Controller
     */
     public function delete(){
       $parameters = $this->getRequest()->request->all();
-      $code = $parameters['code'];
-      $success =  $this->get('uifi.gruplac.scrap.gruplac')->delete($code);
+      $codes = $parameters['codes'];
+      $success =  $this->get('uifi.gruplac.scrap.gruplac')->delete($codes);
       return new JsonResponse(array('success' =>  $success));
     }
 

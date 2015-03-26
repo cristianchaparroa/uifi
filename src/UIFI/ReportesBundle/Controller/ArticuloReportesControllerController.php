@@ -56,7 +56,7 @@ class ArticuloReportesControllerController extends Controller
      * Función que se encarga de filtrar la información de acuerdo de los
      * parámetros seleccionados por el usuario.
      *
-     * @Route(name="reportes_articulos_filtrar", options={"expose":true} )
+     * @Route("/reportes/articulos/filtrar", name="reportes_articulos_filtrar", options={"expose":true} )
      * @Method("GET")
      * @param Request
      * @return JsonResponse

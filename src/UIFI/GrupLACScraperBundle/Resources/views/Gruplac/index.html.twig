@@ -42,7 +42,7 @@
         {% for entity in entities %}
             <tr data-index="{{loop.index}}">
                 <td class="bs-checkbox"><input type="checkbox" name="btSelectItem" data-index="{{loop.index}}"></td>
-                <td >{{entity.id}}</td>
+                <td class="id">{{entity.id}}</td>
                 <td>{{entity.nombre}}</td>
             </tr>
         {% endfor %}
