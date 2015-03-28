@@ -25,6 +25,13 @@ class Integrante
     private $id;
 
     /**
+     * Código del gruplac
+     * @var string
+     * @ORM\Column(name="codigogruplac", type="string", length=14,nullable=true)
+     */
+    private $codigoGruplac;
+
+    /**
      * @ORM\OneToOne(targetEntity="UsersBundle\Entity\Usuario")
      * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
      */
@@ -110,7 +117,7 @@ class Integrante
     public function __toString(){
       return $this->nombres;
     }
-  
+
 
     /**
      * Set id
@@ -128,7 +135,7 @@ class Integrante
     /**
      * Get id
      *
-     * @return string 
+     * @return string
      */
     public function getId()
     {
@@ -151,7 +158,7 @@ class Integrante
     /**
      * Get documento
      *
-     * @return string 
+     * @return string
      */
     public function getDocumento()
     {
@@ -174,7 +181,7 @@ class Integrante
     /**
      * Get nombres
      *
-     * @return string 
+     * @return string
      */
     public function getNombres()
     {
@@ -197,7 +204,7 @@ class Integrante
     /**
      * Get codigo
      *
-     * @return string 
+     * @return string
      */
     public function getCodigo()
     {
@@ -220,7 +227,7 @@ class Integrante
     /**
      * Get telefono
      *
-     * @return string 
+     * @return string
      */
     public function getTelefono()
     {
@@ -243,7 +250,7 @@ class Integrante
     /**
      * Get celular
      *
-     * @return string 
+     * @return string
      */
     public function getCelular()
     {
@@ -266,7 +273,7 @@ class Integrante
     /**
      * Get correoInstitucional
      *
-     * @return string 
+     * @return string
      */
     public function getCorreoInstitucional()
     {
@@ -289,7 +296,7 @@ class Integrante
     /**
      * Get correoPersonal
      *
-     * @return string 
+     * @return string
      */
     public function getCorreoPersonal()
     {
@@ -312,7 +319,7 @@ class Integrante
     /**
      * Get usuario
      *
-     * @return \UsersBundle\Entity\Usuario 
+     * @return \UsersBundle\Entity\Usuario
      */
     public function getUsuario()
     {
@@ -345,7 +352,7 @@ class Integrante
     /**
      * Get articulos
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getArticulos()
     {
@@ -378,10 +385,33 @@ class Integrante
     /**
      * Get grupos
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getGrupos()
     {
         return $this->grupos;
+    }
+
+    /**
+     * Set codigoGruplac
+     *
+     * @param string $codigoGruplac
+     * @return Integrante
+     */
+    public function setCodigoGruplac($codigoGruplac)
+    {
+        $this->codigoGruplac = $codigoGruplac;
+
+        return $this;
+    }
+
+    /**
+     * Get codigoGruplac
+     *
+     * @return string 
+     */
+    public function getCodigoGruplac()
+    {
+        return $this->codigoGruplac;
     }
 }

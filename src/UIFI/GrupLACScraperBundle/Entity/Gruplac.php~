@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Gruplac
  *
  * @ORM\Table( name="gruplac")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="UIFI\GrupLACScraperBundle\Repository\GruplacRepository")
  */
 class Gruplac
 {

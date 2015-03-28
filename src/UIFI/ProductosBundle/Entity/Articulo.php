@@ -83,6 +83,13 @@ class Articulo
      * @ORM\ManyToMany(targetEntity="UIFI\IntegrantesBundle\Entity\Integrante", mappedBy="articulos")
     */
     private $integrantes;
+
+    /**
+     * Codigo del grupo en el cual fue publicado el articulo
+     *
+     * @ORM\Column(name="grupo", type="string", length=255)
+     */
+    private $grupo;
     /**
      * Constructor
      */
@@ -307,5 +314,28 @@ class Articulo
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set grupo
+     *
+     * @param string $grupo
+     * @return Articulo
+     */
+    public function setGrupo($grupo)
+    {
+        $this->grupo = $grupo;
+
+        return $this;
+    }
+
+    /**
+     * Get grupo
+     *
+     * @return string 
+     */
+    public function getGrupo()
+    {
+        return $this->grupo;
     }
 }

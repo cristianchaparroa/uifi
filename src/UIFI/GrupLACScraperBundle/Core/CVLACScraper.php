@@ -10,7 +10,7 @@ namespace UIFI\GrupLACScraperBundle\Core;
   *@author: Cristian Camilo Chaparro A.
   */
 
-class IndividualCVLACScraper extends GrupLACScraper
+class CVLACScraper extends Scraper
 {
   const URL_BASE = 'http://scienti1.colciencias.gov.co:8081/cvlac/visualizador/generarCurriculoCv.do?cod_rh=';
   /**
@@ -24,7 +24,7 @@ class IndividualCVLACScraper extends GrupLACScraper
 	public function __construct( $url )
 	{
       $this->code = $url;
-      GrupLACScraper::__construct( $url  );
+      Scraper::__construct( self::URL_BASE. $url  );
 	}
   private function extraerValor($query){
       $resultados = $this->xpath->query( $query );
@@ -254,8 +254,7 @@ class IndividualCVLACScraper extends GrupLACScraper
   }
 
   public function getCode(){
-    $array = explode("=",$this->code);
-    return $array[1];
+    return $this->code;
   }
   private function isEmptyString($str) {
     return !(isset($str) && (strlen(trim($str)) > 0));

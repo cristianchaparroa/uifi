@@ -6,8 +6,8 @@ namespace UIFI\GrupLACScraperBundle\Service;
 
 use Symfony\Bundle\DoctrineBundle\Registry;
 use Symfony\Component\HttpKernel\Log\LoggerInterface;
-use UIFI\GrupLACScraperBundle\Core\PageGrupLACScraper;
-use UIFI\GrupLACScraperBundle\Core\IndividualCVLACScraper;
+use UIFI\GrupLACScraperBundle\Core\GrupLACScraper;
+use UIFI\GrupLACScraperBundle\Core\CVLACScraper;
 use Symfony\Component\DependencyInjection\Container;
 
 use UIFI\IntegrantesBundle\Entity\Grupo;
@@ -60,7 +60,7 @@ class GetInformacion
 
      foreach( $codes as $code )
      {
-       $grupoScraper = new PageGrupLACScraper($code);
+       $grupoScraper = new GrupLACScraper($code);
        /**
         * Registro el grupo de investigación en el sistema
        */
@@ -76,64 +76,66 @@ class GetInformacion
 
        $entityGrupo = $grupo;
        $integrantes = $grupoScraper->obtenerIntegrantes();
+
+
+
        /**
         * Se obtiene la información de cada integrante
        */
-       foreach( $integrantes as $codeIntegrante => $nombreIntegrante)
+       foreach( $integrantes as $codeIntegrante => $result )
        {
-          $integranteScraper = new IndividualCVLACScraper( $codeIntegrante );
-           //si existe el integrante,significa que pertenece a varios grupos
-          $existIntegrante = $repositoryIntegrante->find($codeIntegrante);
-          if($existIntegrante){
-              $entityIntegrante = $existIntegrante;
-          }
-          else{
-
-             $integrante = new Integrante();
-             $cvlacIntegrante = $integranteScraper->getURL();
-             $integrante->addGrupo( $entityGrupo );
-             $integrante->setId( $cvlacIntegrante );
-             $integrante->setNombres( $nombreIntegrante );
-             //se setea la demas información posible.
-             $this->em->persist( $integrante );
-             $this->em->flush();
-             $entityIntegrante = $repositoryIntegrante->find($codeIntegrante);
-          }
-
-          $entityGrupo->addIntegrante($entityIntegrante);
-          $this->em->persist($entityGrupo);
-          //$this->em->flush();
-
+          // $nombreIntegrante = $result['nombre'];
+          // $vinculacion = $result['vinculacion'];
+          // $integranteScraper = new CVLACScraper( $codeIntegrante );
+          //  //si existe el integrante,significa que pertenece a varios grupos
+          // $existIntegrante = $repositoryIntegrante->find($codeIntegrante);
+          // if($existIntegrante){
+          //     $entityIntegrante = $existIntegrante;
+          // }
+          // else{
+          //
+          //    $integrante = new Integrante();
+          //    $cvlacIntegrante = $integranteScraper->getURL();
+          //    $integrante->addGrupo( $entityGrupo );
+          //    $integrante->setId( $cvlacIntegrante );
+          //    $integrante->setCodigoGruplac( $integranteScraper->getCode()  );
+          //    $integrante->setNombres( $nombreIntegrante );
+          //    //se setea la demas información posible.
+          //    $this->em->persist( $integrante );
+          //    $this->em->flush();
+          //    $entityIntegrante = $repositoryIntegrante->find($codeIntegrante);
+          // }
+          //
+          // $entityGrupo->addIntegrante($entityIntegrante);
+          // $this->em->persist($entityGrupo);
           /**
            *se registran los articulos asociados a un integrante.
            */
-          $articulos =  $integranteScraper->procesarArticulos();
-          $index = 0;
-          foreach( $articulos as $articulo){
-            $article = new Articulo();
-            $codeArticulo = $code ."-". $integranteScraper->getCode() ."-". $index;
-            $article->setId($codeArticulo );
-            $article->setTitulo($articulo['titulo']);
-            $article->setEditorial($articulo['editorial']);
-            $article->setISSN($articulo['ISSN']);
-            $article->setPalabras($articulo['palabras']);
-            $article->addIntegrante($entityIntegrante);
-            $anual = str_replace(' ', '', $articulo['anual']);
-            $anual = '01/01/'.$anual;
-            $fecha = new \DateTime($anual);
-            $article->setFecha($fecha);
-            $this->em->persist($article);
 
-            $entityIntegrante->addArticulo($article);
-            $this->em->persist($article);
-
-            $index++;
-          }
        }
+       //se obtiene la información de cada artículo
+       $articulosGrupo = $grupoScraper->getTitulosArticulos();
+
        $currentTask++;
      }
      $this->em->flush();
      return true;
+   }
+
+   private function contains($text, $word)
+   {
+        $found = false;
+        $spaceArray = explode(' ', $text);
+
+        $nonBreakingSpaceArray = explode(chr(160), $text);
+
+        if (in_array($word, $spaceArray) ||
+            in_array($word, $nonBreakingSpaceArray)
+           ) {
+
+            $found = true;
+        }
+        return $found;
    }
    /**
     * Función que se encarga de eliminar todos los registros para inicializar
