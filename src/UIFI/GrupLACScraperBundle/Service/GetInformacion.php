@@ -118,12 +118,9 @@ class GetInformacion
          $fecha = new \DateTime( $articulo['anual'] );
          $article->setFecha($fecha);
          $article->setGrupo( $entityGrupo );
-         
+
          $this->em->persist( $article );
          $this->em->flush();
-         /*
-         * @FIXME: llenar la tabla integrantes_articulos
-         */
          foreach( $autores as $autor )
          {
             $nombres = strtoupper(substr($autor,1));

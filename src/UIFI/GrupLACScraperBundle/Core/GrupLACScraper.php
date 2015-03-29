@@ -150,6 +150,7 @@ class GrupLACScraper extends  Scraper
 				$articulo['autores']  = $autores;
 				$articulos[] = $articulo;
 			}
+			
 			return$articulos;
 		}
     /**

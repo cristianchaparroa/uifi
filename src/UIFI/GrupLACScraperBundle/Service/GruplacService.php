@@ -19,7 +19,6 @@ use UIFI\GrupLACScraperBundle\Entity\Gruplac;
 */
 class GruplacService
 {
-
     public function __construct(Container $container)
     {
        $this->container = $container;

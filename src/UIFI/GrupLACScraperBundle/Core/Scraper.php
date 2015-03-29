@@ -7,6 +7,7 @@ namespace UIFI\GrupLACScraperBundle\Core;
   */
 class Scraper
 {
+	
 	/**
 	  *
 	  */

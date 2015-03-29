@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class IntegranteRepository extends EntityRepository
 {
+  
   /**
    * Funcion que se encarga de eliminar todos los registros
    * de la entidad

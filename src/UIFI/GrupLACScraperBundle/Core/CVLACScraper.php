@@ -12,6 +12,7 @@ namespace UIFI\GrupLACScraperBundle\Core;
 
 class CVLACScraper extends Scraper
 {
+  
   const URL_BASE = 'http://scienti1.colciencias.gov.co:8081/cvlac/visualizador/generarCurriculoCv.do?cod_rh=';
   /**
    * Código del  CvLAC de una paresona en el grupo de investigación Especificado.
