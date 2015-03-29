@@ -53,6 +53,18 @@ class GrupLACScraper extends  Scraper
 			return $integrantes;
 		}
 		/**
+		* Método que se encarga de extraer un valor a partir de un query
+		* especifico.
+		* @return valor
+		*/
+		public function extraerValue($query){
+				$listaNodos = $this->xpath->query( $query );
+				foreach( $listaNodos as $nodo ){
+					$value =  $nodo->nodeValue;
+				}
+				return isset( $value) ? $value : "";
+		}
+		/**
 			*Función para extrer información de un query.
 			*@param Arreglo con el resultado del query.
 			*/
@@ -68,7 +80,6 @@ class GrupLACScraper extends  Scraper
 						$producciones[ ] = $produccion;
 					}
 			}
-
 			$temp = array();
 			foreach( $producciones as $produccion ){
 				$arreglo = explode( '-', $produccion);
@@ -84,18 +95,63 @@ class GrupLACScraper extends  Scraper
 			}
 			return $temp;
 		}
-    /**
-     * Método que se encarga de extraer un valor a partir de un query
-     * especifico.
-     * @return valor
-    */
-    public function extraerValue($query){
-	      $listaNodos = $this->xpath->query( $query );
-	      foreach( $listaNodos as $nodo ){
-	        $value =  $nodo->nodeValue;
-	      }
-				return isset( $value) ? $value : "";
-    }
+		/**
+		*  Obtiene los artículos publicados en el grupo de Investigación
+		* @return Arreglo con la siguiente información
+		* 			articulo['titulo'] , título de articulo
+		* 			articulo['anual']  , año en el que fue publicado el artículo
+		* 			articulo['autores'], arreglo con los nombres de los autores
+		*/
+		public function getArticulos()
+		{
+			$query = '/html/body/table[8]';
+			$array = $this->extraer( $query );
+			$items = array();
+			$articulos = array();
+
+			foreach( $array as $item )
+			{
+				$articulo = array();
+
+				$doc = new \DOMDocument();
+				$doc->loadHTML( $item );
+				$xpath = new \DOMXPath($doc);
+				$list = $doc->getElementsByTagName('strong');
+
+				//Obtengo el titulo del artículo
+				foreach($list as $node ){
+					$tituloNode = $node->nextSibling;
+					$articulo['titulo'] = $tituloNode->nodeValue;
+				}
+
+				//obtengo los autores del artículo
+				$list = $doc->getElementsByTagName('br');
+				$autores = array();
+				foreach( $list as $node ){
+					$nodesiguiente = $node->nextSibling;
+					if( strpos($nodesiguiente->nodeValue, 'Autores') ){
+						$result = $nodesiguiente->nodeValue;
+						$results = explode( ':',$result);
+						$results = $results[1];
+						$results = str_replace( '\n','',$results);
+						$autores = explode(',',$results);
+					}
+					//se obtiene el año en  el que se publico el artículo
+					if( strpos($nodesiguiente->nodeValue,'ISSN') ){
+						$result = $nodesiguiente->nodeValue;
+						$results = explode( ',',$result );
+						$results = $results[2];
+						$results =explode(' ',$results );
+						$anual  = $results[1];
+						$articulo['anual'] = $anual;
+					}
+				}
+				array_pop($autores);
+				$articulo['autores']  = $autores;
+				$articulos[] = $articulo;
+			}
+			return$articulos;
+		}
     /**
      * Método que extrae la fecha(año y mes) de formación del
      * grupo de investigación.
@@ -245,45 +301,7 @@ class GrupLACScraper extends  Scraper
       return $this->extraer( $query );
     }
 
-		public function getTitulosArticulos(){
-			echo "articulos";
-			$query = '/html/body/table[8]';
-			$array = $this->extraer( $query );
-			$items = array();
 
-
-			foreach( $array as $item )
-			{
-				$articulo = array();
-
-				$doc = new \DOMDocument();
-				$doc->loadHTML( $item );
-				$xpath = new \DOMXPath($doc);
-				$list = $doc->getElementsByTagName('strong');
-
-				//Obtengo el titulo del artículo
-				foreach($list as $node ){
-					$tituloNode = $node->nextSibling;
-					$articulo['titulo'] = $tituloNode->nodeValue;
-				}
-
-				$query = '//br[.="Autores:"]/following-sibling::text()[normalize-space()][1]';
-				foreach ($xpath->query($query) as $node) {
-	        echo $node->nodeValue . "</br> . ";
-
-	      }
-				// foreach( $list as $node )
-				// {
-				// 	$node->nodeValue= str_replace('&nbsp', '', $node->nodeValue );
-				// 	echo $node->firstChild ->nodeValue . '<br><br>';
-				// 	if (is_numeric ($node->nodeValue)){
-				// 			$node->nodeValue='';
-				// 	}
-				// }
-				// $itemFiltered =  $doc->saveHTML() ;
-				// $items[] = $itemFiltered;
-			}
-		}
     /**
      * Retorna otro tipo de articulos publicados por el
      * grupo de investigación.

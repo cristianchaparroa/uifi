@@ -15,7 +15,7 @@ class Articulo
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="string", length=255)
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      */
     private $id;
@@ -24,7 +24,7 @@ class Articulo
     * Titulo del artículo de investigación
      * @var string
      *
-     * @ORM\Column(name="titulo", type="string", length=10000)
+     * @ORM\Column(name="titulo", type="string", length=10000,nullable=true)
      */
     private $titulo;
 
@@ -40,7 +40,7 @@ class Articulo
      * Contenido generado por el Scraper desde el CVLAC
      * @var string
      *
-     * @ORM\Column(name="editorial", type="string", length=255)
+     * @ORM\Column(name="editorial", type="string", length=255,nullable=true)
      */
     private $editorial;
 
@@ -48,7 +48,7 @@ class Articulo
      * Contenido generado por el Scraper desde el CVLAC
      * @var string
      *
-     * @ORM\Column(name="ISSN", type="string", length=255)
+     * @ORM\Column(name="ISSN", type="string", length=255,nullable=true)
      */
     private $ISSN;
 
@@ -332,7 +332,7 @@ class Articulo
     /**
      * Get grupo
      *
-     * @return string 
+     * @return string
      */
     public function getGrupo()
     {

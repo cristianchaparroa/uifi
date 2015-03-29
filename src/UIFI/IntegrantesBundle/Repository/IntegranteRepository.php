@@ -69,4 +69,5 @@ class IntegranteRepository extends EntityRepository
     $results = $statement->fetchAll();
     return $results;
   }
+
 }

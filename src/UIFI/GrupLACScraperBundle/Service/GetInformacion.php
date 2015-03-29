@@ -77,45 +77,68 @@ class GetInformacion
        $entityGrupo = $grupo;
        $integrantes = $grupoScraper->obtenerIntegrantes();
 
-
-
        /**
         * Se obtiene la información de cada integrante
        */
        foreach( $integrantes as $codeIntegrante => $result )
        {
-          // $nombreIntegrante = $result['nombre'];
-          // $vinculacion = $result['vinculacion'];
-          // $integranteScraper = new CVLACScraper( $codeIntegrante );
+          $nombreIntegrante = $result['nombre'];
+          $integranteScraper = new CVLACScraper( $codeIntegrante );
           //  //si existe el integrante,significa que pertenece a varios grupos
-          // $existIntegrante = $repositoryIntegrante->find($codeIntegrante);
-          // if($existIntegrante){
-          //     $entityIntegrante = $existIntegrante;
-          // }
-          // else{
-          //
-          //    $integrante = new Integrante();
-          //    $cvlacIntegrante = $integranteScraper->getURL();
-          //    $integrante->addGrupo( $entityGrupo );
-          //    $integrante->setId( $cvlacIntegrante );
-          //    $integrante->setCodigoGruplac( $integranteScraper->getCode()  );
-          //    $integrante->setNombres( $nombreIntegrante );
-          //    //se setea la demas información posible.
-          //    $this->em->persist( $integrante );
-          //    $this->em->flush();
-          //    $entityIntegrante = $repositoryIntegrante->find($codeIntegrante);
-          // }
-          //
-          // $entityGrupo->addIntegrante($entityIntegrante);
-          // $this->em->persist($entityGrupo);
-          /**
-           *se registran los articulos asociados a un integrante.
-           */
+          $existIntegrante = $repositoryIntegrante->find($codeIntegrante);
+          if($existIntegrante){
+              $entityIntegrante = $existIntegrante;
+          }
+          else{
 
+             $integrante = new Integrante();
+             $cvlacIntegrante = $integranteScraper->getURL();
+             $integrante->addGrupo( $entityGrupo );
+             $integrante->setId( $cvlacIntegrante );
+             $integrante->setCodigoGruplac( $integranteScraper->getCode()  );
+             $integrante->setNombres( strtoupper($nombreIntegrante) );
+             //se setea la demas información posible.
+             $this->em->persist( $integrante );
+             $entityIntegrante = $repositoryIntegrante->find($codeIntegrante);
+          }
+          $entityGrupo->addIntegrante($entityIntegrante);
+          $this->em->persist($entityGrupo);
        }
-       //se obtiene la información de cada artículo
-       $articulosGrupo = $grupoScraper->getTitulosArticulos();
+       //se obtiene los articulos publicados en el grupo
+       $articulosGrupo  = $grupoScraper->getArticulos();
 
+       $index = 0;
+       foreach($articulosGrupo as $articulo )
+       {
+         $codeArticulo =  $code . $index;
+         $autores  = $articulo['autores'];
+         $article = new Articulo();
+         $article->setId($codeArticulo  );
+         $article->setTitulo($articulo['titulo']);
+         $fecha = new \DateTime( $articulo['anual'] );
+         $article->setFecha($fecha);
+         $article->setGrupo( $entityGrupo );
+         
+         $this->em->persist( $article );
+         $this->em->flush();
+         /*
+         * @FIXME: llenar la tabla integrantes_articulos
+         */
+         foreach( $autores as $autor )
+         {
+            $nombres = strtoupper(substr($autor,1));
+            $resultIntegrante  = $repositoryIntegrante->findBy( array('nombres' => $nombres) );
+            if( count(  $resultIntegrante  )>0 ){
+                $entityIntegrante =   $resultIntegrante[0];
+                $entityArticulo = $repositoryArticulo->find($codeArticulo);
+                $entityIntegrante->addArticulo($entityArticulo);
+                $this->em->persist($entityIntegrante);
+                $this->em->flush();
+            }
+         }
+         $this->em->persist( $article );
+         $index++;
+       }
        $currentTask++;
      }
      $this->em->flush();

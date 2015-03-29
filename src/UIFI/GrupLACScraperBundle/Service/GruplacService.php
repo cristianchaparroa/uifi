@@ -6,8 +6,8 @@ namespace UIFI\GrupLACScraperBundle\Service;
 
 use Symfony\Bundle\DoctrineBundle\Registry;
 use Symfony\Component\HttpKernel\Log\LoggerInterface;
-use UIFI\GrupLACScraperBundle\Core\PageGrupLACScraper;
-use UIFI\GrupLACScraperBundle\Core\IndividualCVLACScraper;
+use UIFI\GrupLACScraperBundle\Core\GrupLACScraper;
+use UIFI\GrupLACScraperBundle\Core\CVLACScraper;
 use Symfony\Component\DependencyInjection\Container;
 use UIFI\GrupLACScraperBundle\Entity\Gruplac;
 
@@ -56,7 +56,7 @@ class GruplacService
      * @return Estado del proceso {false,true}
     */
     public function newGruplac($code){
-        $grupoScraper = new PageGrupLACScraper($code);
+        $grupoScraper = new GrupLACScraper($code);
         $nombre = $grupoScraper->getNombreGrupo();
         $gruplac = new Gruplac();
         $gruplac->setId($code);
