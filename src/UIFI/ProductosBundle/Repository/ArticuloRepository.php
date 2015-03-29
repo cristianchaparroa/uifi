@@ -28,8 +28,8 @@ class ArticuloRepository extends EntityRepository
   public function getCountByYear(){
     $em = $this->getEntityManager();
     $connection = $em->getConnection();
-    $sql = 'SELECT COUNT(a.fecha) AS cantidad, YEAR(a.fecha) AS fecha FROM  articulo a
-            GROUP BY a.fecha';
+    $sql = 'SELECT COUNT(a.anual) AS cantidad, a.anual AS fecha FROM  articulo a
+            GROUP BY a.anual';
     $em = $this->getEntityManager();
     $statement = $connection->prepare($sql);
     $statement->execute();

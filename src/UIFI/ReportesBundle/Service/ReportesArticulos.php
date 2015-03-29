@@ -33,6 +33,7 @@ class ReportesArticulos
     */
     private function configurarGrafica($mapParameters)
     {
+        echo json_encode($mapParameters);
         $allCategories = array();
         $series = array();
         $categorias = array();
@@ -73,7 +74,7 @@ class ReportesArticulos
              }
              if($discriminarGrupo =='totalFecha' )
              {
-               $titulo = "Produccion de Artículos en la Facultad por Año";
+               $titulo = "Producción de Artículos en la Facultad por Año";
                $repositoryArticulo = $this->em->getRepository('UIFIProductosBundle:Articulo');
                $results = $repositoryArticulo->getCountByYear();
                $data = array();
@@ -136,7 +137,7 @@ class ReportesArticulos
           }
           else{
             $entityIntegrante = $repositoryIntegrante->find($seleccionaIntegrante);
-            $title = "Articulos publicados por " . $entityIntegrante->getNombres();
+            $title = "Articulos publicados por " . $entityIntegrante->getNombres(). " en ".$grupo->getNombre();
             $results = $repositoryIntegrante
               ->getCantidadArticulosAnual($entityIntegrante->getId(),$grupo->getId() );
 

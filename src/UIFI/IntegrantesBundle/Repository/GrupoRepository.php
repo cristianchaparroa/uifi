@@ -37,7 +37,7 @@ class GrupoRepository extends EntityRepository
     $connection = $em->getConnection();
     $sql = "SELECT count(DISTINCT a.id) as cantidad
       FROM  grupo g, integrante i,grupo_integrante gi, articulo a,integrantes_articulos ia
-      WHERE g.id = :code AND gi.grupo_id = g.id AND gi.integrante_id = i.id
+      WHERE g.id = :code AND gi.grupo_id = g.id AND gi.integrante_id = i.id AND a.grupo = g.id
         AND ia.integrante_id = i.id AND ia.articulo_id  = a.id";
 
     $statement = $connection->prepare($sql);
@@ -63,12 +63,12 @@ class GrupoRepository extends EntityRepository
   public function getCountArticulosByYear($code){
     $em = $this->getEntityManager();
     $connection = $em->getConnection();
-    $sql = 'SELECT  COUNT(DISTINCT (a.id)) as cantidad, g.nombre, YEAR(a.fecha) as anual
+    $sql = 'SELECT  COUNT(DISTINCT (a.id)) as cantidad, g.nombre, a.anual
           FROM  articulo a, integrantes_articulos  ia, integrante i,
             grupo g, grupo_integrante gi
-          WHERE  g.id = :code AND ia.articulo_id = a.id AND ia.integrante_id = i.id
+          WHERE  g.id = :code  AND ia.articulo_id = a.id AND ia.integrante_id = i.id
             AND gi.grupo_id = g.id AND gi.integrante_id = i.id
-          GROUP BY g.id,a.fecha ORDER BY a.fecha,g.nombre';
+          GROUP BY g.id,a.anual ORDER BY a.anual,g.nombre';
     $statement = $connection->prepare($sql);
     $statement->bindValue('code', $code);
     $statement->execute();

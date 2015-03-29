@@ -115,9 +115,9 @@ class GetInformacion
          $article = new Articulo();
          $article->setId($codeArticulo  );
          $article->setTitulo($articulo['titulo']);
-         $fecha = new \DateTime( $articulo['anual'] );
-         $article->setFecha($fecha);
-         $article->setGrupo( $entityGrupo );
+         $article->setAnual( $articulo['anual'] );
+
+         $article->setGrupo( $code );
 
          $this->em->persist( $article );
          $this->em->flush();

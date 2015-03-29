@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class IntegranteRepository extends EntityRepository
 {
-  
+
   /**
    * Funcion que se encarga de eliminar todos los registros
    * de la entidad
@@ -58,11 +58,11 @@ class IntegranteRepository extends EntityRepository
   public function getCantidadArticulosAnual($code,$idGrupo){
     $em = $this->getEntityManager();
     $connection = $em->getConnection();
-    $query = 'SELECT COUNT(*) as cantidad, YEAR(a.fecha) as anual
+    $query = 'SELECT COUNT(*) as cantidad, a.anual
         FROM grupo g, integrante i , grupo_integrante gi, articulo a, integrantes_articulos ia
         WHERE g.id= :idGrupo AND i.id= :code AND gi.grupo_id = g.id  AND gi.integrante_id = i.id
           AND ia.integrante_id = i.id AND ia.articulo_id = a.id
-        GROUP BY a.fecha';
+        GROUP BY a.anual';
     $statement = $connection->prepare($query);
     $statement->bindValue('code', $code);
     $statement->bindValue('idGrupo', $idGrupo);

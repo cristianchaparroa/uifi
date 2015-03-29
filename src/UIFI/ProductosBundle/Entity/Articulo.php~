@@ -12,12 +12,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Articulo
 {
+
     /**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
@@ -71,12 +71,12 @@ class Articulo
     private $categoria;
 
     /**
-     * fecha en que fue publicado el articulo
+     * Año en el que fue publicado el articulo
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha", type="date",nullable=true)
+     * @ORM\Column(name="anual", type="string",length=255,nullable=true)
      */
-    private $fecha;
+    private $anual;
 
     /**
      * Integrantes de un grupo de un investigacion que publicaron el articulo.
@@ -100,6 +100,28 @@ class Articulo
     }
 
 
+    /**
+     * Set id
+     *
+     * @param integer $id
+     * @return Articulo
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Set titulo
@@ -145,84 +167,6 @@ class Articulo
     public function getContenido()
     {
         return $this->contenido;
-    }
-
-    /**
-     * Set categoria
-     *
-     * @param string $categoria
-     * @return Articulo
-     */
-    public function setCategoria($categoria)
-    {
-        $this->categoria = $categoria;
-
-        return $this;
-    }
-
-    /**
-     * Get categoria
-     *
-     * @return string
-     */
-    public function getCategoria()
-    {
-        return $this->categoria;
-    }
-
-    /**
-     * Set fecha
-     *
-     * @param \DateTime $fecha
-     * @return Articulo
-     */
-    public function setFecha($fecha)
-    {
-        $this->fecha = $fecha;
-
-        return $this;
-    }
-
-    /**
-     * Get fecha
-     *
-     * @return \DateTime
-     */
-    public function getFecha()
-    {
-        return $this->fecha;
-    }
-    /**
-     * Get integrantes
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getIntegrantes()
-    {
-        return $this->integrantes;
-    }
-
-    /**
-     * Add integrantes
-     *
-     * @param \UIFI\IntegrantesBundle\Entity\Integrante $integrantes
-     * @return Articulo
-     */
-    public function addIntegrante(\UIFI\IntegrantesBundle\Entity\Integrante $integrantes)
-    {
-        $this->integrantes[] = $integrantes;
-
-        return $this;
-    }
-
-    /**
-     * Remove integrantes
-     *
-     * @param \UIFI\IntegrantesBundle\Entity\Integrante $integrantes
-     */
-    public function removeIntegrante(\UIFI\IntegrantesBundle\Entity\Integrante $integrantes)
-    {
-        $this->integrantes->removeElement($integrantes);
     }
 
     /**
@@ -295,26 +239,49 @@ class Articulo
     }
 
     /**
-     * Set id
+     * Set categoria
      *
-     * @param integer $id
+     * @param string $categoria
      * @return Articulo
      */
-    public function setId($id)
+    public function setCategoria($categoria)
     {
-        $this->id = $id;
+        $this->categoria = $categoria;
 
         return $this;
     }
 
     /**
-     * Get id
+     * Get categoria
      *
-     * @return integer
+     * @return string
      */
-    public function getId()
+    public function getCategoria()
     {
-        return $this->id;
+        return $this->categoria;
+    }
+
+    /**
+     * Set anual
+     *
+     * @param \DateTime $anual
+     * @return Articulo
+     */
+    public function setAnual($anual)
+    {
+        $this->anual = $anual;
+
+        return $this;
+    }
+
+    /**
+     * Get anual
+     *
+     * @return \DateTime
+     */
+    public function getAnual()
+    {
+        return $this->anual;
     }
 
     /**
@@ -338,5 +305,38 @@ class Articulo
     public function getGrupo()
     {
         return $this->grupo;
+    }
+
+    /**
+     * Add integrantes
+     *
+     * @param \UIFI\IntegrantesBundle\Entity\Integrante $integrantes
+     * @return Articulo
+     */
+    public function addIntegrante(\UIFI\IntegrantesBundle\Entity\Integrante $integrantes)
+    {
+        $this->integrantes[] = $integrantes;
+
+        return $this;
+    }
+
+    /**
+     * Remove integrantes
+     *
+     * @param \UIFI\IntegrantesBundle\Entity\Integrante $integrantes
+     */
+    public function removeIntegrante(\UIFI\IntegrantesBundle\Entity\Integrante $integrantes)
+    {
+        $this->integrantes->removeElement($integrantes);
+    }
+
+    /**
+     * Get integrantes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIntegrantes()
+    {
+        return $this->integrantes;
     }
 }
