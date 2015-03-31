@@ -30,6 +30,13 @@
                 <target> Produción de artículos en el grupo  </target>
           </trans-unit>
 
+
+          <trans-unit id="6">
+             <source>reportes.libros.title</source>
+             <target> Reportes de Libros </target>
+         </trans-unit>
+
+
         </body>
     </file>
 </xliff>

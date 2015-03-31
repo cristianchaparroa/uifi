@@ -22,6 +22,7 @@ class ArticuloReportesType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
         $builder->add('grupo',   'filter_entity', array( 'class'=>'UIFIIntegrantesBundle:Grupo', 'choices' => $this->choicesGrupos ) );
 
         $builder->add('discriminarGrupo','choice' ,
@@ -48,12 +49,11 @@ class ArticuloReportesType extends AbstractType
                 'attr' => array('class' => 'date form-control'),
             ),
         ));
-
     }
 
     public function getName()
     {
-        return 'uifi_reportes_articulo';
+        return 'uifi_reportes';
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

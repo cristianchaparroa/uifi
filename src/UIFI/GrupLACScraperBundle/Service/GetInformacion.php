@@ -110,30 +110,30 @@ class GetInformacion
        $index = 0;
        foreach($articulosGrupo as $articulo )
        {
-         $codeArticulo =  $code . $index;
+         $codeArticulo =  $code ."-". $index;
          $autores  = $articulo['autores'];
          $article = new Articulo();
-         $article->setId($codeArticulo  );
+         $article->setId( $codeArticulo  );
          $article->setTitulo($articulo['titulo']);
          $article->setAnual( $articulo['anual'] );
 
          $article->setGrupo( $code );
-
          $this->em->persist( $article );
          $this->em->flush();
          foreach( $autores as $autor )
          {
             $nombres = strtoupper(substr($autor,1));
             $resultIntegrante  = $repositoryIntegrante->findBy( array('nombres' => $nombres) );
+
             if( count(  $resultIntegrante  )>0 ){
                 $entityIntegrante =   $resultIntegrante[0];
-                $entityArticulo = $repositoryArticulo->find($codeArticulo);
-                $entityIntegrante->addArticulo($entityArticulo);
+                $entityIntegrante->addArticulo($article);
                 $this->em->persist($entityIntegrante);
+                $this->em->flush();
+                $this->em->persist( $article );
                 $this->em->flush();
             }
          }
-         $this->em->persist( $article );
          $index++;
        }
        $currentTask++;

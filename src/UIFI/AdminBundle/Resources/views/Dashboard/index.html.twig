@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="{{ asset('css/menu.css') }}" type="text/css" rel="stylesheet" />
+  <link href="{{ asset('css/footer.css') }}" type="text/css" rel="stylesheet" />
   <link href="{{ asset('css/bootstrap-table.min.css') }}" type="text/css" rel="stylesheet" />
   <link href="{{ asset('bootstrap/css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" />
   <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
@@ -48,6 +49,14 @@
 
       </div><!--  endrow-->
 
+      {% block footer %}
+        <footer>
+             <p>Developed by  Cristian Chaparro Contact information:
+               <a href="mailto:cristianchaparroa@gmail.com">cristianchaparroa@gmail.com</a>
+             </p>
+        </footer>
+
+      {% endblock %}
     </div><!-- end container -->
 </body>
 </html>

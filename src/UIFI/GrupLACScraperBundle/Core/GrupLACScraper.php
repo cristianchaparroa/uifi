@@ -147,10 +147,11 @@ class GrupLACScraper extends  Scraper
 					}
 				}
 				array_pop($autores);
+				$autores = array_unique($autores);
 				$articulo['autores']  = $autores;
 				$articulos[] = $articulo;
 			}
-			
+
 			return$articulos;
 		}
     /**

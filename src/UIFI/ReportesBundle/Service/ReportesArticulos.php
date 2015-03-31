@@ -33,7 +33,7 @@ class ReportesArticulos
     */
     private function configurarGrafica($mapParameters)
     {
-        echo json_encode($mapParameters);
+
         $allCategories = array();
         $series = array();
         $categorias = array();
@@ -257,9 +257,6 @@ class ReportesArticulos
         $ob->series($series);
         $ob->tooltip->headerFormat('<span style="font-size:11px">{series.name}</span><br>');
         //$ob->legend->enabled(false);
-        //$func = new \Zend\Json\Expr("function(){return ' Número de Artículos: <b>'+ {this.y +'</b>';}");
-        //$ob->tooltip->formatter($func);
-        //echo json_encode($ob);
         return $ob;
     }
     /**
