@@ -5,13 +5,13 @@
 
 var $table = $('#gruplac-table');
 var $remove = $('#remove');
-
+$('#btn-agregar-gruplac').prop('disabled',false);
 $(function(){
   /**
   * Its happening in the index view
   */
   $('#btn-agregar-gruplac').bind('click',function(){
-    $('#gruplac').empty();
+      $('#gruplac').empty();
   });
   $('#crear-msuccess').hide();
 
@@ -74,7 +74,7 @@ $(function(){
 
 
   $table.on('check.bs.table uncheck.bs.table check-all.bs.table uncheck-all.bs.table', function () {
-    $remove.prop('disabled', !$table.bootstrapTable('getSelections').length);
+      $remove.prop('disabled', !$table.bootstrapTable('getSelections').length);
   });
   $remove.click(function (event)
   {
@@ -203,16 +203,23 @@ function showError(error){
 */
 function updateTable(entities){
   $rows =  $('#gruplac-table > tbody > tr');
-  $rows.each(function(){
-    $(this).remove();
-  });
-  $table = $('#gruplac-table');
-//;
-  $(entities).each(function(index){
-    var entity = $(this)[0] ;
-    var id =  entity['id'] ;
-    var nombre = entity['nombre'];
-    $row = '<tr data-index="'+index+'"><td class="bs-checkbox"><input type="checkbox" name="btSelectItem" data-index="'+index+'"></td><td class="id">'+id+'</td><td>'+nombre+'</td></tr>';
-    $table.append( $row );
-  });
+  console.log( $rows.length);
+  if( $rows.length > 0  ){
+    $rows.each(function(){
+      $(this).remove();
+    });
+    $table = $('#gruplac-table');
+  //;
+    $(entities).each(function(index){
+      var entity = $(this)[0] ;
+      var id =  entity['id'] ;
+      var nombre = entity['nombre'];
+      $row = '<tr data-index="'+index+'"><td class="bs-checkbox"><input type="checkbox" name="btSelectItem" data-index="'+index+'"></td><td class="id">'+id+'</td><td>'+nombre+'</td></tr>';
+      $table.append( $row );
+    });
+  }
+  else{
+    location.reload();
+  }
+
 }
