@@ -21,6 +21,7 @@ use UIFI\ProductosBundle\Entity\Articulo;
 */
 class GetInformacion
 {
+   const PROCESO_AUTOMATICO = 'AUTOMATICO';
    /**
    * Porcentaje del calculo del proceso de la importación de la información del
    * gruplac a la base del sistema.
@@ -80,6 +81,7 @@ class GetInformacion
        /**
         * Se obtiene la información de cada integrante
        */
+
        foreach( $integrantes as $codeIntegrante => $result )
        {
           $nombreIntegrante = $result['nombre'];

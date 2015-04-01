@@ -122,6 +122,7 @@ class GrupLACScraper extends  Scraper
 				foreach($list as $node ){
 					$tituloNode = $node->nextSibling;
 					$articulo['titulo'] = $tituloNode->nodeValue;
+					echo $tituloNode->nodeValue . "</br>\n";
 				}
 
 				//obtengo los autores del artículo
@@ -139,12 +140,15 @@ class GrupLACScraper extends  Scraper
 					//se obtiene el año en  el que se publico el artículo
 					if( strpos($nodesiguiente->nodeValue,'ISSN') ){
 						$result = $nodesiguiente->nodeValue;
-						$results = explode( ',',$result );
-						$results = $results[2];
+						$results = explode( 'vol',$result );
+						$results = $results[0];
+						$results = explode( ',', $result );
+						$results = $results[ count($results)-1 ];
 						$results =explode(' ',$results );
 						$anual  = $results[1];
 						$articulo['anual'] = $anual;
 					}
+
 				}
 				array_pop($autores);
 				$autores = array_unique($autores);

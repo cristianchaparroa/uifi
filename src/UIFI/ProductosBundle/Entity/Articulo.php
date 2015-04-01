@@ -91,6 +91,16 @@ class Articulo
      * @ORM\Column(name="grupo", type="string", length=255)
      */
     private $grupo;
+
+    /**
+     * Tipo de proceso con el que se creo el artículo :
+     *    MANUAL
+     *    AUTOMATICO
+     * @var string
+     *
+     * @ORM\Column(name="proceso", type="string", length=10,nullable=true)
+     */
+    private $proceso;
     /**
      * Constructor
      */
@@ -338,5 +348,28 @@ class Articulo
     public function getIntegrantes()
     {
         return $this->integrantes;
+    }
+
+    /**
+     * Set proceso
+     *
+     * @param string $proceso
+     * @return Articulo
+     */
+    public function setProceso($proceso)
+    {
+        $this->proceso = $proceso;
+
+        return $this;
+    }
+
+    /**
+     * Get proceso
+     *
+     * @return string
+     */
+    public function getProceso()
+    {
+        return $this->proceso;
     }
 }
