@@ -97,7 +97,7 @@ class GrupLACScraper extends  Scraper
 		}
 		/**
 		*  Obtiene los artículos publicados en el grupo de Investigación
-		* @return Arreglo con la siguiente información
+		*  @return Arreglo con la siguiente información
 		* 			articulo['titulo'] , título de articulo
 		* 			articulo['anual']  , año en el que fue publicado el artículo
 		* 			articulo['autores'], arreglo con los nombres de los autores
@@ -122,7 +122,6 @@ class GrupLACScraper extends  Scraper
 				foreach($list as $node ){
 					$tituloNode = $node->nextSibling;
 					$articulo['titulo'] = $tituloNode->nodeValue;
-					echo $tituloNode->nodeValue . "</br>\n";
 				}
 
 				//obtengo los autores del artículo
@@ -157,6 +156,78 @@ class GrupLACScraper extends  Scraper
 			}
 
 			return$articulos;
+		}
+		/**
+     * Extrae la lista de libros publicados por el grupo
+     * de investigación.
+     * @return Arreglo de libros publicados
+    */
+    public function librosPublicados(){
+      $query = '/html/body/table[8]';
+      return $this->extraer( $query );
+    }
+		/**
+		 * Obtienen los libros publicados pro el grupo de investigación,
+		 * @return Arreglo de arreglos
+		 * 		$libro['titulo'] tītulo del libro
+		 * 		$libro['ISBN']   ISBN del libro
+		 * 		$libro['pais']   pais en el que se publico el libro
+		 * 		$libro['anual']  año en el que se publico el libro
+		*/
+		public function getLibros(){
+			$query = '/html/body/table[9]';
+			$array =  $this->extraer( $query );
+			$libros  = array();
+
+
+			foreach( $array as $item )
+			{
+					$doc = new \DOMDocument();
+					$doc->loadHTML( $item );
+					$xpath = new \DOMXPath($doc);
+					$list = $doc->getElementsByTagName('strong');
+
+					$libro = array();
+					foreach($list as $node ){
+						$tituloNode = $node->nextSibling;
+						$libro['titulo'] = $tituloNode->nodeValue;
+					}
+					$list = $doc->getElementsByTagName('br');
+					$autores = array();
+					foreach( $list as $node ){
+							$nodesiguiente = $node->nextSibling;
+							if( strpos($nodesiguiente->nodeValue, 'Autores') ){
+								$result = $nodesiguiente->nodeValue;
+								$results = explode( ':',$result);
+								$results = $results[1];
+								$results = str_replace( '\n','',$results);
+								$autores = explode(',',$results);
+							}
+							if( strpos($nodesiguiente->nodeValue, 'ISBN') ){
+								$result = $nodesiguiente->nodeValue;
+								$results = explode(':',$result);
+								$isbn = $results[1];
+								$results = explode( ' ',$isbn);
+								$isbn = $results[1];
+								$libro['ISBN'] = $isbn;
+							}
+							echo $item;
+							if( strpos($nodesiguiente->nodeValue, 'ISBN') ){
+								$result = $nodesiguiente->nodeValue;
+								$results = explode(',',$result);
+								$libro[ 'pais']  = $results[0];
+								$libro[ 'anual' ] = $results[1];
+							}
+					}
+					array_pop($autores);
+					$autores = array_unique($autores);
+					$libro['autores']  = $autores;
+
+					//var_dump( $item );
+					echo "</br></br>";
+					$libros[] = $libro;
+					echo json_encode($libros);
+			}
 		}
     /**
      * Método que extrae la fecha(año y mes) de formación del
@@ -317,15 +388,7 @@ class GrupLACScraper extends  Scraper
       $query='/html/body/table[10]';
       return $this->extraer( $query );
     }
-    /**
-     * Extrae la lista de libros publicados por el grupo
-     * de investigación.
-     * @return Arreglo de libros publicados
-    */
-    public function librosPublicados(){
-      $query = '/html/body/table[8]';
-      return $this->extraer( $query );
-    }
+
     /**
      * Extrae la lista de capítulos publicados en libros por integrantes
      * del grupo de investigación.
