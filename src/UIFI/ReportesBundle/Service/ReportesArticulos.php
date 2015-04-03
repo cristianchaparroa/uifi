@@ -24,7 +24,12 @@ class ReportesArticulos extends Reporte
        $this->translator = $container->get('translator');
        $repository = $this->em->getRepository('UIFIProductosBundle:Articulo');
        $titulos = array(
-         'totalFecha' =>"Producción de Artículos en la Facultad por Año",
+         'grupo'            =>'Produccion de  Articulos por grupos de Investigación',
+         'grupoAnual'       =>'Produccion de  Articulos por grupos de Investigación discriminados por año',
+         'totalFecha'       =>"Producción de Artículos en la Facultad por Año",
+         'grupoIntegrantes' =>'Produccion de articulos por Integrante en el grupo ',
+         'grupoFecha'       => 'Produccion de articulos discriminados por año en el grupo ',
+         'entidad'          => 'Articulos',
        );
        Reporte::__construct( $titulos, $repository);
     }

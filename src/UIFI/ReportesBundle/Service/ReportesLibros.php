@@ -24,10 +24,13 @@ class ReportesLibros extends Reporte
        $this->translator = $container->get('translator');
        $repository = $this->em->getRepository('UIFIProductosBundle:Libro');
        $titulos = array(
-         'totalFecha' =>"Producción de Libros en la Facultad por Año",
+         'grupo'            =>'Produccion de  Libros por grupos de Investigación',
+         'grupoAnual'       =>'Produccion de  Libros por grupos de Investigación discriminados por año',
+         'totalFecha'       =>"Producción de Libros en la Facultad por Año",
+         'grupoIntegrantes' =>'Produccion de Libros por Integrante en el grupo ',
+         'grupoFecha'       => 'Produccion de Libros discriminados por año en el grupo ',
+         'entidad'          => 'Libros',
        );
        Reporte::__construct( $titulos, $repository);
     }
-
-
 }

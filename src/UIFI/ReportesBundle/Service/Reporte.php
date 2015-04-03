@@ -48,10 +48,11 @@ abstract class Reporte
       */
       if( $grupo == '' )
       {
-           $title = $this->translator->trans('reportes.articulos.title.grupos');
+            //$this->translator->trans('reportes.articulos.title.grupos');
            $discriminarGrupo = $mapParameters['discriminarGrupo'];
            $grupos = $repositoryGrupo->findAll();
            if(  $discriminarGrupo == 'grupo' ){
+             $title = $this->titulos['grupo'];
              foreach( $grupos as $group ){
                 $entityGrupo = $this->repositoryEntity->getCountByGrupo( $group->getId() );
                 $series[] = array( 'name'=> $group->getNombre(), 'data'=> array($entityGrupo) );
@@ -59,6 +60,7 @@ abstract class Reporte
            }
            if( $discriminarGrupo == 'fechaGrupo' )
            {
+             $title = $this->titulos['grupoAnual'];
              $grafica = array();
              foreach( $grupos as $group )
              {
@@ -75,7 +77,7 @@ abstract class Reporte
            }
            if($discriminarGrupo =='totalFecha' )
            {
-             $titulo = $this->titulos[ 'totalFecha' ];
+             $title = $this->titulos[ 'totalFecha' ];
              $results = $this->repositoryEntity->getCountAllByYear();
              $data = array();
 
@@ -97,8 +99,7 @@ abstract class Reporte
         $seleccionaIntegrante = $mapParameters['integrantes'];
         if( $seleccionaIntegrante=='' )
         {
-            $title = $this->translator->trans('reportes.articulos.title.porgrupo') . $grupo->getNombre();
-
+            $title = $this->titulos['grupoIntegrantes'] . $grupo->getNombre() ;// $this->translator->trans('reportes.articulos.title.porgrupo') ;
             $discriminarIntegrante = $mapParameters['discriminarIntegrante'];
             if($discriminarIntegrante == 'integrante')
             {
@@ -120,6 +121,7 @@ abstract class Reporte
             }
             if($discriminarIntegrante=='fecha')
             {
+              $title = $this->titulos['grupoFecha'] . $grupo->getNombre() ;
                 $grupos [] = $grupo;
                 foreach( $grupos as $group )
                 {
@@ -137,7 +139,9 @@ abstract class Reporte
         }
         else{
           $entityIntegrante = $repositoryIntegrante->find($seleccionaIntegrante);
-          $title = "Entity publicados por " . $entityIntegrante->getNombres(). " en ".$grupo->getNombre();
+          $title = $this->titulos[ 'entidad' ] . $entityIntegrante->getNombres(). " en ".$grupo->getNombre();
+
+          echo "i: " . $entityIntegrante->getId() ." g: " .$grupo->getId() ;
           $results = $this->repositoryEntity->getCantidadIntegranteAnual($entityIntegrante->getId(),$grupo->getId() );
           $dataGroup = array();
           foreach( $results as $result ){
