@@ -109,6 +109,15 @@ class Integrante
      * @ORM\JoinTable( name="integrantes_libros")
     */
     protected $libros;
+
+    /**
+     * Libros publicados por uno o varios integrantes de un grupo de
+     * Investigación.
+     *
+     * @ORM\ManyToMany( targetEntity="UIFI\ProductosBundle\Entity\CapitulosLibro" , inversedBy="integrantes",cascade={"remove", "persist"})
+     * @ORM\JoinTable( name="integrantes_capituloslibro")
+    */
+    protected $capituloslibro;
     /**
      * Proyecto curricular al que pertence  un grupo de investigación.
      *
@@ -450,10 +459,43 @@ class Integrante
     /**
      * Get libros
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getLibros()
     {
         return $this->libros;
+    }
+
+    /**
+     * Add capituloslibro
+     *
+     * @param \UIFI\ProductosBundle\Entity\CapitulosLibro $capituloslibro
+     * @return Integrante
+     */
+    public function addCapituloslibro(\UIFI\ProductosBundle\Entity\CapitulosLibro $capituloslibro)
+    {
+        $this->capituloslibro[] = $capituloslibro;
+
+        return $this;
+    }
+
+    /**
+     * Remove capituloslibro
+     *
+     * @param \UIFI\ProductosBundle\Entity\CapitulosLibro $capituloslibro
+     */
+    public function removeCapituloslibro(\UIFI\ProductosBundle\Entity\CapitulosLibro $capituloslibro)
+    {
+        $this->capituloslibro->removeElement($capituloslibro);
+    }
+
+    /**
+     * Get capituloslibro
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCapituloslibro()
+    {
+        return $this->capituloslibro;
     }
 }

@@ -7,13 +7,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use UIFI\ReportesBundle\Form\ReportesType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class LibrosReportesController extends Controller
-{
+class LibrosReportesController extends Controller{
     /**
      * @Route("/reportes/libros", name="reportes_libros")
      */
-    public function indexAction()
-    {
+    public function indexAction(){
       $em = $this->getDoctrine()->getManager();
       $grupos = $em->getRepository('UIFIIntegrantesBundle:Grupo')->findAll();
       $form = $this->get('form.factory')->create(new ReportesType($grupos) );
@@ -30,8 +28,7 @@ class LibrosReportesController extends Controller
       * @param Request
       * @return Template
     */
-     public function graficarAction()
-     {
+     public function graficarAction(){
         $this->em = $this->getDoctrine()->getManager();
         $parameters = $this->getRequest()->request->all();
         $mapParameters = $parameters['uifi_reportes'];

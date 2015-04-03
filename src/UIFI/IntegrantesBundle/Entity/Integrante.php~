@@ -109,6 +109,15 @@ class Integrante
      * @ORM\JoinTable( name="integrantes_libros")
     */
     protected $libros;
+
+    /**
+     * Libros publicados por uno o varios integrantes de un grupo de
+     * Investigación.
+     *
+     * @ORM\ManyToMany( targetEntity="UIFI\ProductosBundle\Entity\CapitulosLibro" , inversedBy="integrantes",cascade={"remove", "persist"})
+     * @ORM\JoinTable( name="integrantes_capituloslibro")
+    */
+    protected $capituloslibro;
     /**
      * Proyecto curricular al que pertence  un grupo de investigación.
      *
@@ -450,7 +459,7 @@ class Integrante
     /**
      * Get libros
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getLibros()
     {

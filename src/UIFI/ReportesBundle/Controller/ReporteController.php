@@ -11,8 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 
-class ReporteController extends Controller
-{
+class ReporteController extends Controller{
   /**
    * Función que se encarga de filtrar la información de acuerdo de los
    * parámetros seleccionados por el usuario.
@@ -22,12 +21,10 @@ class ReporteController extends Controller
    * @param Request
    * @return JsonResponse
   */
-  public function filterAction()
-  {
+  public function filterAction(){
       $params = $this->getRequest()->query->all();
       $codeGrupo = $params['grupo'];
-      if($codeGrupo!=='')
-      {
+      if($codeGrupo!==''){
           $integrantes =  $this->get('uifi.reportes.articulos')->getIntegrantes( $codeGrupo );
           return new JSONResponse( array('success' => true, 'integrantes'=>$integrantes)  );
       }
