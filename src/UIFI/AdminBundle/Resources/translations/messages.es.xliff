@@ -67,6 +67,11 @@
                 <target> Configurar proxy</target>
             </trans-unit>
 
+            <trans-unit id="15">
+                <source>admin.menu.reportes.capituloslibro</source>
+                <target> Rerportes de  Capítulos de Libro</target>
+            </trans-unit>
+
 
         </body>
     </file>
