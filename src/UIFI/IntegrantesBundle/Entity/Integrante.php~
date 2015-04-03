@@ -100,6 +100,15 @@ class Integrante
      * @ORM\JoinTable( name="integrantes_articulos")
     */
     protected $articulos;
+
+    /**
+     * Libros publicados por uno o varios integrantes de un grupo de
+     * Investigación.
+     *
+     * @ORM\ManyToMany( targetEntity="UIFI\ProductosBundle\Entity\Libro" , inversedBy="integrantes",cascade={"remove", "persist"})
+     * @ORM\JoinTable( name="integrantes_libros")
+    */
+    protected $libros;
     /**
      * Proyecto curricular al que pertence  un grupo de investigación.
      *
@@ -408,10 +417,43 @@ class Integrante
     /**
      * Get codigoGruplac
      *
-     * @return string 
+     * @return string
      */
     public function getCodigoGruplac()
     {
         return $this->codigoGruplac;
+    }
+
+    /**
+     * Add libros
+     *
+     * @param \UIFI\ProductosBundle\Entity\Libro $libros
+     * @return Integrante
+     */
+    public function addLibro(\UIFI\ProductosBundle\Entity\Libro $libros)
+    {
+        $this->libros[] = $libros;
+
+        return $this;
+    }
+
+    /**
+     * Remove libros
+     *
+     * @param \UIFI\ProductosBundle\Entity\Libro $libros
+     */
+    public function removeLibro(\UIFI\ProductosBundle\Entity\Libro $libros)
+    {
+        $this->libros->removeElement($libros);
+    }
+
+    /**
+     * Get libros
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getLibros()
+    {
+        return $this->libros;
     }
 }

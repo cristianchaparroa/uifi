@@ -5,8 +5,14 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
+
         <service class="UIFI\ReportesBundle\Service\ReportesArticulos" id="uifi.reportes.articulos">
           <argument type="service" id="service_container" />
         </service>
+
+        <service class="UIFI\ReportesBundle\Service\ReportesLibros" id="uifi.reportes.libros">
+          <argument type="service" id="service_container" />
+        </service>
+
     </services>
 </container>

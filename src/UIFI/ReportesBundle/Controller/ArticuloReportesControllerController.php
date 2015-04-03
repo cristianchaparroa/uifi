@@ -30,7 +30,7 @@ class ArticuloReportesControllerController extends Controller
         $grupos = $em->getRepository('UIFIIntegrantesBundle:Grupo')->findAll();
         $form = $this->get('form.factory')->create(new ArticuloReportesType($grupos) );
         $view =  $form->createView();
-        $parameters = array('form' => $view);
+        $parameters = array('form' => $view, 'ruta'=> 'reportes_articulos_graficar' );
         return  $this->render('UIFIReportesBundle:ArticuloReportes:index.html.twig',$parameters);
     }
 

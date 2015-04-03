@@ -1,111 +1,17 @@
-{% extends "UIFIAdminBundle:Dashboard:index.html.twig" %}
+{% extends "UIFIReportesBundle::filtros.layout.html.twig" %}
 
 
-{% block  main_content %}
 
 
-<h3>{{'reportes.articulos.title'|trans }} </h3>
-<hr>
-<div class="formulario col-sm-9">
-  <div class="well"> {{'reportes.articulos.enunciado'|trans}}</div>
-  <div class="fields-form ">
-    <form id"form-filtro" method="POST" action="{{path('reportes_articulos_graficar')}}">
+{% block title%}
+  {{'reportes.articulos.title'|trans }}
+{% endblock %}
 
-        <div id="grupo" class="form-group ">
-          {{ form_label(form.grupo,'Seleccione un grupo de Investigación') }}
-          {{ form_errors(form.grupo) }}
-          {{ form_widget(form.grupo,  { 'attr': {'class': 'form-control' }} ) }}
-         </div>
-         <!--  DISCRIMINAR REPORTE POR AÑO O POR GRUPOS DE INVESTIGACION
-                 EN LA SELECCION DE GRUPOS -->
-         <div id="discriminarGrupo"  class="form-group">
+{% block enunciado%}
+  {{'reportes.articulos.enunciado'|trans}}
+{% endblock %}
 
-            <div class="integrante">
-                <label style="  font-weight: normal !important;">Discrimininar por Grupo</label>
-                {{ form_errors(form.discriminarGrupo[1]) }}
-                {{ form_widget(form.discriminarGrupo[1]) }}
-             </div>
-             <div class="fecha">
-                 <label style="font-weight: normal !important;">Discriminar por Grupo y Año</label>
-                 {{ form_errors(form.discriminarGrupo[0]) }}
-                 {{ form_widget(form.discriminarGrupo[0]) }}
-              </div>
 
-              <div class="fecha">
-                  <label style="font-weight: normal !important;">Discriminar  Total por año</label>
-                  {{ form_errors(form.discriminarGrupo[2]) }}
-                  {{ form_widget(form.discriminarGrupo[2]) }}
-               </div>
-
-         </div>
-
-         <div id="investigador" class="form-group">
-             {{ form_label(form.integrantes,'Seleccione un Investigador') }}
-             {{ form_errors(form.integrantes) }}
-             {{ form_widget(form.integrantes,  { 'attr': {'class': 'form-control' }} ) }}
-          </div>
-
-          <!--  DISCRIMINAR EL REPORTE POR INTEGRANTES-->
-          <div id="discriminarIntegrante"  class="form-group">
-            <div class="fecha">
-                <label style="font-weight: normal !important;">Discriminar por Año</label>
-                {{ form_errors(form.discriminarIntegrante[0]) }}
-                {{ form_widget(form.discriminarIntegrante[0]) }}
-             </div>
-             <div class="integrante">
-                 <label style="  font-weight: normal !important;">Discrimininar por Investigador</label>
-                 {{ form_errors(form.discriminarIntegrante[1]) }}
-                 {{ form_widget(form.discriminarIntegrante[1]) }}
-              </div>
-          </div>
-          <!--
-          <div class="form-group">
-              <p>Si desea puede filtrar por un rango de fechas en la publicación de los artículos</p>
-              <div class="form-group">
-                  {{ form_label(form.fecha.left_date,'Seleccione la fecha Inicial') }}
-                  {{ form_errors(form.fecha.left_date) }}
-                  {{ form_widget(form.fecha.left_date ) }}
-              </div>
-              <div class="form-group">
-                  {{ form_label(form.fecha.right_date,'Seleccione la fecha final') }}
-                  {{ form_errors(form.fecha.right_date) }}
-                  {{ form_widget(form.fecha.right_date ) }}
-              </div>
-          </div>
-          -->
-          <hr>
-          <input  class="btn btn-success" type="submit"  name="submit-filter" value="Generar reporte" />
-    </form>
-  </div>
-</div>
-<div class="js-css-import-reportes-articulos">
-  <link rel="stylesheet" type="text/css" href="{{asset('css/jquery-ui-1.10.4.min.css') }}">
-  <script src="{{ asset('js/jquery-ui-1.10.4.min.js') }}"></script>
-  <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-  <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+{% block importjcss %}
   <script src="{{ asset('bundles/uifireportes/js/articulos/filter.js') }}"></script>
-
-  <script type="text/javascript">
-          $('.date').datepicker({
-              buttonImageOnly: true,
-              changeMonth: true,
-              changeYear: true,
-              dateFormat: 'dd-mm-yy',
-              yearRange: "-0:+1"
-          }).prev('.btn').on('click', function (e) {
-            e && e.preventDefault();
-            $('.date ui-datapicker-month').focus();
-          });
-
-          $('.modal-stop').on('hide.bs.modal', function (e)
-          {
-              if(event.target instanceof HTMLDivElement)
-              {
-                  return false;
-              }
-                  // alert(event.target);
-              return true; // validate before show the modal
-          });
-  </script>
-</div><!--  end js-css-import-->
 {% endblock %}

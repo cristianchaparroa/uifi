@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use controlid\Bundle\ActivosBundle\Entity\Lista;
 
-class ArticuloReportesType extends AbstractType
+class ReportesType extends AbstractType
 {
 
   /**

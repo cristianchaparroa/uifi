@@ -12,7 +12,7 @@ use UIFI\GrupLACScraperBundle\Core\PageGrupLACScraper;
  * Lógica que permite generar la gráfica de reportes Artículos.
  * @author: Cristian Camilo Chaparro Africano <cristianchaparroa@gmail.com>
 */
-class ReportesArticulos extends Reporte
+class ReportesLibros extends Reporte
 {
     /**
      * Constructor
@@ -22,10 +22,12 @@ class ReportesArticulos extends Reporte
        $this->container = $container;
        $this->em = $container->get('doctrine.orm.entity_manager');
        $this->translator = $container->get('translator');
-       $repository = $this->em->getRepository('UIFIProductosBundle:Articulo');
+       $repository = $this->em->getRepository('UIFIProductosBundle:Libro');
        $titulos = array(
-         'totalFecha' =>"Producción de Artículos en la Facultad por Año",
+         'totalFecha' =>"Producción de Libros en la Facultad por Año",
        );
        Reporte::__construct( $titulos, $repository);
     }
+
+
 }

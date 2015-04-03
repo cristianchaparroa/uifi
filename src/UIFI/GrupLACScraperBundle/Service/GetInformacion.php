@@ -13,6 +13,7 @@ use Symfony\Component\DependencyInjection\Container;
 use UIFI\IntegrantesBundle\Entity\Grupo;
 use UIFI\IntegrantesBundle\Entity\Integrante;
 use UIFI\ProductosBundle\Entity\Articulo;
+use UIFI\ProductosBundle\Entity\Libro;
 /**
  * Servicio que obtiene la información del GrupLAC de Colciencias de los grupos
  * de investigación  y los guarda en la base de datos del sistema.
@@ -44,120 +45,136 @@ class GetInformacion
    */
    public function scrap()
    {
-     $this->initDrop();
-     /**
-      * Se obtiene los codigos de los grupos de investigacion para luego crear
-      * los diferentes scrapers.
-     */
-     $repositoryGruplac = $this->em->getRepository('UIFIGrupLACScraperBundle:Gruplac');
-     $codes = $repositoryGruplac->getAllCodes();
-     $codes = array_unique($codes);
-     $total = count($codes);
-     $currentTask = 0;
-     $codesIntegrantes = array();
-     $repositoryIntegrante = $this->em->getRepository('UIFIIntegrantesBundle:Integrante');
-     $repositoryGrupo = $this->em->getRepository('UIFIIntegrantesBundle:Grupo');
-     $repositoryArticulo = $this->em->getRepository('UIFIProductosBundle:Articulo');
-
-     foreach( $codes as $code )
-     {
-       $grupoScraper = new GrupLACScraper($code);
+       $this->initDrop();
        /**
-        * Registro el grupo de investigación en el sistema
+        * Se obtiene los codigos de los grupos de investigacion para luego crear
+        * los diferentes scrapers.
        */
-       $grupo  = new Grupo();
-       $grupo->setId( $code );
-       $grupo->setGruplac( $grupoScraper->getURL() );
-       $nombreGrupo =  "". $grupoScraper->getNombreGrupo();
-       $grupo->setNombre( $nombreGrupo );
-       $grupo->setEmail( $grupoScraper->extraerEmail() );
-       $grupo->setClasificacion( $grupoScraper->extraerClasificacion() );
-       $this->em->persist( $grupo );
-       //$this->em->flush();
+       $repositoryGruplac = $this->em->getRepository('UIFIGrupLACScraperBundle:Gruplac');
+       $codes = $repositoryGruplac->getAllCodes();
+       $codes = array_unique($codes);
+       $total = count($codes);
+       $currentTask = 0;
+       $codesIntegrantes = array();
+       $repositoryIntegrante = $this->em->getRepository('UIFIIntegrantesBundle:Integrante');
+       $repositoryGrupo = $this->em->getRepository('UIFIIntegrantesBundle:Grupo');
+       $repositoryArticulo = $this->em->getRepository('UIFIProductosBundle:Articulo');
 
-       $entityGrupo = $grupo;
-       $integrantes = $grupoScraper->obtenerIntegrantes();
-
-       /**
-        * Se obtiene la información de cada integrante
-       */
-
-       foreach( $integrantes as $codeIntegrante => $result )
+       foreach( $codes as $code )
        {
-          $nombreIntegrante = $result['nombre'];
-          $integranteScraper = new CVLACScraper( $codeIntegrante );
-          //  //si existe el integrante,significa que pertenece a varios grupos
-          $existIntegrante = $repositoryIntegrante->find($codeIntegrante);
-          if($existIntegrante){
-              $entityIntegrante = $existIntegrante;
-          }
-          else{
+         $grupoScraper = new GrupLACScraper($code);
+         /**
+          * Registro el grupo de investigación en el sistema
+         */
+         $grupo  = new Grupo();
+         $grupo->setId( $code );
+         $grupo->setGruplac( $grupoScraper->getURL() );
+         $nombreGrupo =  "". $grupoScraper->getNombreGrupo();
+         $grupo->setNombre( $nombreGrupo );
+         $grupo->setEmail( $grupoScraper->extraerEmail() );
+         $grupo->setClasificacion( $grupoScraper->extraerClasificacion() );
+         $this->em->persist( $grupo );
+         //$this->em->flush();
 
-             $integrante = new Integrante();
-             $cvlacIntegrante = $integranteScraper->getURL();
-             $integrante->addGrupo( $entityGrupo );
-             $integrante->setId( $cvlacIntegrante );
-             $integrante->setCodigoGruplac( $integranteScraper->getCode()  );
-             $integrante->setNombres( strtoupper($nombreIntegrante) );
-             //se setea la demas información posible.
-             $this->em->persist( $integrante );
-             $entityIntegrante = $repositoryIntegrante->find($codeIntegrante);
-          }
-          $entityGrupo->addIntegrante($entityIntegrante);
-          $this->em->persist($entityGrupo);
-       }
-       //se obtiene los articulos publicados en el grupo
-       $articulosGrupo  = $grupoScraper->getArticulos();
+         $entityGrupo = $grupo;
+         $integrantes = $grupoScraper->obtenerIntegrantes();
 
-       $index = 0;
-       foreach($articulosGrupo as $articulo )
-       {
-         $codeArticulo =  $code ."-". $index;
-         $autores  = $articulo['autores'];
-         $article = new Articulo();
-         $article->setId( $codeArticulo  );
-         $article->setTitulo($articulo['titulo']);
-         $article->setAnual( $articulo['anual'] );
+         /**
+          * Se obtiene la información de cada integrante
+         */
 
-         $article->setGrupo( $code );
-         $this->em->persist( $article );
-         $this->em->flush();
-         foreach( $autores as $autor )
+         foreach( $integrantes as $codeIntegrante => $result )
          {
-            $nombres = strtoupper(substr($autor,1));
-            $resultIntegrante  = $repositoryIntegrante->findBy( array('nombres' => $nombres) );
-
-            if( count(  $resultIntegrante  )>0 ){
-                $entityIntegrante =   $resultIntegrante[0];
-                $entityIntegrante->addArticulo($article);
-                $this->em->persist($entityIntegrante);
-                $this->em->flush();
-                $this->em->persist( $article );
-                $this->em->flush();
+            $nombreIntegrante = $result['nombre'];
+            $integranteScraper = new CVLACScraper( $codeIntegrante );
+            //  //si existe el integrante,significa que pertenece a varios grupos
+            $existIntegrante = $repositoryIntegrante->find($codeIntegrante);
+            if($existIntegrante){
+                $entityIntegrante = $existIntegrante;
             }
+            else{
+
+               $integrante = new Integrante();
+               $cvlacIntegrante = $integranteScraper->getURL();
+               $integrante->addGrupo( $entityGrupo );
+               $integrante->setId( $cvlacIntegrante );
+               $integrante->setCodigoGruplac( $integranteScraper->getCode()  );
+               $integrante->setNombres( strtoupper($nombreIntegrante) );
+               //se setea la demas información posible.
+               $this->em->persist( $integrante );
+               $entityIntegrante = $repositoryIntegrante->find($codeIntegrante);
+            }
+            $entityGrupo->addIntegrante($entityIntegrante);
+            $this->em->persist($entityGrupo);
          }
-         $index++;
+
+         //se obtiene los articulos publicados en el grupo
+         $articulosGrupo  = $grupoScraper->getArticulos();
+         $index = 0;
+         foreach($articulosGrupo as $articulo )
+         {
+           $codeArticulo =  $code ."-". $index;
+           $autores  = $articulo['autores'];
+           $article = new Articulo();
+           $article->setId( $codeArticulo  );
+           $article->setTitulo($articulo['titulo']);
+           $article->setAnual( $articulo['anual'] );
+
+           $article->setGrupo( $code );
+           $this->em->persist( $article );
+           $this->em->flush();
+           foreach( $autores as $autor )
+           {
+              $nombres = strtoupper(substr($autor,1));
+              $resultIntegrante  = $repositoryIntegrante->findBy( array('nombres' => $nombres) );
+
+              if( count(  $resultIntegrante  )>0 ){
+                  $entityIntegrante =   $resultIntegrante[0];
+                  $entityIntegrante->addArticulo($article);
+                  $this->em->persist($entityIntegrante);
+                  $this->em->flush();
+                  $this->em->persist( $article );
+                  $this->em->flush();
+              }
+           }
+           $index++;
+         }//end for articulos
+         $librosGrupo  = $grupoScraper->getLibros();
+
+
+         foreach($librosGrupo as $libro)
+         {
+
+            $autores  = $libro['autores'];
+            $ebook = new Libro();
+            $ebook->setTitulo($libro['titulo']);
+            $ebook->setAnual( $libro['anual'] );
+            $ebook->setIsbn( $libro['ISBN'] );
+            $ebook->setGrupo( $code );
+            $ebook->setPais( $libro['pais'] );
+            $this->em->persist( $ebook );
+            $this->em->flush();
+
+            foreach( $autores as $autor )
+            {
+               $nombres = strtoupper(substr($autor,1));
+               $resultIntegrante  = $repositoryIntegrante->findBy( array('nombres' => $nombres) );
+
+               if( count(  $resultIntegrante  )>0 ){
+                   $entityIntegrante =   $resultIntegrante[0];
+                   $entityIntegrante->addLibro($ebook);
+                   $this->em->persist($entityIntegrante);
+                   $this->em->flush();
+                   $this->em->persist( $ebook );
+                   $this->em->flush();
+               }
+            }
+         }//end for libros
+
+
        }
-       $currentTask++;
-     }
-     $this->em->flush();
-     return true;
-   }
-
-   private function contains($text, $word)
-   {
-        $found = false;
-        $spaceArray = explode(' ', $text);
-
-        $nonBreakingSpaceArray = explode(chr(160), $text);
-
-        if (in_array($word, $spaceArray) ||
-            in_array($word, $nonBreakingSpaceArray)
-           ) {
-
-            $found = true;
-        }
-        return $found;
+       $this->em->flush();
+       return true;
    }
    /**
     * Función que se encarga de eliminar todos los registros para inicializar

@@ -178,8 +178,6 @@ class GrupLACScraper extends  Scraper
 			$query = '/html/body/table[9]';
 			$array =  $this->extraer( $query );
 			$libros  = array();
-
-
 			foreach( $array as $item )
 			{
 					$doc = new \DOMDocument();
@@ -211,7 +209,6 @@ class GrupLACScraper extends  Scraper
 								$isbn = $results[1];
 								$libro['ISBN'] = $isbn;
 							}
-							echo $item;
 							if( strpos($nodesiguiente->nodeValue, 'ISBN') ){
 								$result = $nodesiguiente->nodeValue;
 								$results = explode(',',$result);
@@ -223,11 +220,9 @@ class GrupLACScraper extends  Scraper
 					$autores = array_unique($autores);
 					$libro['autores']  = $autores;
 
-					//var_dump( $item );
-					echo "</br></br>";
 					$libros[] = $libro;
-					echo json_encode($libros);
 			}
+			return $libros;
 		}
     /**
      * Método que extrae la fecha(año y mes) de formación del
