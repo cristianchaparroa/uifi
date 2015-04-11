@@ -45,7 +45,7 @@ class ArticuloReportesControllerController extends Controller
         $parameters = $this->getRequest()->request->all();
         $mapParameters = $parameters['uifi_reportes'];
         $ob =  $this->get('uifi.reportes.articulos')->generarGrafica( $mapParameters );
-        $parameters = array( 'char' => $ob );
+        $parameters = array( 'chart' => $ob );
         return $this->render('UIFIReportesBundle:ArticuloReportes:reporte.html.twig',$parameters );
     }
 }

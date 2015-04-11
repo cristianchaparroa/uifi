@@ -27,8 +27,7 @@ class DashboardController extends Controller
      *
      *  @Route( "/api/gruplac/getInformacion", name="dasboard_get_informacion", options={"expose"=true} )
     */
-    public function getInformacion()
-    {
+    public function getInformacion(){
         $success = $this->get('uifi.gruplac.scrap.getinfo')->scrap();
         return new JsonResponse(array('success' =>  $success ));
     }
