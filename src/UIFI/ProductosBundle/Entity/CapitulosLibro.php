@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * CapitulosLibro
  *
- * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Table("capitulosLibro")
+ * @ORM\Entity(repositoryClass="UIFI\ProductosBundle\Repository\CapitulosLibroRepository")
  */
 class CapitulosLibro
 {
@@ -55,6 +55,12 @@ class CapitulosLibro
      * @ORM\ManyToMany(targetEntity="UIFI\IntegrantesBundle\Entity\Integrante", mappedBy="capituloslibro")
     */
     private $integrantes;
+    /**
+     * Codigo del grupo en el cual fue publicado el articulo
+     *
+     * @ORM\Column(name="grupo", type="string", length=255)
+     */
+    private $grupo;
 
     /**
      * Get id
@@ -196,5 +202,28 @@ class CapitulosLibro
     public function getIntegrantes()
     {
         return $this->integrantes;
+    }
+
+    /**
+     * Set grupo
+     *
+     * @param string $grupo
+     * @return CapitulosLibro
+     */
+    public function setGrupo($grupo)
+    {
+        $this->grupo = $grupo;
+
+        return $this;
+    }
+
+    /**
+     * Get grupo
+     *
+     * @return string
+     */
+    public function getGrupo()
+    {
+        return $this->grupo;
     }
 }

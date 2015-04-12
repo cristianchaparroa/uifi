@@ -30,7 +30,7 @@ class CapitulosLibroReportesController extends Controller
       $form = $this->get('form.factory')->create(new ReportesType($grupos) );
       $view =  $form->createView();
       $parameters = array('form' => $view, 'ruta'=> 'reportes_capituloslibros_graficar' );
-      return  $this->render('UIFIReportesBundle::filtros.layout.html.twig',$parameters);
+      return  $this->render('UIFIReportesBundle:CapitulosLibrosReportes:index.html.twig',$parameters);
   }
 
   /**
@@ -45,8 +45,8 @@ class CapitulosLibroReportesController extends Controller
       $this->em = $this->getDoctrine()->getManager();
       $parameters = $this->getRequest()->request->all();
       $mapParameters = $parameters['uifi_reportes'];
-      $ob =  $this->get('uifi.reportes.articulos')->generarGrafica( $mapParameters );
+      $ob =  $this->get('uifi.reportes.capituloslibros')->generarGrafica( $mapParameters );
       $parameters =  array(  'chart' => $ob );
-      return $this->render('UIFIReportesBundle::reporte.layout.html.twig',$parameters);
+      return $this->render('UIFIReportesBundle:CapitulosLibrosReportes:reporte.html.twig',$parameters);
   }
 }

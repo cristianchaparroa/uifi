@@ -162,19 +162,27 @@ class GrupLACScraper extends  Scraper
      * @return Arreglo con la lista de capitulos publicados
     */
     public function capitulosLibrosPublicados(){
-      $query = '/html/body/table[9]';
+      $query = '/html/body/table[10]';
       return $this->extraer( $query );
     }
 		/**
 		 * Función que se encarga de extraer los capítulos de libros publicados
 		 * por los integrantes del grupo de investigación
+		 *
+		 * @return arreglo de arreglos con los capitulos así
+		 *  $capitulo['titulo']
+		 *  $capitulo['autores']
+		 *  $capitulo['pais']
+  	 *  $capitulo['anual']
+		 *  $capitulo['isbn']
+		 *  $capitulo['editorial']
 		*/
 		public function getCapitulosLibros(){
-			$query = '/html/body/table[9]';
-			$array = $this->extraer( $query );
+			$query = '/html/body/table[10]';
+			$array=  $this->extraer( $query );
 			$capitulos = array();
 
-			foreach( $array as $item ){
+			foreach( 	$array as $item ){
 					$capitulo = array();
 
 					$doc = new \DOMDocument();
@@ -195,6 +203,7 @@ class GrupLACScraper extends  Scraper
 					foreach( $list as $node ){
 						$nodesiguiente = $node->nextSibling;
 
+						//se obtienen los autores que publicaron el capitulo de libro
 						if( strpos($nodesiguiente->nodeValue, 'Autores') ){
 							$result = $nodesiguiente->nodeValue;
 							$results = explode( ':',$result);
@@ -204,20 +213,23 @@ class GrupLACScraper extends  Scraper
 						}
 						$text =  $nodesiguiente->nodeValue;
 						$resultados = explode( ',',$text	);
+						//se obtiene el paise de publicacion
 						if( !strpos($text,'Autores') ){
 							$pais = $resultados[0];
 							$capitulo['pais']  = $pais;
 						}
+						//se obtiene el año de publicacion
 						if( is_numeric($resultados[1]) ){
 							$capitulo['anual'] = $resultados[1];
 						}
+						//se obtiene la editorial que publico
 						if( count($resultados)>3 ){
 							$capitulo['editorial'] = $resultados[3];
 						}
 						else{
 							$capitulo['editorial'] = '';
 						}
-
+						//se obtiene el isbn del libro.
 						if( count($resultados)>2 ){
 							$isbn = $resultados[2];
 							if( strpos($isbn,'ISBN') ){
@@ -231,15 +243,11 @@ class GrupLACScraper extends  Scraper
 							}
 						}
 				  }
-					array_pop($autores);
-					$autores = array_unique($autores);
-					$captiulo['autores']  = $autores;
+					array_pop($autores );
+					$autores  = array_unique($autores );
+					$capitulo['autores']  = $autores;
 					$capitulos[] = $capitulo;
 			}
-
-			var_dump($capitulos);
-
-			echo "\n\n\n";
 			return $capitulos;
 		}
 		/**

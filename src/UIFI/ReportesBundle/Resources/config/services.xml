@@ -14,5 +14,10 @@
           <argument type="service" id="service_container" />
         </service>
 
+        <service class="UIFI\ReportesBundle\Service\ReportesCaptiulosLibros" id="uifi.reportes.capituloslibros">
+          <argument type="service" id="service_container" />
+        </service>
+
+
     </services>
 </container>

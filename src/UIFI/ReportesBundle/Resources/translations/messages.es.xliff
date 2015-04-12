@@ -36,6 +36,11 @@
              <target> Reportes de Libros </target>
          </trans-unit>
 
+         <trans-unit id="7">
+            <source>reportes.capituloslibros.title</source>
+            <target> Reportes de Capítulos de Libros </target>
+        </trans-unit>
+
 
         </body>
     </file>

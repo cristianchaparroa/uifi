@@ -13,6 +13,9 @@ use Symfony\Component\DependencyInjection\Container;
 use UIFI\IntegrantesBundle\Entity\Grupo;
 use UIFI\IntegrantesBundle\Entity\Integrante;
 use UIFI\ProductosBundle\Entity\Articulo;
+
+
+use  UIFI\GrupLACScraperBundle\Service\Getinformacion\CapitulosLibroStore;
 /**
  * Servicio que obtiene la información del GrupLAC de Colciencias de los grupos
  * de investigación  y los guarda en la base de datos del sistema.
@@ -61,34 +64,33 @@ class GetInformacion
      {
 
        $grupoScraper = new GrupLACScraper($code);
-      //  $grupo  = new Grupo();
-      //  $grupo->setId( $code );
-      //  $grupo->setGruplac( $grupoScraper->getURL() );
-      //  $nombreGrupo =  "". $grupoScraper->getNombreGrupo();
-      //  $grupo->setNombre( $nombreGrupo );
-      //  $grupo->setEmail( $grupoScraper->extraerEmail() );
-      //  $grupo->setClasificacion( $grupoScraper->extraerClasificacion() );
-      //  $this->em->persist( $grupo );
-      //    //$this->em->flush();
-      //  $entityGrupo = $grupo;
+       $grupo  = new Grupo();
+       $grupo->setId( $code );
+       $grupo->setGruplac( $grupoScraper->getURL() );
+       $nombreGrupo =  "". $grupoScraper->getNombreGrupo();
+       $grupo->setNombre( $nombreGrupo );
+       $grupo->setEmail( $grupoScraper->extraerEmail() );
+       $grupo->setClasificacion( $grupoScraper->extraerClasificacion() );
+       $this->em->persist( $grupo );
+       $this->em->flush();
+       $entityGrupo = $grupo;
        //
-      //  $integrantes    = $grupoScraper->obtenerIntegrantes();
-      //  $articulos      = $grupoScraper->getArticulos();
-      //  $libros         = $grupoScraper->getLibros();
+       $integrantes    = $grupoScraper->obtenerIntegrantes();
+       $articulos      = $grupoScraper->getArticulos();
+       $libros         = $grupoScraper->getLibros();
        $capituloslibro = $grupoScraper->getCapitulosLibros();
-
-       //$stores = array();
-       //$stores[] = new IntegrantesStore($this->em,$grupo, $integrantes);
-       //$stores[] = new ArticulosStore($this->em,$grupo, $articulos);
-       //$stores[] = new LibrosStore($this->em,$grupo, $libros);
-       //$stores[] = new CapituloLibrosStore($this->em,$grupo, $capitulosLibro );
+       $stores = array();
+       $stores[] = new IntegrantesStore($this->em,$grupo, $integrantes);
+       $stores[] = new ArticulosStore($this->em,$grupo, $articulos);
+       $stores[] = new LibrosStore($this->em,$grupo, $libros);
+       $stores[] = new CapitulosLibroStore($this->em,$grupo,$capituloslibro);
 
        /*Procesa todos las tiendas de informacion extraidas*/
-      //  foreach( $stores as $store ){
-      //    $store->guardar();
-      //  }
+       foreach( $stores as $store ){
+         $store->guardar();
+       }
      }
-     //$this->em->flush();
+     $this->em->flush();
      return true;
    }
    /**

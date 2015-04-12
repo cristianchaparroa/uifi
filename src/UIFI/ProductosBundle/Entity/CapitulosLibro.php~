@@ -7,8 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * CapitulosLibro
  *
- * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Table("capitulosLibro")
+ * @ORM\Entity(repositoryClass="UIFI\ProductosBundle\Repository\CapitulosLibroRepository")
  */
 class CapitulosLibro
 {
@@ -55,6 +55,12 @@ class CapitulosLibro
      * @ORM\ManyToMany(targetEntity="UIFI\IntegrantesBundle\Entity\Integrante", mappedBy="capituloslibro")
     */
     private $integrantes;
+    /**
+     * Codigo del grupo en el cual fue publicado el articulo
+     *
+     * @ORM\Column(name="grupo", type="string", length=255)
+     */
+    private $grupo;
 
     /**
      * Get id
@@ -156,5 +162,68 @@ class CapitulosLibro
     public function getIsbn()
     {
         return $this->isbn;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->integrantes = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add integrantes
+     *
+     * @param \UIFI\IntegrantesBundle\Entity\Integrante $integrantes
+     * @return CapitulosLibro
+     */
+    public function addIntegrante(\UIFI\IntegrantesBundle\Entity\Integrante $integrantes)
+    {
+        $this->integrantes[] = $integrantes;
+
+        return $this;
+    }
+
+    /**
+     * Remove integrantes
+     *
+     * @param \UIFI\IntegrantesBundle\Entity\Integrante $integrantes
+     */
+    public function removeIntegrante(\UIFI\IntegrantesBundle\Entity\Integrante $integrantes)
+    {
+        $this->integrantes->removeElement($integrantes);
+    }
+
+    /**
+     * Get integrantes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIntegrantes()
+    {
+        return $this->integrantes;
+    }
+
+    /**
+     * Set grupo
+     *
+     * @param string $grupo
+     * @return CapitulosLibro
+     */
+    public function setGrupo($grupo)
+    {
+        $this->grupo = $grupo;
+
+        return $this;
+    }
+
+    /**
+     * Get grupo
+     *
+     * @return string
+     */
+    public function getGrupo()
+    {
+        return $this->grupo;
     }
 }
