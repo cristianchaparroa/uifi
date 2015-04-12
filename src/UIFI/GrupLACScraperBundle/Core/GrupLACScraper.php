@@ -147,7 +147,6 @@ class GrupLACScraper extends  Scraper
 						$anual  = $results[1];
 						$articulo['anual'] = $anual;
 					}
-
 				}
 				array_pop($autores);
 				$autores = array_unique($autores);
@@ -156,6 +155,92 @@ class GrupLACScraper extends  Scraper
 			}
 
 			return$articulos;
+		}
+		/**
+     * Extrae la lista de capítulos publicados en libros por integrantes
+     * del grupo de investigación.
+     * @return Arreglo con la lista de capitulos publicados
+    */
+    public function capitulosLibrosPublicados(){
+      $query = '/html/body/table[9]';
+      return $this->extraer( $query );
+    }
+		/**
+		 * Función que se encarga de extraer los capítulos de libros publicados
+		 * por los integrantes del grupo de investigación
+		*/
+		public function getCapitulosLibros(){
+			$query = '/html/body/table[9]';
+			$array = $this->extraer( $query );
+			$capitulos = array();
+
+			foreach( $array as $item ){
+					$capitulo = array();
+
+					$doc = new \DOMDocument();
+					$doc->loadHTML( $item );
+					$xpath = new \DOMXPath($doc);
+					$list = $doc->getElementsByTagName('strong');
+
+					//Obtengo el titulo del capitulo
+					foreach($list as $node ){
+						$tituloNode = $node->nextSibling;
+						$titulo = $tituloNode->nodeValue;
+						$titulo = str_replace( ':','',$titulo);
+						$capitulo['titulo'] = $titulo;
+					}
+
+					$list = $doc->getElementsByTagName('br');
+					$autores = array();
+					foreach( $list as $node ){
+						$nodesiguiente = $node->nextSibling;
+
+						if( strpos($nodesiguiente->nodeValue, 'Autores') ){
+							$result = $nodesiguiente->nodeValue;
+							$results = explode( ':',$result);
+							$results = $results[1];
+							$results = str_replace( '\n','',$results);
+							$autores = explode(',',$results);
+						}
+						$text =  $nodesiguiente->nodeValue;
+						$resultados = explode( ',',$text	);
+						if( !strpos($text,'Autores') ){
+							$pais = $resultados[0];
+							$capitulo['pais']  = $pais;
+						}
+						if( is_numeric($resultados[1]) ){
+							$capitulo['anual'] = $resultados[1];
+						}
+						if( count($resultados)>3 ){
+							$capitulo['editorial'] = $resultados[3];
+						}
+						else{
+							$capitulo['editorial'] = '';
+						}
+
+						if( count($resultados)>2 ){
+							$isbn = $resultados[2];
+							if( strpos($isbn,'ISBN') ){
+								$isbnr = explode(':',$isbn);
+								$isbn = $isbnr[1];
+								$isbnr = explode('vol',$isbn);
+								$isbn = $isbnr[0];
+								$isbn = str_replace(' ','',$isbn);
+								$capitulo['isbn'] = $isbn;
+
+							}
+						}
+				  }
+					array_pop($autores);
+					$autores = array_unique($autores);
+					$captiulo['autores']  = $autores;
+					$capitulos[] = $capitulo;
+			}
+
+			var_dump($capitulos);
+
+			echo "\n\n\n";
+			return $capitulos;
 		}
 		/**
      * Extrae la lista de libros publicados por el grupo
@@ -219,7 +304,6 @@ class GrupLACScraper extends  Scraper
 					array_pop($autores);
 					$autores = array_unique($autores);
 					$libro['autores']  = $autores;
-
 					$libros[] = $libro;
 			}
 			return $libros;
@@ -384,15 +468,7 @@ class GrupLACScraper extends  Scraper
       return $this->extraer( $query );
     }
 
-    /**
-     * Extrae la lista de capítulos publicados en libros por integrantes
-     * del grupo de investigación.
-     * @return Arreglo con la lista de capitulos publicados
-    */
-    public function capitulosLibrosPublicados(){
-      $query = '/html/body/table[9]';
-      return $this->extraer( $query );
-    }
+
 		/**
 		 * Obtiene el nombre del grupo de investigación.
 		*  @return String Nombre del grupo

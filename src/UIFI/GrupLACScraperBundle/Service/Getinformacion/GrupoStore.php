@@ -45,8 +45,6 @@ class GrupoStore
     $this->grupo->setClasificacion( $grupoScraper->extraerClasificacion() );
     $this->em->persist( $this->grupo );
     $this->em->flush();
-  }
-  public function getGrupo(){
     return $this->grupo;
   }
 }

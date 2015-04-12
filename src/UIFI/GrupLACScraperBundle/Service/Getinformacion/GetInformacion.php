@@ -61,32 +61,34 @@ class GetInformacion
      {
 
        $grupoScraper = new GrupLACScraper($code);
-       $grupo  = new Grupo();
-       $grupo->setId( $code );
-       $grupo->setGruplac( $grupoScraper->getURL() );
-       $nombreGrupo =  "". $grupoScraper->getNombreGrupo();
-       $grupo->setNombre( $nombreGrupo );
-       $grupo->setEmail( $grupoScraper->extraerEmail() );
-       $grupo->setClasificacion( $grupoScraper->extraerClasificacion() );
-       $this->em->persist( $grupo );
-         //$this->em->flush();
-       $entityGrupo = $grupo;
+      //  $grupo  = new Grupo();
+      //  $grupo->setId( $code );
+      //  $grupo->setGruplac( $grupoScraper->getURL() );
+      //  $nombreGrupo =  "". $grupoScraper->getNombreGrupo();
+      //  $grupo->setNombre( $nombreGrupo );
+      //  $grupo->setEmail( $grupoScraper->extraerEmail() );
+      //  $grupo->setClasificacion( $grupoScraper->extraerClasificacion() );
+      //  $this->em->persist( $grupo );
+      //    //$this->em->flush();
+      //  $entityGrupo = $grupo;
+       //
+      //  $integrantes    = $grupoScraper->obtenerIntegrantes();
+      //  $articulos      = $grupoScraper->getArticulos();
+      //  $libros         = $grupoScraper->getLibros();
+       $capituloslibro = $grupoScraper->getCapitulosLibros();
 
-       $integrantes  = $grupoScraper->obtenerIntegrantes();
-       $articulos    = $grupoScraper->getArticulos();
-       $libros      = $grupoScraper->getLibros();
-
-       $stores = array();
-       $stores[] = new IntegrantesStore($this->em,$grupo, $integrantes);
-       $stores[] = new ArticulosStore($this->em,$grupo, $articulos);
-       $stores[] = new LibrosStore($this->em,$grupo, $libros);
+       //$stores = array();
+       //$stores[] = new IntegrantesStore($this->em,$grupo, $integrantes);
+       //$stores[] = new ArticulosStore($this->em,$grupo, $articulos);
+       //$stores[] = new LibrosStore($this->em,$grupo, $libros);
+       //$stores[] = new CapituloLibrosStore($this->em,$grupo, $capitulosLibro );
 
        /*Procesa todos las tiendas de informacion extraidas*/
-       foreach( $stores as $store ){
-         $store->guardar();
-       }
+      //  foreach( $stores as $store ){
+      //    $store->guardar();
+      //  }
      }
-     $this->em->flush();
+     //$this->em->flush();
      return true;
    }
    /**
