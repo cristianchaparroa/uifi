@@ -69,7 +69,7 @@ class GrupLACScraper extends  Scraper
 			*@param Arreglo con el resultado del query.
 			*/
 		private function extraer($query){
-			$producciones = array();;
+			$producciones = array();
 			$listaNodos = $this->xpath->query( $query );
 			foreach( $listaNodos as $element ){
 					$elemento =  $element->getElementsByTagName( 'td' );
@@ -179,6 +179,7 @@ class GrupLACScraper extends  Scraper
 		*/
 		public function getCapitulosLibros(){
 			$query = '/html/body/table[10]';
+
 			$array=  $this->extraer( $query );
 			$capitulos = array();
 
@@ -202,7 +203,7 @@ class GrupLACScraper extends  Scraper
 					$autores = array();
 					foreach( $list as $node ){
 						$nodesiguiente = $node->nextSibling;
-
+						//echo 	$nodesiguiente->nodeValue . "</br>";
 						//se obtienen los autores que publicaron el capitulo de libro
 						if( strpos($nodesiguiente->nodeValue, 'Autores') ){
 							$result = $nodesiguiente->nodeValue;
@@ -231,16 +232,19 @@ class GrupLACScraper extends  Scraper
 						}
 						//se obtiene el isbn del libro.
 						if( count($resultados)>2 ){
-							$isbn = $resultados[2];
+							$isbn = $resultados[3];
+
 							if( strpos($isbn,'ISBN') ){
 								$isbnr = explode(':',$isbn);
 								$isbn = $isbnr[1];
-								$isbnr = explode('vol',$isbn);
-								$isbn = $isbnr[0];
 								$isbn = str_replace(' ','',$isbn);
+								echo $isbn ."</br>\n";
 								$capitulo['isbn'] = $isbn;
 
 							}
+						}
+						else{
+							$capitulo['isbn'] = '';
 						}
 				  }
 					array_pop($autores );

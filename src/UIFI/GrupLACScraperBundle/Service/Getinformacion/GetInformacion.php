@@ -79,6 +79,7 @@ class GetInformacion
        $articulos      = $grupoScraper->getArticulos();
        $libros         = $grupoScraper->getLibros();
        $capituloslibro = $grupoScraper->getCapitulosLibros();
+
        $stores = array();
        $stores[] = new IntegrantesStore($this->em,$grupo, $integrantes);
        $stores[] = new ArticulosStore($this->em,$grupo, $articulos);
@@ -102,6 +103,9 @@ class GetInformacion
      $articuloRepository->deleteAll();
      $integranteRepository = $this->em->getRepository('UIFIIntegrantesBundle:Integrante');
      $integranteRepository->deleteAll();
+
+     $capitulosLibroRepository = $this->em->getRepository('UIFIProductosBundle:CapitulosLibro');
+     $capitulosLibroRepository->deleteAll();
 
      $grupoRepository = $this->em->getRepository('UIFIIntegrantesBundle:Grupo');
      $grupoRepository->deleteAll();
