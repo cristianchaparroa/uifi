@@ -203,7 +203,6 @@ class GrupLACScraper extends  Scraper
 					$autores = array();
 					foreach( $list as $node ){
 						$nodesiguiente = $node->nextSibling;
-						//echo 	$nodesiguiente->nodeValue . "</br>";
 						//se obtienen los autores que publicaron el capitulo de libro
 						if( strpos($nodesiguiente->nodeValue, 'Autores') ){
 							$result = $nodesiguiente->nodeValue;
@@ -238,7 +237,6 @@ class GrupLACScraper extends  Scraper
 								$isbnr = explode(':',$isbn);
 								$isbn = $isbnr[1];
 								$isbn = str_replace(' ','',$isbn);
-								echo $isbn ."</br>\n";
 								$capitulo['isbn'] = $isbn;
 
 							}
