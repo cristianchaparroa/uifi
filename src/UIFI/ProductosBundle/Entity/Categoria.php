@@ -20,16 +20,6 @@ class Categoria
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-
-    /**
-     * Tipo de revista A1,A2, B1,B2,C...
-     * @var String
-     *
-     * @ORM\Column(name="tipo", type="string",length=2)
-     */
-    private $tipo;
-
     /**
      * Vigencia Inicial desde la cual la categoria se avala
      * @var date $vigenciaInicial
@@ -45,6 +35,14 @@ class Categoria
      * @ORM\Column(name="vigenciaFinal", type="date", nullable=true)
      */
     private $vigenciaFinal;
+
+    /**
+     * Tipo de revista A1,A2, B1,B2,C...
+     * @var String
+     *
+     * @ORM\Column(name="tipo", type="string",length=2)
+     */
+    private $tipo;
 
     /**
      * Revista a la que esta asociada la categoria.
@@ -82,7 +80,7 @@ class Categoria
     /**
      * Get tipo
      *
-     * @return string 
+     * @return string
      */
     public function getTipo()
     {
@@ -105,7 +103,7 @@ class Categoria
     /**
      * Get vigenciaInicial
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getVigenciaInicial()
     {
@@ -128,7 +126,7 @@ class Categoria
     /**
      * Get vigenciaFinal
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getVigenciaFinal()
     {
@@ -151,7 +149,7 @@ class Categoria
     /**
      * Get revista
      *
-     * @return \UIFI\ProductosBundle\Entity\Revista 
+     * @return \UIFI\ProductosBundle\Entity\Revista
      */
     public function getRevista()
     {

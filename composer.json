@@ -31,7 +31,8 @@
         "jms/serializer-bundle": "@dev",
         "nelmio/api-doc-bundle": "@dev",
         "ob/highcharts-bundle": "~1.2",
-        "zendframework/zend-log": "2.*"
+        "zendframework/zend-log": "2.*",
+        "goodby/csv": "~1.2"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
