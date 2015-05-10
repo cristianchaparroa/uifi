@@ -22,4 +22,11 @@ class IntegranteRepository extends EntityRepository
     return $em->createQuery('DELETE FROM UIFIIntegrantesBundle:Integrante')->execute();
   }
 
+  /**
+   * Se redefine el método de buscar todos de tal manera que se obtienen las
+   * entidades ordenadas por orden Alfabetico segun los nombres.
+  */
+  public function findAll(){
+    return $this->findBy(array(), array('nombres' => 'ASC'));
+  }
 }
