@@ -72,6 +72,11 @@
                 <target> Rerportes de  Capítulos de Libro</target>
             </trans-unit>
 
+            <trans-unit id="16">
+                <source>admin.menu.usuarios</source>
+                <target>Usuarios/Integrantes</target>
+            </trans-unit>
+
 
         </body>
     </file>

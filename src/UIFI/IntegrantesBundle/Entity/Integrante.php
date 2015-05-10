@@ -124,7 +124,6 @@ class Integrante
      * @ORM\ManyToMany(targetEntity="Grupo", mappedBy="integrantes" )
     */
     protected $grupos;
-
     /**
      * Constructor
      */
@@ -492,7 +491,7 @@ class Integrante
     /**
      * Get capituloslibro
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getCapituloslibro()
     {

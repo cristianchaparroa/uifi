@@ -12,6 +12,7 @@ use Symfony\Component\DependencyInjection\Container;
 
 use UIFI\IntegrantesBundle\Entity\Grupo;
 use UIFI\IntegrantesBundle\Entity\Integrante;
+use UIFI\IntegrantesBundle\Entity\IntegranteDirector;
 use UIFI\ProductosBundle\Entity\Articulo;
 use UIFI\ProductosBundle\Entity\Libro;
 /**
@@ -56,14 +57,43 @@ class IntegrantesStore implements IStore
           $integrante->setId( $cvlacIntegrante );
           $integrante->setCodigoGruplac( $integranteScraper->getCode()  );
           $integrante->setNombres( $nombreIntegrante );
+
+
           //se setea la demas información posible.
           $this->em->persist( $integrante );
           $this->em->flush();
           $entityIntegrante = $this->repositoryIntegrante->find($codeIntegrante);
+
+          //se verifica si es director si es asi entonces se genera la
+          //relacion entre el integrante y el grupo.
+          if($this->esDirector($this->grupo,$nombreIntegrante)){
+            $integranteDirector = new IntegranteDirector();
+            $integranteDirector->setGrupo($this->grupo);
+            $integranteDirector->setIntegrante($entityIntegrante);
+            $this->em->persist( $integranteDirector );
+            $this->em->flush();
+          }
        }
 
        $this->grupo->addIntegrante($entityIntegrante);
        $this->em->persist($this->grupo);
     }
+  }
+
+  /**
+   * TODO: Verificar si con el nombre de un integrante es el director
+   * del grupo que se esta procesando.
+   *
+   * @param $grupo que se esta procesando.
+   * @param $nombreIngrente que se esta procesando
+   *
+   * @return Estado de la verificación.
+  */
+  private function esDirector($grupo, $nombreIntegrante){
+    $nombreIntegrante = str_replace(' ', '', $nombreIntegrante );
+    $grupoScraper = new GrupLACScraper( $grupo->getId() );
+    $nombreDirector = $grupoScraper->extraerLider();
+    $nombreDirector = str_replace(' ','', $nombreDirector );
+    return  strtolower($nombreDirector) === strtolower($nombreIntegrante);
   }
 }
