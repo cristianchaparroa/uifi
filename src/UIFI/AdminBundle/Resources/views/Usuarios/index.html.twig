@@ -1,0 +1,61 @@
+{% extends "UIFIAdminBundle:Dashboard:index.html.twig" %}
+
+{% block  main_content %}
+<h4> Usuarios en el sistema </h4>
+<hr>
+
+
+
+<div class="table">
+{% if entities  %}
+    <div class="well">
+       A continuación se listan los Usuarios que pueden entrar en el sistema.
+    </div>
+    <div id="toolbar">
+      <button id="remove" class="btn btn-danger" disabled>
+      <i class="glyphicon glyphicon-remove"></i> Delete
+      </button>
+    </div>
+    <table id="gruplac-table"
+        data-toggle="table"
+        data-toolbar="#toolbar"
+        data-search="true"
+        data-show-refresh="true"
+        data-show-toggle="true"
+        data-show-columns="true"
+        data-show-export="true"
+        data-show-pagination-switch="true"
+        data-pagination="true">
+        <thead>
+            <tr>
+              <th data-field="state" data-checkbox="true"> </th>
+              <th data-field="id" data-sortable="true">Email</th>
+              <th>Estado</th>
+              <th>Roles</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr data-index="{{loop.index}}">
+                <td class="bs-checkbox"><input type="checkbox" name="btSelectItem" data-index="{{loop.index}}"></td>
+                <td class="id">{{entity.email}}</td>
+                <td>
+                  {%if entity.enabled %}
+                    Activo
+                  {% else %}
+                    Inactivo
+                  {%endif%}
+                </td>
+                <td>
+                  {% for i in entity.roles %}
+                      {{i}},
+                  {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+</div>  <!-- end div tables -->
+
+{% endblock %}
