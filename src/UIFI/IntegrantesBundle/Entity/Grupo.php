@@ -89,7 +89,7 @@ class Grupo
     /**
      * Get id
      *
-     * @return string 
+     * @return string
      */
     public function getId()
     {
@@ -112,7 +112,7 @@ class Grupo
     /**
      * Get nombre
      *
-     * @return string 
+     * @return string
      */
     public function getNombre()
     {
@@ -135,7 +135,7 @@ class Grupo
     /**
      * Get gruplac
      *
-     * @return string 
+     * @return string
      */
     public function getGruplac()
     {
@@ -158,7 +158,7 @@ class Grupo
     /**
      * Get email
      *
-     * @return string 
+     * @return string
      */
     public function getEmail()
     {
@@ -181,7 +181,7 @@ class Grupo
     /**
      * Get clasificacion
      *
-     * @return string 
+     * @return string
      */
     public function getClasificacion()
     {
@@ -204,7 +204,7 @@ class Grupo
     /**
      * Get facultad
      *
-     * @return \UIFI\IntegrantesBundle\Entity\Facultad 
+     * @return \UIFI\IntegrantesBundle\Entity\Facultad
      */
     public function getFacultad()
     {
@@ -237,7 +237,7 @@ class Grupo
     /**
      * Get integrantes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getIntegrantes()
     {

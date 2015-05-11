@@ -7,6 +7,9 @@
       <service class="UIFI\IntegrantesBundle\Service\IntegrantesService" id="uifi.integrantes.integrantes">
           <argument type="service" id="service_container" />
       </service>
+      <service class="UIFI\IntegrantesBundle\Service\UsuariosService" id="uifi.integrantes.usuarios">
+          <argument type="service" id="service_container" />
+      </service>
 
     </services>
 

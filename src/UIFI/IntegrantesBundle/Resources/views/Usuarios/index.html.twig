@@ -1,0 +1,60 @@
+{% extends "UIFIIntegrantesBundle:Director:index.html.twig" %}
+
+{% block  main_content %}
+
+<div class="table">
+{% if entities  %}
+    <div class="well">
+       <p>A continuación se listan los usuarios del grupo de Investgacion</p>
+       <p><b>Grupo:</b> {{grupo}}</p>
+       <p><b>Director:</b>{{director}}</p>
+    </div>
+    <div id="toolbar">
+
+    </div>
+    <table id="gruplac-table"
+        data-toggle="table"
+        data-toolbar="#toolbar"
+        data-search="true"
+        data-show-refresh="true"
+        data-show-toggle="true"
+        data-show-columns="true"
+        data-show-export="true"
+        data-show-pagination-switch="true"
+        data-pagination="true">
+        <thead>
+            <tr>
+              <th data-field="state" data-checkbox="true"> </th>
+              <th data-field="usuario" data-sortable="true">Usuario</th>
+              <th data-field="estado" data-sortable="true">Estado</th>
+              <th data-field="roles" data-sortable="true">Roles</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr data-index="{{loop.index}}">
+                <td class="bs-checkbox"><input type="checkbox" name="btSelectItem" data-index="{{loop.index}}"></td>
+                <td class="id">{{entity.email}}</td>
+                <td class="estado">
+                  {% if entity.enabled == 1 %}
+                    Activo
+                  {% else %}
+                    Inactivo
+                  {% endif %}
+                </td>
+                <td>
+                  {% for rol in entity.roles %}
+                    {% if rol!='ROLE_USER' %}
+                      {{rol}}
+                    {% endif %}
+                  {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+</div>  <!-- end div tables -->
+
+
+{% endblock %}
