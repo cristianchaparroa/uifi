@@ -12,10 +12,13 @@
        A continuación se listan los Integrantes de los grupos de Investigación.
     </div>
     <div id="toolbar">
-      <button id="remove" class="btn btn-danger" disabled>
-      <i class="glyphicon glyphicon-remove"></i> Delete
+
+      <button id="remove" class="btn btn-primary" disabled>
+          <i class="glyphicon glyphicon-add"></i> Asignar usuario
       </button>
+
     </div>
+
     <table id="gruplac-table"
         data-toggle="table"
         data-toolbar="#toolbar"
@@ -31,6 +34,7 @@
               <th data-field="state" data-checkbox="true"> </th>
               <th data-field="id" data-sortable="true">Código </th>
               <th>Nombres</th>
+              <th>Usuario</th>
             </tr>
         </thead>
         <tbody>
@@ -39,6 +43,14 @@
                 <td class="bs-checkbox"><input type="checkbox" name="btSelectItem" data-index="{{loop.index}}"></td>
                 <td class="id">{{entity.id}}</td>
                 <td>{{entity.nombres}}</td>
+                <td>
+                   {%if entity.usuario is null  %}
+                      Sin asignar
+                   {% else %}
+                      {{entity.usuario.email}}
+                   {% endif %}
+
+                </td>
             </tr>
         {% endfor %}
         </tbody>

@@ -1,0 +1,16 @@
+
+<div class="col-sm-3">
+<ul class="nav nav-pills nav-stacked left-menu" id="stacked-menu">
+   <!-- Usuarios/Integrantes -->
+   <li>
+     <a onclick="return false" href="#" data-target="#item1" data-toggle="collapse" data-parent="#stacked-menu">
+       <i class="fa fa-user"></i> Integrantes <span class="caret arrow"></span>
+      </a>
+     <ul class="nav nav-stacked collapse left-submenu" id="item1">
+       <li><a href="{{path('director_integrantes')}}">Integrantes</a></li>
+     </ul>
+   </li>
+
+  <li> <a href="{{path('logout')}}"> <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>{{'admin.menu.salir'|trans}}</a></li>
+</ul>
+</div>

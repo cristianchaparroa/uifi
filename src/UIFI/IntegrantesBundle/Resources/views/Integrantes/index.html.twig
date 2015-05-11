@@ -1,18 +1,16 @@
-{% extends "UIFIAdminBundle:Dashboard:index.html.twig" %}
+{% extends "UIFIIntegrantesBundle:Director:index.html.twig" %}
 
 {% block  main_content %}
-<h4> Directores de grupo de Investigación </h4>
-<hr>
-
-
 
 <div class="table">
 {% if entities  %}
     <div class="well">
-       A continuación se listan los directores de los grupos de Investigación.
+       <p>A continuación se listan los integrantes del grupo de Investgacion</p>
+       <p><b>Grupo:</b> {{grupo}}</p>
+       <p><b>Director:</b>{{director}}</p>
     </div>
     <div id="toolbar">
-  
+
     </div>
     <table id="gruplac-table"
         data-toggle="table"
@@ -27,21 +25,31 @@
         <thead>
             <tr>
               <th data-field="state" data-checkbox="true"> </th>
-              <th data-field="id" data-sortable="true">Nombre del Director </th>
-              <th>Grupo de Investigación</th>
+              <th data-field="codigo" data-sortable="true">Código CVLAC</th>
+              <th data-field="id" data-sortable="true">Nombres</th>
+              <th data-field="usuario" data-sortable="true">Usuario</th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr data-index="{{loop.index}}">
                 <td class="bs-checkbox"><input type="checkbox" name="btSelectItem" data-index="{{loop.index}}"></td>
-                <td class="id">{{entity.integrante}}</td>
-                <td>{{entity.grupo}}</td>
+                <td>{{entity.codigogruplac}}</td>
+
+                <td class="id">{{entity.nombres}}</td>
+                <td>
+                {% if entity.usuario is null%}
+                  Sin Asignar
+                {% else %}
+                  {{entity.usuario.email}}
+                {% endif %}
+                </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 {% endif %}
 </div>  <!-- end div tables -->
+
 
 {% endblock %}

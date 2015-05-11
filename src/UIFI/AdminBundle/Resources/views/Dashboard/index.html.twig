@@ -29,6 +29,19 @@
             <h1>{{ 'uifi.title'|trans }}
             <p class="lead">{{'uifi.universidad'|trans}}</p></h1>
           </div>
+
+          <div>
+            <p><b>Usuario:</b> {{app.user.email}}</p>
+
+            <p><b>Roles:</b>
+            {% for rol in app.user.roles %}
+              {% if rol!='ROLE_USER' %}
+                {{rol}}
+              {% endif %}
+            {% endfor %}
+            </p>
+          </div>
+          
       </header>
       <hr>
       <div class="row">

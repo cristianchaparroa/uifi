@@ -6,18 +6,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-/**
- * @Route("/director")
- */
+
 class DirectorController extends Controller
 {
     /**
-     * @Route("/home", name="director_home")
-     * @Template()
+     * @Route("/director", name="director_home")
      */
-    public function homeAction()
+    public function IndexAction()
     {
-        return array();
+      return  $this->render('UIFIIntegrantesBundle:Director:index.html.twig');
     }
-
 }
