@@ -41,8 +41,8 @@ class UsuariosService {
           $integrantes = $grupo->getIntegrantes();
           $integrantes = $integrantes->toArray();
           $usuarios = array();
-          foreach( $integrantes as $integrante){
-              $usuario = $integrante->getUsuario();
+          foreach( $integrantes as $int){
+              $usuario = $int->getUsuario();
               if( $usuario ){
                 $usuarios[]  = $usuario;
               }
