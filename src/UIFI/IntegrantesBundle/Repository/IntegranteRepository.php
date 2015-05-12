@@ -3,6 +3,7 @@
 namespace UIFI\IntegrantesBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use UIFI\IntegrantesBundle\Entity\Integrante;
 
 /**
  * IntegranteRepository
@@ -28,5 +29,13 @@ class IntegranteRepository extends EntityRepository
   */
   public function findAll(){
     return $this->findBy(array(), array('nombres' => 'ASC'));
+  }
+
+  public function findIntegrantesSinUsuario(){
+    $sql = 'SELECT * FROM integrante WHERE usuario_id is null';
+    $stmt = $this->getEntityManager()->getConnection()->prepare($sql);
+    $stmt->execute();
+    $integrantes = $stmt->fetchAll();
+    return $integrantes;
   }
 }

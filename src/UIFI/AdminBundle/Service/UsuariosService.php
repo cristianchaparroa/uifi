@@ -32,4 +32,19 @@ class UsuariosService {
     $entities = $this->em->getRepository('UsersBundle:Usuario')->findAll();
     return $entities;
   }
+
+  /**
+   * Obtiene todos los integrantes que aún no tienen asignado un usuario
+   * para logearse en el sistema.
+   *
+   * @return Arreglo de Integrantes
+  */
+  public function getIntegrantesSinUsuario(){
+    $repo = $this->em->getRepository('UIFIIntegrantesBundle:Integrante');
+    $query = $repo
+      ->createQueryBuilder('i')
+      ->andWhere('i.usuario IS  NULL')
+      ->getQuery();
+    return $query->getResult();
+  }
 }

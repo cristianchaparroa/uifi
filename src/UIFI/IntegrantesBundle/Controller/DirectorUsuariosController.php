@@ -22,4 +22,5 @@ class DirectorUsuariosController extends Controller
       );
       return  $this->render('UIFIIntegrantesBundle:Usuarios:index.html.twig',$parametros);
     }
+
 }
