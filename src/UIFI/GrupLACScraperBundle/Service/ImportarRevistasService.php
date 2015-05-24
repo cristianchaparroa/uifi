@@ -13,7 +13,7 @@ use Goodby\CSV\Import\Standard\LexerConfig;
 
 use UIFI\ProductosBundle\Entity\Revista;
 use UIFI\ProductosBundle\Entity\Categoria;
-
+use  UIFI\ProductosBundle\Entity\Document;
 /**
  * Servicio que se encarga de importar la información  de las revistas de
  * indexación desde un archivo csv.
@@ -39,7 +39,9 @@ class ImportarRevistasService
      *     crear una nueva categoria para esta revista.
      *
     */
-    public function importar(){
+    public function importar($fileId){
+      $file = $this->em->getRepository('UIFIProductosBundle:Document')->find($fileId);
+      $path = __DIR__.'/../../../../web/uploads/documents/'.$file->getPath();
       $config = new LexerConfig();
       $config
       ->setDelimiter(";")
@@ -49,8 +51,6 @@ class ImportarRevistasService
       $lexer = new Lexer($config);
       $interpreter = new Interpreter();
       $interpreter->addObserver(function(array $row) {
-          print_r($row);
-          echo "</br></br>\n\n";
           $isbn          = $this->process($row[1]);
           $nombreRevista = $this->process($row[2]);
           $category      = $this->process($row[3]);
@@ -91,7 +91,8 @@ class ImportarRevistasService
           $this->em->flush();
 
       });
-      $lexer->parse('data.csv', $interpreter);
+      $lexer->parse( $path , $interpreter);
+      $file->removeUpload();
     }
 
     public function process($string ){
