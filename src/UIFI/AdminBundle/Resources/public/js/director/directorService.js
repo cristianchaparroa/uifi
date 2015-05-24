@@ -26,6 +26,7 @@ $(function(){
          var texto =  $(this).text();
          texto = texto.replace(/ +?/g, '');
          if( texto.search('@') !==-1 ){
+           checkbox.hide();
            checkbox.prop('disabled',true);
          }
        }
@@ -43,8 +44,7 @@ $(function(){
 
 
   $('#email').donetyping(function(){
-    checkIsEmail();
-    validateEmail();
+      checkIsEmail();
   });
 
   $crearUsuario.click(function(event){
@@ -92,6 +92,38 @@ $(function(){
     if( IsEmail($email) ){
       $crearUsuario.prop('disabled',false);
       $message.hide();
+
+      var baseUrl= location.protocol + "//" + location.host;
+      var url = baseUrl +  Routing.generate('admin_director_verificaremail');
+      var data = { 'email': $email };
+
+      $.ajax({
+        url: url,
+        async: false,
+        crossDomain: true,
+        method:'POST',
+        data:data,
+        success: function(data)
+        {
+          console.log( JSON.stringify(data) ) ;
+          if( data.success ){
+            $crearUsuario.prop('disabled',true);
+            $('#mess').remove();
+            $message.show();
+            $message.append( '<p id="mess">Ya existe otro usuario registrado con este email</p>' );
+          }
+          else{
+            $crearUsuario.prop('disabled',false);
+            $message.hide();
+          }
+        },
+        error: function(xhr, status, error)
+        {
+          console.log(JSON.stringify(xhr));
+          console.log(JSON.stringify(status));
+          console.log(JSON.stringify(error));
+        }
+      });
     }
     else{
       $crearUsuario.prop('disabled',true);
@@ -99,43 +131,6 @@ $(function(){
       $message.show();
       $message.append( '<p id="mess">No es un email valido</p>' );
     }
-  }
-
-  function validateEmail(){
-    var $email = $('#email').val();
-    $email = $email.replace(/ +?/g, '');
-
-    var baseUrl= location.protocol + "//" + location.host;
-    var url = baseUrl +  Routing.generate('admin_director_verificaremail');
-    var data = { 'email': $email };
-
-    $.ajax({
-      url: url,
-      async: false,
-      crossDomain: true,
-      method:'POST',
-      data:data,
-      success: function(data)
-      {
-        console.log( JSON.stringify(data) ) ;
-        if( data.success ){
-          $crearUsuario.prop('disabled',true);
-          $('#mess').remove();
-          $message.show();
-          $message.append( '<p id="mess">Ya existe otro usuario registrado con este email</p>' );
-        }
-        else{
-          $crearUsuario.prop('disabled',false);
-          $message.hide();
-        }
-      },
-      error: function(xhr, status, error)
-      {
-        console.log(JSON.stringify(xhr));
-        console.log(JSON.stringify(status));
-        console.log(JSON.stringify(error));
-      }
-    });
   }
 
 });
