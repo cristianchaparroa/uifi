@@ -36,41 +36,6 @@ class Revista
       */
     protected $categorias;
 
-
-
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set isbnRevista
-     *
-     * @param string $isbnRevista
-     * @return Revista
-     */
-    public function setIsbnRevista($isbnRevista)
-    {
-        $this->isbnRevista = $isbnRevista;
-
-        return $this;
-    }
-
-    /**
-     * Get isbnRevista
-     *
-     * @return string
-     */
-    public function getIsbnRevista()
-    {
-        return $this->isbnRevista;
-    }
     /**
      * Constructor
      */
@@ -90,6 +55,16 @@ class Revista
         $this->id = $id;
 
         return $this;
+    }
+
+    /**
+     * Get id
+     *
+     * @return string 
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**

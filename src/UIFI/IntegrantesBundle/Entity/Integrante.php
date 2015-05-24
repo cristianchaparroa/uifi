@@ -33,7 +33,7 @@ class Integrante
 
     /**
      * @ORM\OneToOne(targetEntity="UsersBundle\Entity\Usuario")
-     * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id", nullable=true)
      */
     private $usuario;
 

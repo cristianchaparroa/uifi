@@ -32,45 +32,71 @@ class ImportarRevistasService
      * Función que se encarga de importar y procesar la información de las
      * revistas de indexación desde un archivo csv.
      *
+     * TODO:
+     *  -Actualizar si se importan archivos con la mismo isbn y la misma
+     *     fecha inicial y final
+     *  -Verificar si el isbn ya existe y las fechas de vigencia son diferentes
+     *     crear una nueva categoria para esta revista.
+     *
     */
     public function importar(){
       $config = new LexerConfig();
+      $config
+      ->setDelimiter(";")
+        ->setToCharset('UTF-8')
+        ->setFromCharset('SJIS-win');
+
       $lexer = new Lexer($config);
       $interpreter = new Interpreter();
       $interpreter->addObserver(function(array $row) {
+          print_r($row);
+          echo "</br></br>\n\n";
+          $isbn          = $this->process($row[1]);
+          $nombreRevista = $this->process($row[2]);
+          $category      = $this->process($row[3]);
+          $inicial       = $this->process($row[4]);
+          $final         = $this->process($row[5]);
+
           $revista = new Revista();
-          $revista->setId($row[0]);
-          $revista->setNombre($row[1]);
+          $revista->setId($isbn);
+          $revista->setNombre($nombreRevista);
+
           $this->em->persist($revista);
-          $categoria = new Categoria();
-          $categoria->setTipo( $row[2]);
-          $fechas = explode( '-',$row[3]);
-          $fechaInicial = $fechas[0];
-          $fechaInicials = explode( ' ',$fechaInicial);
-          //elimino los items con espacio blanco
-          $fechaInicials = $this->removeEmpty($fechaInicials) ;
-          $fechaInicialMes = $fechaInicials[0];
-          $fechaInicialMes = $this->getMes( $fechaInicialMes );
-          $fechaInicialAnual = $fechaInicials[1];
-          $fechaFinal = $fechas[1];
-          $fechaFinals = explode( ' ',$fechaFinal );
-          $fechaFinals = $this->removeEmpty($fechaFinals);
-          $fechaFinalMes = $fechaFinals[0];
-          $fechaFinalMes = $this->getMes($fechaFinalMes);
-          $fechaFinalAnual = $fechaFinals[1];
-          $stringInicial  = $fechaInicialAnual . "/".  $fechaInicialMes ."/01";
-          $vigenciaInicial = new \DateTime( $stringInicial );
-          $stringFinal = $fechaFinalAnual ."/".$fechaFinalMes."/01" ;
-          $vigenciaFinal = new \DateTime(  $stringFinal );
-          $categoria->setVigenciaInicial($vigenciaInicial);
-          $categoria->setVigenciaFinal($vigenciaFinal);
+          $this->em->flush();
+
+          $categoria = new categoria();
+          $categoria->setTipo($category);
+
+          $fechaInicial = explode('-',$inicial);
+          $mesInicial   = $this->getMes($fechaInicial[0]);
+          $anualInicial = $fechaInicial[1];
+
+
+          $fechaFinal = explode('-',$inicial);
+          $mesFinal   = $this->getMes($fechaFinal[0]);
+          $anualFinal = $fechaFinal[1];
+
+          $strInicial =  $mesInicial . "-01-".$anualInicial;
+          $strFinal   =  $mesFinal. "-01-".$anualFinal;
+
+          $categoria->setVigenciaInicial( new \DateTime($strInicial));
+          $categoria->setVigenciaFinal( new \DateTime($strFinal));
+
           $categoria->setRevista($revista);
           $this->em->persist($categoria);
+          $this->em->flush();
+
           $revista->addCategoria($categoria);
           $this->em->persist($revista);
           $this->em->flush();
+
       });
       $lexer->parse('data.csv', $interpreter);
+    }
+
+    public function process($string ){
+      $string = preg_replace('/[^A-Za-z0-9\. -]/', '', $string);
+      return $string;
     }
     /**
      * Obtiene el número de un mes, basado en el nombre
@@ -102,7 +128,7 @@ class ImportarRevistasService
     }
 
     /**
-     * Funcioón que se encarga de eliminar elementos en blanco
+     * Función que se encarga de eliminar elementos en blanco
      * de un arreglo.
      *
      * @param $array Arreglo a procesar
