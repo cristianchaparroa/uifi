@@ -14,6 +14,24 @@ $(function(){
     $agregarUsuario.prop('disabled', !$table.bootstrapTable('getSelections').length);
   });
 
+  /**
+   * Desactivo todos los checkbox que tienen un usuario asignado.
+  */
+  $.each( $('input[name="btSelectItem"]'),function(){
+    var desactivar = false;
+     //verifico  cada elemento
+     var checkbox = $(this);
+     $.each( checkbox.closest("td").siblings("td") ,function(){
+       if( $(this).attr('class') ==='usuario' ){
+         var texto =  $(this).text();
+         texto = texto.replace(/ +?/g, '');
+         if( texto.search('@') !==-1 ){
+           checkbox.prop('disabled',true);
+         }
+       }
+     });
+  });
+
   $agregarUsuario.click(function(event){
     $.each( $('input[name="btSelectItem"]:checkbox:checked').closest("td").siblings("td") ,function(){
       if( $(this).attr('class') ==='codigo' ){
@@ -74,7 +92,6 @@ $(function(){
     if( IsEmail($email) ){
       $crearUsuario.prop('disabled',false);
       $message.hide();
-
     }
     else{
       $crearUsuario.prop('disabled',true);
