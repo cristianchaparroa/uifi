@@ -43,8 +43,8 @@
                 <td class="bs-checkbox"><input type="checkbox" name="btSelectItem" data-index="{{loop.index}}"></td>
                 <td class="codigo">{{entity.integrante.id}}</td>
                 <td class="nombre">{{entity.integrante}}</td>
-                <td>{{entity.grupo}}</td>
-                <td>
+                <td class="grupo">{{entity.grupo}}</td>
+                <td class="usuario">
                   {% if entity.integrante.usuario is null  %}
                     Sin asignar
                   {% else %}

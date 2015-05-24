@@ -47,6 +47,8 @@ class DirectorService {
     $integrante = $this->em->getRepository('UIFIIntegrantesBundle:Integrante')->find( $idIntegrante );
     if( $integrante ){
         $integrante->setUsuario( $result['user'] );
+        $this->em->persist($integrante);
+        $this->em->flush();
     }
     $this->sendEmail( $integrante->getNombres(), $email, $result['password'] );
     return $integrante;
