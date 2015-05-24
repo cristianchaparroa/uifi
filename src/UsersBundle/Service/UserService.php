@@ -23,12 +23,12 @@ class UserService
   /**
    * Verifica que el email que se pone no este registrado en el sistema.
    * @param $email
-   * @param
+   * @return Estado de la validación verdadero si existe, falso de lo contrario
   */
   public function verificarEmail($email){
-    $repositoryUsuario = $this->em->getRepository('UsersBundle:Usuario');
-    $user = $repositoryUsuario->findUserByEmail($email);
-     return ( $user ? true: false );
+    $userManager = $this->container->get('fos_user.user_manager');
+    $user = $userManager->findUserByEmail($email);
+    return ( $user ? true: false );
   }
   /**
    * Crea un usuario en el sistema.

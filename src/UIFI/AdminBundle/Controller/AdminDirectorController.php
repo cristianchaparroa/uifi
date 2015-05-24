@@ -40,4 +40,20 @@ class AdminDirectorController extends Controller
       return new JsonResponse(array('success' =>  $success));
     }
 
+    /**
+    * Función que se encarga de verificar si un email ya existe en la
+    * plataforma
+    * @Route("/admin/director/verificaremail", name="admin_director_verificaremail",  options={"expose"=true} )
+    * @Method("POST")
+    *
+    * @param email a verficar
+    * @return JSON response con el estado de la validación
+    */
+    public function verificarEmail(){
+      $parameters = $this->getRequest()->request->all();
+      $email = $parameters['email'];
+      $success = $this->container->get('uifi.users')->verificarEmail($email);
+      return new JsonResponse(array('success' =>  $success));
+    }
+
 }

@@ -25,21 +25,8 @@ $(function(){
 
 
   $('#email').donetyping(function(){
-    var $email = $('#email').val();
-    $email = $email.replace(/ +?/g, '');
-    if( IsEmail($email) ){
-      $crearUsuario.prop('disabled',false);
-      $message.hide();
-
-    }
-    else{
-      $crearUsuario.prop('disabled',true);
-      $('#mess').remove();
-      $message.show();
-      $message.append( '<p id="mess">No es un email valido</p>' );
-    }
-
-    //TODO check if the email exists
+    checkIsEmail();
+    validateEmail();
   });
 
   $crearUsuario.click(function(event){
@@ -80,7 +67,62 @@ $(function(){
     event.stopPropagation();
 
   });//end click crear usuario.
+
+  function checkIsEmail(){
+    var $email = $('#email').val();
+    $email = $email.replace(/ +?/g, '');
+    if( IsEmail($email) ){
+      $crearUsuario.prop('disabled',false);
+      $message.hide();
+
+    }
+    else{
+      $crearUsuario.prop('disabled',true);
+      $('#mess').remove();
+      $message.show();
+      $message.append( '<p id="mess">No es un email valido</p>' );
+    }
+  }
+
+  function validateEmail(){
+    var $email = $('#email').val();
+    $email = $email.replace(/ +?/g, '');
+
+    var baseUrl= location.protocol + "//" + location.host;
+    var url = baseUrl +  Routing.generate('admin_director_verificaremail');
+    var data = { 'email': $email };
+
+    $.ajax({
+      url: url,
+      async: false,
+      crossDomain: true,
+      method:'POST',
+      data:data,
+      success: function(data)
+      {
+        console.log( JSON.stringify(data) ) ;
+        if( data.success ){
+          $crearUsuario.prop('disabled',true);
+          $('#mess').remove();
+          $message.show();
+          $message.append( '<p id="mess">Ya existe otro usuario registrado con este email</p>' );
+        }
+        else{
+          $crearUsuario.prop('disabled',false);
+          $message.hide();
+        }
+      },
+      error: function(xhr, status, error)
+      {
+        console.log(JSON.stringify(xhr));
+        console.log(JSON.stringify(status));
+        console.log(JSON.stringify(error));
+      }
+    });
+  }
+
 });
+
 
 function IsEmail(email) {
   var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
