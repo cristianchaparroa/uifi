@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * en especifico.
  *
  * @ORM\Table( "integrante_director" )
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="UIFI\IntegrantesBundle\Repository\IntegranteDirectorRepository")
  */
 class IntegranteDirector
 {

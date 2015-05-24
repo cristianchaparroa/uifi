@@ -142,6 +142,7 @@ $(function(){
 */
 function check(){
   var $code = $('#gruplac').val();
+  $code = $code.replace(/ +?/g, '');
   if( $.isNumeric($code)  ){
     $('#fail').hide();
 

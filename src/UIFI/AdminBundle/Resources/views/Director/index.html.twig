@@ -12,9 +12,11 @@
        A continuación se listan los directores de los grupos de Investigación.
     </div>
     <div id="toolbar">
-
+      <button id="btn-agregar-usuario"class="btn btn-success" data-toggle="modal" data-target="#agregarUsuariocDialogo">
+        Asignar Usuario
+      </button>
     </div>
-    <table id="gruplac-table"
+    <table id="directores-table"
         data-toggle="table"
         data-toolbar="#toolbar"
         data-search="true"
@@ -22,26 +24,61 @@
         data-show-toggle="true"
         data-show-columns="true"
         data-show-export="true"
+        data-single-select="true"
         data-show-pagination-switch="true"
+
         data-pagination="true">
         <thead>
             <tr>
-              <th data-field="state" data-checkbox="true"> </th>
-              <th data-field="id" data-sortable="true">Nombre del Director </th>
+              <th data-field="state" data-checkbox="true"></th>
+              <th data-field="id" data-sortable="true">Código </th>
+              <th>Nombres</th>
               <th>Grupo de Investigación</th>
+              <th>Usuario</th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr data-index="{{loop.index}}">
                 <td class="bs-checkbox"><input type="checkbox" name="btSelectItem" data-index="{{loop.index}}"></td>
-                <td class="id">{{entity.integrante}}</td>
+                <td class="codigo">{{entity.integrante.id}}</td>
+                <td class="nombre">{{entity.integrante}}</td>
                 <td>{{entity.grupo}}</td>
+                <td>
+                  {% if entity.integrante.usuario is null  %}
+                    Sin asignar
+                  {% else %}
+                    {{entity.integrante.usuario.email}}
+                  {% endif %}
+                </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 {% endif %}
 </div>  <!-- end div tables -->
+
+<div  style="display: none;"  class="modal fade" id="agregarUsuariocDialogo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"  aria-hidden="true">
+   <div class="modal-dialog">
+     <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">Agregar Usuario</h4>
+          </div>
+          <div class="modal-body">
+                {% embed "UIFIAdminBundle:Director:new.html.twig"  %}
+                {% endembed %}
+          </div>
+    </div>
+  </div>
+</div>
+
+<div class="js-css-import">
+  <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+  <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+  <script src="{{ asset('bundles/uifiadmin/js/director/directorService.js') }}"></script>
+
+
+</div><!--  end js-css-import-->
 
 {% endblock %}

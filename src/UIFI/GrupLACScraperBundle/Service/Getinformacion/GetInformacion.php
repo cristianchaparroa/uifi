@@ -78,13 +78,13 @@ class GetInformacion
        $integrantes    = $grupoScraper->obtenerIntegrantes();
        $articulos      = $grupoScraper->getArticulos();
        $libros         = $grupoScraper->getLibros();
-       $capituloslibro = $grupoScraper->getCapitulosLibros();
+       //$capituloslibro = $grupoScraper->getCapitulosLibros();
 
        $stores = array();
        $stores[] = new IntegrantesStore($this->em,$grupo, $integrantes);
        $stores[] = new ArticulosStore($this->em,$grupo, $articulos);
        $stores[] = new LibrosStore($this->em,$grupo, $libros);
-       $stores[] = new CapitulosLibroStore($this->em,$grupo,$capituloslibro);
+       //$stores[] = new CapitulosLibroStore($this->em,$grupo,$capituloslibro);
 
        /*Procesa todos las tiendas de informacion extraidas*/
        foreach( $stores as $store ){
@@ -99,6 +99,9 @@ class GetInformacion
     * las tablas requeridas en el proceso de automatización.
    */
    public function initDrop(){
+     $integranteDirectorRepository = $this->em->getRepository('UIFIIntegrantesBundle:IntegranteDirector');
+     $integranteDirectorRepository->deleteAll();
+
      $articuloRepository = $this->em->getRepository('UIFIProductosBundle:Articulo');
      $articuloRepository->deleteAll();
      $integranteRepository = $this->em->getRepository('UIFIIntegrantesBundle:Integrante');
@@ -109,6 +112,9 @@ class GetInformacion
 
      $grupoRepository = $this->em->getRepository('UIFIIntegrantesBundle:Grupo');
      $grupoRepository->deleteAll();
+
+
+
    }
 
 }
