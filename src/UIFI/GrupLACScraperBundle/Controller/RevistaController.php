@@ -8,11 +8,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use  UIFI\ProductosBundle\Entity\Document;
+
 
 class RevistaController extends Controller
 {
     /**
+     * Funcion que muestra la página para subir un archivo CSV.
+     *
      * @Route("/admin/revistas/", name="admin_revistas")
      */
     public function indexAction(){
@@ -37,13 +39,39 @@ class RevistaController extends Controller
       return $this->render('UIFIGrupLACScraperBundle:Revista:index.html.twig', $parametros );
     }
     /**
+     * Funcion que se encarga de importar las revistas y asignarle la categoria
+     * especifica.
+     *
+     * @param fieldID Identificador del Archivo CSV que se importo
+     *
      * @Route("/admin/revistas/importar/{fileId}",name="revistas_importar")
      */
     public function importarAction($fileId){
       $this->get('uifi.gruplac.importar.revistas')->importar($fileId);
-      echo "termino";
-      return new JsonResponse( );
+      return $this->redirect($this->generateUrl('revistas_lista' ));
     }
+
+    /**
+     * Función que redirige a la lista de revistas de indexación.
+     *
+     * @Route("/admin/revistas/lista",name="revistas_lista")
+     * @Method("POST")
+    */
+    public function listaAction(){
+      return $this->render('UIFIGrupLACScraperBundle:Revista:lista.html.twig');
+    }
+    /**
+     * Función que redirige a la lista de revistas de indexación.
+     *
+     * @Route("/admin/revistas/getlistarevistas",name="revistas_getlistarevista")
+     * @Method("POST")
+    */
+    public function getListaRevistas(){
+      $revistas = $this->get('uifi.gruplac.revistas')->listar();
+      $parametros = array( 'revistas' => $revistas );
+      return new JsonResponse( $parametros );
+    }
+
 
 
 

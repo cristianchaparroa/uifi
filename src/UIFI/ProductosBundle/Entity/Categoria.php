@@ -155,4 +155,8 @@ class Categoria
     {
         return $this->revista;
     }
+
+    public function __toString(){
+      return $this->tipo;
+    }
 }
