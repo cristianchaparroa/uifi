@@ -7,6 +7,8 @@ namespace UIFI\GrupLACScraperBundle\Service;
 use Symfony\Bundle\DoctrineBundle\Registry;
 use Symfony\Component\HttpKernel\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Goodby\CSV\Import\Standard\Lexer;
 use Goodby\CSV\Import\Standard\Interpreter;
 use Goodby\CSV\Import\Standard\LexerConfig;
@@ -144,4 +146,24 @@ class ImportarRevistasService
       }
       return $arr;
     }
+
+    /**
+   * Displays a form to create a new Operador entity.
+   *
+   * @Route("/descargar", name="member_evento_csv_descargar")
+   * @Method("GET")
+   * @Template()
+   */
+  public function download()
+  {
+      $filename ='revistas.csv';
+      $path = __DIR__.'/../../../../../web/uploads/documents/Persona.csv';
+      $path = __DIR__.'/../../../../web/uploads/documents/revista.csv';
+      $content = file_get_contents($path);
+      $response = new Response();
+      $response->headers->set('Content-Type', 'text/xls');
+      $response->headers->set('Content-Disposition', 'attachment;filename="'.$filename);
+      $response->setContent($content);
+      return $response;
+  }
 }

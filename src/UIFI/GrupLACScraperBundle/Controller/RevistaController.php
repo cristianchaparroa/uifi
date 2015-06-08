@@ -74,6 +74,17 @@ class RevistaController extends Controller
       return new JsonResponse( $parametros );
     }
 
+    /**
+   * Displays a form to create a new Operador entity.
+   *
+   * @Route("/admin/revistas/download",name="revistas_descargar")
+   * @Method("GET")
+   */
+  public function downloadAction()
+  {
+    return   $this->get('uifi.gruplac.importar.revistas')->download();
+  }
+
 
 
 
