@@ -19,6 +19,8 @@ class AppController extends Controller
   */
   public function indexAction()
   {
-      return $this->redirect($this->generateUrl('login'));
+      //return $this->redirect($this->generateUrl('login'));
+      return $this->render('AppBundle::index.html.twig');
+
   }
 }

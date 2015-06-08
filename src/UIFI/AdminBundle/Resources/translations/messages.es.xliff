@@ -40,12 +40,12 @@
 
             <trans-unit id="9">
                 <source>admin.menu.reportes</source>
-                <target> Rerportes </target>
+                <target> Reportes </target>
             </trans-unit>
 
             <trans-unit id="10">
                 <source>admin.menu.reportes.articulo</source>
-                <target> Rerportes de Artículos</target>
+                <target> Reportes de Artículos</target>
             </trans-unit>
 
             <trans-unit id="11">
@@ -60,7 +60,7 @@
 
             <trans-unit id="13">
                 <source>admin.menu.reportes.libros</source>
-                <target> Rerportes de Libros</target>
+                <target> Reportes de Libros</target>
             </trans-unit>
             <trans-unit id="14">
                 <source>admin.menu.configuracion.proxy</source>
@@ -69,7 +69,7 @@
 
             <trans-unit id="15">
                 <source>admin.menu.reportes.capituloslibro</source>
-                <target> Rerportes de  Capítulos de Libro</target>
+                <target> Reportes de  Capítulos de Libro</target>
             </trans-unit>
 
             <trans-unit id="16">
