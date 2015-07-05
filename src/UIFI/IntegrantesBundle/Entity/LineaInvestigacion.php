@@ -7,17 +7,17 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Grupo
  *
- * @ORM\Table("grupo")
+ * @ORM\Table("lineas_investigacion")
  * @ORM\Entity(repositoryClass="UIFI\IntegrantesBundle\Repository\GrupoRepository")
  */
-class Grupo
+class LineaInvestigacion
 {
     /**
-     * @var string
-     * Identificador del grupo de investigacion.
+     * @var integer
      *
-     * @ORM\Column(name="id", type="string", length=255)
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
@@ -28,47 +28,17 @@ class Grupo
      */
     private $nombre;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="gruplac", type="string", length=255)
-     */
-    private $gruplac;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=255)
-     */
-    private $email;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="clasificacion", type="string", length=255)
-     */
     private $clasificacion;
 
     /**
-     * Facultdad a la que pertence  un grupo de investigación.
+     * Grupo al que hace referencia el grupo de investigación.
      *
-     * @ORM\ManyToOne(targetEntity="Facultad", inversedBy="grupos" )
-     * @ORM\JoinColumn(name="facultad_id" ,referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Facultad", inversedBy="lineas" )
+     * @ORM\JoinColumn(name="grupo_id" ,referencedColumnName="id")
     */
-    protected $facultad;
+    protected $grupo;
 
-    /**
-      * Lineas de investigación que tiene un grupo de inevestigación.
-      *
-      * @ORM\OneToMany(targetEntity="Grupo", mappedBy="grupo")
-      */
-    protected $lineas;
-    /**
-     * Estudiantes que pertenecen a un grupo de investigacion.
-     * @ORM\ManyToMany( targetEntity="Integrante", inversedBy="grupos", cascade={"remove","persist"})
-     * @ORM\JoinTable(name="grupo_integrante")
-    */
-    protected $integrantes;
     /**
      * Constructor
      */
@@ -252,35 +222,25 @@ class Grupo
     }
 
     /**
-     * Add lineas
+     * Set grupo
      *
-     * @param \UIFI\IntegrantesBundle\Entity\Grupo $lineas
-     * @return Grupo
+     * @param \UIFI\IntegrantesBundle\Entity\Facultad $grupo
+     * @return LineaInvestigacion
      */
-    public function addLinea(\UIFI\IntegrantesBundle\Entity\Grupo $lineas)
+    public function setGrupo(\UIFI\IntegrantesBundle\Entity\Facultad $grupo = null)
     {
-        $this->lineas[] = $lineas;
+        $this->grupo = $grupo;
 
         return $this;
     }
 
     /**
-     * Remove lineas
+     * Get grupo
      *
-     * @param \UIFI\IntegrantesBundle\Entity\Grupo $lineas
+     * @return \UIFI\IntegrantesBundle\Entity\Facultad 
      */
-    public function removeLinea(\UIFI\IntegrantesBundle\Entity\Grupo $lineas)
+    public function getGrupo()
     {
-        $this->lineas->removeElement($lineas);
-    }
-
-    /**
-     * Get lineas
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getLineas()
-    {
-        return $this->lineas;
+        return $this->grupo;
     }
 }
