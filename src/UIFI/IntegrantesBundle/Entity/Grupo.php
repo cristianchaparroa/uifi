@@ -60,7 +60,7 @@ class Grupo
     /**
       * Lineas de investigación que tiene un grupo de inevestigación.
       *
-      * @ORM\OneToMany(targetEntity="Grupo", mappedBy="grupo")
+      * @ORM\OneToMany(targetEntity="LineaInvestigacion", mappedBy="grupo")
       */
     protected $lineas;
     /**
@@ -277,7 +277,7 @@ class Grupo
     /**
      * Get lineas
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getLineas()
     {

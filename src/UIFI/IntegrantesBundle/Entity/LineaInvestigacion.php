@@ -28,13 +28,10 @@ class LineaInvestigacion
      */
     private $nombre;
 
-
-    private $clasificacion;
-
     /**
      * Grupo al que hace referencia el grupo de investigación.
      *
-     * @ORM\ManyToOne(targetEntity="Facultad", inversedBy="lineas" )
+     * @ORM\ManyToOne(targetEntity="Grupo", inversedBy="lineas" )
      * @ORM\JoinColumn(name="grupo_id" ,referencedColumnName="id")
     */
     protected $grupo;
@@ -237,7 +234,7 @@ class LineaInvestigacion
     /**
      * Get grupo
      *
-     * @return \UIFI\IntegrantesBundle\Entity\Facultad 
+     * @return \UIFI\IntegrantesBundle\Entity\Facultad
      */
     public function getGrupo()
     {
