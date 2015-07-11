@@ -1,0 +1,46 @@
+<html ng-app="uifi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>UIFI</title>
+
+  {% embed "AppBundle:layout:style.layout.html.twig" %}{% endembed %}
+  {% embed "AppBundle:layout:bootstrap.layout.html.twig" %}{% endembed %}
+</head>
+<body id="page-top" data-spy="scroll" data-target=".navbar-custom">
+    <!-- Navigation -->
+    {% embed "AppBundle:layout:navigation.layout.html.twig" %}{% endembed %}
+    <!-- /Navigation -->
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+
+    <script src="{{ asset('js/angular.min.js') }}"></script>
+    <script src="{{ asset('js/angular-ui-router.min.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/app.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/services/GruposService.js') }}"></script>
+    <script src="{{ asset('bundles/app/js/controllers/GrupoController.js') }}"></script>
+
+    <div class="laterales">
+          <div ng-controller="GruposController">
+              <h3 style="text-align:center;">[[title]] </h3>
+
+              <div class="list-group ">
+                  <div ng-repeat="grupo in grupos">
+                      <div class="media objetosmedia">
+                        <div class="media-body">
+                          <h4 class="media-heading">[[grupo.nombre]]</h4>
+                            <p><b>Email:</b>[[grupo.email]]</p>
+                            <p><b>Clasificación:</b>[[grupo.clasificacion]]</p>
+                            <p><b>Gruplac:</b> <a href="[[grupo.gruplac]]">link</a></p>
+                        </div>
+                    </div>
+                  </div>
+              </div>
+
+          </div>
+    </div>
+</body>
+</html>

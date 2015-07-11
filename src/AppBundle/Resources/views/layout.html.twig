@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html ng-app="uifi">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>UIFI</title>
+
+  {% embed "AppBundle:layout:style.layout.html.twig" %}{% endembed %}
+
+</head>
+
+<body id="page-top" data-spy="scroll" data-target=".navbar-custom">
+
+  <!-- Navigation -->
+  {% embed "AppBundle:layout:navigation.layout.html.twig" %}{% endembed %}
+  <!-- /Navigation -->
+
+  <!-- Section: about -->
+  {% embed "AppBundle:layout:about.layout.html.twig" %}{% endembed %}
+  <!-- /Section: about -->
+
+  <!-- Section: services -->
+  {% embed "AppBundle:layout:services.layout.html.twig" %}{% endembed %}
+  <!-- /Section: services -->
+
+   <!-- Section: contact -->
+    {% embed "AppBundle:layout:contact.layout.html.twig" %}{% endembed %}
+   <!-- /Section: contact -->
+
+   {% block content %}
+   {% endblock %}
+
+    <footer>
+      {% block footer %}
+      {% endblock %}
+    </footer>
+
+    <!-- Core JavaScript Files -->
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.sticky.js"></script>
+    <script src="js/jquery.easing.min.js"></script>
+    <script src="js/jquery.scrollTo.js"></script>
+    <script src="js/jquery.appear.js"></script>
+    <script src="js/stellar.js"></script>
+    <script src="js/nivo-lightbox.min.js"></script>
+
+    <script src="js/custom.js"></script>
+    <script src="js/css3-animate-it.js"></script>
+
+    <script src="js/angular.min.js"></script>
+
+    <script src="/bundles/app/js/app.js"></script>
+
+  </body>
+
+  </html>

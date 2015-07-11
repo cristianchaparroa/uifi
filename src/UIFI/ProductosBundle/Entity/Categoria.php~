@@ -24,7 +24,7 @@ class Categoria
      * Vigencia Inicial desde la cual la categoria se avala
      * @var date $vigenciaInicial
      *
-     * @ORM\Column(name="vigenciaInicial", type="date")
+     * @ORM\Column(name="vigenciaInicial", type="date",nullable=true)
      */
     private $vigenciaInicial;
 
@@ -40,7 +40,7 @@ class Categoria
      * Tipo de revista A1,A2, B1,B2,C...
      * @var String
      *
-     * @ORM\Column(name="tipo", type="string",length=2)
+     * @ORM\Column(name="tipo", type="string",length=10)
      */
     private $tipo;
 
@@ -154,5 +154,9 @@ class Categoria
     public function getRevista()
     {
         return $this->revista;
+    }
+
+    public function __toString(){
+      return $this->tipo;
     }
 }

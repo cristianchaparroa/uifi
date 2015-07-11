@@ -56,6 +56,13 @@ class Grupo
      * @ORM\JoinColumn(name="facultad_id" ,referencedColumnName="id")
     */
     protected $facultad;
+
+    /**
+      * Lineas de investigación que tiene un grupo de inevestigación.
+      *
+      * @ORM\OneToMany(targetEntity="LineaInvestigacion", mappedBy="grupo")
+      */
+    protected $lineas;
     /**
      * Estudiantes que pertenecen a un grupo de investigacion.
      * @ORM\ManyToMany( targetEntity="Integrante", inversedBy="grupos", cascade={"remove","persist"})
@@ -89,7 +96,7 @@ class Grupo
     /**
      * Get id
      *
-     * @return string 
+     * @return string
      */
     public function getId()
     {
@@ -112,7 +119,7 @@ class Grupo
     /**
      * Get nombre
      *
-     * @return string 
+     * @return string
      */
     public function getNombre()
     {
@@ -135,7 +142,7 @@ class Grupo
     /**
      * Get gruplac
      *
-     * @return string 
+     * @return string
      */
     public function getGruplac()
     {
@@ -158,7 +165,7 @@ class Grupo
     /**
      * Get email
      *
-     * @return string 
+     * @return string
      */
     public function getEmail()
     {
@@ -181,7 +188,7 @@ class Grupo
     /**
      * Get clasificacion
      *
-     * @return string 
+     * @return string
      */
     public function getClasificacion()
     {
@@ -204,7 +211,7 @@ class Grupo
     /**
      * Get facultad
      *
-     * @return \UIFI\IntegrantesBundle\Entity\Facultad 
+     * @return \UIFI\IntegrantesBundle\Entity\Facultad
      */
     public function getFacultad()
     {
@@ -237,10 +244,43 @@ class Grupo
     /**
      * Get integrantes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getIntegrantes()
     {
         return $this->integrantes;
+    }
+
+    /**
+     * Add lineas
+     *
+     * @param \UIFI\IntegrantesBundle\Entity\Grupo $lineas
+     * @return Grupo
+     */
+    public function addLinea(\UIFI\IntegrantesBundle\Entity\Grupo $lineas)
+    {
+        $this->lineas[] = $lineas;
+
+        return $this;
+    }
+
+    /**
+     * Remove lineas
+     *
+     * @param \UIFI\IntegrantesBundle\Entity\Grupo $lineas
+     */
+    public function removeLinea(\UIFI\IntegrantesBundle\Entity\Grupo $lineas)
+    {
+        $this->lineas->removeElement($lineas);
+    }
+
+    /**
+     * Get lineas
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLineas()
+    {
+        return $this->lineas;
     }
 }

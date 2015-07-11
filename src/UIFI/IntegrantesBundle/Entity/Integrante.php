@@ -114,6 +114,23 @@ class Integrante
      * Libros publicados por uno o varios integrantes de un grupo de
      * Investigación.
      *
+     * @ORM\ManyToMany( targetEntity="UIFI\ProductosBundle\Entity\Patente" , inversedBy="integrantes",cascade={"remove", "persist"})
+     * @ORM\JoinTable( name="integrantes_patentes")
+    */
+    protected $patentes;
+    /**
+     * Software publicados por uno o varios integrantes de un grupo de
+     * Investigación.
+     *
+     * @ORM\ManyToMany( targetEntity="UIFI\ProductosBundle\Entity\Software" , inversedBy="integrantes",cascade={"remove", "persist"})
+     * @ORM\JoinTable( name="integrantes_software")
+    */
+    protected $software;
+
+    /**
+     * Libros publicados por uno o varios integrantes de un grupo de
+     * Investigación.
+     *
      * @ORM\ManyToMany( targetEntity="UIFI\ProductosBundle\Entity\CapitulosLibro" , inversedBy="integrantes",cascade={"remove", "persist"})
      * @ORM\JoinTable( name="integrantes_capituloslibro")
     */
@@ -496,5 +513,71 @@ class Integrante
     public function getCapituloslibro()
     {
         return $this->capituloslibro;
+    }
+
+    /**
+     * Add software
+     *
+     * @param \UIFI\ProductosBundle\Entity\Software $software
+     * @return Integrante
+     */
+    public function addSoftware(\UIFI\ProductosBundle\Entity\Software $software)
+    {
+        $this->software[] = $software;
+
+        return $this;
+    }
+
+    /**
+     * Remove software
+     *
+     * @param \UIFI\ProductosBundle\Entity\Software $software
+     */
+    public function removeSoftware(\UIFI\ProductosBundle\Entity\Software $software)
+    {
+        $this->software->removeElement($software);
+    }
+
+    /**
+     * Get software
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSoftware()
+    {
+        return $this->software;
+    }
+
+    /**
+     * Add patentes
+     *
+     * @param \UIFI\ProductosBundle\Entity\Patente $patentes
+     * @return Integrante
+     */
+    public function addPatente(\UIFI\ProductosBundle\Entity\Patente $patentes)
+    {
+        $this->patentes[] = $patentes;
+
+        return $this;
+    }
+
+    /**
+     * Remove patentes
+     *
+     * @param \UIFI\ProductosBundle\Entity\Patente $patentes
+     */
+    public function removePatente(\UIFI\ProductosBundle\Entity\Patente $patentes)
+    {
+        $this->patentes->removeElement($patentes);
+    }
+
+    /**
+     * Get patentes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPatentes()
+    {
+        return $this->patentes;
     }
 }

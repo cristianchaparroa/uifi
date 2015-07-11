@@ -27,7 +27,7 @@
         "friendsofsymfony/jsrouting-bundle": "~1.5",
         "nelmio/cors-bundle": "~1.4",
 	"lexik/form-filter-bundle": "~3.0",
-        "friendsofsymfony/rest-bundle": "~1.5",
+        "friendsofsymfony/rest-bundle": "~1.6",
         "jms/serializer-bundle": "@dev",
         "nelmio/api-doc-bundle": "@dev",
         "ob/highcharts-bundle": "~1.2",
