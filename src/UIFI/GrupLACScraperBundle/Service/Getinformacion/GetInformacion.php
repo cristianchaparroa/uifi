@@ -7,6 +7,8 @@ namespace UIFI\GrupLACScraperBundle\Service\Getinformacion;
 use Symfony\Bundle\DoctrineBundle\Registry;
 use Symfony\Component\HttpKernel\Log\LoggerInterface;
 use UIFI\GrupLACScraperBundle\Core\GrupLACScraper;
+
+
 use UIFI\GrupLACScraperBundle\Core\CVLACScraper;
 use Symfony\Component\DependencyInjection\Container;
 
@@ -75,16 +77,21 @@ class GetInformacion
        $this->em->flush();
        $entityGrupo = $grupo;
        //
-       $integrantes    = $grupoScraper->obtenerIntegrantes();
-       $articulos      = $grupoScraper->getArticulos();
-       $libros         = $grupoScraper->getLibros();
+       //$integrantes    = $grupoScraper->obtenerIntegrantes();
+       //$articulos      = $grupoScraper->getArticulos();
+       //$libros         = $grupoScraper->getLibros();
+       //$software        = $grupoScraper->getSoftware();
+       $proyectos        = $grupoScraper->getProyectosDirigidos();
        //$capituloslibro = $grupoScraper->getCapitulosLibros();
 
        $stores = array();
-       $stores[] = new IntegrantesStore($this->em,$grupo, $integrantes);
-       $stores[] = new ArticulosStore($this->em,$grupo, $articulos);
-       $stores[] = new LibrosStore($this->em,$grupo, $libros);
+      //  $stores[] = new IntegrantesStore($this->em,$grupo, $integrantes);
+      //  $stores[] = new ArticulosStore($this->em,$grupo, $articulos);
+      //  $stores[] = new LibrosStore($this->em,$grupo, $libros);
        //$stores[] = new CapitulosLibroStore($this->em,$grupo,$capituloslibro);
+       $stores[] = new ProyectoDirigidoStore($this->em,$grupo,$proyectos);
+       //$stores[] = new SoftwareStore($this->em,$grupo, $software);
+
 
        /*Procesa todos las tiendas de informacion extraidas*/
        foreach( $stores as $store ){
@@ -109,6 +116,12 @@ class GetInformacion
 
      $capitulosLibroRepository = $this->em->getRepository('UIFIProductosBundle:CapitulosLibro');
      $capitulosLibroRepository->deleteAll();
+
+     $softwareRepository = $this->em->getRepository('UIFIProductosBundle:Software');
+     $softwareRepository->deleteAll();
+
+     $ProyectoDirigidoRepository = $this->em->getRepository('UIFIProductosBundle:ProyectoDirigido');
+     $ProyectoDirigidoRepository->deleteAll();
 
      $grupoRepository = $this->em->getRepository('UIFIIntegrantesBundle:Grupo');
      $grupoRepository->deleteAll();
