@@ -128,6 +128,15 @@ class Integrante
     protected $software;
 
     /**
+     * Proyectos dirigidos por uno o varios integrantes de un grupo de
+     * Investigación.
+     *
+     * @ORM\ManyToMany( targetEntity="UIFI\ProductosBundle\Entity\ProyectoDirigido" , inversedBy="integrantes",cascade={"remove", "persist"})
+     * @ORM\JoinTable( name="integrantes_proyectos_dirigido")
+    */
+    protected $proyectosDirigidos;
+
+    /**
      * Libros publicados por uno o varios integrantes de un grupo de
      * Investigación.
      *
@@ -574,10 +583,43 @@ class Integrante
     /**
      * Get patentes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPatentes()
     {
         return $this->patentes;
+    }
+
+    /**
+     * Add proyectosDirigidos
+     *
+     * @param \UIFI\ProductosBundle\Entity\ProyectoDirigido $proyectosDirigidos
+     * @return Integrante
+     */
+    public function addProyectosDirigido(\UIFI\ProductosBundle\Entity\ProyectoDirigido $proyectosDirigidos)
+    {
+        $this->proyectosDirigidos[] = $proyectosDirigidos;
+
+        return $this;
+    }
+
+    /**
+     * Remove proyectosDirigidos
+     *
+     * @param \UIFI\ProductosBundle\Entity\ProyectoDirigido $proyectosDirigidos
+     */
+    public function removeProyectosDirigido(\UIFI\ProductosBundle\Entity\ProyectoDirigido $proyectosDirigidos)
+    {
+        $this->proyectosDirigidos->removeElement($proyectosDirigidos);
+    }
+
+    /**
+     * Get proyectosDirigidos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProyectosDirigidos()
+    {
+        return $this->proyectosDirigidos;
     }
 }

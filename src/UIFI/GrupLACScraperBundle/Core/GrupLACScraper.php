@@ -318,6 +318,238 @@ class GrupLACScraper extends  Scraper
 			}
 			return $libros;
 		}
+		/**
+		 * Software desarrollado a partir de la producción Investigativa en
+		 * en el grupo.
+		 * @return Arreglo con la producción de software.
+		*/
+		public function obtenerSoftwares(){
+			$query = '/html/body/table[16]';
+			return $this->extraer( $query );
+		}
+
+		/**
+		 * Obtiene un arreglo de arreglos de software del grupo
+		 * de investigacion.
+		 *
+		 * return
+		 * 		$programa['pais']
+		 *		$programa['anual']
+		 * 		$programa['disponibilidad']
+		 *		$programa['sitioWeb']
+		 *		$programa['tipo']
+		 *		$programa['nombreComercial']
+		 *		$programa['nombreProyecto']
+		 *		$programa['institucionFinanciera']
+		 *		$programa['autores'] arreglo de string
+		*/
+		public function getSoftware(){
+			$query = '/html/body/table[31]';
+			$array = $this->extraer( $query );
+			$programas = array();
+			foreach( $array as $item ){
+				$doc = new \DOMDocument();
+				$doc->loadHTML( $item );
+				$xpath = new \DOMXPath($doc);
+
+				$programa = array();
+
+				//obtengo el tipo de programa.
+				$list = $doc->getElementsByTagName('strong');
+				foreach($list as $node ){
+					$programa['tipo'] = $node->nodeValue;
+					//obtengo el nombre
+					$tituloNode = $node->nextSibling;
+					$titulo = $tituloNode->nodeValue;
+					$titulo = str_replace(':','',$titulo);
+					$programa['titulo'] = $titulo;
+				}
+
+				$list = $doc->getElementsByTagName('br');
+				foreach($list as $node){
+					$nodesiguiente = $node->nextSibling;
+					$value = $nodesiguiente->nodeValue;
+					$valores = explode(",",$value);
+					if(count($valores)>3){
+						$programa['pais'] = $this->eliminarSaltoLinea($valores[0]);
+					}
+					foreach($valores as $valor)
+					{
+						if(is_numeric($valor) ){
+							$programa['anual'] = $valor;
+						}
+
+						if( strpos($valor,'Disponibilidad')){
+								$disponibilidad = explode(':', $valor);
+								$disponibilidad = ( count($disponibilidad) >1 ? $disponibilidad[1]:1);
+								$disponibilidad = $this->eliminarSaltoLinea($disponibilidad);
+								$programa['disponibilidad'] = $disponibilidad;
+						}
+						if( strpos($valor,'Sitio web') ){
+								$sitioWeb = explode(':',$valor );
+								$sitioWeb = ( count($sitioWeb)>1 ?  $sitioWeb[1] : "" );
+								$programa['sitioWeb'] =$sitioWeb;
+						}
+						if( strpos($valor,'Nombre comercial') ){
+								$nombreComercial = explode( ':', $valor );
+								$nombreComercial = ( count($nombreComercial)>1 ? $nombreComercial[1] : "" );
+								$nombreComercial = $this->eliminarSaltoLinea($nombreComercial);
+								$programa['nombreComercial'] = $nombreComercial;
+						}
+
+						if( strpos($valor,'Nombre del proyecto') ){
+							 	$nombreProyecto = explode(':',$valor);
+								$nombreProyecto = ( count($nombreProyecto)>1 ? $nombreProyecto[1] : "");
+								$nombreProyecto = $this->eliminarSaltoLinea($nombreProyecto);
+								$programa['nombreProyecto'] = $nombreProyecto;
+
+						}
+						if( strpos($valor,'Institución financiadora') ){
+								$institucionFinanciera = explode(':',$valor);
+								$institucionFinanciera = (  count($institucionFinanciera)>1 ?  $institucionFinanciera[1]:"" );
+								$institucionFinanciera = $this->eliminarSaltoLinea($institucionFinanciera);
+								$programa['institucionFinanciera'] = $institucionFinanciera;
+						}
+					}
+				}
+				//obtengo los autores
+				$list = $doc->getElementsByTagName('br');
+				foreach($list as $node){
+					$nodesiguiente = $node->nextSibling;
+					$value = $nodesiguiente->nodeValue;
+					$result = explode(':',$value);
+					$result = $result[1];
+					$result =  trim(preg_replace('/\s\s+/', ' ', $result));
+					$autores = explode(',',$result);
+					$autores = array_filter( $autores );
+					$programa['autores'] = $autores;
+				}
+				$programas[] = $programa;
+			}
+			return $programas;
+		}
+		/**
+		 * Obtiene la lista de proyectos de un grupo de investigacion.
+		 *
+		 * @return
+		 *			$proyecto['titulo']
+		 *			$proyecto['tipo']
+		 *			$proyecto['autores']
+		 *			$proyecto['tipoOrientacion']
+		 *			$proyecto['nombreEstudiante']
+		 *			$proyecto['proyectoAcademico']
+		 *			$proyecto['numeroPaginas']
+		 *			$proyecto['valoracion']
+		 *			$proyecto['institucion']
+		 */
+		public function getProyectosDirigidos(){
+			$query = '/html/body/table[49]';
+			$array = $this->extraer( $query );
+			$proyectos = array();
+
+			foreach($array as $item ){
+				$doc = new \DOMDocument();
+				$doc->loadHTML( $item );
+				$xpath = new \DOMXPath($doc);
+				$list = $doc->getElementsByTagName('strong');
+
+				$proyecto = array();
+				foreach($list as $node ){
+					$proyecto['tipo'] = $node->nodeValue;
+					$tituloNode = $node->nextSibling;
+					$titulo = $tituloNode->nodeValue;
+					$titulo = str_replace(':','',$titulo);
+					$proyecto['titulo'] = $titulo;
+					$list = $doc->getElementsByTagName('br');
+
+					foreach($list as $node){
+						$nodesiguiente = $node->nextSibling;
+						$value = $nodesiguiente->nodeValue;
+						$valores = explode(",",$value);
+
+
+						foreach($valores as $valor)
+						{
+							if( strpos($valor, 'hasta') ){
+								$result = explode('hasta',$valor);
+
+								$fechaInicial =  $result[0];
+								$fechaInicial = explode(' ',$fechaInicial );
+								$fechaInicial = $this->elimiarElementosVacios($fechaInicial);
+								$mesInicial = 	count($fechaInicial)>1 ? $fechaInicial[1]:"";
+								$anualInicial = count($fechaInicial)>1 ? $fechaInicial[2]:"";
+
+								$fechaFinal  = count($result)>1 ? $result[1] : "";
+								$fechaFinal = explode(' ', $fechaFinal);
+								$fechaFinal = $this->elimiarElementosVacios($fechaFinal);
+
+								$mesFinal = empty($fechaFinal) ? "" : $fechaFinal[0];
+								$anualFinal = count($fechaFinal)>1 ?  $fechaFinal[1]:"";
+
+								$proyecto['mesInicial']   = $this->eliminarSaltoLinea($mesInicial);
+								$proyecto['anualInicial'] = $this->eliminarSaltoLinea($anualFinal);
+								$proyecto['mesFinal'] 		= $this->eliminarSaltoLinea($mesFinal);
+								$proyecto['anualFinal'] 	= $this->eliminarSaltoLinea($anualFinal);
+							}
+							if( strpos($valor,'Tipo de orientación') ){
+								$tipoOrientacion = explode(':',$valor);
+								$tipoOrientacion = ( count($tipoOrientacion)>1 ? $tipoOrientacion[1] :"");
+								$tipoOrientacion = $this->eliminarSaltoLinea($tipoOrientacion);
+								$proyecto['tipoOrientacion'] = $tipoOrientacion;
+							}
+							if( strpos($valor,'Nombre del estudiante') ){
+								$nombreEstudiante = explode(':',$valor);
+								$nombreEstudiante = ( count($nombreEstudiante)>1 ? $nombreEstudiante[1] :"");
+								$nombreEstudiante = $this->eliminarSaltoLinea($nombreEstudiante);
+								$proyecto['nombreEstudiante'] = $nombreEstudiante;
+							}
+							if( strpos($valor,'Programa académico') ){
+								$proyectoAcademico = explode( ':',$valor );
+								$proyectoAcademico = ( count($proyectoAcademico)>1 ? $proyectoAcademico[1]:"" );
+								$proyectoAcademico = $this->eliminarSaltoLinea($proyectoAcademico);
+								$proyecto['proyectoAcademico'] = $proyectoAcademico;
+							}
+
+							if( strpos($valor,'Número de páginas')  ){
+								$numeroPaginas = explode( ':',$valor);
+								$numeroPaginas = ( count($numeroPaginas)>1 ? $numeroPaginas[1] : "");
+								$numeroPaginas = $this->eliminarSaltoLinea($numeroPaginas);
+								$proyecto['numeroPaginas'] = $numeroPaginas;
+							}
+							if( strpos($valor,'Valoración:')  ){
+								$valoracion = explode( ":",$valor);
+								$valoracion = (  count($valoracion)>1 ? $valoracion[1]: ""  );
+								$valoracion = $this->eliminarSaltoLinea($valoracion);
+								$proyecto['valoracion'] = $valoracion;
+							}
+							if( strpos($valor,'Institución')  ){
+								$institucion = explode( ':',$valor );
+								$institucion = (  count($institucion)>1 ? $institucion[1]:""  );
+								$institucion = $this->eliminarSaltoLinea( $institucion );
+								$proyecto['institucion'] = $institucion;
+							}
+						}
+					}
+
+				}
+
+				//obtengo los autores
+				$list = $doc->getElementsByTagName('br');
+				foreach($list as $node){
+					$nodesiguiente = $node->nextSibling;
+					$value = $nodesiguiente->nodeValue;
+					$result = explode(':',$value);
+					$result = $result[1];
+					$result =  trim(preg_replace('/\s\s+/', ' ', $result));
+					$autores = explode(',',$result);
+					$autores = array_filter( $autores );
+					$proyecto['autores'] = $autores;
+				}
+				$proyectos[] = $proyecto;
+			}
+			return $proyectos;
+		}
+
     /**
      * Método que extrae la fecha(año y mes) de formación del
      * grupo de investigación.
@@ -457,15 +689,7 @@ class GrupLACScraper extends  Scraper
       $query = '/html/body/table[15]';
       return $this->extraer( $query );
     }
-    /**
-     * Software desarrollado a partir de la producción Investigativa en
-     * en el grupo.
-     * @return Arreglo con la producción de software.
-    */
-    public function obtenerSoftwares(){
-      $query = '/html/body/table[16]';
-      return $this->extraer( $query );
-    }
+
 
 
     /**
@@ -496,4 +720,7 @@ class GrupLACScraper extends  Scraper
 		public function getURL(){
 			return   $this->urlBase;
 		}
+
+
+
 }

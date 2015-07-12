@@ -29,7 +29,7 @@ class ProyectoDirigidoRepository extends EntityRepository implements IReportable
     public function getCountAllByYear(){
       $em = $this->getEntityManager();
       $connection = $em->getConnection();
-      $sql = 'SELECT COUNT(a.anual) AS cantidad, a.anual AS fecha FROM  articulo a
+      $sql = 'SELECT COUNT(a.anual) AS cantidad, a.anual AS fecha FROM  proyecto_dirigido a
               GROUP BY a.anual';
       $em = $this->getEntityManager();
       $statement = $connection->prepare($sql);
@@ -40,7 +40,7 @@ class ProyectoDirigidoRepository extends EntityRepository implements IReportable
 
 
     /**
-     * Función que se encarga de contar el número de artículos que tiene publicado
+     * Función que se encarga de contar el número de proyectos dirigidos  que tiene publicado
      * un grupo de investigación de acuerdo de las publicaciones realizadas por
      * cada uno de los integrantes del grupo de Investigación.
      *
@@ -52,9 +52,13 @@ class ProyectoDirigidoRepository extends EntityRepository implements IReportable
       $em = $this->getEntityManager();
       $connection = $em->getConnection();
       $sql = "SELECT count(DISTINCT a.id) as cantidad
-        FROM  grupo g, integrante i,grupo_integrante gi, articulo a,integrantes_articulos ia
-        WHERE g.id = :code AND gi.grupo_id = g.id AND gi.integrante_id = i.id AND a.grupo = g.id
-          AND ia.integrante_id = i.id AND ia.articulo_id  = a.id";
+        FROM  grupo g, integrante i,grupo_integrante gi,
+                proyecto_dirigido a,integrantes_proyectos_dirigido ia
+        WHERE g.id = :code
+          AND gi.grupo_id = g.id
+          AND gi.integrante_id = i.id
+          AND a.grupo = g.id
+          AND ia.integrante_id = i.id AND ia.proyectodirigido_id  = a.id";
 
       $statement = $connection->prepare($sql);
       $statement->bindValue('code', $code);
@@ -69,7 +73,7 @@ class ProyectoDirigidoRepository extends EntityRepository implements IReportable
     }
 
     /**
-     * Función que se encarge de contar el número de artículos que tiene publicado
+     * Función que se encarge de contar el número de proyectos dirigidos que tiene publicado
      * un grupo de investigación de acuerdo a las publicaciones realizadas por los
      * integrantes , discriminado por año.
      *
@@ -79,12 +83,18 @@ class ProyectoDirigidoRepository extends EntityRepository implements IReportable
     public function getCountByYear($code){
       $em = $this->getEntityManager();
       $connection = $em->getConnection();
-      $sql = 'SELECT  COUNT(DISTINCT (a.id)) as cantidad, g.nombre, a.anual
-            FROM  articulo a, integrantes_articulos  ia, integrante i,
-              grupo g, grupo_integrante gi
-            WHERE  g.id = :code  AND ia.articulo_id = a.id AND ia.integrante_id = i.id
-              AND gi.grupo_id = g.id AND gi.integrante_id = i.id
-            GROUP BY g.id,a.anual ORDER BY a.anual,g.nombre';
+      $sql = 'SELECT COUNT(DISTINCT (p.id)) as cantidad, g.nombre, p.anual, g.id
+              FROM proyecto_dirigido p
+              inner join integrantes_proyectos_dirigido ip
+                  on p.id = ip.proyectodirigido_id
+              inner join integrante i
+                  on i.id = ip.integrante_id
+              inner join grupo_integrante gi
+                  on gi.integrante_id = i.id
+              inner join grupo g
+                  on g.id  = gi.grupo_id
+                  and g.id =:code
+              GROUP BY g.id, p.anual';
       $statement = $connection->prepare($sql);
       $statement->bindValue('code', $code);
       $statement->execute();
@@ -103,10 +113,15 @@ class ProyectoDirigidoRepository extends EntityRepository implements IReportable
     public function getCantidadByIntegrante($code,$idGrupo){
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
-        $query = "SELECT  count(*) as numeroArticulos
-          FROM integrante i , grupo g, grupo_integrante gi, articulo a, integrantes_articulos ia
-          WHERE i.id= :code AND gi.grupo_id = g.id AND g.id = :idGrupo AND gi.integrante_id = i.id
-          AND ia.integrante_id = i.id  AND ia.articulo_id = a.id";
+        $query = "SELECT  count(*) as numeroProyectos
+        FROM integrante i , grupo g, grupo_integrante gi, proyecto_dirigido a,
+            integrantes_proyectos_dirigido ia
+        WHERE i.id= :code
+            AND gi.grupo_id = g.id
+            AND g.id = :idGrupo
+            AND gi.integrante_id = i.id
+            AND ia.integrante_id = i.id
+            AND ia.proyectodirigido_id = a.id";
           $statement = $connection->prepare($query);
           $statement->bindValue('code', $code);
           $statement->bindValue('idGrupo', $idGrupo);
@@ -114,7 +129,7 @@ class ProyectoDirigidoRepository extends EntityRepository implements IReportable
           $results = $statement->fetchAll();
           if( count($results)>0){
             $numeroArticulos = $results[0];
-            $numeroArticulos = intval($numeroArticulos['numeroArticulos']);
+            $numeroArticulos = intval($numeroArticulos['numeroProyectos']);
             return $numeroArticulos;
           }
           return 0;
@@ -130,9 +145,13 @@ class ProyectoDirigidoRepository extends EntityRepository implements IReportable
        $em = $this->getEntityManager();
        $connection = $em->getConnection();
        $query = 'SELECT COUNT(*) as cantidad, a.anual
-           FROM grupo g, integrante i , grupo_integrante gi, articulo a, integrantes_articulos ia
-           WHERE g.id= :idGrupo AND i.id= :code AND gi.grupo_id = g.id  AND gi.integrante_id = i.id
-             AND ia.integrante_id = i.id AND ia.articulo_id = a.id
+           FROM grupo g, integrante i , grupo_integrante gi, proyecto_dirigido a, integrantes_proyectos_dirigido ia
+           WHERE g.id= :idGrupo
+            AND i.id= :code
+            AND gi.grupo_id = g.id
+            AND gi.integrante_id = i.id
+            AND ia.integrante_id = i.id
+            AND ia.proyectodirigido_id = a.id
            GROUP BY a.anual';
        $statement = $connection->prepare($query);
        $statement->bindValue('code', $code);

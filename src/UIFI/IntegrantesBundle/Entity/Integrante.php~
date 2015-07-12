@@ -128,6 +128,15 @@ class Integrante
     protected $software;
 
     /**
+     * Proyectos dirigidos por uno o varios integrantes de un grupo de
+     * Investigación.
+     *
+     * @ORM\ManyToMany( targetEntity="UIFI\ProductosBundle\Entity\ProyectoDirigido" , inversedBy="integrantes",cascade={"remove", "persist"})
+     * @ORM\JoinTable( name="integrantes_proyectos_dirigido")
+    */
+    protected $proyectosDirigidos;
+
+    /**
      * Libros publicados por uno o varios integrantes de un grupo de
      * Investigación.
      *
@@ -546,5 +555,38 @@ class Integrante
     public function getSoftware()
     {
         return $this->software;
+    }
+
+    /**
+     * Add patentes
+     *
+     * @param \UIFI\ProductosBundle\Entity\Patente $patentes
+     * @return Integrante
+     */
+    public function addPatente(\UIFI\ProductosBundle\Entity\Patente $patentes)
+    {
+        $this->patentes[] = $patentes;
+
+        return $this;
+    }
+
+    /**
+     * Remove patentes
+     *
+     * @param \UIFI\ProductosBundle\Entity\Patente $patentes
+     */
+    public function removePatente(\UIFI\ProductosBundle\Entity\Patente $patentes)
+    {
+        $this->patentes->removeElement($patentes);
+    }
+
+    /**
+     * Get patentes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPatentes()
+    {
+        return $this->patentes;
     }
 }

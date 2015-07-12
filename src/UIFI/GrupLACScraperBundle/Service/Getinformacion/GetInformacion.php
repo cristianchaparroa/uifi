@@ -77,20 +77,20 @@ class GetInformacion
        $this->em->flush();
        $entityGrupo = $grupo;
        //
-       //$integrantes    = $grupoScraper->obtenerIntegrantes();
-       //$articulos      = $grupoScraper->getArticulos();
-       //$libros         = $grupoScraper->getLibros();
-       //$software        = $grupoScraper->getSoftware();
-       $proyectos        = $grupoScraper->getProyectosDirigidos();
-       //$capituloslibro = $grupoScraper->getCapitulosLibros();
+       $integrantes    = $grupoScraper->obtenerIntegrantes();
+       $articulos      = $grupoScraper->getArticulos();
+       $libros         = $grupoScraper->getLibros();
+       $software        = $grupoScraper->getSoftware();
+       $proyectos       = $grupoScraper->getProyectosDirigidos();
+      // $capituloslibro = $grupoScraper->getCapitulosLibros();
 
        $stores = array();
-      //  $stores[] = new IntegrantesStore($this->em,$grupo, $integrantes);
-      //  $stores[] = new ArticulosStore($this->em,$grupo, $articulos);
-      //  $stores[] = new LibrosStore($this->em,$grupo, $libros);
+       $stores[] = new IntegrantesStore($this->em,$grupo, $integrantes);
+       $stores[] = new ArticulosStore($this->em,$grupo, $articulos);
+       $stores[] = new LibrosStore($this->em,$grupo, $libros);
        //$stores[] = new CapitulosLibroStore($this->em,$grupo,$capituloslibro);
        $stores[] = new ProyectoDirigidoStore($this->em,$grupo,$proyectos);
-       //$stores[] = new SoftwareStore($this->em,$grupo, $software);
+       $stores[] = new SoftwareStore($this->em,$grupo, $software);
 
 
        /*Procesa todos las tiendas de informacion extraidas*/
@@ -125,8 +125,6 @@ class GetInformacion
 
      $grupoRepository = $this->em->getRepository('UIFIIntegrantesBundle:Grupo');
      $grupoRepository->deleteAll();
-
-
 
    }
 

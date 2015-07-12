@@ -51,10 +51,15 @@ class SoftwareRepository extends EntityRepository implements IReportableReposito
     public function getCountByGrupo( $code ){
       $em = $this->getEntityManager();
       $connection = $em->getConnection();
-      // $sql = "SELECT count(DISTINCT a.id) as cantidad
-      //   FROM  grupo g, integrante i,grupo_integrante gi, articulo a,integrantes_articulos ia
-      //   WHERE g.id = :code AND gi.grupo_id = g.id AND gi.integrante_id = i.id AND a.grupo = g.id
-      //     AND ia.integrante_id = i.id AND ia.articulo_id  = a.id";
+
+      $sql = "SELECT count(DISTINCT a.id) as cantidad
+        FROM  grupo g, integrante i,grupo_integrante gi, software a,integrantes_software ia
+        WHERE g.id = :code
+         AND gi.grupo_id = g.id
+         AND gi.integrante_id = i.id
+         AND a.grupo = g.id
+         AND ia.integrante_id = i.id
+         AND ia.software_id  = a.id";
 
       $statement = $connection->prepare($sql);
       $statement->bindValue('code', $code);
@@ -79,12 +84,17 @@ class SoftwareRepository extends EntityRepository implements IReportableReposito
     public function getCountByYear($code){
       $em = $this->getEntityManager();
       $connection = $em->getConnection();
-      // $sql = 'SELECT  COUNT(DISTINCT (a.id)) as cantidad, g.nombre, a.anual
-      //       FROM  articulo a, integrantes_articulos  ia, integrante i,
-      //         grupo g, grupo_integrante gi
-      //       WHERE  g.id = :code  AND ia.articulo_id = a.id AND ia.integrante_id = i.id
-      //         AND gi.grupo_id = g.id AND gi.integrante_id = i.id
-      //       GROUP BY g.id,a.anual ORDER BY a.anual,g.nombre';
+
+      $sql = "SELECT  COUNT(DISTINCT (a.id)) as cantidad, g.nombre, a.anual
+              FROM    software a, integrantes_software  ia, integrante i,
+                      grupo g, grupo_integrante gi
+              WHERE   g.id = :code
+                      AND ia.software_id = a.id
+                      AND ia.integrante_id = i.id
+                      AND gi.grupo_id = g.id
+                      AND gi.integrante_id = i.id
+                      GROUP BY g.id,a.anual ORDER BY a.anual,g.nombre";
+
       $statement = $connection->prepare($sql);
       $statement->bindValue('code', $code);
       $statement->execute();
@@ -103,10 +113,15 @@ class SoftwareRepository extends EntityRepository implements IReportableReposito
     public function getCantidadByIntegrante($code,$idGrupo){
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
-        // $query = "SELECT  count(*) as numeroArticulos
-        //   FROM integrante i , grupo g, grupo_integrante gi, articulo a, integrantes_articulos ia
-        //   WHERE i.id= :code AND gi.grupo_id = g.id AND g.id = :idGrupo AND gi.integrante_id = i.id
-        //   AND ia.integrante_id = i.id  AND ia.articulo_id = a.id";
+        $query = "SELECT  count(*) as numeroSoftware
+            FROM integrante i , grupo g, grupo_integrante gi, software a, integrantes_software ia
+            WHERE i.id= :code
+            AND gi.grupo_id = g.id
+            AND g.id = :idGrupo
+            AND gi.integrante_id = i.id
+            AND ia.integrante_id = i.id
+            AND ia.software_id = a.id";
+
           $statement = $connection->prepare($query);
           $statement->bindValue('code', $code);
           $statement->bindValue('idGrupo', $idGrupo);
@@ -114,7 +129,7 @@ class SoftwareRepository extends EntityRepository implements IReportableReposito
           $results = $statement->fetchAll();
           if( count($results)>0){
             $numeroArticulos = $results[0];
-            $numeroArticulos = intval($numeroArticulos['numeroArticulos']);
+            $numeroArticulos = intval($numeroArticulos['numeroSoftware']);
             return $numeroArticulos;
           }
           return 0;
@@ -129,11 +144,17 @@ class SoftwareRepository extends EntityRepository implements IReportableReposito
      public function getCantidadIntegranteAnual($code,$idGrupo){
        $em = $this->getEntityManager();
        $connection = $em->getConnection();
-      //  $query = 'SELECT COUNT(*) as cantidad, a.anual
-      //      FROM grupo g, integrante i , grupo_integrante gi, articulo a, integrantes_articulos ia
-      //      WHERE g.id= :idGrupo AND i.id= :code AND gi.grupo_id = g.id  AND gi.integrante_id = i.id
-      //        AND ia.integrante_id = i.id AND ia.articulo_id = a.id
-      //      GROUP BY a.anual';
+
+       $query ="SELECT COUNT(*) as cantidad, a.anual
+          FROM grupo g, integrante i , grupo_integrante gi, software a, integrantes_software ia
+          WHERE g.id= :idGrupo
+            AND i.id= :code
+            AND gi.grupo_id = g.id
+            AND gi.integrante_id = i.id
+            AND ia.integrante_id = i.id
+            AND ia.software_id = a.id
+            GROUP BY a.anual";
+
        $statement = $connection->prepare($query);
        $statement->bindValue('code', $code);
        $statement->bindValue('idGrupo', $idGrupo);

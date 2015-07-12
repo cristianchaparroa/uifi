@@ -77,4 +77,15 @@ class Scraper
 		return $this->dom;
 	}
 
+	public function elimiarElementosVacios($array){
+		$newArray= array();
+		foreach( $array as $item){
+			 $elemento = $this->eliminarSaltoLinea($item);
+			 if( !empty($elemento)  ){
+				 $newArray [] = $elemento;
+			 }
+		}
+		return $newArray;
+	}
+
 }

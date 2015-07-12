@@ -44,7 +44,7 @@ class ProyectoDirigidoStore implements IStore
 
       $project = new ProyectoDirigido();
       $project->setTitulo($proyecto['titulo']);
-      //$project->setAnual( $proyecto['anual'] );
+      $project->setAnual( $proyecto['anualInicial'] );
       $project->setTipo( $proyecto['tipo'] );
       $project->setGrupo( $this->grupo->getId() );
       $project->setNombreEstudiante(  $proyecto['nombreEstudiante']  );
@@ -63,10 +63,10 @@ class ProyectoDirigidoStore implements IStore
          $resultIntegrante  = $this->repositoryIntegrante->findBy( array('nombres' => $nombres) );
          if( count(  $resultIntegrante  )>0 ){
              $entityIntegrante =   $resultIntegrante[0];
-             $entityIntegrante->addSoftware($proyect);
+             $entityIntegrante->addProyectosDirigido($project);
              $this->em->persist($entityIntegrante);
              $this->em->flush();
-             $this->em->persist( $proyect );
+             $this->em->persist( $project );
              $this->em->flush();
          }
       }

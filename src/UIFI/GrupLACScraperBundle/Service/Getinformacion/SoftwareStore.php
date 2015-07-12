@@ -37,33 +37,36 @@ class SoftwareStore implements IStore
 
   public function guardar(){
     $softwareGrupo = $this->software;
-    $index = 0;
     foreach($softwareGrupo as $software )
     {
-      $codeArticulo =  $this->grupo->getId() ."-". $index;
       $autores  = $software['autores'];
-
       $soft = new Software();
       $soft->setTitulo($software['titulo']);
       $soft->setAnual( $software['anual'] );
       $soft->setGrupo( $this->grupo->getId() );
       $this->em->persist( $soft );
-      $this->em->flush();
-
+    //  $this->em->flush();
       foreach( $autores as $autor )
       {
          $nombres = strtoupper(substr($autor,1));
          $resultIntegrante  = $this->repositoryIntegrante->findBy( array('nombres' => $nombres) );
+
          if( count(  $resultIntegrante  )>0 ){
              $entityIntegrante =   $resultIntegrante[0];
              $entityIntegrante->addSoftware($soft);
              $this->em->persist($entityIntegrante);
-             $this->em->flush();
+             //$this->em->flush();
              $this->em->persist( $soft );
-             $this->em->flush();
+             //$this->em->flush();
+         }
+         //si no existe que lo cree.
+         else{
+           
          }
       }
-      $index++;
+      $this->em->flush(); // Persist objects that did not make up an entire batch
+      $this->em->clear();
+
     }
 
   }
