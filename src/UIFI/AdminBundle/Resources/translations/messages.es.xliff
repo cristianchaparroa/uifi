@@ -77,6 +77,15 @@
                 <target>Usuarios/Integrantes</target>
             </trans-unit>
 
+            <trans-unit id="17">
+                <source>admin.menu.reportes.software</source>
+                <target>Reportes de Software</target>
+            </trans-unit>
+
+            <trans-unit id="18">
+                <source>admin.menu.reportes.proyectosdirigidos</source>
+                <target>Reportes de Proyectos dirigidos</target>
+            </trans-unit>
 
         </body>
     </file>

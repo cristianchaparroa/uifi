@@ -41,6 +41,15 @@
             <target> Reportes de Capítulos de Libros </target>
         </trans-unit>
 
+        <trans-unit id="8">
+           <source>reportes.software.title</source>
+           <target> Reportes de Software </target>
+       </trans-unit>
+
+       <trans-unit id="9">
+          <source>reportes.proyectosdirigidos.title</source>
+          <target> Reportes de Proyectos dirigidos </target>
+       </trans-unit>
 
         </body>
     </file>
