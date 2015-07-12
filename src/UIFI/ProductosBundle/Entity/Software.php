@@ -16,8 +16,8 @@ class Software
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="string", length=255)
      * @ORM\Id
+     * @ORM\Column(name="id", type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
@@ -94,29 +94,6 @@ class Software
     public function __construct()
     {
         $this->integrantes = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Set id
-     *
-     * @param string $id
-     * @return Software
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
-     * Get id
-     *
-     * @return string
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**
@@ -334,5 +311,15 @@ class Software
     public function getIntegrantes()
     {
         return $this->integrantes;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 }

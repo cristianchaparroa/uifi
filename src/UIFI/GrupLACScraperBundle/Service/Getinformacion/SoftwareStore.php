@@ -12,8 +12,7 @@ use Symfony\Component\DependencyInjection\Container;
 
 use UIFI\IntegrantesBundle\Entity\Grupo;
 use UIFI\IntegrantesBundle\Entity\Integrante;
-use UIFI\ProductosBundle\Entity\Articulo;
-use UIFI\ProductosBundle\Entity\Libro;
+use UIFI\ProductosBundle\Entity\Software;
 /**
  * Servicio que obtiene la información del GrupLAC de Colciencias de los articulos
  * de investigación  y los guarda en la base de datos del sistema.

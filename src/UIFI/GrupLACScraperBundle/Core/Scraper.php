@@ -7,7 +7,7 @@ namespace UIFI\GrupLACScraperBundle\Core;
   */
 class Scraper
 {
-	
+
 	/**
 	  *
 	  */
@@ -69,4 +69,12 @@ class Scraper
 	public function isError(){
 		return $this->error;
 	}
+
+	public function eliminarSaltoLinea( $string ){
+		return  trim(preg_replace('/\s\s+/', ' ', $string ));
+	}
+	public function getDOM(){
+		return $this->dom;
+	}
+
 }
