@@ -46,6 +46,7 @@ class IntegrantesStore implements IStore
        $nombreIntegrante = $result['nombre'];
        $vinculacion = $result['vinculacion'];
        $integranteScraper = new CVLACScraper( $codeIntegrante );
+
        $existIntegrante = $this->repositoryIntegrante->find($codeIntegrante);
        if($existIntegrante){
            $entityIntegrante = $existIntegrante;

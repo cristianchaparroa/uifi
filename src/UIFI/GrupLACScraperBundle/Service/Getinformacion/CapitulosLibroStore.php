@@ -46,7 +46,7 @@ class CapitulosLibroStore implements IStore
        $chapter = new CapitulosLibro();
        $chapter->setTitulo($capitulo['titulo']);
        $chapter->setAnual( $capitulo['anual'] );
-       $chapter->setIsbn( $capitulo['isbn'] );
+       $chapter->setIsbn(  array_key_exists('isbn',$capitulo) ? $capitulo['isbn'] : "" );
        $chapter->setPais( $capitulo['pais'] );
        //Indico el grupo al cual pertenece el capítulo de libro.
        $chapter->setGrupo( $this->grupo->getId() );

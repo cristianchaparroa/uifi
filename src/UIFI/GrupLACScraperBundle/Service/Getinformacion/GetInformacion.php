@@ -82,13 +82,13 @@ class GetInformacion
        $libros         = $grupoScraper->getLibros();
        $software        = $grupoScraper->getSoftware();
        $proyectos       = $grupoScraper->getProyectosDirigidos();
-      // $capituloslibro = $grupoScraper->getCapitulosLibros();
+       $capituloslibro = $grupoScraper->getCapitulosLibros();
 
        $stores = array();
        $stores[] = new IntegrantesStore($this->em,$grupo, $integrantes);
        $stores[] = new ArticulosStore($this->em,$grupo, $articulos);
        $stores[] = new LibrosStore($this->em,$grupo, $libros);
-       //$stores[] = new CapitulosLibroStore($this->em,$grupo,$capituloslibro);
+       $stores[] = new CapitulosLibroStore($this->em,$grupo,$capituloslibro);
        $stores[] = new ProyectoDirigidoStore($this->em,$grupo,$proyectos);
        $stores[] = new SoftwareStore($this->em,$grupo, $software);
 

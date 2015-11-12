@@ -229,8 +229,8 @@ class GrupLACScraper extends  Scraper
 						else{
 							$capitulo['editorial'] = '';
 						}
-						//se obtiene el isbn del libro.
-						if( count($resultados)>2 ){
+						
+						if( count($resultados)>2  && isset($resultados[3]) ){
 							$isbn = $resultados[3];
 
 							if( strpos($isbn,'ISBN') ){
@@ -459,7 +459,7 @@ class GrupLACScraper extends  Scraper
 					$tituloNode = $node->nextSibling;
 					$titulo = $tituloNode->nodeValue;
 					$titulo = str_replace(':','',$titulo);
-					$proyecto['titulo'] = $titulo;
+					$proyecto['titulo'] = utf8_encode ($titulo);
 					$list = $doc->getElementsByTagName('br');
 
 					foreach($list as $node){

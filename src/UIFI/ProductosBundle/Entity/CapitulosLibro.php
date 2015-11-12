@@ -45,7 +45,7 @@ class CapitulosLibro
     /**
      * @var string
      *
-     * @ORM\Column(name="isbn", type="string", length=255)
+     * @ORM\Column(name="isbn", type="string", length=255,nullable=true)
      */
     private $isbn;
 
