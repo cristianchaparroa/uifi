@@ -5,8 +5,8 @@ app/config/parameters.yml
 app/cache/*
 app/logs/*
 vendor/*
-web/bundles/*
-web/uploads/*
+#web/bundles/*
+#web/uploads/*
 src/*.php~
 # -- Composer -----------------------------------------
 composer.phar
