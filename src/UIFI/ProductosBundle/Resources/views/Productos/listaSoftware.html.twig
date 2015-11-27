@@ -1,0 +1,53 @@
+{% extends "UIFIAdminBundle:Dashboard:index.html.twig" %}
+
+{% block  main_content %}
+    <h4>Software </h4>
+
+    <hr>
+    <div class="table">
+    {% if entities  %}
+    <p> A continuacion se muestra la lista de Software en el Sistema</p>
+
+    <div id="toolbar">
+      <button id="exportar" class="btn btn-success">
+      <i class="glyphicon glyphicon-arrow-down"></i> Exportar Excel
+      </button>
+    </div>
+    <table id="gruplac-table"
+        data-toggle="table"
+        data-toolbar="#toolbar"
+        data-search="true"
+        data-show-refresh="true"
+        data-show-toggle="true"
+        data-show-columns="true"
+        data-show-export="true"
+        data-show-pagination-switch="true"
+        data-pagination="true">
+        <thead>
+            <tr>
+              <th data-field="state" data-checkbox="true"></th>
+              <th>Grupo</th>
+              <th>Nombre</th>
+              <th>Integrantes</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr data-index="{{loop.index}}">
+                <td class="bs-checkbox"><input type="checkbox" name="btSelectItem" data-index="{{loop.index}}"></td>
+                <td>{{entity.grupo}}</td>
+                <td>{{entity.titulo}}</td>
+                <td>
+                    {% for integrante in entity.integrantes %}
+                      {{integrante}}
+                    {% endfor %}
+
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+    </div>
+
+{% endblock %}

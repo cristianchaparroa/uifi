@@ -54,15 +54,20 @@ class GruplacService
      * @param Código del gruplac del grupo Investigación
      * @return Estado del proceso {false,true}
     */
-    public function newGruplac($code){
-        $grupoScraper = new GrupLACScraper($code);
-        $nombre = $grupoScraper->getNombreGrupo();
-        $gruplac = new Gruplac();
-        $gruplac->setId($code);
-        $gruplac->setNombre($nombre);
-        $this->em->persist($gruplac);
-        $this->em->flush();
-        return true;
+    public function newGruplac($code) {
+        try{
+          $grupoScraper = new GrupLACScraper($code);
+          $nombre = $grupoScraper->getNombreGrupo();
+          $gruplac = new Gruplac();
+          $gruplac->setId($code);
+          $gruplac->setNombre($nombre);
+          $this->em->persist($gruplac);
+          $this->em->flush();
+          return true;
+        } catch(Exception $e){
+          echo json_encode( $e ); 
+        }
+
     }
     /**
     * Función que se encarga de verificar si existe el código de un gruplac en

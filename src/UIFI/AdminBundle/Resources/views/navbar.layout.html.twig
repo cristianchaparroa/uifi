@@ -37,12 +37,13 @@
            <a href="{{path('gruplac_dashboard')}}"><i class="glyphicon glyphicon-cloud-download"></i>
            {{'admin.menu.productos.automatizado'|trans}}</a>
        </li>
+       <li><a href="{{path('admin_revistas')}}"><i class="fa fa-upload"></i>Importar revistas</a></li>
 
-       <li>
-           <a href="{{path('admin_revistas')}}"><i class="fa fa-upload"></i>
-           Importar revistas</a>
-       </li>
-
+       <li> <a href="{{path('productos_articulos')}}"><i class="fa fa-upload"></i>Articulos</a></li>
+       <li><a href="{{path('productos_libros')}}"><i class="fa fa-upload"></i>Libros</a></li>
+       <li> <a href="{{path('productos_capitulos_libro')}}"><i class="fa fa-upload"></i>Capitulos de Libro</a></li>
+       <li><a href="{{path('productos_software')}}"><i class="fa fa-upload"></i>Software</a></li>
+       <li> <a href="{{path('productos_proyectos_dirigidos')}}"><i class="fa fa-upload"></i>Proyectos dirigidos</a></li>
 
      </ul>
    </li>
@@ -77,7 +78,8 @@
        <!--  configuracion de grupos de investigación-->
 
        <li> <a href="{{path('admin_configuration_gruplac')}}"> <i class="fa fa-list-alt"></i>{{'admin.menu.configuracion.gruplacs'|trans}}</a></li>
-       <li><a href="#"> <i class="fa fa-filter"></i>{{'admin.menu.configuracion.proxy'|trans}}</a></li>
+
+       <!-- <li><a href="#"> <i class="fa fa-filter"></i>{{'admin.menu.configuracion.proxy'|trans}}</a></li> -->
     </ul>
 
   </li>
