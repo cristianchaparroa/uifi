@@ -65,7 +65,7 @@ class GruplacService
           $this->em->flush();
           return true;
         } catch(Exception $e){
-          echo json_encode( $e ); 
+          echo json_encode( $e );
         }
 
     }

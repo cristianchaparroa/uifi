@@ -101,6 +101,7 @@ class GrupLACScraper extends  Scraper
 		* 			articulo['titulo'] , título de articulo
 		* 			articulo['anual']  , año en el que fue publicado el artículo
 		* 			articulo['autores'], arreglo con los nombres de los autores
+		* 			articulo['issn'], arreglo con los nombres de los autores
 		*/
 		public function getArticulos()
 		{
@@ -142,10 +143,17 @@ class GrupLACScraper extends  Scraper
 						$results = explode( 'vol',$result );
 						$results = $results[0];
 						$results = explode( ',', $result );
+						$resultsISSN = $results[1];
+						$resultsISSN = explode( ':', $resultsISSN);
+						$resultsISSN =  count($resultsISSN) > 1  ? $resultsISSN[1] : "";
+						$resultsISSN = str_replace(' ', '',$resultsISSN);
+						$articulo['issn'] = $resultsISSN;
 						$results = $results[ count($results)-1 ];
 						$results =explode(' ',$results );
 						$anual  = $results[1];
 						$articulo['anual'] = $anual;
+						echo json_encode( $articulo ) . "</br></br>\n\n";
+						echo  "-------------------- </br></br>\n\n";
 					}
 				}
 				array_pop($autores);
@@ -229,7 +237,7 @@ class GrupLACScraper extends  Scraper
 						else{
 							$capitulo['editorial'] = '';
 						}
-						
+
 						if( count($resultados)>2  && isset($resultados[3]) ){
 							$isbn = $resultados[3];
 

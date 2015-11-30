@@ -1,3 +1,4 @@
+'use strict';
 /**
  * @file index.js
  * @author: Cristian Camilo Chaparro Africano.
@@ -36,7 +37,7 @@ $(function(){
 
     $.ajax({
       url: url,
-      async: false,
+      async: true,
       crossDomain: true,
       method:'POST',
       data:data,
