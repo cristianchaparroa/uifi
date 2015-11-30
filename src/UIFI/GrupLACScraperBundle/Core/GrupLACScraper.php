@@ -152,8 +152,6 @@ class GrupLACScraper extends  Scraper
 						$results =explode(' ',$results );
 						$anual  = $results[1];
 						$articulo['anual'] = $anual;
-						echo json_encode( $articulo ) . "</br></br>\n\n";
-						echo  "-------------------- </br></br>\n\n";
 					}
 				}
 				array_pop($autores);
@@ -162,7 +160,7 @@ class GrupLACScraper extends  Scraper
 				$articulos[] = $articulo;
 			}
 
-			return$articulos;
+			return $articulos;
 		}
 		/**
      * Extrae la lista de capítulos publicados en libros por integrantes

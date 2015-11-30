@@ -47,12 +47,11 @@ class ArticulosStore implements IStore
       $article->setId( $codeArticulo  );
       $article->setTitulo($articulo['titulo']);
       $article->setAnual( $articulo['anual'] );
-      $article->setISSN( $articulo['issnl'] );
+      $article->setISSN( $articulo['issn'] );
       $article->setGrupo( $this->grupo->getId() );
       $this->em->persist( $article );
       $this->em->flush();
-      foreach( $autores as $autor )
-      {
+      foreach( $autores as $autor ) {
          $nombres = strtoupper(substr($autor,1));
          $resultIntegrante  = $this->repositoryIntegrante->findBy( array('nombres' => $nombres) );
          if( count(  $resultIntegrante  )>0 ){
