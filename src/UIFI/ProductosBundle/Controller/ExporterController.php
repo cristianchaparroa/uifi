@@ -14,8 +14,7 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 */
 class ExporterController extends Controller
 {
-  public function descargarProductos($filename)
-  {
+  public function descargarProductos($filename) {
       $path = $this->container->getParameter('kernel.root_dir').'/../web/productos/' . $filename . '.xls';
       $content = file_get_contents($path);
       $response = new Response();
@@ -31,7 +30,7 @@ class ExporterController extends Controller
   */
   public function getArticulos() {
     $filename = 'articulos';
-    $file =  $this->get('uifi.productos.exporter')->getArticulos($filename );
+    $file =  $this->get('uifi.productos.exporter')->getArticulos($filename);
     return $this->descargarProductos($filename);
   }
 
@@ -41,7 +40,7 @@ class ExporterController extends Controller
   */
   public function getCapitulosLibro() {
     $filename = 'capitulosLibro';
-    $file =  $this->get('uifi.productos.exporter')->getCapitulosLibro($filename );
+    $file =  $this->get('uifi.productos.exporter')->getCapitulosLibro($filename);
     return $this->descargarProductos($filename);
   }
 
@@ -51,7 +50,7 @@ class ExporterController extends Controller
   */
   public function getLibros() {
     $filename = 'libros';
-    $file =  $this->get('uifi.productos.exporter')->getLibros($filename );
+    $file =  $this->get('uifi.productos.exporter')->getLibros($filename);
     return $this->descargarProductos($filename);
   }
 
@@ -61,7 +60,17 @@ class ExporterController extends Controller
   */
   public function getProyectosDirigidos() {
     $filename = 'proyectosDirigidos';
-    $file =  $this->get('uifi.productos.exporter')->getProyectosDirigidos($filename );
+    $file =  $this->get('uifi.productos.exporter')->getProyectosDirigidos($filename);
+    return $this->descargarProductos($filename);
+  }
+
+  /**
+   *
+   * @Route("/productos/excel/software", name="productos_excel_software")
+  */
+  public function getSoftware() {
+    $filename = 'software';
+    $file =  $this->get('uifi.productos.exporter')->getSoftware($filename);
     return $this->descargarProductos($filename);
   }
 }
