@@ -9,9 +9,7 @@
     <p> A continuación se muestra la lista de  Artículos en el Sistema</p>
 
     <div id="toolbar">
-      <button id="exportar" class="btn btn-success">
-      <i class="glyphicon glyphicon-arrow-down"></i> Exportar Excel
-      </button>
+      <a class="btn btn-success" href="{{ path('productos_excel_articulos')}}"><i class="glyphicon glyphicon-arrow-down"></i> Exportar Excel</a>
     </div>
     <table id="gruplac-table"
         data-toggle="table"
@@ -52,4 +50,7 @@
     {% endif %}
     </div>
 
+    <div class="js-css">
+      <script src="{{ asset('bundles/uifiproductos/js/exporter/exporter.js') }}"></script>
+    </div>
 {% endblock %}

@@ -157,7 +157,6 @@ class ImportarRevistasService
   public function download()
   {
       $filename ='revistas.csv';
-      $path = __DIR__.'/../../../../../web/uploads/documents/Persona.csv';
       $path = __DIR__.'/../../../../web/uploads/documents/revista.csv';
       $content = file_get_contents($path);
       $response = new Response();

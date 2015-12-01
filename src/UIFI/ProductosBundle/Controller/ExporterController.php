@@ -1,0 +1,37 @@
+<?php
+
+namespace UIFI\ProductosBundle\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+
+/**
+ *  Controlador Exporta Entidades c
+*/
+class ExporterController extends Controller
+{
+  /**
+   *
+   * @Route("/productos/excel/articulos", name="productos_excel_articulos",options={"expose"=true})
+  */
+  public function getArticulos() {
+    $filename = 'articulos';
+    $file =  $this->get('uifi.productos.exporter')->getArticulos($filename );
+    return $this->descargarProductos($filename);
+  }
+
+  public function descargarProductos($filename)
+  {
+      $path = $this->container->getParameter('kernel.root_dir').'/../web/productos/' . $filename . '.xls';
+      $content = file_get_contents($path);
+      $response = new Response();
+      $response->headers->set('Content-Type', 'text/xls');
+      $response->headers->set('Content-Disposition', 'attachment;filename="'.$filename);
+      $response->setContent($content);
+      return $response;
+  }
+}
