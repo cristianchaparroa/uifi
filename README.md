@@ -17,4 +17,4 @@ Framework de gestión grupos de investigación Facultad de Ingeniería de la Uni
   - Exportar artículos de Investigación en formato excel (depende del proeceso automatizado)
   - Exportar Capítulos Libros de investigación en formato excel(depende del proceso automatizado)
   - Exportar Proyectos dirigidos en formato excel (depende del proceso automatizado)
-  - Exportar productos de Software en formato excel (depende del proceso automatizado)
+  - Exportar productos de Software en formato excel (depende del proceso automatizado) 
