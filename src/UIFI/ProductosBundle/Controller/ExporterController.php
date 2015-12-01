@@ -54,4 +54,14 @@ class ExporterController extends Controller
     $file =  $this->get('uifi.productos.exporter')->getLibros($filename );
     return $this->descargarProductos($filename);
   }
+
+  /**
+   *
+   * @Route("/productos/excel/proyectosDirigidos", name="productos_excel_proyectos_dirigidos")
+  */
+  public function getProyectosDirigidos() {
+    $filename = 'proyectosDirigidos';
+    $file =  $this->get('uifi.productos.exporter')->getProyectosDirigidos($filename );
+    return $this->descargarProductos($filename);
+  }
 }
