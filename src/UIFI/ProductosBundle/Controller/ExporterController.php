@@ -45,4 +45,13 @@ class ExporterController extends Controller
     return $this->descargarProductos($filename);
   }
 
+  /**
+   *
+   * @Route("/productos/excel/libros", name="productos_excel_libros")
+  */
+  public function getLibros() {
+    $filename = 'libros';
+    $file =  $this->get('uifi.productos.exporter')->getLibros($filename );
+    return $this->descargarProductos($filename);
+  }
 }

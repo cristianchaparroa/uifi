@@ -62,4 +62,23 @@ class ProductosExporterService
         return $file;
       }
 
+      /**
+       * Obtiene la lista de Libros en formato XLS, con la siguiente
+       * informacion:
+       *  isbn,titulo
+       *
+       * @param $fileName,  Nombre del achivo con que se genera el XLS.
+       * @return Archivo XLS
+      */
+      public function getLibros($fileName) {
+        $entities = $this->em->getRepository('UIFIProductosBundle:Libro')->findAll();
+        $path = $this->container->getParameter('kernel.root_dir').'/../web/productos';
+        $className = 'UIFI\ProductosBundle\Entity\Libro';
+        $headers = array( "ISSN", "TITULO" );
+        $properties = array('isbn','titulo');
+        $excelExporter = new ExcelExporter();
+        $file = $excelExporter->getXLS($path,$fileName,$className, $headers,$properties,$entities);
+        return $file;
+      }
+
 }
