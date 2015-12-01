@@ -22,6 +22,18 @@ class ExcelExporter
   public function __construct(){
 
   }
+  /**
+   * Funcion que se encarga de generar un archivo en excel en el servidor.
+   * @param $path, ruta en la que se va a alojar el archivo.
+   * @param $fileName, nombre del archivo a generar.
+   * @param className, nombre de la clase de la entidad que se va usar para generar
+   *    las propiedades.
+   * @param $headers, titulos de las columnas de la tabla de excel.
+   * @param $porperties, propiedades de la la entidad de las cuales se van a obtener
+   *  los valores a mostrar
+   * @param $entities, entidades sobre las cuales se extrae la informacion del
+   *  reporte en excel.
+  */
   public function getXLS($path,$fileName,$className, $headers,$properties,$entities) {
     $workbook = new Workbook();
     $sheet = new Sheet($workbook);

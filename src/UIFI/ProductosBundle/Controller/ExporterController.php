@@ -14,16 +14,6 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 */
 class ExporterController extends Controller
 {
-  /**
-   *
-   * @Route("/productos/excel/articulos", name="productos_excel_articulos",options={"expose"=true})
-  */
-  public function getArticulos() {
-    $filename = 'articulos';
-    $file =  $this->get('uifi.productos.exporter')->getArticulos($filename );
-    return $this->descargarProductos($filename);
-  }
-
   public function descargarProductos($filename)
   {
       $path = $this->container->getParameter('kernel.root_dir').'/../web/productos/' . $filename . '.xls';
@@ -34,4 +24,25 @@ class ExporterController extends Controller
       $response->setContent($content);
       return $response;
   }
+
+  /**
+   *
+   * @Route("/productos/excel/articulos", name="productos_excel_articulos")
+  */
+  public function getArticulos() {
+    $filename = 'articulos';
+    $file =  $this->get('uifi.productos.exporter')->getArticulos($filename );
+    return $this->descargarProductos($filename);
+  }
+
+  /**
+   *
+   * @Route("/productos/excel/capitulosLibro", name="productos_excel_capitulos_libro")
+  */
+  public function getCapitulosLibro() {
+    $filename = 'capitulosLibro';
+    $file =  $this->get('uifi.productos.exporter')->getCapitulosLibro($filename );
+    return $this->descargarProductos($filename);
+  }
+
 }
