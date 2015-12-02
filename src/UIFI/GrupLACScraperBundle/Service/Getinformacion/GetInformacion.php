@@ -49,7 +49,7 @@ class GetInformacion
    */
    public function scrap($codes)
    {
-     $this->initDrop();
+     //$this->initDrop();
      /**
       * Se obtiene los codigos de los grupos de investigacion para luego crear
       * los diferentes scrapers.

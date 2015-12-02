@@ -30,55 +30,56 @@ $(function(){
           $codes.push( $(this).text() );
         }
       });
-      var data = { 'codes': $codes };
-      alert(JSON.stringify(data));
-      $('#cancelar-proceso').prop('disabled',false);
-      porcentaje = 0;
-      $( '.log-success' ).hide();
-      $('.progress').show();
-      var baseUrl= location.protocol + "//" + location.host;
-      var url = baseUrl +  Routing.generate('dasboard_get_informacion');
 
-      handlerCheckProgress = setInterval(function(){
-        $progressBar.attr('data-transitiongoal', porcentaje ).progressbar({display_text: 'center'});
-        if(porcentaje!=90){
-          porcentaje++;
-        }
+      if( $codes.length >0 ) {
+          var data = { 'codes': $codes };
+          $('#cancelar-proceso').prop('disabled',false);
+          porcentaje = 0;
+          $( '.log-success' ).hide();
+          $('.progress').show();
+          var baseUrl= location.protocol + "//" + location.host;
+          var url = baseUrl +  Routing.generate('dasboard_get_informacion');
 
-      },1000);
+          handlerCheckProgress = setInterval(function(){
+            $progressBar.attr('data-transitiongoal', porcentaje ).progressbar({display_text: 'center'});
+            if(porcentaje!=90){
+              porcentaje++;
+            }
 
-      handlerGetInformation = $.ajax({
-        url: url,
-        async: true,
-        crossDomain: true,
-        data:data,
-        method:'POST',
-        success: function(data) {
-          console.log(data);
-          $progressBar.attr('data-transitiongoal', '100').progressbar({display_text: 'center'});
+          },1000);
 
-          $( '.log-success' ).show();
-          $( '.message').remove();
-          $( '.log-success' ).append('<p class="message">El proceso ha terminado satisfactoriamente</p>');
-        }, error: function(xhr, status, error) {
-          console.log( JSON.stringify(xhr) ) ;
-          console.log( JSON.stringify(status) ) ;
-          console.log( JSON.stringify(error) ) ;
+          handlerGetInformation = $.ajax({
+            url: url,
+            async: true,
+            crossDomain: true,
+            data:data,
+            method:'POST',
+            success: function(data) {
+              console.log(data);
+              $progressBar.attr('data-transitiongoal', '100').progressbar({display_text: 'center'});
 
-          $( '.log-fail' ).show();
-          $( '.messageFail').remove();
-          $( '.log-fail' ).append('<p class="messageFail">El proceso Fallo</p>');
-        }
-      }).always(function() {
-          $progressBar.attr('data-transitiongoal', '100').progressbar({display_text: 'center'});
-          clearInterval(handlerCheckProgress);
-          handlerCheckProgress = null;
-          setTimeout(function(){
-            $('.progress').hide();
-          },4000);
+              $( '.log-success' ).show();
+              $( '.message').remove();
+              $( '.log-success' ).append('<p class="message">El proceso ha terminado satisfactoriamente</p>');
+            }, error: function(xhr, status, error) {
+              console.log( JSON.stringify(xhr) ) ;
+              console.log( JSON.stringify(status) ) ;
+              console.log( JSON.stringify(error) ) ;
 
-      });//end ajax
+              $( '.log-fail' ).show();
+              $( '.messageFail').remove();
+              $( '.log-fail' ).append('<p class="messageFail">El proceso Fallo</p>');
+            }
+          }).always(function() {
+              $progressBar.attr('data-transitiongoal', '100').progressbar({display_text: 'center'});
+              clearInterval(handlerCheckProgress);
+              handlerCheckProgress = null;
+              setTimeout(function(){
+                $('.progress').hide();
+              },4000);
 
+          });//end ajax
+      }
       event.preventDefault();
       event.stopPropagation();
   });//end bind

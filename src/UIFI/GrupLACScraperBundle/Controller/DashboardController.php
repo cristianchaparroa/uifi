@@ -34,7 +34,6 @@ class DashboardController extends Controller
     public function getInformacion() {
         $parameters = $this->getRequest()->request->all();
         $codes = $parameters['codes'];
-        echo json_encode($codes);
         $success = $this->get('uifi.gruplac.scrap.getinfo')->scrap($codes);
         return new JsonResponse(array('success' =>  $success ));
     }
