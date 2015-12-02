@@ -38,10 +38,8 @@ class ProyectoDirigidoStore implements IStore
 
   public function guardar(){
     $proyectosGrupo = $this->proyectos;
-    foreach($proyectosGrupo as $proyecto )
-    {
+    foreach($proyectosGrupo as $proyecto ) {
       $autores  = $proyecto['autores'];
-
       $project = new ProyectoDirigido();
       $project->setTitulo($proyecto['titulo']);
       $project->setAnual( $proyecto['anualInicial'] );

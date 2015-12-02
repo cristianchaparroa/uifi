@@ -13,6 +13,14 @@ use UIFI\ReportesBundle\Repository\IReportableRepository;
 class LibroRepository extends EntityRepository implements IReportableRepository
 {
     /**
+     * Funcion que se encarga de eliminar todos los registros
+     * de la entidad
+    */
+    public function deleteAll(){
+      $em = $this->getEntityManager();
+      return $em->createQuery('DELETE FROM UIFIProductosBundle:Libro')->execute();
+    }
+    /**
     * Cuenta el número de articulos publicados por año en la facultad
     *
     */

@@ -38,8 +38,7 @@ class LibrosStore implements IStore
   /**
    *
   */
-  public function guardar()
-  {
+  public function guardar() {
     $librosGrupo = $this->libros;
     foreach($librosGrupo as $libro)
     {
@@ -52,6 +51,7 @@ class LibrosStore implements IStore
        $ebook->setPais( $libro['pais'] );
        $this->em->persist( $ebook );
        $this->em->flush();
+
        foreach( $autores as $autor )
        {
           $nombres = strtoupper(substr($autor,1));

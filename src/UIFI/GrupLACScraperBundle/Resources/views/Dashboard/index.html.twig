@@ -9,22 +9,60 @@
     <p class="message"></p>
   </div>
 
-  <div class="log-fail alert alert-danger">
-    <p class="messageFail"></p>
+  <div class="table">
+  {% if entities  %}
+  <div class="alert alert-info">
+    <p>Seleccione la lista de Grupos de Investigacion a Importar desde Colciencias</p>
   </div>
 
   <div class="progress progress-striped active">
     <div class="progress-bar progress-bar-danger" role="progressbar" data-transitiongoal="100"></div>
   </div>
 
-  <div class="row">
-         <div class="col-md-3">
-            <form action="{{path('dasboard_get_informacion')}}">
-              <button  id="button-getInformacion" class="btn btn-success">  {{ 'uifi.gruplac.dashboard.buttons.get'|trans }} </button>
-            </form>
-         </div>
-
+  <div class="log-fail alert alert-danger">
+    <p class="messageFail"></p>
   </div>
+
+  <div id="toolbar">
+    <form action="{{path('dasboard_get_informacion')}}">
+      <button  id="button-getInformacion" class="btn btn-success">  {{ 'uifi.gruplac.dashboard.buttons.get'|trans }} </button>
+    </form>
+  </div>
+
+  <table id="gruplac-table"
+      data-toggle="table"
+      data-toolbar="#toolbar"
+      data-search="true"
+      data-show-refresh="true"
+      data-show-toggle="true"
+      data-show-columns="true"
+      data-show-export="true"
+      data-show-pagination-switch="true"
+      data-pagination="true">
+      <thead>
+          <tr>
+            <th data-field="state" data-checkbox="true"></th>
+            <th data-field="id" data-sortable="true">Código Gruplac </th>
+            <th>Nombre</th>
+          </tr>
+      </thead>
+      <tbody>
+      {% for entity in entities %}
+          <tr data-index="{{loop.index}}">
+              <td class="bs-checkbox"><input type="checkbox" name="btSelectItem" data-index="{{loop.index}}"></td>
+              <td class="id">{{entity.id}}</td>
+              <td>{{entity.nombre}}</td>
+          </tr>
+      {% endfor %}
+      </tbody>
+  </table>
+  {% endif %}
+  </div>
+
+
+
+
+
   <div class="js-css-import">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-progressbar-3.3.0.min.css')}}">
     <script src="{{ asset('js/bootstrap-progressbar.min.js') }}"></script>

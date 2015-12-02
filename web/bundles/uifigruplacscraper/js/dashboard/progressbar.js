@@ -1,3 +1,4 @@
+'use strict';
 /**
  * @file
  * @author: Cristian Camilo Chaparro Africano.
@@ -22,6 +23,15 @@ $(function(){
   */
   $( '#button-getInformacion' ).bind('click',function(event)
   {
+
+      var $codes = [];
+      $.each( $('input[name="btSelectItem"]:checkbox:checked').closest("td").siblings("td") ,function(){
+        if( $(this).attr('class') ==='id' ) {
+          $codes.push( $(this).text() );
+        }
+      });
+      var data = { 'codes': $codes };
+      alert(JSON.stringify(data));
       $('#cancelar-proceso').prop('disabled',false);
       porcentaje = 0;
       $( '.log-success' ).hide();
@@ -41,17 +51,16 @@ $(function(){
         url: url,
         async: true,
         crossDomain: true,
-        success: function(data)
-        {
+        data:data,
+        method:'POST',
+        success: function(data) {
           console.log(data);
           $progressBar.attr('data-transitiongoal', '100').progressbar({display_text: 'center'});
 
           $( '.log-success' ).show();
           $( '.message').remove();
           $( '.log-success' ).append('<p class="message">El proceso ha terminado satisfactoriamente</p>');
-        },
-        error: function(xhr, status, error)
-        {
+        }, error: function(xhr, status, error) {
           console.log( JSON.stringify(xhr) ) ;
           console.log( JSON.stringify(status) ) ;
           console.log( JSON.stringify(error) ) ;
@@ -59,10 +68,8 @@ $(function(){
           $( '.log-fail' ).show();
           $( '.messageFail').remove();
           $( '.log-fail' ).append('<p class="messageFail">El proceso Fallo</p>');
-
         }
-      }).always(function()
-      {
+      }).always(function() {
           $progressBar.attr('data-transitiongoal', '100').progressbar({display_text: 'center'});
           clearInterval(handlerCheckProgress);
           handlerCheckProgress = null;

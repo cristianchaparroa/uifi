@@ -34,10 +34,11 @@ class GetInformacion
    /**
     * Constructor
    */
-   public function __construct(Container $container)
+   public function __construct(Container $container,LoggerInterface $logger)
    {
       $this->container = $container;
       $this->em = $container->get('doctrine.orm.entity_manager');
+       $this->logger = $logger;
    }
    /**
     * Función que se encarga obtener toda la información de GrupLAC y
@@ -46,15 +47,15 @@ class GetInformacion
     * @return Valor booleano que indica el estado de la operación.
     *         True indica que la operación fue completada satisfactoriamente.
    */
-   public function scrap()
+   public function scrap($codes)
    {
      $this->initDrop();
      /**
       * Se obtiene los codigos de los grupos de investigacion para luego crear
       * los diferentes scrapers.
      */
-     $repositoryGruplac = $this->em->getRepository('UIFIGrupLACScraperBundle:Gruplac');
-     $codes = $repositoryGruplac->getAllCodes();
+     // $repositoryGruplac = $this->em->getRepository('UIFIGrupLACScraperBundle:Gruplac');
+     // $codes = $repositoryGruplac->getAllCodes();
      $codes = array_unique($codes);
      $total = count($codes);
      $codesIntegrantes = array();
@@ -62,9 +63,7 @@ class GetInformacion
      $repositoryGrupo = $this->em->getRepository('UIFIIntegrantesBundle:Grupo');
      $repositoryArticulo = $this->em->getRepository('UIFIProductosBundle:Articulo');
 
-     foreach( $codes as $code )
-     {
-
+     foreach( $codes as $code ) {
        $grupoScraper = new GrupLACScraper($code);
        $grupo  = new Grupo();
        $grupo->setId( $code );
@@ -76,7 +75,7 @@ class GetInformacion
        $this->em->persist( $grupo );
        $this->em->flush();
        $entityGrupo = $grupo;
-       //
+
        $integrantes    = $grupoScraper->obtenerIntegrantes();
        $articulos      = $grupoScraper->getArticulos();
        $libros         = $grupoScraper->getLibros();
@@ -88,10 +87,9 @@ class GetInformacion
        $stores[] = new IntegrantesStore($this->em,$grupo, $integrantes);
        $stores[] = new ArticulosStore($this->em,$grupo, $articulos);
        $stores[] = new LibrosStore($this->em,$grupo, $libros);
-       $stores[] = new CapitulosLibroStore($this->em,$grupo,$capituloslibro);
-       $stores[] = new ProyectoDirigidoStore($this->em,$grupo,$proyectos);
        $stores[] = new SoftwareStore($this->em,$grupo, $software);
-
+       $stores[] = new ProyectoDirigidoStore($this->em,$grupo,$proyectos);
+       $stores[] = new CapitulosLibroStore($this->em,$grupo,$capituloslibro);
 
        /*Procesa todos las tiendas de informacion extraidas*/
        foreach( $stores as $store ){
@@ -111,8 +109,12 @@ class GetInformacion
 
      $articuloRepository = $this->em->getRepository('UIFIProductosBundle:Articulo');
      $articuloRepository->deleteAll();
+
      $integranteRepository = $this->em->getRepository('UIFIIntegrantesBundle:Integrante');
      $integranteRepository->deleteAll();
+
+     $librosRepository = $this->em->getRepository('UIFIProductosBundle:Libro');
+     $librosRepository->deleteAll();
 
      $capitulosLibroRepository = $this->em->getRepository('UIFIProductosBundle:CapitulosLibro');
      $capitulosLibroRepository->deleteAll();
