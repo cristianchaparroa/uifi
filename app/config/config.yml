@@ -93,3 +93,18 @@ uifi_grup_lac_scraper:
     proxy:
       enable: false
       url: 'http://proxy.udistrital.edu.co:3128'
+
+
+monolog:
+    handlers:
+        applog:
+            type: stream
+            path: /var/log/symfony.log
+            level: error
+        main:
+            type: fingers_crossed
+            action_level: warning
+            handler: file
+        syslog:
+            type: syslog
+            level: error
