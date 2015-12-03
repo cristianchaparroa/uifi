@@ -121,6 +121,11 @@ class GrupLACScraper extends  Scraper
 
 				//Obtengo el titulo del artículo
 				foreach($list as $node ){
+					$tipo = $node->nodeValue;
+					$tipo = str_replace( '"','',$tipo);
+					$tipo = str_replace( '\\','',$tipo);
+					$tipo = str_replace( ':','',$tipo);
+					$articulo['tipo'] = $tipo;
 					$tituloNode = $node->nextSibling;
 					$articulo['titulo'] = $tituloNode->nodeValue;
 				}
@@ -140,7 +145,31 @@ class GrupLACScraper extends  Scraper
 					//se obtiene el año en  el que se publico el artículo
 					if( strpos($nodesiguiente->nodeValue,'ISSN') ){
 						$result = $nodesiguiente->nodeValue;
+						$resultPais = explode(',',$result);
+						$pais = count($resultPais)>1 ? ($this->eliminarSaltoLinea($resultPais[0])) : "";
+						$articulo['pais'] = $pais;
+
+						if (count($resultPais)>2) {
+							$revista = $resultPais[1];
+							$revista = explode('ISSN',$revista);
+							$revista = count($revista)>1 ? $revista[0] : "";
+						}
+
 						$results = explode( 'vol',$result );
+						$resultsVolumen =  $results[1];
+						$resultsVolumen = explode('fasc',$resultsVolumen);
+						if (count($resultsVolumen)>1) {
+							$resultsPag = explode('págs',$resultsVolumen[1]);
+							$fasc =  count($resultsPag)>1 ? str_replace(':','',$resultsPag[0]) : "";
+							$articulo ['fasc'] = str_replace(' ','',$fasc);
+							$paginas = count($resultsPag)==2 ? $this->eliminarSaltoLinea(str_replace(':','',$resultsPag[1])) : "";
+							$articulo['paginas'] = $paginas;
+						}
+
+						$volumen = count($resultsVolumen)>1 ? ($this->eliminarSaltoLinea($resultsVolumen[0])) : "";
+						$volumen = str_replace(':','',$volumen);
+						$articulo['volumen'] = $volumen;
+
 						$results = $results[0];
 						$results = explode( ',', $result );
 						$resultsISSN = $results[1];
@@ -157,6 +186,7 @@ class GrupLACScraper extends  Scraper
 				array_pop($autores);
 				$autores = array_unique($autores);
 				$articulo['autores']  = $autores;
+				echo json_encode($articulo) . "</br></br>\n\n";
 				$articulos[] = $articulo;
 			}
 
