@@ -7,7 +7,6 @@
 
         <service class="UIFI\GrupLACScraperBundle\Service\Getinformacion\GetInformacion" id="uifi.gruplac.scrap.getinfo">
             <argument type="service" id="service_container" />
-            <argument type="service" id="logger"/>
         </service>
 
         <service class="UIFI\GrupLACScraperBundle\Service\GruplacService" id="uifi.gruplac.scrap.gruplac">
