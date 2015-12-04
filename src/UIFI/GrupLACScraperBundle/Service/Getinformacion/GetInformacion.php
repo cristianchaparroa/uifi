@@ -34,11 +34,10 @@ class GetInformacion
    /**
     * Constructor
    */
-   public function __construct(Container $container,LoggerInterface $logger)
+   public function __construct(Container $container)
    {
       $this->container = $container;
       $this->em = $container->get('doctrine.orm.entity_manager');
-       $this->logger = $logger;
    }
    /**
     * Función que se encarga obtener toda la información de GrupLAC y
@@ -49,7 +48,7 @@ class GetInformacion
    */
    public function scrap($codes)
    {
-     //$this->initDrop();
+     $this->initDrop();
      /**
       * Se obtiene los codigos de los grupos de investigacion para luego crear
       * los diferentes scrapers.
@@ -78,18 +77,18 @@ class GetInformacion
 
        $integrantes    = $grupoScraper->obtenerIntegrantes();
        $articulos      = $grupoScraper->getArticulos();
-       $libros         = $grupoScraper->getLibros();
-       $software        = $grupoScraper->getSoftware();
-       $proyectos       = $grupoScraper->getProyectosDirigidos();
-       $capituloslibro = $grupoScraper->getCapitulosLibros();
+      //  $libros         = $grupoScraper->getLibros();
+      //  $software        = $grupoScraper->getSoftware();
+      //  $proyectos       = $grupoScraper->getProyectosDirigidos();
+      //  $capituloslibro = $grupoScraper->getCapitulosLibros();
 
        $stores = array();
        $stores[] = new IntegrantesStore($this->em,$grupo, $integrantes);
        $stores[] = new ArticulosStore($this->em,$grupo, $articulos);
-       $stores[] = new LibrosStore($this->em,$grupo, $libros);
-       $stores[] = new SoftwareStore($this->em,$grupo, $software);
-       $stores[] = new ProyectoDirigidoStore($this->em,$grupo,$proyectos);
-       $stores[] = new CapitulosLibroStore($this->em,$grupo,$capituloslibro);
+      //  $stores[] = new LibrosStore($this->em,$grupo, $libros);
+      //  $stores[] = new SoftwareStore($this->em,$grupo, $software);
+      //  $stores[] = new ProyectoDirigidoStore($this->em,$grupo,$proyectos);
+      //  $stores[] = new CapitulosLibroStore($this->em,$grupo,$capituloslibro);
 
        /*Procesa todos las tiendas de informacion extraidas*/
        foreach( $stores as $store ){

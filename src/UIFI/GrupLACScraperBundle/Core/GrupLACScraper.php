@@ -153,6 +153,7 @@ class GrupLACScraper extends  Scraper
 							$revista = $resultPais[1];
 							$revista = explode('ISSN',$revista);
 							$revista = count($revista)>1 ? $revista[0] : "";
+							$articulo['revista'] = $revista;
 						}
 
 						$results = explode( 'vol',$result );

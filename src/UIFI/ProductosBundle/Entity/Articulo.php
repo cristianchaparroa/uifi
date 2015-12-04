@@ -105,7 +105,7 @@ class Articulo
      * @var string
      * @ORM\Column(name="fasciculo", type="string",length=3 ,nullable=true)
      */
-    private $fasciuclo;
+    private $fasciculo;
 
     /**
      * @var string
@@ -139,7 +139,7 @@ class Articulo
     /**
      * Get id
      *
-     * @return string 
+     * @return string
      */
     public function getId()
     {
@@ -162,7 +162,7 @@ class Articulo
     /**
      * Get titulo
      *
-     * @return string 
+     * @return string
      */
     public function getTitulo()
     {
@@ -185,7 +185,7 @@ class Articulo
     /**
      * Get editorial
      *
-     * @return string 
+     * @return string
      */
     public function getEditorial()
     {
@@ -208,7 +208,7 @@ class Articulo
     /**
      * Get ISSN
      *
-     * @return string 
+     * @return string
      */
     public function getISSN()
     {
@@ -231,7 +231,7 @@ class Articulo
     /**
      * Get categoria
      *
-     * @return string 
+     * @return string
      */
     public function getCategoria()
     {
@@ -254,7 +254,7 @@ class Articulo
     /**
      * Get anual
      *
-     * @return string 
+     * @return string
      */
     public function getAnual()
     {
@@ -277,7 +277,7 @@ class Articulo
     /**
      * Get grupo
      *
-     * @return string 
+     * @return string
      */
     public function getGrupo()
     {
@@ -300,7 +300,7 @@ class Articulo
     /**
      * Get proceso
      *
-     * @return string 
+     * @return string
      */
     public function getProceso()
     {
@@ -323,7 +323,7 @@ class Articulo
     /**
      * Get tipo
      *
-     * @return string 
+     * @return string
      */
     public function getTipo()
     {
@@ -346,7 +346,7 @@ class Articulo
     /**
      * Get revista
      *
-     * @return string 
+     * @return string
      */
     public function getRevista()
     {
@@ -369,35 +369,14 @@ class Articulo
     /**
      * Get volumen
      *
-     * @return string 
+     * @return string
      */
     public function getVolumen()
     {
         return $this->volumen;
     }
 
-    /**
-     * Set fasciuclo
-     *
-     * @param string $fasciuclo
-     * @return Articulo
-     */
-    public function setFasciuclo($fasciuclo)
-    {
-        $this->fasciuclo = $fasciuclo;
 
-        return $this;
-    }
-
-    /**
-     * Get fasciuclo
-     *
-     * @return string 
-     */
-    public function getFasciuclo()
-    {
-        return $this->fasciuclo;
-    }
 
     /**
      * Set paginas
@@ -415,7 +394,7 @@ class Articulo
     /**
      * Get paginas
      *
-     * @return string 
+     * @return string
      */
     public function getPaginas()
     {
@@ -448,10 +427,33 @@ class Articulo
     /**
      * Get integrantes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getIntegrantes()
     {
         return $this->integrantes;
+    }
+
+    /**
+     * Set fasciculo
+     *
+     * @param string $fasciculo
+     * @return Articulo
+     */
+    public function setFasciculo($fasciculo)
+    {
+        $this->fasciculo = $fasciculo;
+
+        return $this;
+    }
+
+    /**
+     * Get fasciculo
+     *
+     * @return string 
+     */
+    public function getFasciculo()
+    {
+        return $this->fasciculo;
     }
 }
