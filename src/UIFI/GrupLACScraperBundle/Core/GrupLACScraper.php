@@ -319,6 +319,8 @@ class GrupLACScraper extends  Scraper
 
 					$libro = array();
 					foreach($list as $node ){
+						$tipo =  $node->nodeValue;
+						$libro['tipo'] = $tipo;
 						$tituloNode = $node->nextSibling;
 						$libro['titulo'] = $tituloNode->nodeValue;
 					}
@@ -335,6 +337,21 @@ class GrupLACScraper extends  Scraper
 							}
 							if( strpos($nodesiguiente->nodeValue, 'ISBN') ){
 								$result = $nodesiguiente->nodeValue;
+								$resultsVolumen = explode('vol:',$result);
+
+								if(count($resultsVolumen )>=2){
+									$resultsVolumen = explode('págs:',$resultsVolumen[1]);
+									$volumen =  count(	$resultsVolumen )>1 ? $this->eliminarSaltoLinea( str_replace(' ','',$resultsVolumen[0]) ) : "";
+									$libro['volumen'] = $volumen;
+									$resultsPaginas = $resultsVolumen[1];
+									$resultsEditorial = explode('Ed.',$resultsPaginas);
+									$editorial = count($resultsEditorial)>=2 ? $this->eliminarSaltoLinea($resultsEditorial[1]) :  "";
+								  $libro['editorial'] = $editorial;
+									$resultsPaginas = explode(',',	$resultsPaginas);
+									$paginas = count($resultsPaginas) > 1 ?  str_replace(' ','',$resultsPaginas[0]) : "";
+									$libro['paginas'] = $paginas;
+								}
+
 								$results = explode(':',$result);
 								$isbn = $results[1];
 								$results = explode( ' ',$isbn);
@@ -344,8 +361,8 @@ class GrupLACScraper extends  Scraper
 							if( strpos($nodesiguiente->nodeValue, 'ISBN') ){
 								$result = $nodesiguiente->nodeValue;
 								$results = explode(',',$result);
-								$libro[ 'pais']  = $results[0];
-								$libro[ 'anual' ] = $results[1];
+								$libro[ 'pais']  =  count($results)> 1 ? $this->eliminarSaltoLinea(str_replace(' ','',$results[0])) : "";
+								$libro[ 'anual' ] = count($results)>=2 ? $results[1] : "";
 							}
 					}
 					array_pop($autores);

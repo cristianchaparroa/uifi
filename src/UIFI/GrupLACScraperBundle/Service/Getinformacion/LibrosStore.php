@@ -49,6 +49,12 @@ class LibrosStore implements IStore
        $ebook->setIsbn( $libro['ISBN'] );
        $ebook->setGrupo( $this->grupo->getId() );
        $ebook->setPais( $libro['pais'] );
+
+       $ebook->setTipo(array_key_exists('tipo',$libro) ?  $libro['tipo'] : "");
+       $ebook->setVolumen(array_key_exists('volumen',$libro) ?  $libro['volumen'] : "");
+       $ebook->setPaginas(array_key_exists('paginas',$libro) ?  $libro['paginas'] : "");
+       $ebook->setEditorial(array_key_exists('editorial',$libro) ?  $libro['editorial'] : "");
+
        $this->em->persist( $ebook );
        $this->em->flush();
 

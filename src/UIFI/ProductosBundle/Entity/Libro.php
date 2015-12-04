@@ -31,7 +31,7 @@ class Libro
     /**
      * @var string
      *
-     * @ORM\Column(name="pais", type="string", length=255)
+     * @ORM\Column(name="pais", type="string", length=255,nullable=true)
      */
     private $pais;
 
@@ -61,6 +61,33 @@ class Libro
      * @ORM\Column(name="grupo", type="string", length=255)
      */
     private $grupo;
+
+    /**
+     * Volumen de libro
+     *
+     * @ORM\Column(name="tipo", type="string", length=50,nullable=true)
+     */
+    private $tipo;
+    /**
+     * Volumen de libro
+     *
+     * @ORM\Column(name="volumen", type="string", length=20,nullable=true)
+     */
+    private $volumen;
+
+    /**
+     * Numero de pagians que tiene el libro publicado
+     *
+     * @ORM\Column(name="paginas", type="string", length=20,nullable=true)
+     */
+    private $paginas;
+
+    /**
+     * Numero de pagians que tiene el libro publicado
+     *
+     * @ORM\Column(name="editorial", type="string", nullable=true)
+     */
+    private $editorial;
 
     /**
      * Get id
@@ -225,5 +252,97 @@ class Libro
     public function getGrupo()
     {
         return $this->grupo;
+    }
+
+    /**
+     * Set volumen
+     *
+     * @param string $volumen
+     * @return Libro
+     */
+    public function setVolumen($volumen)
+    {
+        $this->volumen = $volumen;
+
+        return $this;
+    }
+
+    /**
+     * Get volumen
+     *
+     * @return string
+     */
+    public function getVolumen()
+    {
+        return $this->volumen;
+    }
+
+    /**
+     * Set paginas
+     *
+     * @param string $paginas
+     * @return Libro
+     */
+    public function setPaginas($paginas)
+    {
+        $this->paginas = $paginas;
+
+        return $this;
+    }
+
+    /**
+     * Get paginas
+     *
+     * @return string
+     */
+    public function getPaginas()
+    {
+        return $this->paginas;
+    }
+
+    /**
+     * Set editorial
+     *
+     * @param string $editorial
+     * @return Libro
+     */
+    public function setEditorial($editorial)
+    {
+        $this->editorial = $editorial;
+
+        return $this;
+    }
+
+    /**
+     * Get editorial
+     *
+     * @return string
+     */
+    public function getEditorial()
+    {
+        return $this->editorial;
+    }
+
+    /**
+     * Set tipo
+     *
+     * @param string $tipo
+     * @return Libro
+     */
+    public function setTipo($tipo)
+    {
+        $this->tipo = $tipo;
+
+        return $this;
+    }
+
+    /**
+     * Get tipo
+     *
+     * @return string 
+     */
+    public function getTipo()
+    {
+        return $this->tipo;
     }
 }
