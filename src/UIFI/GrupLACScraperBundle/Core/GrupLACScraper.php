@@ -230,6 +230,8 @@ class GrupLACScraper extends  Scraper
 
 					//Obtengo el titulo del capitulo
 					foreach($list as $node ){
+						$tipo = $node->nodeValue;
+						$capitulo['tipo'] = $tipo;
 						$tituloNode = $node->nextSibling;
 						$titulo = $tituloNode->nodeValue;
 						$titulo = str_replace( ':','',$titulo);
@@ -253,7 +255,7 @@ class GrupLACScraper extends  Scraper
 						//se obtiene el paise de publicacion
 						if( !strpos($text,'Autores') ){
 							$pais = $resultados[0];
-							$capitulo['pais']  = $pais;
+							$capitulo['pais']  = $this->eliminarSaltoLinea($pais);
 						}
 						//se obtiene el año de publicacion
 						if( is_numeric($resultados[1]) ){
@@ -263,10 +265,22 @@ class GrupLACScraper extends  Scraper
 						if( count($resultados)>3 ){
 							$capitulo['editorial'] = $resultados[3];
 						}
-						else{
-							$capitulo['editorial'] = '';
-						}
+						$resltsTituloLibro =  count($resultados)>=3 ? $this->eliminarSaltoLinea($resultados[2]) : "";
+						$capitulo['tituloLibro'] = $resltsTituloLibro;
 
+						echo		$resltsTituloLibro .  "| ";
+						if( count($resultados)>=5){
+							$resultsVolumen = $resultados[4];
+							$resultsVolumen = explode('Vol.',$resultsVolumen );
+							$volumen = count($resultsVolumen)>=2 ? $this->eliminarSaltoLinea(str_replace(' ','',$resultsVolumen[1])) : "";
+							$capitulo['volumen'] = $volumen;
+						}
+						if( count($resultados)>=6){
+							$resultsPaginas = $resultados[5];
+							$resultsPaginas = explode('págs:',$resultsPaginas  );
+							$paginas = count($resultsPaginas)>1  ? $resultsPaginas[1] : "";
+							$capitulo['paginas'] = $paginas;
+						}
 						if( count($resultados)>2  && isset($resultados[3]) ){
 							$isbn = $resultados[3];
 

@@ -24,9 +24,16 @@ class CapitulosLibro
     /**
      * @var string
      *
-     * @ORM\Column(name="titulo", type="string", length=10000)
+     * @ORM\Column(name="titulo", type="string", length=10000,nullable=true)
      */
     private $titulo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="titulo_libro", type="string", length=10000,nullable=true)
+     */
+    private $tituloLibro;
 
     /**
      * @var string
@@ -61,6 +68,36 @@ class CapitulosLibro
      * @ORM\Column(name="grupo", type="string", length=255)
      */
     private $grupo;
+
+    /**
+     * Editorial que publico el libro y por ende el capitulo de libro.
+     *
+     * @ORM\Column(name="editorial", type="string", nullable=true)
+     */
+    private $editorial;
+
+    /**
+     * Volumen
+     *
+     * @ORM\Column(name="volumen", type="string", length=10, nullable=true)
+     */
+    private $volumen;
+
+    /**
+     * Paginas del libro en las que fue publicado el capitulo de libro.
+     *
+     * @ORM\Column(name="paginas", type="string", length=10,nullable=true)
+     */
+    private $paginas;
+
+    /**
+     * Tipo de capitulo de libro
+     *
+     * @ORM\Column(name="tipo", type="string",nullable=true)
+     */
+    private $tipo;
+
+
 
     /**
      * Get id
@@ -225,5 +262,120 @@ class CapitulosLibro
     public function getGrupo()
     {
         return $this->grupo;
+    }
+
+    /**
+     * Set tituloLibro
+     *
+     * @param string $tituloLibro
+     * @return CapitulosLibro
+     */
+    public function setTituloLibro($tituloLibro)
+    {
+        $this->tituloLibro = $tituloLibro;
+
+        return $this;
+    }
+
+    /**
+     * Get tituloLibro
+     *
+     * @return string
+     */
+    public function getTituloLibro()
+    {
+        return $this->tituloLibro;
+    }
+
+    /**
+     * Set editorial
+     *
+     * @param string $editorial
+     * @return CapitulosLibro
+     */
+    public function setEditorial($editorial)
+    {
+        $this->editorial = $editorial;
+
+        return $this;
+    }
+
+    /**
+     * Get editorial
+     *
+     * @return string
+     */
+    public function getEditorial()
+    {
+        return $this->editorial;
+    }
+
+    /**
+     * Set volumen
+     *
+     * @param string $volumen
+     * @return CapitulosLibro
+     */
+    public function setVolumen($volumen)
+    {
+        $this->volumen = $volumen;
+
+        return $this;
+    }
+
+    /**
+     * Get volumen
+     *
+     * @return string
+     */
+    public function getVolumen()
+    {
+        return $this->volumen;
+    }
+
+    /**
+     * Set paginas
+     *
+     * @param string $paginas
+     * @return CapitulosLibro
+     */
+    public function setPaginas($paginas)
+    {
+        $this->paginas = $paginas;
+
+        return $this;
+    }
+
+    /**
+     * Get paginas
+     *
+     * @return string
+     */
+    public function getPaginas()
+    {
+        return $this->paginas;
+    }
+
+    /**
+     * Set tipo
+     *
+     * @param string $tipo
+     * @return CapitulosLibro
+     */
+    public function setTipo($tipo)
+    {
+        $this->tipo = $tipo;
+
+        return $this;
+    }
+
+    /**
+     * Get tipo
+     *
+     * @return string
+     */
+    public function getTipo()
+    {
+        return $this->tipo;
     }
 }
