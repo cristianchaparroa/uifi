@@ -48,6 +48,13 @@ class ArticulosStore implements IStore
       $article->setTitulo($articulo['titulo']);
       $article->setAnual( $articulo['anual'] );
       $article->setISSN( $articulo['issn'] );
+
+      $article->setTipo( array_key_exists('tipo',$articulo) ?  $articulo['tipo']:"");
+      $article->setRevista( array_key_exists('revista',$articulo) ?  $articulo['revista']:"");
+      $article->setVolumen( array_key_exists('volumen',$articulo) ?  $articulo['volumen']:"");
+      $article->setFasciculo( array_key_exists('fasc',$articulo) ?  $articulo['fasc']:"");
+      $article->setPaginas( array_key_exists('paginas',$articulo) ?  $articulo['paginas']:"");
+
       $article->setGrupo( $this->grupo->getId() );
       $this->em->persist( $article );
       $this->em->flush();

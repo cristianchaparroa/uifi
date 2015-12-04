@@ -33,14 +33,6 @@ class Articulo
      * Contenido generado por el Scraper desde el CVLAC
      * @var string
      *
-     * @ORM\Column(name="contenido", type="string", length=255,nullable=true)
-     */
-    private $contenido;
-
-    /**
-     * Contenido generado por el Scraper desde el CVLAC
-     * @var string
-     *
      * @ORM\Column(name="editorial", type="string", length=255,nullable=true)
      */
     private $editorial;
@@ -49,24 +41,14 @@ class Articulo
      * Contenido generado por el Scraper desde el CVLAC
      * @var string
      *
-     * @ORM\Column(name="ISSN", type="string", length=255,nullable=true)
+     * @ORM\Column(name="ISSN", type="string", length=50,nullable=true)
      */
     private $ISSN;
-
-    /**
-     * Contenido generado por el Scraper desde el CVLAC
-     * @var string
-     *
-     * @ORM\Column(name="palabras", type="string", length=10000,nullable=true)
-     */
-    private $palabras;
-
-
     /**
      * Categoria del articulo de investigacion
      * @var string
      *
-     * @ORM\Column(name="categoria", type="string", length=255,nullable=true)
+     * @ORM\Column(name="categoria", type="string", length=3,nullable=true)
      */
     private $categoria;
 
@@ -74,7 +56,7 @@ class Articulo
      * Año en el que fue publicado el articulo
      * @var \DateTime
      *
-     * @ORM\Column(name="anual", type="string",length=255,nullable=true)
+     * @ORM\Column(name="anual", type="string",length=10,nullable=true)
      */
     private $anual;
 
@@ -101,6 +83,37 @@ class Articulo
      * @ORM\Column(name="proceso", type="string", length=10,nullable=true)
      */
     private $proceso;
+
+    /**
+     * @var string
+     * @ORM\Column(name="tipo", type="string",nullable=true)
+     */
+    private $tipo;
+    /**
+     * @var string
+     * @ORM\Column(name="revista", type="string",nullable=true)
+     */
+    private $revista;
+
+    /**
+     * @var string
+     * @ORM\Column(name="volumen", type="string",length=5 ,nullable=true)
+     */
+    private $volumen;
+
+    /**
+     * @var string
+     * @ORM\Column(name="fasciculo", type="string",length=3 ,nullable=true)
+     */
+    private $fasciuclo;
+
+    /**
+     * @var string
+     * @ORM\Column(name="paginas", type="string",length=10 ,nullable=true)
+     */
+    private $paginas;
+
+
     /**
      * Constructor
      */
@@ -113,7 +126,7 @@ class Articulo
     /**
      * Set id
      *
-     * @param integer $id
+     * @param string $id
      * @return Articulo
      */
     public function setId($id)
@@ -126,7 +139,7 @@ class Articulo
     /**
      * Get id
      *
-     * @return integer
+     * @return string 
      */
     public function getId()
     {
@@ -149,34 +162,11 @@ class Articulo
     /**
      * Get titulo
      *
-     * @return string
+     * @return string 
      */
     public function getTitulo()
     {
         return $this->titulo;
-    }
-
-    /**
-     * Set contenido
-     *
-     * @param string $contenido
-     * @return Articulo
-     */
-    public function setContenido($contenido)
-    {
-        $this->contenido = $contenido;
-
-        return $this;
-    }
-
-    /**
-     * Get contenido
-     *
-     * @return string
-     */
-    public function getContenido()
-    {
-        return $this->contenido;
     }
 
     /**
@@ -195,7 +185,7 @@ class Articulo
     /**
      * Get editorial
      *
-     * @return string
+     * @return string 
      */
     public function getEditorial()
     {
@@ -218,34 +208,11 @@ class Articulo
     /**
      * Get ISSN
      *
-     * @return string
+     * @return string 
      */
     public function getISSN()
     {
         return $this->ISSN;
-    }
-
-    /**
-     * Set palabras
-     *
-     * @param string $palabras
-     * @return Articulo
-     */
-    public function setPalabras($palabras)
-    {
-        $this->palabras = $palabras;
-
-        return $this;
-    }
-
-    /**
-     * Get palabras
-     *
-     * @return string
-     */
-    public function getPalabras()
-    {
-        return $this->palabras;
     }
 
     /**
@@ -264,7 +231,7 @@ class Articulo
     /**
      * Get categoria
      *
-     * @return string
+     * @return string 
      */
     public function getCategoria()
     {
@@ -274,7 +241,7 @@ class Articulo
     /**
      * Set anual
      *
-     * @param \DateTime $anual
+     * @param string $anual
      * @return Articulo
      */
     public function setAnual($anual)
@@ -287,7 +254,7 @@ class Articulo
     /**
      * Get anual
      *
-     * @return \DateTime
+     * @return string 
      */
     public function getAnual()
     {
@@ -310,11 +277,149 @@ class Articulo
     /**
      * Get grupo
      *
-     * @return string
+     * @return string 
      */
     public function getGrupo()
     {
         return $this->grupo;
+    }
+
+    /**
+     * Set proceso
+     *
+     * @param string $proceso
+     * @return Articulo
+     */
+    public function setProceso($proceso)
+    {
+        $this->proceso = $proceso;
+
+        return $this;
+    }
+
+    /**
+     * Get proceso
+     *
+     * @return string 
+     */
+    public function getProceso()
+    {
+        return $this->proceso;
+    }
+
+    /**
+     * Set tipo
+     *
+     * @param string $tipo
+     * @return Articulo
+     */
+    public function setTipo($tipo)
+    {
+        $this->tipo = $tipo;
+
+        return $this;
+    }
+
+    /**
+     * Get tipo
+     *
+     * @return string 
+     */
+    public function getTipo()
+    {
+        return $this->tipo;
+    }
+
+    /**
+     * Set revista
+     *
+     * @param string $revista
+     * @return Articulo
+     */
+    public function setRevista($revista)
+    {
+        $this->revista = $revista;
+
+        return $this;
+    }
+
+    /**
+     * Get revista
+     *
+     * @return string 
+     */
+    public function getRevista()
+    {
+        return $this->revista;
+    }
+
+    /**
+     * Set volumen
+     *
+     * @param string $volumen
+     * @return Articulo
+     */
+    public function setVolumen($volumen)
+    {
+        $this->volumen = $volumen;
+
+        return $this;
+    }
+
+    /**
+     * Get volumen
+     *
+     * @return string 
+     */
+    public function getVolumen()
+    {
+        return $this->volumen;
+    }
+
+    /**
+     * Set fasciuclo
+     *
+     * @param string $fasciuclo
+     * @return Articulo
+     */
+    public function setFasciuclo($fasciuclo)
+    {
+        $this->fasciuclo = $fasciuclo;
+
+        return $this;
+    }
+
+    /**
+     * Get fasciuclo
+     *
+     * @return string 
+     */
+    public function getFasciuclo()
+    {
+        return $this->fasciuclo;
+    }
+
+    /**
+     * Set paginas
+     *
+     * @param string $paginas
+     * @return Articulo
+     */
+    public function setPaginas($paginas)
+    {
+        $this->paginas = $paginas;
+
+        return $this;
+    }
+
+    /**
+     * Get paginas
+     *
+     * @return string 
+     */
+    public function getPaginas()
+    {
+        return $this->paginas;
     }
 
     /**
@@ -343,33 +448,10 @@ class Articulo
     /**
      * Get integrantes
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getIntegrantes()
     {
         return $this->integrantes;
-    }
-
-    /**
-     * Set proceso
-     *
-     * @param string $proceso
-     * @return Articulo
-     */
-    public function setProceso($proceso)
-    {
-        $this->proceso = $proceso;
-
-        return $this;
-    }
-
-    /**
-     * Get proceso
-     *
-     * @return string
-     */
-    public function getProceso()
-    {
-        return $this->proceso;
     }
 }
