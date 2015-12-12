@@ -48,7 +48,7 @@ class CapitulosLibroStore implements IStore
        $chapter->setAnual( $capitulo['anual'] );
        $chapter->setPais( $capitulo['pais'] );
        $chapter->setIsbn(  array_key_exists('isbn',$capitulo) ? $capitulo['isbn'] : "" );
-       $chapter->setTituloLibro( $capitulo['tituloLibro']);
+       $chapter->setTituloLibro( $capitulo['libro']);
        $chapter->setTipo( array_key_exists('tipo',$capitulo) ? $capitulo['tipo'] : "");
        $chapter->setEditorial( array_key_exists('editorial',$capitulo) ? $capitulo['editorial'] : "");
        $chapter->setVolumen( array_key_exists('volumen',$capitulo) ? $capitulo['volumen'] : "");

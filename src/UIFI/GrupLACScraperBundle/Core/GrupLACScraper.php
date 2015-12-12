@@ -107,7 +107,6 @@ class GrupLACScraper extends  Scraper
 		{
 			$query = '/html/body/table[8]';
 			$array = $this->extraer( $query );
-			print_r($array);
 			$items = array();
 			$articulos = array();
 
@@ -187,7 +186,6 @@ class GrupLACScraper extends  Scraper
 				array_pop($autores);
 				$autores = array_unique($autores);
 				$articulo['autores']  = $autores;
-				echo json_encode($articulo) . "</br></br>\n\n";
 				$articulos[] = $articulo;
 			}
 
@@ -261,14 +259,6 @@ class GrupLACScraper extends  Scraper
 						if( is_numeric($resultados[1]) ){
 							$capitulo['anual'] = $resultados[1];
 						}
-						//se obtiene la editorial que publico
-						if( count($resultados)>3 ){
-							$capitulo['editorial'] = $resultados[3];
-						}
-						$resltsTituloLibro =  count($resultados)>=3 ? $this->eliminarSaltoLinea($resultados[2]) : "";
-						$capitulo['tituloLibro'] = $resltsTituloLibro;
-
-						echo		$resltsTituloLibro .  "| ";
 						if( count($resultados)>=5){
 							$resultsVolumen = $resultados[4];
 							$resultsVolumen = explode('Vol.',$resultsVolumen );
@@ -286,15 +276,21 @@ class GrupLACScraper extends  Scraper
 
 							if( strpos($isbn,'ISBN') ){
 								$isbnr = explode(':',$isbn);
-								$isbn = $isbnr[1];
-								$isbn = str_replace(' ','',$isbn);
+								$isbn = count($isbnr) >= 2 ?  $isbnr[1] : "";
 								$capitulo['isbn'] = $isbn;
-
 							}
 						}
-						else{
-							$capitulo['isbn'] = '';
+						if( count($resultados)>6) {
+							$editorialResult = $resultados[6];
+							$editorialResult = explode('Ed.', $editorialResult);
+							$editorial = 	count($editorialResult) >=2 ? $this->eliminarSaltoLinea($editorialResult[1]) : "";
+							$capitulo['editorial'] = 	$editorial;
 						}
+						if ( count($resultados)>3) {
+							$libro = $resultados[2];
+							$capitulo['libro'] = $this->eliminarSaltoLinea($libro);
+						}
+
 				  }
 					array_pop($autores );
 					$autores  = array_unique($autores );

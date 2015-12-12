@@ -55,8 +55,8 @@ class ProductosExporterService
         $entities = $this->em->getRepository('UIFIProductosBundle:CapitulosLibro')->findAll();
         $path = $this->container->getParameter('kernel.root_dir').'/../web/productos';
         $className = 'UIFI\ProductosBundle\Entity\CapitulosLibro';
-        $headers = array( "ISSN", "TITULO" , "PAIS","AÑO","VOLUMEN");
-        $properties = array('isbn','titulo', 'pais', 'anual','volumen');
+        $headers = array(   "ISBN", "GRUPO",      "TIPO","TITULO", "PAIS", "AÑO",   "LIBRO",      "VOLUMEN", "PAGINAS", "EDITORIAL", "AUTORES");
+        $properties = array('isbn', 'nombreGrupo','tipo','titulo', 'pais', 'anual', 'tituloLibro','volumen', 'paginas', 'editorial', 'integrantes');
         $excelExporter = new ExcelExporter();
         $file = $excelExporter->getXLS($path,$fileName,$className, $headers,$properties,$entities);
         return $file;
