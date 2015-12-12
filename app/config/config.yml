@@ -62,8 +62,8 @@ swiftmailer:
     encryption: ssl
     auth_mode:  login
     host:       smtp.gmail.com
-    username:   cristianchaparroa@gmail.com
-    password:   Test-Development-$1032
+    username:
+    password:   
 
 
 fos_user:
