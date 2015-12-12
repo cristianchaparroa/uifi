@@ -38,49 +38,49 @@ class Evento
     /**
      * @var string
      *
-     * @ORM\Column(name="titulo", type="string", length=500)
+     * @ORM\Column(name="titulo", type="string", length=500, nullable=true)
      */
     private $titulo;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="ciudad", type="string", length=255)
+     * @ORM\Column(name="ciudad", type="string", length=255,nullable=true)
      */
     private $ciudad;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="desde", type="date")
+     * @ORM\Column(name="desde", type="date",nullable=true)
      */
     private $desde;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="hasta", type="date")
+     * @ORM\Column(name="hasta", type="date", nullable=true)
      */
     private $hasta;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="ambito", type="string", length=255)
+     * @ORM\Column(name="ambito", type="string", length=255, nullable=true)
      */
     private $ambito;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="participacion", type="string", length=255)
+     * @ORM\Column(name="participacion", type="string", length=255, nullable=true)
      */
     private $participacion;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="institucion", type="string", length=255)
+     * @ORM\Column(name="institucion", type="string", length=255, nullable=true)
      */
     private $institucion;
 
