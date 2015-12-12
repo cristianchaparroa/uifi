@@ -113,6 +113,13 @@ class Articulo
      */
     private $paginas;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre_grupo", type="string", length=255)
+     */
+    private $nombreGrupo;
+
 
     /**
      * Constructor
@@ -450,10 +457,33 @@ class Articulo
     /**
      * Get fasciculo
      *
-     * @return string 
+     * @return string
      */
     public function getFasciculo()
     {
         return $this->fasciculo;
+    }
+
+    /**
+     * Set nombreGrupo
+     *
+     * @param string $nombreGrupo
+     * @return Articulo
+     */
+    public function setNombreGrupo($nombreGrupo)
+    {
+        $this->nombreGrupo = $nombreGrupo;
+
+        return $this;
+    }
+
+    /**
+     * Get nombreGrupo
+     *
+     * @return string
+     */
+    public function getNombreGrupo()
+    {
+        return $this->nombreGrupo;
     }
 }

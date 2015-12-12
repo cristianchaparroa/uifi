@@ -51,6 +51,7 @@ class ProyectoDirigidoStore implements IStore
       $project->setValoracion(  $proyecto['valoracion']  );
       $project->setNumeroPaginas(  intval($proyecto['numeroPaginas'] ) );
       $project->setInstitucion(  $proyecto['institucion']  );
+      $project->SetNombreGrupo($this->grupo->getNombre());
 
       $this->em->persist( $project );
       $this->em->flush();

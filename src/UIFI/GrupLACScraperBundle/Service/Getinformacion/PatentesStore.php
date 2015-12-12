@@ -48,6 +48,8 @@ class PatentesStore implements IStore
       $patente ->setTitulo($patente['titulo']);
       $patente ->setAnual( $patente['anual'] );
       $patente ->setGrupo( $this->grupo->getId() );
+      $patente->SetNombreGrupo($this->grupo->getNombre());
+
       $this->em->persist( $patente  );
       $this->em->flush();
       foreach( $autores as $autor )

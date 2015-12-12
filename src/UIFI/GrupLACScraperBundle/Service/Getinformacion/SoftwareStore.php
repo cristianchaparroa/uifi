@@ -44,6 +44,8 @@ class SoftwareStore implements IStore
       $soft->setTitulo($software['titulo']);
       $soft->setAnual( $software['anual'] );
       $soft->setGrupo( $this->grupo->getId() );
+      $soft->SetNombreGrupo($this->grupo->getNombre());
+
       $this->em->persist( $soft );
     //  $this->em->flush();
       foreach( $autores as $autor )
@@ -61,7 +63,7 @@ class SoftwareStore implements IStore
          }
          //si no existe que lo cree.
          else{
-           
+
          }
       }
       $this->em->flush(); // Persist objects that did not make up an entire batch

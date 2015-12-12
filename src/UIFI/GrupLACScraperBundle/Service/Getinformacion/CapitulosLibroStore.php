@@ -53,6 +53,7 @@ class CapitulosLibroStore implements IStore
        $chapter->setEditorial( array_key_exists('editorial',$capitulo) ? $capitulo['editorial'] : "");
        $chapter->setVolumen( array_key_exists('volumen',$capitulo) ? $capitulo['volumen'] : "");
        $chapter->setPaginas( array_key_exists('paginas',$capitulo) ? $capitulo['paginas'] : "");
+       $chapter->SetNombreGrupo($this->grupo->getNombre());
        //Indico el grupo al cual pertenece el capítulo de libro.
        $chapter->setGrupo( $this->grupo->getId() );
        $this->em->persist( $chapter );

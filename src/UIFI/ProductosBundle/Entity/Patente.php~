@@ -60,6 +60,13 @@ class Patente
      * @ORM\Column(name="proceso", type="string", length=10,nullable=true)
      */
     private $proceso;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre_grupo", type="string", length=255)
+     */
+    private $nombreGrupo;
     /**
      * Constructor
      */
@@ -217,5 +224,28 @@ class Patente
     public function getIntegrantes()
     {
         return $this->integrantes;
+    }
+
+    /**
+     * Set nombreGrupo
+     *
+     * @param string $nombreGrupo
+     * @return Patente
+     */
+    public function setNombreGrupo($nombreGrupo)
+    {
+        $this->nombreGrupo = $nombreGrupo;
+
+        return $this;
+    }
+
+    /**
+     * Get nombreGrupo
+     *
+     * @return string
+     */
+    public function getNombreGrupo()
+    {
+        return $this->nombreGrupo;
     }
 }

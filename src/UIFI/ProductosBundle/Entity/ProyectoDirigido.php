@@ -110,6 +110,13 @@ class ProyectoDirigido
      * @ORM\Column(name="proceso", type="string", length=10,nullable=true)
      */
     private $proceso;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre_grupo", type="string", length=255)
+     */
+    private $nombreGrupo;
     /**
      * Constructor
      */
@@ -460,5 +467,28 @@ class ProyectoDirigido
     public function getInstitucion()
     {
         return $this->institucion;
+    }
+
+    /**
+     * Set nombreGrupo
+     *
+     * @param string $nombreGrupo
+     * @return ProyectoDirigido
+     */
+    public function setNombreGrupo($nombreGrupo)
+    {
+        $this->nombreGrupo = $nombreGrupo;
+
+        return $this;
+    }
+
+    /**
+     * Get nombreGrupo
+     *
+     * @return string
+     */
+    public function getNombreGrupo()
+    {
+        return $this->nombreGrupo;
     }
 }

@@ -55,6 +55,8 @@ class ArticulosStore implements IStore
       $article->setFasciculo( array_key_exists('fasc',$articulo) ?  $articulo['fasc']:"");
       $article->setPaginas( array_key_exists('paginas',$articulo) ?  $articulo['paginas']:"");
 
+      $article->SetNombreGrupo($this->grupo->getNombre());
+
       $article->setGrupo( $this->grupo->getId() );
       $this->em->persist( $article );
       $this->em->flush();

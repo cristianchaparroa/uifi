@@ -88,6 +88,13 @@ class Software
      * @ORM\Column(name="grupo", type="string", length=255)
      */
     private $grupo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre_grupo", type="string", length=255)
+     */
+    private $nombreGrupo;
     /**
      * Constructor
      */
@@ -316,10 +323,33 @@ class Software
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set nombreGrupo
+     *
+     * @param string $nombreGrupo
+     * @return Software
+     */
+    public function setNombreGrupo($nombreGrupo)
+    {
+        $this->nombreGrupo = $nombreGrupo;
+
+        return $this;
+    }
+
+    /**
+     * Get nombreGrupo
+     *
+     * @return string
+     */
+    public function getNombreGrupo()
+    {
+        return $this->nombreGrupo;
     }
 }
