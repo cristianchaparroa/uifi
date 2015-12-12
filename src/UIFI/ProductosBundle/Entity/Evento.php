@@ -84,6 +84,12 @@ class Evento
      */
     private $institucion;
 
+    /**
+     * Codigo del grupo en el cual fue publicado el articulo
+     *
+     * @ORM\Column(name="grupo", type="string", length=255)
+     */
+    private $grupo;
 
     /**
      * @var string
@@ -393,5 +399,28 @@ class Evento
     public function getNombreGrupo()
     {
         return $this->nombreGrupo;
+    }
+
+    /**
+     * Set grupo
+     *
+     * @param string $grupo
+     * @return Evento
+     */
+    public function setGrupo($grupo)
+    {
+        $this->grupo = $grupo;
+
+        return $this;
+    }
+
+    /**
+     * Get grupo
+     *
+     * @return string 
+     */
+    public function getGrupo()
+    {
+        return $this->grupo;
     }
 }
