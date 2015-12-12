@@ -54,6 +54,8 @@ class ArticulosStore implements IStore
       $article->setVolumen( array_key_exists('volumen',$articulo) ?  $articulo['volumen']:"");
       $article->setFasciculo( array_key_exists('fasc',$articulo) ?  $articulo['fasc']:"");
       $article->setPaginas( array_key_exists('paginas',$articulo) ?  $articulo['paginas']:"");
+      $article->setPais( array_key_exists('pais',$articulo) ?  $articulo['pais']:"");
+
 
       $article->SetNombreGrupo($this->grupo->getNombre());
 

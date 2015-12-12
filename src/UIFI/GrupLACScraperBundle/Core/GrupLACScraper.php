@@ -107,13 +107,13 @@ class GrupLACScraper extends  Scraper
 		{
 			$query = '/html/body/table[8]';
 			$array = $this->extraer( $query );
+			print_r($array);
 			$items = array();
 			$articulos = array();
 
 			foreach( $array as $item )
 			{
 				$articulo = array();
-
 				$doc = new \DOMDocument();
 				$doc->loadHTML( $item );
 				$xpath = new \DOMXPath($doc);

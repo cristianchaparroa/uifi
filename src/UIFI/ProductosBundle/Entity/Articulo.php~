@@ -120,6 +120,12 @@ class Articulo
      */
     private $nombreGrupo;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pais", type="string", length=60, nullable=true )
+     */
+    private $pais;
 
     /**
      * Constructor

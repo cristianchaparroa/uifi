@@ -120,6 +120,12 @@ class Articulo
      */
     private $nombreGrupo;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pais", type="string", length=60, nullable=true )
+     */
+    private $pais;
 
     /**
      * Constructor
@@ -485,5 +491,28 @@ class Articulo
     public function getNombreGrupo()
     {
         return $this->nombreGrupo;
+    }
+
+    /**
+     * Set pais
+     *
+     * @param string $pais
+     * @return Articulo
+     */
+    public function setPais($pais)
+    {
+        $this->pais = $pais;
+
+        return $this;
+    }
+
+    /**
+     * Get pais
+     *
+     * @return string 
+     */
+    public function getPais()
+    {
+        return $this->pais;
     }
 }
