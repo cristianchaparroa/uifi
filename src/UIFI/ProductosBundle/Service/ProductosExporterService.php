@@ -8,7 +8,7 @@ use Symfony\Bundle\DoctrineBundle\Registry;
 use Symfony\Component\HttpKernel\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Container;
 
-use UIFI\ProductosBundle\Core\ExcelExporter;
+use UIFI\ProductosBundle\Core\ExcelExporter\ExcelExporter;
 
 
 /**
@@ -36,8 +36,8 @@ class ProductosExporterService
         $entities = $this->em->getRepository('UIFIProductosBundle:Articulo')->findAll();
         $path = $this->container->getParameter('kernel.root_dir').'/../web/productos';
         $className = 'UIFI\ProductosBundle\Entity\Articulo';
-        $headers = array( "ISSN", "TITULO" , "AÑO", "GRUPO", "TIPO", "REVISTA","VOLUMEN","FASC","PAGINAS");
-        $properties = array('ISSN','titulo','anual','grupo','tipo','revista','volumen','fasciculo','paginas');
+        $headers = array( "ISSN", "TITULO" , "AÑO", "GRUPO", "TIPO", "REVISTA","VOLUMEN","FASC","PAGINAS","INTEGRANTES");
+        $properties = array('ISSN','titulo','anual','grupo','tipo','revista','volumen','fasciculo','paginas','integrantes');
         $excelExporter = new ExcelExporter();
         $file = $excelExporter->getXLS($path,$fileName,$className, $headers,$properties,$entities);
         return $file;

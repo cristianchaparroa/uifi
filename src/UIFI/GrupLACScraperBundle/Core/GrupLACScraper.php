@@ -11,7 +11,7 @@ namespace UIFI\GrupLACScraperBundle\Core;
   */
 class GrupLACScraper extends  Scraper
 {
-		const URL_BASE='http://scienti1.colciencias.gov.co:8080/gruplac/jsp/visualiza/visualizagr.jsp?nro=';
+		const URL_BASE='http://scienti.colciencias.gov.co:8080/gruplac/jsp/visualiza/visualizagr.jsp?nro=';
 	  /**
 	    * Constructor del objeto
 	    */

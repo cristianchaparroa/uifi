@@ -76,19 +76,19 @@ class GetInformacion
        $entityGrupo = $grupo;
 
        $integrantes    = $grupoScraper->obtenerIntegrantes();
-      //  $articulos      = $grupoScraper->getArticulos();
+       $articulos      = $grupoScraper->getArticulos();
       //  $libros         = $grupoScraper->getLibros();
       //  $software        = $grupoScraper->getSoftware();
       //  $proyectos       = $grupoScraper->getProyectosDirigidos();
-       $capituloslibro = $grupoScraper->getCapitulosLibros();
+      //  $capituloslibro = $grupoScraper->getCapitulosLibros();
 
        $stores = array();
        $stores[] = new IntegrantesStore($this->em,$grupo, $integrantes);
-      //  $stores[] = new ArticulosStore($this->em,$grupo, $articulos);
+       $stores[] = new ArticulosStore($this->em,$grupo, $articulos);
       //  $stores[] = new LibrosStore($this->em,$grupo, $libros);
       //  $stores[] = new SoftwareStore($this->em,$grupo, $software);
       //  $stores[] = new ProyectoDirigidoStore($this->em,$grupo,$proyectos);
-       $stores[] = new CapitulosLibroStore($this->em,$grupo,$capituloslibro);
+      //  $stores[] = new CapitulosLibroStore($this->em,$grupo,$capituloslibro);
 
        /*Procesa todos las tiendas de informacion extraidas*/
        foreach( $stores as $store ){

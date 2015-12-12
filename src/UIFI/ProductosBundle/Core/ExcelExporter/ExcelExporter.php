@@ -1,6 +1,6 @@
 <?php
 
-namespace UIFI\ProductosBundle\Core;
+namespace UIFI\ProductosBundle\Core\ExcelExporter;
 
 use ExcelAnt\Adapter\PhpExcel\Workbook\Workbook;
 use ExcelAnt\Adapter\PhpExcel\Sheet\Sheet;
@@ -43,13 +43,12 @@ class ExcelExporter
       array_push($row, $column);
     }
     $table->setRow($row);
-    $reflectionClass = new \ReflectionClass($className);
+
     foreach( $entities as $entity) {
       $row = array();
       foreach( $properties as $property) {
-        $reflectionProperty = $reflectionClass->getProperty($property);
-        $reflectionProperty->setAccessible(true);
-        $value = $reflectionProperty->getValue($entity);
+        $builderExporter = new BuilderExporter();
+        $value =$builderExporter->getValue($className,$entity,$property);
         array_push($row, $value);
       }
       $table->setRow($row);
