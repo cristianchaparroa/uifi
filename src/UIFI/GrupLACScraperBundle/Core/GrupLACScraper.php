@@ -786,5 +786,108 @@ class GrupLACScraper extends  Scraper
 		}
 
 
+		
+    	/**
+     * Extrae la lista de eventos a los que asiste el grupo
+     * de investigación.
+     * @return Arreglo de eventos del grupo
+    */
+    public function eventos(){
+      $query = '/html/body/table[35]'; //Qué es?
+      return $this->extraer( $query );
+    }
+		/**
+		 * Obtienen los eventos a los que asiste el grupo de investigación,
+		 * @return Arreglo de arreglos
+		 * 		$evento['facultad'] facultad del evento
+		 * 		$evento['nro_id']   id del evento
+		 * 		$evento['tipo']   tipo de evento
+		 * 		$evento['titulo']  nombre del evento
+		 * 		$evento['ciudad']  ciudad en que se realiza el evento
+		 * 		$evento['deste']  fecha de inicio del evento
+		 * 		$evento['hasta']  fecha de finalización del evento
+		 * 		$evento['ambito']  ambito del evento
+		 * 		$evento['participacion']  participación del evento
+		 * 		$evento['institucion']  institución del evento
+		*/
+		public function getEventos(){
+			$query = '/html/body/table[35]';
+			$array = $this->extraer( $query );
+			$eventos = array();
+
+			foreach($array as $item ){
+				$doc = new \DOMDocument();
+				$doc->loadHTML( $item );
+				$xpath = new \DOMXPath($doc);
+				$list = $doc->getElementsByTagName('strong');
+
+				$evento = array();
+				foreach($list as $node ){
+					$evento['tipo'] = $node->nodeValue;
+					$tituloNode = $node->nextSibling;
+					$titulo = $tituloNode->nodeValue;
+					$titulo = str_replace(':','',$titulo);
+					$proyecto['titulo'] = utf8_encode ($titulo);
+					$list = $doc->getElementsByTagName('br');
+
+					foreach($list as $node){
+						$nodesiguiente = $node->nextSibling;
+						$value = $nodesiguiente->nodeValue;
+						$valores = explode(",",$value);
+
+
+						foreach($valores as $valor)
+						{
+							if(strpos($valor, 'hasta')){
+								$result = explode('hasta', $valor);
+								
+								$fechaInicial = $result[0];
+								$fechaInicial = explode(' ',$fechaInicial);
+								$evento['desde'] = count($fechaInicial)>1 ? $this->eliminarSaltoLinea($fechaInicial[1]):"";
+								
+								$fechaFinal = count($result)>1 ? $result[1] : "";
+								$evento['hasta'] = $this->eliminarSaltoLinea($fechaFinal[0]);
+								
+							}
+							elseif(strpos($valor,'Ámbito')){
+								$ambito = explode(':', $valor);
+								$ambito = count($ambito)>1 ? $ambito[1] : "";
+								$ambito = $this->eliminarSaltoLinea($ambito);
+								$evento['ambito'] = $ambito;
+							}
+							elseif(strpos($valor,'Tipos de participación')){
+								$tipoParticipacion = explode(':', $valor);
+								$tipoParticipacion = count($tipoParticipacion)>1 ? $tipoParticipacion[1] : "";
+								$tipoParticipacion = $this->eliminarSaltoLinea($tipoParticipacion);
+								$evento['participacion'] = $tipoParticipacion;
+							}
+							elseif(strpos($valor,'Institución')){
+								$institucion = explode(':', $valor);
+								$institucion = count($institucion)>1 ? $institucion[1] : "";
+								$institucion = $this->eliminarSaltoLinea($institucion);
+								$evento['institucion'] = $institucion;
+							}
+							elseif(strpos($valor,'Institución')){
+								$institucion = explode(':', $valor);
+								$institucion = count($institucion)>1 ? $institucion[1] : "";
+								$institucion = $this->eliminarSaltoLinea($institucion);
+								$evento['institucion'] = $institucion;
+							}
+							else{
+								$ciudad = count($valor) == 1 ? $valor[0] : "";
+								$ciudad = $this->eliminarSaltoLinea($ciudad);
+								if($evento['ciudad'] == ""){
+									$evento['ciudad'] = $ciudad;
+								}
+							}
+						}
+					}
+
+				}
+
+				$eventos[] = $evento;
+			}
+			return $eventos;
+		}
 
 }
