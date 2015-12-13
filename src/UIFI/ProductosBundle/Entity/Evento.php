@@ -50,16 +50,16 @@ class Evento
     private $ciudad;
 
     /**
-     * @var \DateTime
+     * @var string
      *
-     * @ORM\Column(name="desde", type="date",nullable=true)
+     * @ORM\Column(name="desde", type="string", length=255,nullable=true)
      */
     private $desde;
 
     /**
-     * @var \DateTime
+     * @var string
      *
-     * @ORM\Column(name="hasta", type="date", nullable=true)
+     * @ORM\Column(name="hasta", type="string", length=255, nullable=true)
      */
     private $hasta;
 
