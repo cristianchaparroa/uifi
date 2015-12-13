@@ -15,6 +15,7 @@ use Symfony\Component\DependencyInjection\Container;
 use UIFI\IntegrantesBundle\Entity\Grupo;
 use UIFI\IntegrantesBundle\Entity\Integrante;
 use UIFI\ProductosBundle\Entity\Articulo;
+use UIFI\ProductosBundle\Entity\Evento;
 
 
 use  UIFI\GrupLACScraperBundle\Service\Getinformacion\CapitulosLibroStore;
@@ -81,6 +82,7 @@ class GetInformacion
       //  $software        = $grupoScraper->getSoftware();
       //  $proyectos       = $grupoScraper->getProyectosDirigidos();
        $capituloslibro = $grupoScraper->getCapitulosLibros();
+       $evento = $grupoScraper->getEventos();
 
        $stores = array();
        $stores[] = new IntegrantesStore($this->em,$grupo, $integrantes);
@@ -89,6 +91,8 @@ class GetInformacion
       //  $stores[] = new SoftwareStore($this->em,$grupo, $software);
       //  $stores[] = new ProyectoDirigidoStore($this->em,$grupo,$proyectos);
        $stores[] = new CapitulosLibroStore($this->em,$grupo,$capituloslibro);
+       
+       $stores[] = new EventoStore($this->em,$grupo,$evento);
 
        /*Procesa todos las tiendas de informacion extraidas*/
        foreach( $stores as $store ){
