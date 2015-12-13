@@ -786,7 +786,7 @@ class GrupLACScraper extends  Scraper
 		}
 
 
-		
+
     	/**
      * Extrae la lista de eventos a los que asiste el grupo
      * de investigación.
@@ -840,14 +840,14 @@ class GrupLACScraper extends  Scraper
 						{
 							if(strpos($valor, 'hasta')){
 								$result = explode('hasta', $valor);
-								
+
 								$fechaInicial = $result[0];
 								$fechaInicial = explode(' ',$fechaInicial);
 								$evento['desde'] = count($fechaInicial)>1 ? $this->eliminarSaltoLinea($fechaInicial[1]):"";
-								
+
 								$fechaFinal = count($result)>1 ? $result[1] : "";
 								$evento['hasta'] = $this->eliminarSaltoLinea($fechaFinal[0]);
-								
+
 							}
 							elseif(strpos($valor,'Ámbito')){
 								$ambito = explode(':', $valor);
@@ -876,9 +876,7 @@ class GrupLACScraper extends  Scraper
 							else{
 								$ciudad = count($valor) == 1 ? $valor[0] : "";
 								$ciudad = $this->eliminarSaltoLinea($ciudad);
-								if($evento['ciudad'] == ""){
-									$evento['ciudad'] = $ciudad;
-								}
+								$evento['ciudad'] = $ciudad;
 							}
 						}
 					}

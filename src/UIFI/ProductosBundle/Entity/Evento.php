@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Evento
  *
- * @ORM\Table()
+ * @ORM\Table(name="evento")
  * @ORM\Entity(repositoryClass="UIFI\ProductosBundle\Entity\EventoRepository")
  */
 class Evento
@@ -24,14 +24,14 @@ class Evento
     /**
      * @var string
      *
-     * @ORM\Column(name="facultad", type="string", length=255)
+     * @ORM\Column(name="facultad", type="string", length=255, nullable=true)
      */
     private $facultad;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="tipo", type="string", length=255)
+     * @ORM\Column(name="tipo", type="string", length=255, nullable=true)
      */
     private $tipo;
 
@@ -417,7 +417,7 @@ class Evento
     /**
      * Get grupo
      *
-     * @return string 
+     * @return string
      */
     public function getGrupo()
     {

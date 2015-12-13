@@ -16,7 +16,7 @@ use UIFI\ProductosBundle\Entity\Evento;
 
 /**
  * Servicio que obtiene la información del GrupLAC de Colciencias de los eventos
- * en los que se presenta un grupo de investigación  y los guarda en la base de 
+ * en los que se presenta un grupo de investigación  y los guarda en la base de
  * datos del sistema.
  *
  * @author Wilson Albeiro Salamanca Saboyá <wsalamanca91@gmail.com>
@@ -40,19 +40,17 @@ class EventoStore implements IStore
   public function guardar(){
     $eventosGrupo = $this->eventos;
     foreach($eventosGrupo as $evento ) {
-      
       $event = new Evento();
-      $event->setTitulo($evento['titulo']);
-      $event->setTipo( $evento['tipo'] );
       $event->setGrupo( $this->grupo->getId() );
-      $event->setCiudad(  $evento['ciudad']  );
-      $event->setDesde( $evento['desde'] );
-      $event->setHasta( $evento['hasta'] );
-      $event->setAmbito(  $evento['ambito']  );
-      $event->setParticipacion(  intval($evento['participacion'] ) );
-      $event->setInstitucion(  $evento['institucion']  );
       $event->SetNombreGrupo($this->grupo->getNombre());
-
+      $event->setTitulo( array_key_exists('titulo',$evento) ?  $evento['titulo'] : "");
+      $event->setTipo( array_key_exists('tipo',$evento)  ? $evento['tipo']: "" );
+      $event->setCiudad(  array_key_exists('ciudad',$evento) ?  $evento['ciudad'] : "" );
+      $event->setDesde( array_key_exists('desde',$evento) ?   $evento['desde'] : "");
+      $event->setHasta(  array_key_exists('hasta',$evento) ? $evento['hasta'] : "");
+      $event->setAmbito(  array_key_exists('ambito',$evento) ? $evento['ambito']:""  );
+      $event->setParticipacion( array_key_exists('participacion',$evento) ?  intval($evento['participacion']) : "" );
+      $event->setInstitucion( array_key_exists('institucion',$evento)   ? $evento['institucion'] : ""  );
       $this->em->persist( $event );
       $this->em->flush();
     }
