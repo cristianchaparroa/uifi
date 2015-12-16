@@ -57,6 +57,7 @@ class IntegrantesStore implements IStore
           $integrante->addGrupo( $this->grupo );
           $integrante->setId( $cvlacIntegrante );
           $integrante->setCodigoGruplac( $integranteScraper->getCode()  );
+          $integrante->setNombreGrupo( $this->grupo->getNombre());
           $integrante->setNombres( $nombreIntegrante );
 
 

@@ -60,7 +60,12 @@ class Integrante
      */
     private $codigo;
 
-
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre_grupo", type="string", length=255)
+     */
+    private $nombreGrupo;
 
     /**
      * Telefono Fijo
@@ -621,5 +626,28 @@ class Integrante
     public function getProyectosDirigidos()
     {
         return $this->proyectosDirigidos;
+    }
+
+    /**
+     * Set nombreGrupo
+     *
+     * @param string $nombreGrupo
+     * @return Integrante
+     */
+    public function setNombreGrupo($nombreGrupo)
+    {
+        $this->nombreGrupo = $nombreGrupo;
+
+        return $this;
+    }
+
+    /**
+     * Get nombreGrupo
+     *
+     * @return string 
+     */
+    public function getNombreGrupo()
+    {
+        return $this->nombreGrupo;
     }
 }

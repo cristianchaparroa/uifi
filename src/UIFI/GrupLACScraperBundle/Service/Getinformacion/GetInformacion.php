@@ -81,8 +81,8 @@ class GetInformacion
       //  $libros         = $grupoScraper->getLibros();
       //  $software        = $grupoScraper->getSoftware();
       //  $proyectos       = $grupoScraper->getProyectosDirigidos();
-       $capituloslibro = $grupoScraper->getCapitulosLibros();
-       $eventos = $grupoScraper->getEventos();
+      //  $capituloslibro = $grupoScraper->getCapitulosLibros();
+      //  $eventos = $grupoScraper->getEventos();
 
        $stores = array();
        $stores[] = new IntegrantesStore($this->em,$grupo, $integrantes);
@@ -91,7 +91,7 @@ class GetInformacion
       //  $stores[] = new SoftwareStore($this->em,$grupo, $software);
       //  $stores[] = new ProyectoDirigidoStore($this->em,$grupo,$proyectos);
       //  $stores[] = new CapitulosLibroStore($this->em,$grupo,$capituloslibro);
-       $stores[] = new EventoStore($this->em,$grupo,$eventos);
+      //  $stores[] = new EventoStore($this->em,$grupo,$eventos);
 
        /*Procesa todos las tiendas de informacion extraidas*/
        foreach( $stores as $store ){
