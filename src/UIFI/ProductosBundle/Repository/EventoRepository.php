@@ -12,4 +12,12 @@ use Doctrine\ORM\EntityRepository;
  */
 class EventoRepository extends EntityRepository
 {
+  /**
+   * Funcion que se encarga de eliminar todos los registros
+   * de la entidad
+  */
+  public function deleteAll(){
+    $em = $this->getEntityManager();
+    return $em->createQuery('DELETE FROM UIFIProductosBundle:Evento')->execute();
+  }
 }

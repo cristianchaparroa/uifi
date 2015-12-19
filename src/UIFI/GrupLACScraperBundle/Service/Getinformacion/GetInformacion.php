@@ -77,19 +77,19 @@ class GetInformacion
        $entityGrupo = $grupo;
 
        $integrantes    = $grupoScraper->obtenerIntegrantes();
-      //  $articulos      = $grupoScraper->getArticulos();
-      //  $libros         = $grupoScraper->getLibros();
-      //  $software        = $grupoScraper->getSoftware();
-      //  $proyectos       = $grupoScraper->getProyectosDirigidos();
-      //  $capituloslibro = $grupoScraper->getCapitulosLibros();
-      //  $eventos = $grupoScraper->getEventos();
+       #$articulos      = $grupoScraper->getArticulos();
+       #$libros         = $grupoScraper->getLibros();
+       #$software        = $grupoScraper->getSoftware();
+       $proyectos       = $grupoScraper->getProyectosDirigidos();
+       #$capituloslibro = $grupoScraper->getCapitulosLibros();
+       #$eventos = $grupoScraper->getEventos();
 
        $stores = array();
        $stores[] = new IntegrantesStore($this->em,$grupo, $integrantes);
       //  $stores[] = new ArticulosStore($this->em,$grupo, $articulos);
       //  $stores[] = new LibrosStore($this->em,$grupo, $libros);
       //  $stores[] = new SoftwareStore($this->em,$grupo, $software);
-      //  $stores[] = new ProyectoDirigidoStore($this->em,$grupo,$proyectos);
+       $stores[] = new ProyectoDirigidoStore($this->em,$grupo,$proyectos);
       //  $stores[] = new CapitulosLibroStore($this->em,$grupo,$capituloslibro);
       //  $stores[] = new EventoStore($this->em,$grupo,$eventos);
 
@@ -126,6 +126,9 @@ class GetInformacion
 
      $ProyectoDirigidoRepository = $this->em->getRepository('UIFIProductosBundle:ProyectoDirigido');
      $ProyectoDirigidoRepository->deleteAll();
+
+     $eventoRepository = $this->em->getRepository('UIFIProductosBundle:Evento');
+     $eventoRepository->deleteAll();
 
      $grupoRepository = $this->em->getRepository('UIFIIntegrantesBundle:Grupo');
      $grupoRepository->deleteAll();
