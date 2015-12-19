@@ -74,8 +74,8 @@ class ProductosExporterService
         $entities = $this->em->getRepository('UIFIProductosBundle:Libro')->findAll();
         $path = $this->container->getParameter('kernel.root_dir').'/../web/productos';
         $className = 'UIFI\ProductosBundle\Entity\Libro';
-        $headers = array( "ISSN", "TITULO", "TIPO","PAIS","AÑO","VOLUMEN","PAGINAS","EDITORIAL" );
-        $properties = array('isbn','titulo','tipo','pais','anual','volumen','paginas','editorial');
+        $headers = array( "ISSN", "TITULO", "TIPO","PAIS","AÑO","VOLUMEN","PAGINAS","EDITORIAL" , "AUTORES");
+        $properties = array('isbn','titulo','tipo','pais','anual','volumen','paginas','editorial',"integrantes");
         $excelExporter = new ExcelExporter();
         $file = $excelExporter->getXLS($path,$fileName,$className, $headers,$properties,$entities);
         return $file;
@@ -93,8 +93,8 @@ class ProductosExporterService
         $entities = $this->em->getRepository('UIFIProductosBundle:ProyectoDirigido')->findAll();
         $path = $this->container->getParameter('kernel.root_dir').'/../web/productos';
         $className = 'UIFI\ProductosBundle\Entity\ProyectoDirigido';
-        $headers = array( "TIPO", "TITULO" );
-        $properties = array('tipo','titulo');
+        $headers = array( "GRUPO","TIPO", "TITULO", "AÑO","TIPO ORIENTACION","ESTUDIANTE","PROGRAMA","PAGINAS","VALORACION","INSTITUCION","AUTORES");
+        $properties = array('nombreGrupo','tipo','titulo','anual','tipoOrientacion','nombreEstudiante','proyectoAcademico','numeroPaginas','valoracion','institucion','integrantes');
         $excelExporter = new ExcelExporter();
         $file = $excelExporter->getXLS($path,$fileName,$className, $headers,$properties,$entities);
         return $file;

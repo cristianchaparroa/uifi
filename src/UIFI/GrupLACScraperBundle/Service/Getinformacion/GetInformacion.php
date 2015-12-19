@@ -85,7 +85,7 @@ class GetInformacion
        #$eventos = $grupoScraper->getEventos();
 
        $stores = array();
-       $stores[] = new IntegrantesStore($this->em,$grupo, $integrantes);
+      //  $stores[] = new IntegrantesStore($this->em,$grupo, $integrantes);
       //  $stores[] = new ArticulosStore($this->em,$grupo, $articulos);
       //  $stores[] = new LibrosStore($this->em,$grupo, $libros);
       //  $stores[] = new SoftwareStore($this->em,$grupo, $software);
@@ -124,8 +124,8 @@ class GetInformacion
      $softwareRepository = $this->em->getRepository('UIFIProductosBundle:Software');
      $softwareRepository->deleteAll();
 
-     $ProyectoDirigidoRepository = $this->em->getRepository('UIFIProductosBundle:ProyectoDirigido');
-     $ProyectoDirigidoRepository->deleteAll();
+     $proyectoDirigidoRepository = $this->em->getRepository('UIFIProductosBundle:ProyectoDirigido');
+     $proyectoDirigidoRepository->deleteAll();
 
      $eventoRepository = $this->em->getRepository('UIFIProductosBundle:Evento');
      $eventoRepository->deleteAll();

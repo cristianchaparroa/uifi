@@ -117,6 +117,36 @@ class ProyectoDirigido
      * @ORM\Column(name="nombre_grupo", type="string", length=255)
      */
     private $nombreGrupo;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="mes_inicial", type="string", length=2)
+     */
+    private $mesInicial;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="mes_final", type="string", length=2)
+     */
+    private $mesFinal;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="anual_inicial", type="string", length=10)
+     */
+    private $anualInicial;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="anual_final", type="string", length=10)
+     */
+    private $anualFinal;
+
     /**
      * Constructor
      */
@@ -490,5 +520,100 @@ class ProyectoDirigido
     public function getNombreGrupo()
     {
         return $this->nombreGrupo;
+    }
+
+    /**
+     * Set mesInicial
+     *
+     * @param string $mesInicial
+     * @return ProyectoDirigido
+     */
+    public function setMesInicial($mesInicial)
+    {
+        $this->mesInicial = $mesInicial;
+
+        return $this;
+    }
+
+    /**
+     * Get mesInicial
+     *
+     * @return string
+     */
+    public function getMesInicial()
+    {
+        return $this->mesInicial;
+    }
+
+    /**
+     * Set mesFinal
+     *
+     * @param string $mesFinal
+     * @return ProyectoDirigido
+     */
+    public function setMesFinal($mesFinal)
+    {
+        $this->mesFinal = $mesFinal;
+
+        return $this;
+    }
+
+    /**
+     * Get mesFinal
+     *
+     * @return string
+     */
+    public function getMesFinal()
+    {
+        return $this->mesFinal;
+    }
+
+
+
+
+    /**
+     * Set anualInicial
+     *
+     * @param string $anualInicial
+     * @return ProyectoDirigido
+     */
+    public function setAnualInicial($anualInicial)
+    {
+        $this->anualInicial = $anualInicial;
+
+        return $this;
+    }
+
+    /**
+     * Get anualInicial
+     *
+     * @return string 
+     */
+    public function getAnualInicial()
+    {
+        return $this->anualInicial;
+    }
+
+    /**
+     * Set anualFinal
+     *
+     * @param string $anualFinal
+     * @return ProyectoDirigido
+     */
+    public function setAnualFinal($anualFinal)
+    {
+        $this->anualFinal = $anualFinal;
+
+        return $this;
+    }
+
+    /**
+     * Get anualFinal
+     *
+     * @return string 
+     */
+    public function getAnualFinal()
+    {
+        return $this->anualFinal;
     }
 }
