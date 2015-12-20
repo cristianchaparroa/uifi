@@ -1,0 +1,51 @@
+{% extends "UIFIAdminBundle:Dashboard:index.html.twig" %}
+
+{% block  main_content %}
+    <h4>Artículos de Investigación </h4>
+
+    <hr>
+    <div class="table">
+    {% if entities  %}
+    <p> A continuación se muestra la lista de  Eventos en el Sistema</p>
+
+    <div id="toolbar">
+      <a class="btn btn-success" href="{{ path('productos_excel_eventos')}}"><i class="glyphicon glyphicon-arrow-down"></i> Exportar Excel</a>
+    </div>
+    <table id="gruplac-table"
+        data-toggle="table"
+        data-toolbar="#toolbar"
+        data-search="true"
+        data-show-refresh="true"
+        data-show-toggle="true"
+        data-show-columns="true"
+        data-show-export="true"
+        data-show-pagination-switch="true"
+        data-pagination="true">
+        <thead>
+            <tr>
+              <th data-field="state" data-checkbox="true"></th>
+              <th>Grupo</th>
+              <th>Titulo</th>
+              <th>Institucion</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr data-index="{{loop.index}}">
+                <td class="bs-checkbox"><input type="checkbox" name="btSelectItem" data-index="{{loop.index}}"></td>
+
+                <td>{{entity.nombreGrupo}}</td>
+                <td>{{entity.titulo}}</td>
+                <td>{{entity.institucion}}</td>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+    </div>
+
+    <div class="js-css">
+      <script src="{{ asset('bundles/uifiproductos/js/exporter/exporter.js') }}"></script>
+    </div>
+{% endblock %}

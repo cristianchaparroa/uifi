@@ -47,4 +47,8 @@ class ProductosService
       $entities = $this->em->getRepository('UIFIProductosBundle:Software')->findAll();
       return $entities;
     }
+    public function getEventos() {
+      $entities = $this->em->getRepository('UIFIProductosBundle:Evento')->findAll();
+      return $entities;
+    }
 }

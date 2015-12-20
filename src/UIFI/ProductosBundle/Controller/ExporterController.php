@@ -73,4 +73,14 @@ class ExporterController extends Controller
     $file =  $this->get('uifi.productos.exporter')->getSoftware($filename);
     return $this->descargarProductos($filename);
   }
+
+  /**
+   *
+   * @Route("/productos/excel/eventos", name="productos_excel_eventos")
+  */
+  public function getEventos() {
+    $filename = 'eventos';
+    $file =  $this->get('uifi.productos.exporter')->getEventos($filename);
+    return $this->descargarProductos($filename);
+  }
 }

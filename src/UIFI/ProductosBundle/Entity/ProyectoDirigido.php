@@ -122,14 +122,14 @@ class ProyectoDirigido
     /**
      * @var string
      *
-     * @ORM\Column(name="mes_inicial", type="string", length=2)
+     * @ORM\Column(name="mes_inicial", type="string", length=10)
      */
     private $mesInicial;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="mes_final", type="string", length=2)
+     * @ORM\Column(name="mes_final", type="string", length=10)
      */
     private $mesFinal;
 
@@ -587,7 +587,7 @@ class ProyectoDirigido
     /**
      * Get anualInicial
      *
-     * @return string 
+     * @return string
      */
     public function getAnualInicial()
     {
@@ -610,7 +610,7 @@ class ProyectoDirigido
     /**
      * Get anualFinal
      *
-     * @return string 
+     * @return string
      */
     public function getAnualFinal()
     {

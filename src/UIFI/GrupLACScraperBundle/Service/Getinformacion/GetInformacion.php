@@ -49,7 +49,7 @@ class GetInformacion
    */
    public function scrap($codes)
    {
-     $this->initDrop();
+    //  $this->initDrop();
      /**
       * Se obtiene los codigos de los grupos de investigacion para luego crear
       * los diferentes scrapers.
@@ -72,24 +72,24 @@ class GetInformacion
        $grupo->setNombre( $nombreGrupo );
        $grupo->setEmail( $grupoScraper->extraerEmail() );
        $grupo->setClasificacion( $grupoScraper->extraerClasificacion() );
-       $this->em->persist( $grupo );
-       $this->em->flush();
+      //  $this->em->persist( $grupo );
+      //  $this->em->flush();
        $entityGrupo = $grupo;
 
-       $integrantes    = $grupoScraper->obtenerIntegrantes();
-       #$articulos      = $grupoScraper->getArticulos();
-       #$libros         = $grupoScraper->getLibros();
-       #$software        = $grupoScraper->getSoftware();
-       $proyectos       = $grupoScraper->getProyectosDirigidos();
-       #$capituloslibro = $grupoScraper->getCapitulosLibros();
-       #$eventos = $grupoScraper->getEventos();
+      //  $integrantes    = $grupoScraper->obtenerIntegrantes();
+      //  $articulos      = $grupoScraper->getArticulos();
+      //  $libros         = $grupoScraper->getLibros();
+      //  $software        = $grupoScraper->getSoftware();
+      //  $proyectos       = $grupoScraper->getProyectosDirigidos();
+      //  $capituloslibro = $grupoScraper->getCapitulosLibros();
+       $eventos = $grupoScraper->getEventos();
 
        $stores = array();
       //  $stores[] = new IntegrantesStore($this->em,$grupo, $integrantes);
       //  $stores[] = new ArticulosStore($this->em,$grupo, $articulos);
       //  $stores[] = new LibrosStore($this->em,$grupo, $libros);
       //  $stores[] = new SoftwareStore($this->em,$grupo, $software);
-       $stores[] = new ProyectoDirigidoStore($this->em,$grupo,$proyectos);
+      //  $stores[] = new ProyectoDirigidoStore($this->em,$grupo,$proyectos);
       //  $stores[] = new CapitulosLibroStore($this->em,$grupo,$capituloslibro);
       //  $stores[] = new EventoStore($this->em,$grupo,$eventos);
 

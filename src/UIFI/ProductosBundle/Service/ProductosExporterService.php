@@ -45,8 +45,6 @@ class ProductosExporterService
 
       /**
        * Obtiene la lista de Capitulos de Libro en formato XLS, con la siguiente
-       * informacion:
-       *  isbn,titulo
        *
        * @param $fileName,  Nombre del achivo con que se genera el XLS.
        * @return Archivo XLS
@@ -64,8 +62,6 @@ class ProductosExporterService
 
       /**
        * Obtiene la lista de Libros en formato XLS, con la siguiente
-       * informacion:
-       *  isbn,titulo
        *
        * @param $fileName,  Nombre del achivo con que se genera el XLS.
        * @return Archivo XLS
@@ -82,9 +78,7 @@ class ProductosExporterService
       }
 
       /**
-       * Obtiene la lista de Libros en formato XLS, con la siguiente
-       * informacion:
-       *  isbn,titulo
+       * Obtiene la lista de Proyectos en formato XLS.
        *
        * @param $fileName,  Nombre del achivo con que se genera el XLS.
        * @return Archivo XLS
@@ -93,17 +87,15 @@ class ProductosExporterService
         $entities = $this->em->getRepository('UIFIProductosBundle:ProyectoDirigido')->findAll();
         $path = $this->container->getParameter('kernel.root_dir').'/../web/productos';
         $className = 'UIFI\ProductosBundle\Entity\ProyectoDirigido';
-        $headers = array( "GRUPO","TIPO", "TITULO", "AÑO","TIPO ORIENTACION","ESTUDIANTE","PROGRAMA","PAGINAS","VALORACION","INSTITUCION","AUTORES");
-        $properties = array('nombreGrupo','tipo','titulo','anual','tipoOrientacion','nombreEstudiante','proyectoAcademico','numeroPaginas','valoracion','institucion','integrantes');
+        $headers = array( "GRUPO","TIPO", "TITULO", "MES INICIAL","AÑO INICIAL","MES FINAL","AÑO FINAL","TIPO ORIENTACION","ESTUDIANTE","PROGRAMA","PAGINAS","VALORACION","INSTITUCION","AUTORES");
+        $properties = array('nombreGrupo','tipo','titulo','mesInicial','anualInicial','mesFinal','anualFinal','tipoOrientacion','nombreEstudiante','proyectoAcademico','numeroPaginas','valoracion','institucion','integrantes');
         $excelExporter = new ExcelExporter();
         $file = $excelExporter->getXLS($path,$fileName,$className, $headers,$properties,$entities);
         return $file;
       }
 
       /**
-       * Obtiene la lista de Libros en formato XLS, con la siguiente
-       * informacion:
-       *  isbn,titulo
+       * Obtiene la lista de Software en formato XLS.
        *
        * @param $fileName,  Nombre del achivo con que se genera el XLS.
        * @return Archivo XLS
@@ -114,6 +106,23 @@ class ProductosExporterService
         $className = 'UIFI\ProductosBundle\Entity\Software';
         $headers = array( "AÑO", "TITULO" );
         $properties = array('anual','titulo');
+        $excelExporter = new ExcelExporter();
+        $file = $excelExporter->getXLS($path,$fileName,$className, $headers,$properties,$entities);
+        return $file;
+      }
+
+      /**
+       * Obtiene la lista de Eventos en formato XLS
+       *
+       * @param $fileName,  Nombre del achivo con que se genera el XLS.
+       * @return Archivo XLS
+      */
+      public function getEventos($fileName) {
+        $entities = $this->em->getRepository('UIFIProductosBundle:Evento')->findAll();
+        $path = $this->container->getParameter('kernel.root_dir').'/../web/productos';
+        $className = 'UIFI\ProductosBundle\Entity\Evento';
+        $headers = array( "GRUPO","TIPO", "TITULO","CIUDAD","CIUDAD","DESDE","HASTA", "AMBITO", "PARTICIPACION", "INSTITUCION" );
+        $properties = array('nombreGrupo','tipo','titulo','ciudad','desde','hasta','ambito','participacion','institucion');
         $excelExporter = new ExcelExporter();
         $file = $excelExporter->getXLS($path,$fileName,$className, $headers,$properties,$entities);
         return $file;
