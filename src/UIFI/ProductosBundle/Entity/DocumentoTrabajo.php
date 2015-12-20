@@ -79,6 +79,18 @@ class DocumentoTrabajo
      * @ORM\Column(name="doi", type="string", length=255,nullable=true)
      */
     private $doi;
+    /**
+     * Codigo del grupo en el cual fue publicado el articulo
+     *
+     * @ORM\Column(name="grupo", type="string", length=255)
+     */
+    private $grupo;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre_grupo", type="string", length=255)
+     */
+    private $nombreGrupo;
 
 
     /**
@@ -292,10 +304,56 @@ class DocumentoTrabajo
     /**
      * Get tipo
      *
-     * @return string 
+     * @return string
      */
     public function getTipo()
     {
         return $this->tipo;
+    }
+
+    /**
+     * Set grupo
+     *
+     * @param string $grupo
+     * @return DocumentoTrabajo
+     */
+    public function setGrupo($grupo)
+    {
+        $this->grupo = $grupo;
+
+        return $this;
+    }
+
+    /**
+     * Get grupo
+     *
+     * @return string 
+     */
+    public function getGrupo()
+    {
+        return $this->grupo;
+    }
+
+    /**
+     * Set nombreGrupo
+     *
+     * @param string $nombreGrupo
+     * @return DocumentoTrabajo
+     */
+    public function setNombreGrupo($nombreGrupo)
+    {
+        $this->nombreGrupo = $nombreGrupo;
+
+        return $this;
+    }
+
+    /**
+     * Get nombreGrupo
+     *
+     * @return string 
+     */
+    public function getNombreGrupo()
+    {
+        return $this->nombreGrupo;
     }
 }
