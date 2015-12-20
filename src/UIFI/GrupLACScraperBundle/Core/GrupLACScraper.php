@@ -826,63 +826,60 @@ class GrupLACScraper extends  Scraper
 					$evento['tipo'] = $node->nodeValue;
 					$tituloNode = $node->nextSibling;
 					$titulo = $tituloNode->nodeValue;
+
 					$titulo = str_replace(':','',$titulo);
-					$proyecto['titulo'] = utf8_encode ($titulo);
+					$titulo = utf8_encode ($titulo);
+					$evento['titulo'] = $titulo;
 					$list = $doc->getElementsByTagName('br');
 
 					foreach($list as $node){
 						$nodesiguiente = $node->nextSibling;
 						$value = $nodesiguiente->nodeValue;
 						$valores = explode(",",$value);
-
-
-						foreach($valores as $valor)
-						{
+						$ciudad = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[0]) : "";
+						$evento['ciudad'] = $ciudad;
+						foreach($valores as $valor) {
 							if(strpos($valor, 'hasta')){
 								$result = explode('hasta', $valor);
-
 								$fechaInicial = $result[0];
-								$fechaInicial = explode(' ',$fechaInicial);
-								$evento['desde'] = count($fechaInicial)>1 ? $this->eliminarSaltoLinea($fechaInicial[1]):"";
-
+								$fechaInicial = explode('desde',$fechaInicial);
+								$desde = count($fechaInicial)>1 ? $this->eliminarSaltoLinea($fechaInicial[1]):"";
+								$desde = str_replace(' ','', $desde );
+								$desde = substr( $desde,0,-1);
+								$evento['desde'] =  $desde;
 								$fechaFinal = count($result)>1 ? $result[1] : "";
-								$evento['hasta'] = $this->eliminarSaltoLinea($fechaFinal[0]);
-
+								$fechaFinal = $this->eliminarSaltoLinea($fechaFinal);
+								$fechaFinal = explode('Ámbito:',$fechaFinal);
+								$hasta = count($fechaFinal) > 1 ? str_replace(' ','',$fechaFinal[0]) : "";
+								$evento['hasta'] = $hasta;
 							}
-							elseif(strpos($valor,'Ámbito')){
+							if(strpos($valor,'Ámbito')){
 								$ambito = explode(':', $valor);
 								$ambito = count($ambito)>1 ? $ambito[1] : "";
 								$ambito = $this->eliminarSaltoLinea($ambito);
 								$evento['ambito'] = $ambito;
 							}
-							elseif(strpos($valor,'Tipos de participación')){
+							if(strpos($valor,'Tipos de participación')){
 								$tipoParticipacion = explode(':', $valor);
 								$tipoParticipacion = count($tipoParticipacion)>1 ? $tipoParticipacion[1] : "";
 								$tipoParticipacion = $this->eliminarSaltoLinea($tipoParticipacion);
 								$evento['participacion'] = $tipoParticipacion;
 							}
-							elseif(strpos($valor,'Institución')){
+							if(strpos($valor,'Institución')){
 								$institucion = explode(':', $valor);
 								$institucion = count($institucion)>1 ? $institucion[1] : "";
 								$institucion = $this->eliminarSaltoLinea($institucion);
 								$evento['institucion'] = $institucion;
 							}
-							elseif(strpos($valor,'Institución')){
+							if(strpos($valor,'Institución')){
 								$institucion = explode(':', $valor);
 								$institucion = count($institucion)>1 ? $institucion[1] : "";
 								$institucion = $this->eliminarSaltoLinea($institucion);
 								$evento['institucion'] = $institucion;
-							}
-							else{
-								$ciudad = count($valor) == 1 ? $valor[0] : "";
-								$ciudad = $this->eliminarSaltoLinea($ciudad);
-								$evento['ciudad'] = $ciudad;
 							}
 						}
 					}
-
 				}
-
 				$eventos[] = $evento;
 			}
 			return $eventos;
