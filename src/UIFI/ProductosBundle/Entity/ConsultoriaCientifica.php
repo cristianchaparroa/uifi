@@ -5,70 +5,93 @@ namespace UIFI\ProductosBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * ConsultoriaCientifica
+ * Consultorías científico tecnológicas e Informes técnicos
+ * @ORM\Table(name="consultoria_cientifica")
+ * @ORM\Entity(repositoryClass="UIFI\ProductosBundle\Repository\ConsultoriaCientificaRepository")
  */
 class ConsultoriaCientifica
 {
-    /**
-     * @var integer
-     */
-    private $id;
 
-    /**
-     * @var string
-     */
-    private $tipo;
+      /**
+       * @var integer
+       *
+       * @ORM\Column(name="id", type="integer")
+       * @ORM\Id
+       * @ORM\GeneratedValue(strategy="AUTO")
+       */
+      private $id;
+      /**
+       * Contenido generado por el Scraper desde el CVLAC
+       * @var string
+       *
+       * @ORM\Column(name="tipo", type="string", length=50,nullable=true)
+       */
+      private $tipo;
+      /**
+      * Titulo del artículo de investigación
+       * @var string
+       *
+       * @ORM\Column(name="titulo", type="string", length=10000,nullable=true)
+       */
+      private $titulo;
+      /**
+       * @var string
+       *
+       * @ORM\Column(name="pais", type="string", length=60, nullable=true )
+       */
+      private $pais;
 
-    /**
-     * @var string
-     */
-    private $titulo;
+      /**
+       * Año en el que fue publicado el articulo
+       * @var \DateTime
+       *
+       * @ORM\Column(name="anual", type="string",length=10,nullable=true)
+       */
+      private $anual;
+      /**
+       * @var string
+       * @ORM\Column(name="idioma", type="string",nullable=true)
+       */
+      private $idioma;
 
-    /**
-     * @var string
-     */
-    private $pais;
+      /**
+       * @var string
+       * @ORM\Column(name="disponibilidad", type="string",length=5 ,nullable=true)
+       */
+      private $disponibilidad;
 
-    /**
-     * @var string
-     */
-    private $anual;
+      /**
+       * @var string
+       * @ORM\Column(name="numero_contrato", type="string",length=50 ,nullable=true)
+       */
+      private $numeroContrato;
 
-    /**
-     * @var string
-     */
-    private $idioma;
+      /**
+       * @var string
+       * @ORM\Column(name="institucion_beneficiaria", type="string",length=255 ,nullable=true)
+       */
+      private $institucionBeneficiaria;
 
-    /**
-     * @var string
-     */
-    private $disponibilidad;
+      /**
+       * @var string
+       *
+       * @ORM\Column(name="nombre_grupo", type="string", length=255)
+       */
+      private $nombreGrupo;
+      /**
+       * Codigo del grupo en el cual fue publicado el articulo
+       *
+       * @ORM\Column(name="grupo", type="string", length=255)
+       */
+      private $grupo;
+      /**
+       * Integrantes de un grupo de un investigacion que publicaron el articulo.
+       *
+       * @ORM\ManyToMany(targetEntity="UIFI\IntegrantesBundle\Entity\Integrante", mappedBy="articulos")
+      */
+      private $integrantes;
 
-    /**
-     * @var string
-     */
-    private $numeroContrato;
-
-    /**
-     * @var string
-     */
-    private $institucionBeneficiaria;
-
-    /**
-     * @var string
-     */
-    private $grupo;
-
-    /**
-     * @var string
-     */
-    private $nombreGrupo;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $integrantes;
-
+  
     /**
      * Constructor
      */
@@ -272,29 +295,6 @@ class ConsultoriaCientifica
     }
 
     /**
-     * Set grupo
-     *
-     * @param string $grupo
-     * @return ConsultoriaCientifica
-     */
-    public function setGrupo($grupo)
-    {
-        $this->grupo = $grupo;
-
-        return $this;
-    }
-
-    /**
-     * Get grupo
-     *
-     * @return string 
-     */
-    public function getGrupo()
-    {
-        return $this->grupo;
-    }
-
-    /**
      * Set nombreGrupo
      *
      * @param string $nombreGrupo
@@ -315,6 +315,29 @@ class ConsultoriaCientifica
     public function getNombreGrupo()
     {
         return $this->nombreGrupo;
+    }
+
+    /**
+     * Set grupo
+     *
+     * @param string $grupo
+     * @return ConsultoriaCientifica
+     */
+    public function setGrupo($grupo)
+    {
+        $this->grupo = $grupo;
+
+        return $this;
+    }
+
+    /**
+     * Get grupo
+     *
+     * @return string 
+     */
+    public function getGrupo()
+    {
+        return $this->grupo;
     }
 
     /**
