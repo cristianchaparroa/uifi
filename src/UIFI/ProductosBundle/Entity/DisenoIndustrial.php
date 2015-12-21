@@ -50,6 +50,14 @@ class DisenoIndustrial
       private $anual;
 
       /**
+       * Año en el que fue publicado el articulo
+       *
+       * @ORM\Column(name="disponibilidad", type="string",length=10,nullable=true)
+       */
+      private $disponibilidad;
+
+
+      /**
        * @var string
        * @ORM\Column(name="institucion_financiadora", type="string",length=255 ,nullable=true)
        */
@@ -84,7 +92,7 @@ class DisenoIndustrial
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -107,7 +115,7 @@ class DisenoIndustrial
     /**
      * Get tipo
      *
-     * @return string 
+     * @return string
      */
     public function getTipo()
     {
@@ -130,7 +138,7 @@ class DisenoIndustrial
     /**
      * Get titulo
      *
-     * @return string 
+     * @return string
      */
     public function getTitulo()
     {
@@ -153,7 +161,7 @@ class DisenoIndustrial
     /**
      * Get pais
      *
-     * @return string 
+     * @return string
      */
     public function getPais()
     {
@@ -176,7 +184,7 @@ class DisenoIndustrial
     /**
      * Get anual
      *
-     * @return string 
+     * @return string
      */
     public function getAnual()
     {
@@ -199,7 +207,7 @@ class DisenoIndustrial
     /**
      * Get institucionFinanciadora
      *
-     * @return string 
+     * @return string
      */
     public function getInstitucionFinanciadora()
     {
@@ -222,7 +230,7 @@ class DisenoIndustrial
     /**
      * Get nombreGrupo
      *
-     * @return string 
+     * @return string
      */
     public function getNombreGrupo()
     {
@@ -245,7 +253,7 @@ class DisenoIndustrial
     /**
      * Get grupo
      *
-     * @return string 
+     * @return string
      */
     public function getGrupo()
     {
@@ -278,10 +286,33 @@ class DisenoIndustrial
     /**
      * Get integrantes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getIntegrantes()
     {
         return $this->integrantes;
+    }
+
+    /**
+     * Set disponibilidad
+     *
+     * @param string $disponibilidad
+     * @return DisenoIndustrial
+     */
+    public function setDisponibilidad($disponibilidad)
+    {
+        $this->disponibilidad = $disponibilidad;
+
+        return $this;
+    }
+
+    /**
+     * Get disponibilidad
+     *
+     * @return string 
+     */
+    public function getDisponibilidad()
+    {
+        return $this->disponibilidad;
     }
 }
