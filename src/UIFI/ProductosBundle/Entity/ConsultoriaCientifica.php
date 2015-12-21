@@ -56,7 +56,7 @@ class ConsultoriaCientifica
 
       /**
        * @var string
-       * @ORM\Column(name="disponibilidad", type="string",length=5 ,nullable=true)
+       * @ORM\Column(name="disponibilidad", type="string",length=50 ,nullable=true)
        */
       private $disponibilidad;
 
@@ -91,7 +91,7 @@ class ConsultoriaCientifica
       */
       private $integrantes;
 
-  
+
     /**
      * Constructor
      */
@@ -103,7 +103,7 @@ class ConsultoriaCientifica
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -126,7 +126,7 @@ class ConsultoriaCientifica
     /**
      * Get tipo
      *
-     * @return string 
+     * @return string
      */
     public function getTipo()
     {
@@ -149,7 +149,7 @@ class ConsultoriaCientifica
     /**
      * Get titulo
      *
-     * @return string 
+     * @return string
      */
     public function getTitulo()
     {
@@ -172,7 +172,7 @@ class ConsultoriaCientifica
     /**
      * Get pais
      *
-     * @return string 
+     * @return string
      */
     public function getPais()
     {
@@ -195,7 +195,7 @@ class ConsultoriaCientifica
     /**
      * Get anual
      *
-     * @return string 
+     * @return string
      */
     public function getAnual()
     {
@@ -218,7 +218,7 @@ class ConsultoriaCientifica
     /**
      * Get idioma
      *
-     * @return string 
+     * @return string
      */
     public function getIdioma()
     {
@@ -241,7 +241,7 @@ class ConsultoriaCientifica
     /**
      * Get disponibilidad
      *
-     * @return string 
+     * @return string
      */
     public function getDisponibilidad()
     {
@@ -264,7 +264,7 @@ class ConsultoriaCientifica
     /**
      * Get numeroContrato
      *
-     * @return string 
+     * @return string
      */
     public function getNumeroContrato()
     {
@@ -287,7 +287,7 @@ class ConsultoriaCientifica
     /**
      * Get institucionBeneficiaria
      *
-     * @return string 
+     * @return string
      */
     public function getInstitucionBeneficiaria()
     {
@@ -310,7 +310,7 @@ class ConsultoriaCientifica
     /**
      * Get nombreGrupo
      *
-     * @return string 
+     * @return string
      */
     public function getNombreGrupo()
     {
@@ -333,7 +333,7 @@ class ConsultoriaCientifica
     /**
      * Get grupo
      *
-     * @return string 
+     * @return string
      */
     public function getGrupo()
     {
@@ -366,7 +366,7 @@ class ConsultoriaCientifica
     /**
      * Get integrantes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getIntegrantes()
     {
