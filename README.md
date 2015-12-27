@@ -20,3 +20,10 @@ Framework de gestión grupos de investigación Facultad de Ingeniería de la Uni
   - Exportar Proyectos dirigidos en formato excel (depende del proceso automatizado)
   - Exportar productos de Software en formato excel (depende del proceso automatizado)
   - Exportar Eventos en formato excel (depende del proceso automatizado)
+
+#### Estado actual del proyecto
+
+Actualemente el proyecto se encuentra en construcción y el proyecto se lleva a través de las siguientes ramas
+- Master:     [![Build Status](https://travis-ci.org/cristianchaparroa/uifi.svg)](https://travis-ci.org/cristianchaparroa/uifi)
+- Desarrollo: [![Build Status](https://travis-ci.org/cristianchaparroa/uifi.svg)](https://travis-ci.org/cristianchaparroa/uifi)
+- Testing: [![Build Status](https://travis-ci.org/cristianchaparroa/uifi.svg?branch=testing)](https://travis-ci.org/cristianchaparroa/uifi)
