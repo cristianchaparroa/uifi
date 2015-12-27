@@ -95,7 +95,7 @@ class ProductosService
       $entities = $this->em->getRepository('UIFIProductosBundle:SignoDistintivo')->findAll();
       return $entities;
     }
-    public function getSponoff() {
+    public function getSpinoff() {
       $entities = $this->em->getRepository('UIFIProductosBundle:SpinOff')->findAll();
       return $entities;
     }

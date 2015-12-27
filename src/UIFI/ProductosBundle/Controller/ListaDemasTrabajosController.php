@@ -9,15 +9,15 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 /**
  *  Controlador para listar la información
 */
-class ListaLibrosController extends Controller
+class ListaDemasTrabajosController extends Controller
 {
   /**
    * Punto de entrada para los productos de investigacion de la plataforma.
    *
-   * @Route("/productos/lista/libros", name="productos_lista_libros")
+   * @Route("/productos/lista/demas_trabajos", name="productos_lista_demas_trabajos")
   */
   public function indexAction() {
-    $entities =  $this->get('uifi.productos')->getLibros();
-    return $this->render('UIFIProductosBundle:Productos:listaLibros.html.twig',array('entities' => $entities));
+    $entities =  $this->get('uifi.productos')->getDemasTrabajos();
+    return $this->render('UIFIProductosBundle:Productos:listaArticulos.html.twig',array('entities' => $entities));
   }
 }

@@ -14,7 +14,7 @@ class ListaProyectosDirigidosController extends Controller
   /**
    * Punto de entrada para los productos de investigacion de la plataforma.
    *
-   * @Route("/productos/proyectosdirigidos", name="productos_proyectos_dirigidos")
+   * @Route("/productos/lista/proyectos_dirigidos", name="productos_lista_proyectos_dirigidos")
   */
   public function indexAction() {
     $entities =  $this->get('uifi.productos')->getProyectosDirigidos();

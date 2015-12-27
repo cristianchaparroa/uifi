@@ -14,7 +14,7 @@ class ListaSoftwareController extends Controller
   /**
    * Punto de entrada para los productos de investigacion de la plataforma.
    *
-   * @Route("/productos/software", name="productos_software")
+   * @Route("/productos/lista/software", name="productos_lista_software")
   */
   public function indexAction() {
     $entities =  $this->get('uifi.productos')->getSoftware();

@@ -14,7 +14,7 @@ class ListaCapitulosLibroController extends Controller
   /**
    * Punto de entrada para los productos de investigacion de la plataforma.
    *
-   * @Route("/productos/capituloslibro", name="productos_capitulos_libro")
+   * @Route("/productos/lista/capitulos_libro", name="productos_lista_capitulos_libro")
   */
   public function indexAction() {
     $entities =  $this->get('uifi.productos')->getCapitulosLibro();

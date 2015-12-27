@@ -14,7 +14,7 @@ class ListaArticulosController extends Controller
   /**
    * Punto de entrada para los productos de investigacion de la plataforma.
    *
-   * @Route("/productos/articulos", name="productos_articulos")
+   * @Route("/productos/lista/articulos", name="productos_lista_articulos")
   */
   public function indexAction() {
     $entities =  $this->get('uifi.productos')->getArticulos();

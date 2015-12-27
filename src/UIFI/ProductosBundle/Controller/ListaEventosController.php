@@ -14,7 +14,7 @@ class ListaEventosController extends Controller
   /**
    * Punto de entrada para los productos de investigacion de la plataforma.
    *
-   * @Route("/productos/eventos", name="productos_eventos")
+   * @Route("/productos/lista/eventos", name="productos_lista_eventos")
   */
   public function indexAction() {
     $entities =  $this->get('uifi.productos')->getEventos();
