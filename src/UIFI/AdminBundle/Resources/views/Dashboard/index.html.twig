@@ -35,6 +35,11 @@
             <p class="lead">{{'uifi.universidad'|trans}}</p></h1>
           </div>
 
+          <div class="row">
+              {% embed "UIFIAdminBundle::navbar.layout.html.twig" %}
+              {% endembed %}
+          </div>
+<!--
           <div>
             <p><b>Usuario:</b> {{app.user.email}}</p>
 
@@ -46,14 +51,11 @@
             {% endfor %}
             </p>
           </div>
-
+-->
       </header>
       <hr>
       <div class="row">
-            {% embed "UIFIAdminBundle::navbar.layout.html.twig" %}
-            {% endembed %}
-
-            <div class="col-sm-9">
+            <div class="">
              {% block main_content %}
                   <div class="well">
                     Desde el panel de administración podrá tener acceso a las
@@ -66,10 +68,7 @@
                       <li>Reportes</li>
                     </ul>
                   </div>
-
-
                   <div class="imagenes">
-
                   </div>
              {% endblock %}
             </div>

@@ -1,91 +1,70 @@
 
-<div class="col-sm-3">
-<ul class="nav nav-pills nav-stacked left-menu" id="stacked-menu">
-   <!-- GRUPOS -->
-   <li>
-     <a onclick="return false" href="#" data-target="#item1" data-toggle="collapse" data-parent="#stacked-menu">
-       <i class="fa fa-users"></i>
-        {{'admin.menu.grupos'|trans}}<span class="caret arrow"></span>
-      </a>
-     <ul class="nav nav-stacked collapse left-submenu" id="item1">
-       <li><a href="#">{{'admin.menu.grupos.lista'|trans}}</a></li>
-     </ul>
-   </li>
+<div class="">
+  <ul class="nav navbar-nav">
+           <!-- GRUPOS -->
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{'admin.menu.grupos'|trans}}<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+             <li><a href="#">{{'admin.menu.grupos.lista'|trans}}</a></li>
+          </ul>
+        </li>
+        <!-- Usuarios/Integrantes -->
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> {{'admin.menu.usuarios'|trans}}<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="{{path('admin_director')}}">Directores</a></li>
+            <li><a href="{{path('admin_integrantes')}}">Integrantes</a></li>
+            <li><a href="{{path('admin_usuarios')}}">Usuarios</a></li>
+          </ul>
+        </li>
+        <!-- PROCESOS-->
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Procesos <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li>
+                <a href="{{path('gruplac_dashboard')}}"><i class="glyphicon glyphicon-cloud-download"></i>
+                Importar GrupLAC's</a>
+            </li>
+            <li><a href="{{path('admin_revistas')}}"><i class="fa fa-upload"></i>Importar revistas</a></li>
 
-   <!-- Usuarios/Integrantes -->
-   <li>
-     <a onclick="return false" href="#" data-target="#item4" data-toggle="collapse" data-parent="#stacked-menu">
-       <i class="fa fa-user"></i>
-        {{'admin.menu.usuarios'|trans}}<span class="caret arrow"></span>
-      </a>
-     <ul class="nav nav-stacked collapse left-submenu" id="item4">
-       <li><a href="{{path('admin_director')}}">Directores</a></li>
-       <li><a href="{{path('admin_integrantes')}}">Integrantes</a></li>
-       <li><a href="{{path('admin_usuarios')}}">Usuarios</a></li>
-     </ul>
-   </li>
+           </ul>
+        </li>
+        <!-- PRODUCTOS-->
+         <li class="dropdown">
+           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> {{'admin.menu.productos'|trans}}<span class="caret"></span></a>
+           <ul class="dropdown-menu">
+             <li> <a href="{{path('productos_lista_articulos')}}"><i class="fa fa-upload"></i>Articulos</a></li>
+             <li><a href="{{path('productos_lista_libros')}}"><i class="fa fa-upload"></i>Libros</a></li>
+             <li> <a href="{{path('productos_lista_capitulos_libro')}}"><i class="fa fa-upload"></i>Capitulos de Libro</a></li>
+             <li><a href="{{path('productos_lista_software')}}"><i class="fa fa-upload"></i>Software</a></li>
+             <li> <a href="{{path('productos_lista_proyectos_dirigidos')}}"><i class="fa fa-upload"></i>Proyectos dirigidos</a></li>
+             <li> <a href="{{path('productos_lista_eventos')}}"><i class="fa fa-upload"></i>Eventos</a></li>
+           </ul>
+         </li>
+         <!-- REPORTES -->
+         <li class="dropdown">
+           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">  {{'admin.menu.reportes'|trans}} <span class="caret"></span></a>
+           <ul class="dropdown-menu">
+             <li><a href="{{path('reportes_articulos')}}"> <i class="fa fa-file-text-o"></i> {{'admin.menu.reportes.articulo'|trans}}</a></li>
+             <li><a href="{{path('reportes_libros')}}"> <i class="fa fa-book"></i> {{'admin.menu.reportes.libros'|trans}}</a></li>
+             <li><a href="{{path('reportes_capituloslibros')}}"> <i class="fa fa-book"></i> {{'admin.menu.reportes.capituloslibro'|trans}}</a></li>
+             <li><a href="{{path('reportes_software')}}"> <i class="fa fa-floppy-o "></i> {{'admin.menu.reportes.software'|trans}}</a></li>
+             <li><a href="{{path('reportes_proyectos_dirigidos')}}"> <i class="fa fa-file-text"></i> {{'admin.menu.reportes.proyectosdirigidos'|trans}}</a></li>
+           </ul>
+         </li>
+  </ul>
 
-   <!-- PRODUCTOS-->
-   <li>
-     <a onclick="return false" href="#" data-target="#item2" data-toggle="collapse" data-parent="#stacked-menu">
-       <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
-       {{'admin.menu.productos'|trans}}
-       <span class="caret arrow"></span>
-     </a>
-     <ul class="nav nav-stacked collapse left-submenu" id="item2">
-       <li>
-           <a href="{{path('gruplac_dashboard')}}"><i class="glyphicon glyphicon-cloud-download"></i>
-           {{'admin.menu.productos.automatizado'|trans}}</a>
-       </li>
-       <li><a href="{{path('admin_revistas')}}"><i class="fa fa-upload"></i>Importar revistas</a></li>
+  <ul class="nav navbar-nav navbar-right">
 
-       <li> <a href="{{path('productos_lista_articulos')}}"><i class="fa fa-upload"></i>Articulos</a></li>
-       <li><a href="{{path('productos_lista_libros')}}"><i class="fa fa-upload"></i>Libros</a></li>
-       <li> <a href="{{path('productos_lista_capitulos_libro')}}"><i class="fa fa-upload"></i>Capitulos de Libro</a></li>
-       <li><a href="{{path('productos_lista_software')}}"><i class="fa fa-upload"></i>Software</a></li>
-       <li> <a href="{{path('productos_lista_proyectos_dirigidos')}}"><i class="fa fa-upload"></i>Proyectos dirigidos</a></li>
-       <li> <a href="{{path('productos_lista_eventos')}}"><i class="fa fa-upload"></i>Eventos</a></li>
+    <li class="dropdown">
+           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Configuracion <span class="caret"></span></a>
+           <ul class="dropdown-menu">
+              <li> <a href="{{path('admin_configuration_gruplac')}}"> <i class="fa fa-list-alt"></i>{{'admin.menu.configuracion.gruplacs'|trans}}</a></li>
+           </ul>
+    </li>
 
-     </ul>
-   </li>
-
-   <!-- REPORTES -->
-   <li>
-     <a onclick="return false" href="#" data-target="#item3" data-toggle="collapse" data-parent="#stacked-menu">
-       <span class="fa fa-bar-chart" aria-hidden="true"></span>
-        {{'admin.menu.reportes'|trans}}
-        <span class="caret arrow"></span>
-     </a>
-     <ul class="nav nav-stacked collapse left-submenu" id="item3">
-       <li><a href="{{path('reportes_articulos')}}"> <i class="fa fa-file-text-o"></i> {{'admin.menu.reportes.articulo'|trans}}</a></li>
-       <li><a href="{{path('reportes_libros')}}"> <i class="fa fa-book"></i> {{'admin.menu.reportes.libros'|trans}}</a></li>
-       <li><a href="{{path('reportes_capituloslibros')}}"> <i class="fa fa-book"></i> {{'admin.menu.reportes.capituloslibro'|trans}}</a></li>
-       <li><a href="{{path('reportes_software')}}"> <i class="fa fa-floppy-o "></i> {{'admin.menu.reportes.software'|trans}}</a></li>
-       <li><a href="{{path('reportes_proyectos_dirigidos')}}"> <i class="fa fa-file-text"></i> {{'admin.menu.reportes.proyectosdirigidos'|trans}}</a></li>
-
-
-     </ul>
-   </li>
-
+      <li> <a href="{{path('logout')}}"> <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>{{'admin.menu.salir'|trans}}</a></li>
+  </ul>
 
 
-   <!-- CONFIGURACIÓN -->
-   <li>
-     <a href="#" data-target="#item5" data-toggle="collapse" data-parent="#stacked-menu">
-       <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
-       {{'admin.menu.configuracion'|trans}}<span class="caret arrow"></span>
-     </a>
-     <ul class="nav nav-pills nav-stacked collapse" id="item5">
-       <!--  configuracion de grupos de investigación-->
-
-       <li> <a href="{{path('admin_configuration_gruplac')}}"> <i class="fa fa-list-alt"></i>{{'admin.menu.configuracion.gruplacs'|trans}}</a></li>
-
-       <!-- <li><a href="#"> <i class="fa fa-filter"></i>{{'admin.menu.configuracion.proxy'|trans}}</a></li> -->
-    </ul>
-
-  </li>
-
-
-  <li> <a href="{{path('logout')}}"> <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>{{'admin.menu.salir'|trans}}</a></li>
-</ul>
 </div>
