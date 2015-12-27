@@ -12,7 +12,7 @@ src/*.php~
 composer.phar
 composer.lock
 # -- PHPUnit ------------------------------------------
-app/phpunit.xml  
+#app/phpunit.xml  
 
 # -- Editores -----------------------------------------
 # vim

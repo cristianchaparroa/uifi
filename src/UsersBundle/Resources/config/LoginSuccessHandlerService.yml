@@ -3,4 +3,4 @@ parameters:
 services:
     users.handler.login_success_handler:
         class: %users.handler.login_success_handler.class%
-        arguments: [@router, @security.context]
+        arguments: ['@router','@security.context']

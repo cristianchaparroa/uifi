@@ -4,6 +4,14 @@ php:
 
 before_script:
   - cp app/config/parameters.yml.travis app/config/parameters.yml
+  - composer self-update
   - composer install  -o
   - php app/console doctrine:database:create --env=test
   - php app/console doctrine:schema:create --env=test
+
+script:
+  - phpunit -c app
+
+notifications:
+  email:
+    -  cristianchaparroa@gmail.com
