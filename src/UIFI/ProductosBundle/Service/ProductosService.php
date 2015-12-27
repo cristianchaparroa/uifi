@@ -51,4 +51,26 @@ class ProductosService
       $entities = $this->em->getRepository('UIFIProductosBundle:Evento')->findAll();
       return $entities;
     }
+    public function getDocumentosTrabajo () {}
+    public function getOtrosArticulos() {}
+    public function getOraPublicacionDivulgativa() {}
+    public function getConsultoriaCientificaTecnologica() {}
+    public function getDisenosIndustriales() {}
+    public function getInonovacionProcesosProcedimientos() {}
+    public function getInnovacionGestionEmpreserial() {}
+    public function getOtrosProductosTescnologicos() {}
+    public function getPrototipos() {}
+    public function getNormasRegulaciones() {}
+    public function getSignosDistintivos() {}
+    public function getSponoff() {}
+    public function getEdiciones() {}
+    public function getInformesInvestigacion() {}
+    public function getRedesConocimientoEspecializado() {}
+    public function getGeneracionContenidoImpreso() {}
+    public function getGeneracionContenidoVirtual() {}
+    public function getCursosCortaDuracionDictados() {}
+    public function getJurados() {}
+    public function getParticipacionComitesEvaluacion() {}
+    public function getDemasTrabajos() {}
+    public function getProyectos() {}
 }
