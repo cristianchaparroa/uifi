@@ -51,26 +51,92 @@ class ProductosService
       $entities = $this->em->getRepository('UIFIProductosBundle:Evento')->findAll();
       return $entities;
     }
-    public function getDocumentosTrabajo () {}
-    public function getOtrosArticulos() {}
-    public function getOraPublicacionDivulgativa() {}
-    public function getConsultoriaCientificaTecnologica() {}
-    public function getDisenosIndustriales() {}
-    public function getInonovacionProcesosProcedimientos() {}
-    public function getInnovacionGestionEmpreserial() {}
-    public function getOtrosProductosTescnologicos() {}
-    public function getPrototipos() {}
-    public function getNormasRegulaciones() {}
-    public function getSignosDistintivos() {}
-    public function getSponoff() {}
-    public function getEdiciones() {}
-    public function getInformesInvestigacion() {}
-    public function getRedesConocimientoEspecializado() {}
-    public function getGeneracionContenidoImpreso() {}
-    public function getGeneracionContenidoVirtual() {}
-    public function getCursosCortaDuracionDictados() {}
-    public function getJurados() {}
-    public function getParticipacionComitesEvaluacion() {}
-    public function getDemasTrabajos() {}
-    public function getProyectos() {}
+    public function getDocumentosTrabajo () {
+      $entities = $this->em->getRepository('UIFIProductosBundle:DocumentoTrabajo')->findAll();
+      return $entities;
+    }
+    public function getOtrosArticulos() {
+      $entities = $this->em->getRepository('UIFIProductosBundle:OtroArticulo')->findAll();
+      return $entities;
+    }
+    public function getOtraPublicacionDivulgativa() {
+      $entities = $this->em->getRepository('UIFIProductosBundle:OtraPublicacionDivulgativa')->findAll();
+      return $entities;
+    }
+    public function getConsultoriaCientificaTecnologica() {
+      $entities = $this->em->getRepository('UIFIProductosBundle:ConsultoriaCientifica')->findAll();
+      return $entities;
+    }
+    public function getDisenosIndustriales() {
+      $entities = $this->em->getRepository('UIFIProductosBundle:DisenoIndustrial')->findAll();
+      return $entities;
+    }
+    public function getInonovacionProcesosProcedimientos() {
+      $entities = $this->em->getRepository('UIFIProductosBundle:InnovacionProcesosProcedimientos')->findAll();
+      return $entities;
+    }
+    public function getInnovacionGestionEmpreserial() {
+      $entities = $this->em->getRepository('UIFIProductosBundle:InnovacionGestionEmpresarial')->findAll();
+      return $entities;
+    }
+    public function getOtrosProductosTecnologicos() {
+      $entities = $this->em->getRepository('UIFIProductosBundle:OtroProductoTecnologico')->findAll();
+      return $entities;
+    }
+    public function getPrototipos() {
+      $entities = $this->em->getRepository('UIFIProductosBundle:Prototipo')->findAll();
+      return $entities;
+    }
+    public function getNormasRegulaciones() {
+      $entities = $this->em->getRepository('UIFIProductosBundle:NormaRegulacion')->findAll();
+      return $entities;
+    }
+    public function getSignosDistintivos() {
+      $entities = $this->em->getRepository('UIFIProductosBundle:SignoDistintivo')->findAll();
+      return $entities;
+    }
+    public function getSponoff() {
+      $entities = $this->em->getRepository('UIFIProductosBundle:SpinOff')->findAll();
+      return $entities;
+    }
+    public function getEdiciones() {
+      $entities = $this->em->getRepository('UIFIProductosBundle:Edicion')->findAll();
+      return $entities;
+    }
+    public function getInformesInvestigacion() {
+      $entities = $this->em->getRepository('UIFIProductosBundle:InformeInvestigacion')->findAll();
+      return $entities;
+    }
+    public function getRedesConocimientoEspecializado() {
+      $entities = $this->em->getRepository('UIFIProductosBundle:RedesConocimientoEspecializado')->findAll();
+      return $entities;
+    }
+    public function getGeneracionContenidoImpreso() {
+      $entities = $this->em->getRepository('UIFIProductosBundle:ContenidoImpreso')->findAll();
+      return $entities;
+    }
+    public function getGeneracionContenidoVirtual() {
+      $entities = $this->em->getRepository('UIFIProductosBundle:ContenidoVirtual')->findAll();
+      return $entities;
+    }
+    public function getCursosCortaDuracionDictados() {
+      $entities = $this->em->getRepository('UIFIProductosBundle:CursoCortaDuracionDictado')->findAll();
+      return $entities;
+    }
+    public function getJurados() {
+      $entities = $this->em->getRepository('UIFIProductosBundle:Jurado')->findAll();
+      return $entities;
+    }
+    public function getParticipacionComitesEvaluacion() {
+      $entities = $this->em->getRepository('UIFIProductosBundle:ComiteEvaluacion')->findAll();
+      return $entities;
+    }
+    public function getDemasTrabajos() {
+      $entities = $this->em->getRepository('UIFIProductosBundle:DemasTrabajos')->findAll();
+      return $entities;
+    }
+    public function getProyectos() {
+      $entities = $this->em->getRepository('UIFIProductosBundle:Proyecto')->findAll();
+      return $entities;
+    }
 }
