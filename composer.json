@@ -34,7 +34,8 @@
         "zendframework/zend-log": "2.*",
         "goodby/csv": "~1.2",
         "phpoffice/phpexcel": "^1.8",
-        "wisembly/excelant": "^1.0"
+        "wisembly/excelant": "^1.0",
+        "jms/di-extra-bundle": "^1.6"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
