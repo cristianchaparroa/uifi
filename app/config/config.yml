@@ -63,7 +63,7 @@ swiftmailer:
     auth_mode:  login
     host:       smtp.gmail.com
     username:
-    password:   
+    password:
 
 
 fos_user:
@@ -93,3 +93,18 @@ uifi_grup_lac_scraper:
     proxy:
       enable: false
       url: 'http://proxy.udistrital.edu.co:3128'
+
+
+monolog:
+    handlers:
+        syslog:
+            type: stream
+            path: /var/log/symfony.log
+            level: error
+        main:
+            type: fingerscrossed
+            action_level: warning
+            handler: file
+        file:
+            type: stream
+            level: debug
