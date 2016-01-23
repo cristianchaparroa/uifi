@@ -17,6 +17,35 @@
             <argument type="service" id="service_container" />
         </service>
 
+        <!-- servicios de Assamblers -->
+        <service class="UIFI\GrupLACScraperBundle\Assembler\ArticuloAssembler" id="uifi.gruplac.assembler.articulo">
+            <argument type="service" id="service_container" />
+        </service>
+        <service class="UIFI\GrupLACScraperBundle\Assembler\GrupoAssembler" id="uifi.gruplac.assembler.grupo">
+            <argument type="service" id="service_container" />
+        </service>
+        <service class="UIFI\GrupLACScraperBundle\Assembler\IntegranteAssembler" id="uifi.gruplac.assembler.integrante">
+            <argument type="service" id="service_container" />
+        </service>
+
+        <!-- Servicios de scrapping -->
+        <service class="UIFI\GrupLACScraperBundle\Service\Scraper\ScraperService" id="uifi.gruplac.scrap.scraper">
+            <argument type="service" id="service_container" />
+        </service>
+
+        <service class="UIFI\GrupLACScraperBundle\Service\Scraper\ArticulosScraperService" id="uifi.gruplac.service.scraper.articulo">
+        </service>
+
+        <service class="UIFI\GrupLACScraperBundle\Service\Scraper\GrupoScraperService" id="uifi.gruplac.service.scraper.grupo">
+        </service>
+
+        <service class="UIFI\GrupLACScraperBundle\Service\Scraper\IntegrantesScraperService" id="uifi.gruplac.service.scraper.integrantes">
+        </service>
+
+
+
+
+
 
     </services>
 </container>

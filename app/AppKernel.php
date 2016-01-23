@@ -41,6 +41,9 @@ class AppKernel extends Kernel
             new UIFI\ReportesBundle\UIFIReportesBundle(),
             //Charts
             new Ob\HighchartsBundle\ObHighchartsBundle(),
+            new JMS\AopBundle\JMSAopBundle(),
+            new JMS\DiExtraBundle\JMSDiExtraBundle($this),
+
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

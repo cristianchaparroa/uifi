@@ -108,3 +108,7 @@ monolog:
         file:
             type: stream
             level: debug
+
+jms_di_extra:
+    locations:
+        all_bundles: true

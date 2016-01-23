@@ -47,9 +47,11 @@ class GetInformacion
     * @return Valor booleano que indica el estado de la operación.
     *         True indica que la operación fue completada satisfactoriamente.
    */
-   public function scrap($codes)
-   {
-    //  $this->initDrop();
+   public function scrap($codes) {
+     $logger = $this->container->get('logger');
+     $logger->err('eliminando los registros de la base de datos');
+     $this->initDrop();
+     $logger->err('datos eliminados de la base de datos');
      /**
       * Se obtiene los codigos de los grupos de investigacion para luego crear
       * los diferentes scrapers.
@@ -64,20 +66,22 @@ class GetInformacion
      $repositoryArticulo = $this->em->getRepository('UIFIProductosBundle:Articulo');
 
      foreach( $codes as $code ) {
+       $logger->err('procesando el grupo: ' . $code);
        $grupoScraper = new GrupLACScraper($code);
        $grupo  = new Grupo();
        $grupo->setId( $code );
        $grupo->setGruplac( $grupoScraper->getURL() );
        $nombreGrupo =  "". $grupoScraper->getNombreGrupo();
+       $logger->err('procesando el grupo: '.$nombreGrupo);
        $grupo->setNombre( $nombreGrupo );
        $grupo->setEmail( $grupoScraper->extraerEmail() );
        $grupo->setClasificacion( $grupoScraper->extraerClasificacion() );
-      //  $this->em->persist( $grupo );
+       $this->em->persist( $grupo );
       //  $this->em->flush();
        $entityGrupo = $grupo;
 
-      //  $integrantes    = $grupoScraper->obtenerIntegrantes();
-      //  $articulos      = $grupoScraper->getArticulos();
+       $integrantes    = $grupoScraper->obtenerIntegrantes();
+       $articulos      = $grupoScraper->getArticulos();
       //  $libros         = $grupoScraper->getLibros();
       //  $software        = $grupoScraper->getSoftware();
       //  $proyectos       = $grupoScraper->getProyectosDirigidos();
@@ -85,8 +89,8 @@ class GetInformacion
        $eventos = $grupoScraper->getEventos();
 
        $stores = array();
-      //  $stores[] = new IntegrantesStore($this->em,$grupo, $integrantes);
-      //  $stores[] = new ArticulosStore($this->em,$grupo, $articulos);
+       $stores[] = new IntegrantesStore($this->em,$grupo, $integrantes,$logger);
+       $stores[] = new ArticulosStore($this->em,$grupo, $articulos,$logger);
       //  $stores[] = new LibrosStore($this->em,$grupo, $libros);
       //  $stores[] = new SoftwareStore($this->em,$grupo, $software);
       //  $stores[] = new ProyectoDirigidoStore($this->em,$grupo,$proyectos);

@@ -29,19 +29,23 @@ class IntegrantesStore implements IStore
    * @param $grupo del cual se va a extraer los integrantes
    * @param $integrantes Lista de integrantes scrapeados del GrupLAC.
   */
-  public function __construct( $em, $grupo, $integrantes){
+  public function __construct( $em, $grupo, $integrantes,$logger){
     $this->em = $em;
     $this->grupo = $grupo;
     $this->integrantes = $integrantes;
     $this->repositoryIntegrante = $this->em->getRepository('UIFIIntegrantesBundle:Integrante');
+    $this->logger = $logger;
   }
   /**
    * Función que se encarga persistirla los integrantes
    * en la base de datos del sistema.
   */
-  public function guardar()
-  {
+  public function guardar() {
+    $this->logger->err('Guardando integrantes...');
+    $start = microtime(true);
     $integrantes = $this->integrantes;
+    $numeroIntegrantes = count($integrantes);
+    $this->logger->err('numero de integrantes: '.$numeroIntegrantes);
     foreach( $integrantes as $codeIntegrante => $result ){
        $nombreIntegrante = $result['nombre'];
        $vinculacion = $result['vinculacion'];
@@ -63,7 +67,7 @@ class IntegrantesStore implements IStore
 
           //se setea la demas información posible.
           $this->em->persist( $integrante );
-          $this->em->flush();
+          // $this->em->flush();
           $entityIntegrante = $this->repositoryIntegrante->find($codeIntegrante);
 
           //se verifica si es director si es asi entonces se genera la
@@ -73,13 +77,15 @@ class IntegrantesStore implements IStore
             $integranteDirector->setGrupo($this->grupo);
             $integranteDirector->setIntegrante($entityIntegrante);
             $this->em->persist( $integranteDirector );
-            $this->em->flush();
+            // $this->em->flush();
           }
        }
 
        $this->grupo->addIntegrante($entityIntegrante);
        $this->em->persist($this->grupo);
     }
+    $time_elapsed_secs = microtime(true) - $start;
+    $this->logger->err('tiempo de procesamienti de integrantes: '.$time_elapsed_secs);
   }
 
   /**

@@ -1,7 +1,8 @@
 <?php
-namespace AppBundle\EventListener
+namespace AppBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+
 
 class  CorsListener
 {

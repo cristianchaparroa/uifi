@@ -28,19 +28,22 @@ class ArticulosStore implements IStore
    * @param $grupo del cual se va a extraer los integrantes
    * @param $articulos Lista de artículos scrapeados del GrupLAC.
   */
-  public function __construct( $em, $grupo, $articulos){
+  public function __construct( $em, $grupo, $articulos, $logger){
     $this->em = $em;
     $this->grupo = $grupo;
     $this->articulos = $articulos;
     $this->repositoryIntegrante = $this->em->getRepository('UIFIIntegrantesBundle:Integrante');
+    $this->logger = $logger;
   }
 
 
   public function guardar(){
+    $this->logger->err('Guardando Articulos...');
+    $start = microtime(true);
     $articulosGrupo = $this->articulos;
     $index = 0;
-    foreach($articulosGrupo as $articulo )
-    {
+    $articles = array();
+    foreach($articulosGrupo as $articulo) {
       $codeArticulo =  $this->grupo->getId() ."-". $index;
       $autores  = $articulo['autores'];
       $article = new Articulo();
@@ -48,20 +51,18 @@ class ArticulosStore implements IStore
       $article->setTitulo($articulo['titulo']);
       $article->setAnual( $articulo['anual'] );
       $article->setISSN( $articulo['issn'] );
-
       $article->setTipo( array_key_exists('tipo',$articulo) ?  $articulo['tipo']:"");
       $article->setRevista( array_key_exists('revista',$articulo) ?  $articulo['revista']:"");
       $article->setVolumen( array_key_exists('volumen',$articulo) ?  $articulo['volumen']:"");
       $article->setFasciculo( array_key_exists('fasc',$articulo) ?  $articulo['fasc']:"");
       $article->setPaginas( array_key_exists('paginas',$articulo) ?  $articulo['paginas']:"");
       $article->setPais( array_key_exists('pais',$articulo) ?  $articulo['pais']:"");
-
-
       $article->SetNombreGrupo($this->grupo->getNombre());
+      $article->setGrupo($this->grupo->getId());
 
-      $article->setGrupo( $this->grupo->getId() );
+      $articles[] = $article;
       $this->em->persist( $article );
-      $this->em->flush();
+      // $this->em->flush();
       foreach( $autores as $autor ) {
          $nombres = strtoupper(substr($autor,1));
          $resultIntegrante  = $this->repositoryIntegrante->findBy( array('nombres' => $nombres) );
@@ -69,13 +70,14 @@ class ArticulosStore implements IStore
              $entityIntegrante =   $resultIntegrante[0];
              $entityIntegrante->addArticulo($article);
              $this->em->persist($entityIntegrante);
-             $this->em->flush();
+            //  $this->em->flush();
              $this->em->persist( $article );
-             $this->em->flush();
+            //  $this->em->flush();
          }
       }
       $index++;
     }//end for articulos
-
+    $time_elapsed_secs = microtime(true) - $start;
+    $this->logger->err('tiempo de procesamienti de integrantes: '.$time_elapsed_secs);
   }
 }
