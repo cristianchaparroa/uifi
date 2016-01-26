@@ -26,12 +26,9 @@ class IntegranteAssembler{
    * @return modelo
   */
   public function crearModelo($integranteDTO) {
-    $logger = $this->container->get('logger');
     $integrante = new Integrante();
-    // $integrante->setGruplac();
     $integrante->setNombres(array_key_exists('nombre',$integranteDTO) ? $integranteDTO['nombre'] : "");
     $integrante->setNombreGrupo(array_key_exists('nombreGrupo',$integranteDTO) ?  $integranteDTO['nombreGrupo'] : "");
-    $logger->err($integrante);
     return $integrante;
   }
   /**
@@ -43,7 +40,8 @@ class IntegranteAssembler{
     $integrantes = array();
     foreach( $integrantessDTO as $integrantesDTO) {
       foreach($integrantesDTO as $integranteDTO) {
-        $integrantes[] = $this->crearModelo($integranteDTO);
+        $integrante =  $this->crearModelo($integranteDTO);
+        $integrantes[] = $integrante;
       }
     }
     return $integrantes;
