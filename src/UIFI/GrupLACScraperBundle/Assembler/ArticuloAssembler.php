@@ -3,6 +3,8 @@
 namespace UIFI\GrupLACScraperBundle\Assembler;
 
 use UIFI\ProductosBundle\Entity\Articulo;
+use Symfony\Component\DependencyInjection\Container;
+
 /**
 
   *
@@ -13,6 +15,10 @@ use UIFI\ProductosBundle\Entity\Articulo;
   *
   */
 class ArticuloAssembler{
+  public function __construct(Container $container) {
+     $this->container = $container;
+     $this->em = $container->get('doctrine.orm.entity_manager');
+  }
   /**
    * Convierte un arreglo asocitivo a un modelo.
    * @param arreglo asociativo

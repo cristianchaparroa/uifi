@@ -9,15 +9,15 @@ namespace UIFI\GrupLACScraperBundle\Core;
   *
   * @author: Cristian Camilo Chaparro A.
   */
-class GrupScraper extends  Scraper
+class IntegrantesScraper extends  Scraper
 {
 		const URL_BASE='http://scienti.colciencias.gov.co:8080/gruplac/jsp/visualiza/visualizagr.jsp?nro=';
 	  /**
 	    * Constructor del objeto
 	    */
-	  public function __construct( $url ) {
-       Scraper::__construct( self::URL_BASE . $url );
-			 $this->url = $url;
+	  public function __construct( $grupoDTO ) {
+       Scraper::__construct( self::URL_BASE . $grupoDTO['id'] );
+			 $this->grupoDTO = $grupoDTO;
 	  }
 
 		/**
@@ -42,11 +42,18 @@ class GrupScraper extends  Scraper
 						$element =  $node->firstChild ;
 						$listLinks =  $element->getElementsByTagName('a');
 
-						foreach( $listLinks as $link ){
+						foreach( $listLinks as $link ) {
 							$array = explode('=', $link->getAttribute('href') );
 							$urlCVLAC = $array[1];
 							$nombre = $link->nodeValue;
-							$integrantes[ $urlCVLAC ] = array( 'nombre' => $nombre, 'vinculacion' =>$vinculacion , 'grupo' => $this->url );
+
+							$integrantes[] =  array(
+									'codigoIntegrante' 	=> $urlCVLAC,
+									'nombre'						=> $nombre,
+									'vinculacion'  			=> $vinculacion ,
+									'nombreGrupo'	 			=> $this->grupoDTO['nombre'] ,
+									'grupo'							=> $this->grupoDTO
+							);
 						}
 				}
 			}

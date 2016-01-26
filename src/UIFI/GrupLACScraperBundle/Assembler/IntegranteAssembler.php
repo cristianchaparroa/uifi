@@ -2,8 +2,10 @@
 
 namespace UIFI\GrupLACScraperBundle\Assembler;
 
+use UIFI\GrupLACScraperBundle\Core\CVLACScraper;
 use UIFI\IntegrantesBundle\Entity\Integrante;
 use UIFI\IntegrantesBundle\Entity\IntegranteDirector;
+use Symfony\Component\DependencyInjection\Container;
 /**
   *@file
   *
@@ -14,21 +16,22 @@ use UIFI\IntegrantesBundle\Entity\IntegranteDirector;
   */
 
 class IntegranteAssembler{
+  public function __construct(Container $container) {
+     $this->container = $container;
+     $this->em = $container->get('doctrine.orm.entity_manager');
+  }
   /**
    * Convierte un arreglo asocitivo a un modelo.
    * @param arreglo asociativo
    * @return modelo
   */
   public function crearModelo($integranteDTO) {
+    $logger = $this->container->get('logger');
     $integrante = new Integrante();
-    $integrante->setNombres($integranteDTO['nombre']);
-    $integrante->setVinculacion($integranteDTO['vinculacion']);
-    $integrantesDTOcraper = new CVLACScraper($integranteDTO['codigoIntegrante']);
-    // $integrante->addGrupo( $this->grupo );
-    $integrante->setId( $cvlacIntegrante );
-    $integrante->setCodigoGruplac( $integrantesDTOcraper->getCode()  );
-    // $integrante->setNombreGrupo( $this->grupo->getNombre());
-    $integrante->setNombres( $nombreIntegrante );
+    // $integrante->setGruplac();
+    $integrante->setNombres(array_key_exists('nombre',$integranteDTO) ? $integranteDTO['nombre'] : "");
+    $integrante->setNombreGrupo(array_key_exists('nombreGrupo',$integranteDTO) ?  $integranteDTO['nombreGrupo'] : "");
+    $logger->err($integrante);
     return $integrante;
   }
   /**
@@ -36,14 +39,13 @@ class IntegranteAssembler{
    * @param lista de arreglos asociativos
    * @return lista de modelos
   */
-  public function crearLista ($integrantesDTO) {
+  public function crearLista($integrantessDTO) {
     $integrantes = array();
-    foreach($integrantesDTO as $integrante) {
-      $integrante[] = $this->crearModelo($integrante);
+    foreach( $integrantessDTO as $integrantesDTO) {
+      foreach($integrantesDTO as $integranteDTO) {
+        $integrantes[] = $this->crearModelo($integranteDTO);
+      }
     }
-    return $integrante;
-  }
-  public function crearListas($gruposDTO){
-
+    return $integrantes;
   }
 }

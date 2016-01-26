@@ -31,6 +31,7 @@ class ScraperService {
    *
    */
    public function scrap($codes) {
+     $logger = $this->container->get('logger');
      $this->initDrop();
      $codes = array_unique($codes);
      $numeroGrupos = count($codes);
@@ -42,10 +43,11 @@ class ScraperService {
        foreach($grupos as $grupo) {
          $this->em->persist($grupo);
        }
-       //es una lista que contiene listas de integrantes
-       $integrantessDTO = $this->containe->get('uifi.gruplac.service.scraper.integrante')->getIntegrantes($gruposDTO);
-      //  //modelos
-      //  $integrantess =  $this->container->get('uifi.gruplac.assember.integrante')->crearListas($gruposDTO);
+       $integrantessDTO = $this->container->get('uifi.gruplac.service.scraper.integrantes')->getIntegrantes($gruposDTO);
+       $integrantes = $this->container->get('uifi.gruplac.assembler.integrante')->crearLista($integrantessDTO);
+       foreach($integrantes  as $integrante) {
+         $this->em->persist($integrante);
+       }
       //  //se procesan todos los integranates de todos los grupos
       //  foreach($integrantess as $integrantes) {
       //    //se guardan uno a uno los integrantes.

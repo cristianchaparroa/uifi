@@ -19,13 +19,13 @@
 
         <!-- servicios de Assamblers -->
         <service class="UIFI\GrupLACScraperBundle\Assembler\ArticuloAssembler" id="uifi.gruplac.assembler.articulo">
-            <argument type="service" id="service_container" />
+          <argument type="service" id="service_container" />
         </service>
         <service class="UIFI\GrupLACScraperBundle\Assembler\GrupoAssembler" id="uifi.gruplac.assembler.grupo">
             <argument type="service" id="service_container" />
         </service>
         <service class="UIFI\GrupLACScraperBundle\Assembler\IntegranteAssembler" id="uifi.gruplac.assembler.integrante">
-            <argument type="service" id="service_container" />
+          <argument type="service" id="service_container" />
         </service>
 
         <!-- Servicios de scrapping -->

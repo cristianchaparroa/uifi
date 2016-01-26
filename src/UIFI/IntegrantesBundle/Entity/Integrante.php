@@ -14,16 +14,15 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="UIFI\IntegrantesBundle\Repository\IntegranteRepository")
  * @ORM\Table(name="integrante")
  */
-class Integrante
-{
+class Integrante {
     /**
-     * URL del cvlac del Integrante del grupo de investigación
-     * @var string
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\Column(name="id", type="string", length=255)
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
     /**
      * Código del gruplac
      * @var string
@@ -161,33 +160,45 @@ class Integrante
     public function __construct()
     {
         $this->articulos = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    public function __toString(){
-      return $this->nombres;
-    }
-
-
-    /**
-     * Set id
-     *
-     * @param string $id
-     * @return Integrante
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
+        $this->libros = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->patentes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->software = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->proyectosDirigidos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->capituloslibro = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->grupos = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
      * Get id
      *
-     * @return string
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set codigoGruplac
+     *
+     * @param string $codigoGruplac
+     * @return Integrante
+     */
+    public function setCodigoGruplac($codigoGruplac)
+    {
+        $this->codigoGruplac = $codigoGruplac;
+
+        return $this;
+    }
+
+    /**
+     * Get codigoGruplac
+     *
+     * @return string
+     */
+    public function getCodigoGruplac()
+    {
+        return $this->codigoGruplac;
     }
 
     /**
@@ -257,6 +268,29 @@ class Integrante
     public function getCodigo()
     {
         return $this->codigo;
+    }
+
+    /**
+     * Set nombreGrupo
+     *
+     * @param string $nombreGrupo
+     * @return Integrante
+     */
+    public function setNombreGrupo($nombreGrupo)
+    {
+        $this->nombreGrupo = $nombreGrupo;
+
+        return $this;
+    }
+
+    /**
+     * Get nombreGrupo
+     *
+     * @return string
+     */
+    public function getNombreGrupo()
+    {
+        return $this->nombreGrupo;
     }
 
     /**
@@ -408,62 +442,6 @@ class Integrante
     }
 
     /**
-     * Add grupos
-     *
-     * @param \UIFI\IntegrantesBundle\Entity\Grupo $grupos
-     * @return Integrante
-     */
-    public function addGrupo(\UIFI\IntegrantesBundle\Entity\Grupo $grupos)
-    {
-        $this->grupos[] = $grupos;
-
-        return $this;
-    }
-
-    /**
-     * Remove grupos
-     *
-     * @param \UIFI\IntegrantesBundle\Entity\Grupo $grupos
-     */
-    public function removeGrupo(\UIFI\IntegrantesBundle\Entity\Grupo $grupos)
-    {
-        $this->grupos->removeElement($grupos);
-    }
-
-    /**
-     * Get grupos
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getGrupos()
-    {
-        return $this->grupos;
-    }
-
-    /**
-     * Set codigoGruplac
-     *
-     * @param string $codigoGruplac
-     * @return Integrante
-     */
-    public function setCodigoGruplac($codigoGruplac)
-    {
-        $this->codigoGruplac = $codigoGruplac;
-
-        return $this;
-    }
-
-    /**
-     * Get codigoGruplac
-     *
-     * @return string
-     */
-    public function getCodigoGruplac()
-    {
-        return $this->codigoGruplac;
-    }
-
-    /**
      * Add libros
      *
      * @param \UIFI\ProductosBundle\Entity\Libro $libros
@@ -494,72 +472,6 @@ class Integrante
     public function getLibros()
     {
         return $this->libros;
-    }
-
-    /**
-     * Add capituloslibro
-     *
-     * @param \UIFI\ProductosBundle\Entity\CapitulosLibro $capituloslibro
-     * @return Integrante
-     */
-    public function addCapituloslibro(\UIFI\ProductosBundle\Entity\CapitulosLibro $capituloslibro)
-    {
-        $this->capituloslibro[] = $capituloslibro;
-
-        return $this;
-    }
-
-    /**
-     * Remove capituloslibro
-     *
-     * @param \UIFI\ProductosBundle\Entity\CapitulosLibro $capituloslibro
-     */
-    public function removeCapituloslibro(\UIFI\ProductosBundle\Entity\CapitulosLibro $capituloslibro)
-    {
-        $this->capituloslibro->removeElement($capituloslibro);
-    }
-
-    /**
-     * Get capituloslibro
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getCapituloslibro()
-    {
-        return $this->capituloslibro;
-    }
-
-    /**
-     * Add software
-     *
-     * @param \UIFI\ProductosBundle\Entity\Software $software
-     * @return Integrante
-     */
-    public function addSoftware(\UIFI\ProductosBundle\Entity\Software $software)
-    {
-        $this->software[] = $software;
-
-        return $this;
-    }
-
-    /**
-     * Remove software
-     *
-     * @param \UIFI\ProductosBundle\Entity\Software $software
-     */
-    public function removeSoftware(\UIFI\ProductosBundle\Entity\Software $software)
-    {
-        $this->software->removeElement($software);
-    }
-
-    /**
-     * Get software
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getSoftware()
-    {
-        return $this->software;
     }
 
     /**
@@ -596,6 +508,39 @@ class Integrante
     }
 
     /**
+     * Add software
+     *
+     * @param \UIFI\ProductosBundle\Entity\Software $software
+     * @return Integrante
+     */
+    public function addSoftware(\UIFI\ProductosBundle\Entity\Software $software)
+    {
+        $this->software[] = $software;
+
+        return $this;
+    }
+
+    /**
+     * Remove software
+     *
+     * @param \UIFI\ProductosBundle\Entity\Software $software
+     */
+    public function removeSoftware(\UIFI\ProductosBundle\Entity\Software $software)
+    {
+        $this->software->removeElement($software);
+    }
+
+    /**
+     * Get software
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSoftware()
+    {
+        return $this->software;
+    }
+
+    /**
      * Add proyectosDirigidos
      *
      * @param \UIFI\ProductosBundle\Entity\ProyectoDirigido $proyectosDirigidos
@@ -629,25 +574,72 @@ class Integrante
     }
 
     /**
-     * Set nombreGrupo
+     * Add capituloslibro
      *
-     * @param string $nombreGrupo
+     * @param \UIFI\ProductosBundle\Entity\CapitulosLibro $capituloslibro
      * @return Integrante
      */
-    public function setNombreGrupo($nombreGrupo)
+    public function addCapituloslibro(\UIFI\ProductosBundle\Entity\CapitulosLibro $capituloslibro)
     {
-        $this->nombreGrupo = $nombreGrupo;
+        $this->capituloslibro[] = $capituloslibro;
 
         return $this;
     }
 
     /**
-     * Get nombreGrupo
+     * Remove capituloslibro
      *
-     * @return string 
+     * @param \UIFI\ProductosBundle\Entity\CapitulosLibro $capituloslibro
      */
-    public function getNombreGrupo()
+    public function removeCapituloslibro(\UIFI\ProductosBundle\Entity\CapitulosLibro $capituloslibro)
     {
-        return $this->nombreGrupo;
+        $this->capituloslibro->removeElement($capituloslibro);
+    }
+
+    /**
+     * Get capituloslibro
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCapituloslibro()
+    {
+        return $this->capituloslibro;
+    }
+
+    /**
+     * Add grupos
+     *
+     * @param \UIFI\IntegrantesBundle\Entity\Grupo $grupos
+     * @return Integrante
+     */
+    public function addGrupo(\UIFI\IntegrantesBundle\Entity\Grupo $grupos)
+    {
+        $this->grupos[] = $grupos;
+
+        return $this;
+    }
+
+    /**
+     * Remove grupos
+     *
+     * @param \UIFI\IntegrantesBundle\Entity\Grupo $grupos
+     */
+    public function removeGrupo(\UIFI\IntegrantesBundle\Entity\Grupo $grupos)
+    {
+        $this->grupos->removeElement($grupos);
+    }
+
+    /**
+     * Get grupos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGrupos()
+    {
+        return $this->grupos;
+    }
+
+    public function __toString() {
+      return "Integrante[ nombre=".$this->nombres."]";
     }
 }
