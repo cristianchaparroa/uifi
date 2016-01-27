@@ -88,4 +88,48 @@ class Scraper
 		return $newArray;
 	}
 
+	/**
+	* Método que se encarga de extraer un valor a partir de un query
+	* especifico.
+	* @return valor
+	*/
+	public function extraerValue($query){
+			$listaNodos = $this->xpath->query( $query );
+			foreach( $listaNodos as $nodo ){
+				$value =  $nodo->nodeValue;
+			}
+			return isset( $value) ? $value : "";
+	}
+	/**
+		*Función para extrer información de un query.
+		*@param Arreglo con el resultado del query.
+		*/
+	public function extraer($query){
+		$producciones = array();
+		$listaNodos = $this->xpath->query( $query );
+		foreach( $listaNodos as $element ){
+				$elemento =  $element->getElementsByTagName( 'td' );
+				foreach ( $elemento as $node ){
+					$doc = new \DOMDocument();
+					$doc->appendChild($doc->importNode($node, true));
+					$produccion =  $doc->saveHTML() ;
+					$producciones[ ] = $produccion;
+				}
+		}
+		$temp = array();
+		foreach( $producciones as $produccion ){
+			$arreglo = explode( '-', $produccion);
+				if( isset( $arreglo[1] ) ){
+						$produccion = '';
+						for( $var =1 ; $var<count($arreglo); $var++ )
+						{
+								$produccion  = $produccion .'-'.$arreglo[$var];
+						}
+
+						$temp [] =  substr($produccion,1) ;
+				}
+		}
+		return $temp;
+	}
+
 }

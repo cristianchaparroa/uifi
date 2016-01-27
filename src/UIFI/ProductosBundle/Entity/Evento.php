@@ -424,4 +424,7 @@ class Evento
     {
         return $this->grupo;
     }
+    public function __toString() {
+      return "Evento[ titulo = ".$this->titulo." ]";
+    }
 }

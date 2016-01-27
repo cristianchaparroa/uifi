@@ -45,10 +45,8 @@ class ScraperService {
        }
        $integrantessDTO = $this->container->get('uifi.gruplac.service.scraper.integrantes')->getIntegrantes($gruposDTO);
        $integrantes = $this->container->get('uifi.gruplac.assembler.integrante')->crearLista($integrantessDTO);
-       $logger->err("Numero de integrantes: ".count($integrantes));
        $grupo = NULL;
        foreach($integrantes  as $integrante) {
-            $logger->err($integrante);
         //  if( is_null($grupo) || $grupo->getNombre() !== $integrante->getNombreGrupo()) {
              $grupo = $this->container->get('uifi.gruplac.util.collection.grupo')->getGrupo($grupos,$integrante->getNombreGrupo());
              if( !is_null($grupo)) {
@@ -57,15 +55,13 @@ class ScraperService {
              }
         //  }
          $this->em->persist($integrante);
-
        }
-      //  //se procesan todos los integranates de todos los grupos
-      //  foreach($integrantess as $integrantes) {
-      //    //se guardan uno a uno los integrantes.
-      //    foreach($integrantes as $ingreantes){
-      //      $this->em->persist($integrante);
-      //    }
-      //  }
+
+       $eventosDTO = $this->container->get('uifi.gruplac.service.scraper.eventos')->getEventos($gruposDTO);
+       $eventos = $this->container->get('uifi.gruplac.assembler.evento')->crearLista($eventosDTO);
+       foreach($eventos as $evento) {
+         $this->em->persist($evento);
+       }
        $this->em->flush();
      }
      return true;
