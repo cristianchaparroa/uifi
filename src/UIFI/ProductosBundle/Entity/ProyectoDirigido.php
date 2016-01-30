@@ -63,19 +63,19 @@ class ProyectoDirigido
    private $tipoOrientacion;
 
    /**
-   * @ORM\Column(name="proyecto_academico", type="string",length=1000,nullable=true)
+   * @ORM\Column(name="proyecto_academico", type="string",length=1000,nullable=true,nullable=true)
    */
    private $proyectoAcademico;
 
    /**
-   * @ORM\Column(name="valoracion", type="string",length=1000,nullable=true)
+   * @ORM\Column(name="valoracion", type="string",length=1000,nullable=true,nullable=true)
    */
    private $valoracion;
 
    /**
     * @var integer
     *
-    * @ORM\Column(name="numero_paginas", type="integer")
+    * @ORM\Column(name="numero_paginas", type="integer",nullable=true)
     */
    private $numeroPaginas;
 
@@ -122,28 +122,28 @@ class ProyectoDirigido
     /**
      * @var string
      *
-     * @ORM\Column(name="mes_inicial", type="string", length=10)
+     * @ORM\Column(name="mes_inicial", type="string", length=10,nullable=true)
      */
     private $mesInicial;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="mes_final", type="string", length=10)
+     * @ORM\Column(name="mes_final", type="string", length=10,nullable=true)
      */
     private $mesFinal;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="anual_inicial", type="string", length=10)
+     * @ORM\Column(name="anual_inicial", type="string", length=10,nullable=true)
      */
     private $anualInicial;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="anual_final", type="string", length=10)
+     * @ORM\Column(name="anual_final", type="string", length=10,nullable=true)
      */
     private $anualFinal;
 

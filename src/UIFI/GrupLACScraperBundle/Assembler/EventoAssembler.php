@@ -35,6 +35,8 @@ class EventoAssembler{
     $evento->setHasta(array_key_exists('hasta',$eventoDTO) ? $eventoDTO['hasta'] : "");
     $evento->setAmbito(array_key_exists('ambito',$eventoDTO) ? $eventoDTO['ambito'] : "");
     $evento->setInstitucion(array_key_exists('institucion',$eventoDTO) ? $eventoDTO['institucion'] : "");
+    $evento->setParticipacion(array_key_exists('participacion',$eventoDTO) ?  $eventoDTO['participacion'] : "");
+
     $evento->setNombreGrupo(array_key_exists('nombreGrupo',$eventoDTO) ?  $eventoDTO['nombreGrupo'] : "");
     $evento->setGrupo(array_key_exists('grupo',$eventoDTO) ?  $eventoDTO['grupo'] : "");
     return $evento;

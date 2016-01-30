@@ -57,11 +57,16 @@ class ScraperService {
          $this->em->persist($integrante);
        }
 
-       $eventosDTO = $this->container->get('uifi.gruplac.service.scraper.eventos')->getEventos($gruposDTO);
-       $eventos = $this->container->get('uifi.gruplac.assembler.evento')->crearLista($eventosDTO);
-       foreach($eventos as $evento) {
-         $this->em->persist($evento);
+       $proyectosDTO = $this->container->get('uifi.gruplac.service.scraper.proyectosDirigidos')->getProyectosDirigidos($gruposDTO);
+       $proyectos = $this->container->get('uifi.gruplac.assembler.proyectoDirigido')->crearLista($proyectosDTO );
+       foreach($proyectos as $proyecto) {
+         $this->em->persist($proyecto);
        }
+      //  $eventosDTO = $this->container->get('uifi.gruplac.service.scraper.eventos')->getEventos($gruposDTO);
+      //  $eventos = $this->container->get('uifi.gruplac.assembler.evento')->crearLista($eventosDTO);
+      //  foreach($eventos as $evento) {
+      //    $this->em->persist($evento);
+      //  }
        $this->em->flush();
      }
      return true;

@@ -121,7 +121,7 @@ class ProductosExporterService
         $entities = $this->em->getRepository('UIFIProductosBundle:Evento')->findAll();
         $path = $this->container->getParameter('kernel.root_dir').'/../web/productos';
         $className = 'UIFI\ProductosBundle\Entity\Evento';
-        $headers = array( "GRUPO","TIPO", "TITULO","CIUDAD","CIUDAD","DESDE","HASTA", "AMBITO", "PARTICIPACION", "INSTITUCION" );
+        $headers = array( "GRUPO","TIPO", "TITULO","CIUDAD","DESDE","HASTA", "AMBITO", "PARTICIPACION", "INSTITUCION" );
         $properties = array('nombreGrupo','tipo','titulo','ciudad','desde','hasta','ambito','participacion','institucion');
         $excelExporter = new ExcelExporter();
         $file = $excelExporter->getXLS($path,$fileName,$className, $headers,$properties,$entities);
