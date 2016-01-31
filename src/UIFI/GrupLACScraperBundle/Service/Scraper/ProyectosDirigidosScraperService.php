@@ -36,6 +36,12 @@ use UIFI\GrupLACScraperBundle\Core\ProyectosDirigidosScraper;
        foreach($gruposDTO as $grupoDTO) {
          $proyectos[] = $this->getProyectosDirigidosGrupo($grupoDTO);
        }
-       return $proyectos;
+       $projects = array();
+       foreach($proyectos as $projects) {
+         foreach($projects as $project){
+              $projects [] = $project;
+         }
+       }
+       return  $projects ;
      }
  }

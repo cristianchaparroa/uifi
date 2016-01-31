@@ -50,12 +50,10 @@ class ProyectoDirigidoAssembler{
    * @param lista de arreglos asociativos
    * @return lista de modelos
   */
-  public function crearLista($proyectossDTO) {
+  public function crearLista($proyectosDTO) {
     $proyectos = array();
-    foreach($proyectossDTO as $proyectosDTO) {
-      foreach($proyectosDTO as $pryectoDirigidoDTO){
-          $proyectos[]  = $this->crearModelo($pryectoDirigidoDTO);
-      }
+    foreach($proyectosDTO as $pryectoDirigidoDTO){
+        $proyectos[]  = $this->crearModelo($pryectoDirigidoDTO);
     }
     return $proyectos;
   }

@@ -140,7 +140,8 @@ class ProyectosDirigidosScraper extends  Scraper
 					$result = $result[1];
 					$result =  trim(preg_replace('/\s\s+/', ' ', $result));
 					$autores = explode(',',$result);
-					$autores = array_filter( $autores );
+					$autores = array_filter($autores);
+					$autores = array_unique($autores);
 					$proyecto['autores'] = $autores;
 				}
 				$proyectos[] = $proyecto;
