@@ -88,7 +88,7 @@ class ProductosExporterService
         $path = $this->container->getParameter('kernel.root_dir').'/../web/productos';
         $className = 'UIFI\ProductosBundle\Entity\ProyectoDirigido';
         $headers = array( "GRUPO","TIPO", "TITULO", "MES INICIAL","AÑO INICIAL","MES FINAL","AÑO FINAL","TIPO ORIENTACION","ESTUDIANTE","PROGRAMA","PAGINAS","VALORACION","INSTITUCION","AUTORES");
-        $properties = array('nombreGrupo','tipo','titulo','mesInicial','anualInicial','mesFinal','anualFinal','tipoOrientacion','nombreEstudiante','proyectoAcademico','numeroPaginas','valoracion','institucion','integrantes');
+        $properties = array('nombreGrupo','tipo','titulo','mesInicial','anualInicial','mesFinal','anualFinal','tipoOrientacion','nombreEstudiante','proyectoAcademico','numeroPaginas','valoracion','institucion','autores');
         $excelExporter = new ExcelExporter();
         $file = $excelExporter->getXLS($path,$fileName,$className, $headers,$properties,$entities);
         return $file;

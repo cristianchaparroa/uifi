@@ -43,6 +43,13 @@ class ProyectoDirigidoAssembler{
     $proyectDirigido->setMesFinal(array_key_exists('mesFinal',$proyectoDirigidoDTO) ?  $proyectoDirigidoDTO['mesFinal'] : "");
     $proyectDirigido->setAnualInicial(array_key_exists('anualInicial',$proyectoDirigidoDTO) ?  $proyectoDirigidoDTO['anualInicial'] : "");
     $proyectDirigido->setAnualFinal(array_key_exists('anualFinal',$proyectoDirigidoDTO) ?  $proyectoDirigidoDTO['anualFinal'] : "");
+    $autores = array_key_exists('autores',$proyectoDirigidoDTO) ?  $proyectoDirigidoDTO['autores'] : array();
+    $autoresString = "";
+    foreach($autores as $autor){
+      $autoresString = $autoresString . $autor .",";
+    }
+    $autoresString = substr($autoresString, 0, -1);
+    $proyectDirigido->setAutores( $autoresString );
     return $proyectDirigido;
   }
   /**

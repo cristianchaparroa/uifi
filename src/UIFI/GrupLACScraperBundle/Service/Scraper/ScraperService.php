@@ -9,6 +9,7 @@ use Symfony\Component\DependencyInjection\Container;
 
 use UIFI\IntegrantesBundle\Entity\Grupo;
 use UIFI\IntegrantesBundle\Entity\Integrante;
+use UIFI\IntegrantesBundle\Entity\IntegranteProyectoDirigido;
 use UIFI\ProductosBundle\Entity\Articulo;
 use UIFI\ProductosBundle\Entity\Evento;
 
@@ -58,9 +59,10 @@ class ScraperService {
        }
 
        $proyectosDTO = $this->container->get('uifi.gruplac.service.scraper.proyectosDirigidos')->getProyectosDirigidos($gruposDTO);
-       $proyectos = $this->container->get('uifi.gruplac.assembler.proyectoDirigido')->crearLista($proyectosDTO );
+       $proyectos = $this->container->get('uifi.gruplac.assembler.proyectoDirigido')->crearLista($proyectosDTO);
        foreach($proyectos as $proyecto) {
-         $this->em->persist($proyecto);
+          // $autores =  $this->container->get('uifi.gruplac.util.collection.proyectoDirigido')->getAutores($proyectosDTO,$proyecto,$integrantes);
+          $this->em->persist($proyecto);
        }
       //  $eventosDTO = $this->container->get('uifi.gruplac.service.scraper.eventos')->getEventos($gruposDTO);
       //  $eventos = $this->container->get('uifi.gruplac.assembler.evento')->crearLista($eventosDTO);

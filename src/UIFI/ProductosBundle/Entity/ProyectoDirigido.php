@@ -84,15 +84,16 @@ class ProyectoDirigido
    * @ORM\Column(name="institucion", type="string",length=1000,nullable=true)
    */
    private $institucion;
-
-
+   /**
+   * @ORM\Column(name="autores", type="string",length=1000,nullable=true)
+   */
+   private $autores;
 
     /**
      * Integrantes de un grupo de un investigacion que publicaron el articulo.
-     *
-     * @ORM\ManyToMany(targetEntity="UIFI\IntegrantesBundle\Entity\Integrante", mappedBy="proyectosDirigidos")
+     * @ORM\Column(name="integrante", type="string",length=1000,nullable=true)
     */
-    private $integrantes;
+    private $integranteProyectoDirigido;
 
     /**
      * Codigo del grupo en el cual fue publicado el articulo
@@ -148,14 +149,17 @@ class ProyectoDirigido
     private $anualFinal;
 
     /**
-     * Constructor
+     * Set id
+     *
+     * @param integer $id
+     * @return ProyectoDirigido
      */
-    public function __construct()
+    public function setId($id)
     {
-        $this->integrantes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->id = $id;
+
+        return $this;
     }
-
-
 
     /**
      * Get id
@@ -188,52 +192,6 @@ class ProyectoDirigido
     public function getTitulo()
     {
         return $this->titulo;
-    }
-
-    /**
-     * Set contenido
-     *
-     * @param string $contenido
-     * @return ProyectoDirigido
-     */
-    public function setContenido($contenido)
-    {
-        $this->contenido = $contenido;
-
-        return $this;
-    }
-
-    /**
-     * Get contenido
-     *
-     * @return string
-     */
-    public function getContenido()
-    {
-        return $this->contenido;
-    }
-
-    /**
-     * Set idioma
-     *
-     * @param string $idioma
-     * @return ProyectoDirigido
-     */
-    public function setIdioma($idioma)
-    {
-        $this->idioma = $idioma;
-
-        return $this;
-    }
-
-    /**
-     * Get idioma
-     *
-     * @return string
-     */
-    public function getIdioma()
-    {
-        return $this->idioma;
     }
 
     /**
@@ -303,85 +261,6 @@ class ProyectoDirigido
     public function getNombreEstudiante()
     {
         return $this->nombreEstudiante;
-    }
-
-    /**
-     * Set grupo
-     *
-     * @param string $grupo
-     * @return ProyectoDirigido
-     */
-    public function setGrupo($grupo)
-    {
-        $this->grupo = $grupo;
-
-        return $this;
-    }
-
-    /**
-     * Get grupo
-     *
-     * @return string
-     */
-    public function getGrupo()
-    {
-        return $this->grupo;
-    }
-
-    /**
-     * Set proceso
-     *
-     * @param string $proceso
-     * @return ProyectoDirigido
-     */
-    public function setProceso($proceso)
-    {
-        $this->proceso = $proceso;
-
-        return $this;
-    }
-
-    /**
-     * Get proceso
-     *
-     * @return string
-     */
-    public function getProceso()
-    {
-        return $this->proceso;
-    }
-
-    /**
-     * Add integrantes
-     *
-     * @param \UIFI\IntegrantesBundle\Entity\Integrante $integrantes
-     * @return ProyectoDirigido
-     */
-    public function addIntegrante(\UIFI\IntegrantesBundle\Entity\Integrante $integrantes)
-    {
-        $this->integrantes[] = $integrantes;
-
-        return $this;
-    }
-
-    /**
-     * Remove integrantes
-     *
-     * @param \UIFI\IntegrantesBundle\Entity\Integrante $integrantes
-     */
-    public function removeIntegrante(\UIFI\IntegrantesBundle\Entity\Integrante $integrantes)
-    {
-        $this->integrantes->removeElement($integrantes);
-    }
-
-    /**
-     * Get integrantes
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getIntegrantes()
-    {
-        return $this->integrantes;
     }
 
     /**
@@ -500,6 +379,98 @@ class ProyectoDirigido
     }
 
     /**
+     * Set autores
+     *
+     * @param string $autores
+     * @return ProyectoDirigido
+     */
+    public function setAutores($autores)
+    {
+        $this->autores = $autores;
+
+        return $this;
+    }
+
+    /**
+     * Get autores
+     *
+     * @return string
+     */
+    public function getAutores()
+    {
+        return $this->autores;
+    }
+
+    /**
+     * Set integranteProyectoDirigido
+     *
+     * @param string $integranteProyectoDirigido
+     * @return ProyectoDirigido
+     */
+    public function setIntegranteProyectoDirigido($integranteProyectoDirigido)
+    {
+        $this->integranteProyectoDirigido = $integranteProyectoDirigido;
+
+        return $this;
+    }
+
+    /**
+     * Get integranteProyectoDirigido
+     *
+     * @return string
+     */
+    public function getIntegranteProyectoDirigido()
+    {
+        return $this->integranteProyectoDirigido;
+    }
+
+    /**
+     * Set grupo
+     *
+     * @param string $grupo
+     * @return ProyectoDirigido
+     */
+    public function setGrupo($grupo)
+    {
+        $this->grupo = $grupo;
+
+        return $this;
+    }
+
+    /**
+     * Get grupo
+     *
+     * @return string
+     */
+    public function getGrupo()
+    {
+        return $this->grupo;
+    }
+
+    /**
+     * Set proceso
+     *
+     * @param string $proceso
+     * @return ProyectoDirigido
+     */
+    public function setProceso($proceso)
+    {
+        $this->proceso = $proceso;
+
+        return $this;
+    }
+
+    /**
+     * Get proceso
+     *
+     * @return string
+     */
+    public function getProceso()
+    {
+        return $this->proceso;
+    }
+
+    /**
      * Set nombreGrupo
      *
      * @param string $nombreGrupo
@@ -568,9 +539,6 @@ class ProyectoDirigido
         return $this->mesFinal;
     }
 
-
-
-
     /**
      * Set anualInicial
      *
@@ -615,5 +583,8 @@ class ProyectoDirigido
     public function getAnualFinal()
     {
         return $this->anualFinal;
+    }
+    public function __toString(){
+      return "ProyectoDirigido [ tipo=".$this->tipo.", titulo=".$this->titulo."]";
     }
 }

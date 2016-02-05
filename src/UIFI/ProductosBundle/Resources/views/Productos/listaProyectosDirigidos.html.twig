@@ -37,12 +37,7 @@
                 <td>{{entity.grupo}}</td>
                 <td>{{entity.tipo}}</td>
                 <td>{{entity.titulo}}</td>
-                <td>
-                    {% for integrante in entity.integrantes %}
-                      {{integrante}}
-                    {% endfor %}
-
-                </td>
+                <td>{{entity.autores}}</td>
             </tr>
         {% endfor %}
         </tbody>

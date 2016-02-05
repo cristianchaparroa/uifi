@@ -34,14 +34,10 @@ use UIFI\GrupLACScraperBundle\Core\ProyectosDirigidosScraper;
      public function getProyectosDirigidos($gruposDTO) {
        $proyectos = array();
        foreach($gruposDTO as $grupoDTO) {
-         $proyectos[] = $this->getProyectosDirigidosGrupo($grupoDTO);
+         $projectos = $this->getProyectosDirigidosGrupo($grupoDTO);
+         $this->logger->err("numero de proyectos: " . count($projectos));
+         $proyectos = array_merge($proyectos,$projectos);
        }
-       $projects = array();
-       foreach($proyectos as $projects) {
-         foreach($projects as $project){
-              $projects [] = $project;
-         }
-       }
-       return  $projects ;
+       return  $proyectos ;
      }
  }
