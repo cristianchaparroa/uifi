@@ -21,7 +21,6 @@ class Software
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
     /**
      * @var string
      *
@@ -32,32 +31,22 @@ class Software
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre_comercial", type="string", length=255,nullable=true)
+     * @ORM\Column(name="tipo", type="string", nullable=true)
      */
-    private $nombreComercial;
+    private $tipo;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre_proyecto", type="string", length=255,nullable=true)
+     * @ORM\Column(name="nombre_comercial", type="string", length=255,nullable=true)
      */
-    private $nombreProyecto;
-
-
+    private $nombreComercial;
     /**
      * @var string
      *
      * @ORM\Column(name="institucion_financiera", type="string", length=255,nullable=true)
      */
     private $institucionFinanciera;
-
-    /**
-     * Categoria del articulo de investigacion
-     * @var string
-     *
-     * @ORM\Column(name="categoria", type="string", length=255,nullable=true)
-     */
-    private $categoria;
 
     /**
       * Indica si un software esta disponible, estados:
@@ -95,6 +84,22 @@ class Software
      * @ORM\Column(name="nombre_grupo", type="string", length=255)
      */
     private $nombreGrupo;
+
+    /**
+    * @ORM\Column(name="autores", type="string",length=1000,nullable=true)
+    */
+    private $autores;
+
+    /**
+    * @ORM\Column(name="pais", type="string",nullable=true)
+    */
+    private $pais;
+
+    /**
+    * @ORM\Column(name="sitio_web", type="string",nullable=true)
+    */
+    private $sitioWeb;
+
     /**
      * Constructor
      */
@@ -351,5 +356,101 @@ class Software
     public function getNombreGrupo()
     {
         return $this->nombreGrupo;
+    }
+
+    /**
+     * Set autores
+     *
+     * @param string $autores
+     * @return Software
+     */
+    public function setAutores($autores)
+    {
+        $this->autores = $autores;
+
+        return $this;
+    }
+
+    /**
+     * Get autores
+     *
+     * @return string
+     */
+    public function getAutores()
+    {
+        return $this->autores;
+    }
+
+    /**
+     * Set pais
+     *
+     * @param string $pais
+     * @return Software
+     */
+    public function setPais($pais)
+    {
+        $this->pais = $pais;
+
+        return $this;
+    }
+
+    /**
+     * Get pais
+     *
+     * @return string
+     */
+    public function getPais()
+    {
+        return $this->pais;
+    }
+
+    /**
+     * Set tipo
+     *
+     * @param string $tipo
+     * @return Software
+     */
+    public function setTipo($tipo)
+    {
+        $this->tipo = $tipo;
+
+        return $this;
+    }
+
+    /**
+     * Get tipo
+     *
+     * @return string
+     */
+    public function getTipo()
+    {
+        return $this->tipo;
+    }
+
+    /**
+     * Set sitioWeb
+     *
+     * @param string $sitioWeb
+     * @return Software
+     */
+    public function setSitioWeb($sitioWeb)
+    {
+        $this->sitioWeb = $sitioWeb;
+
+        return $this;
+    }
+
+    /**
+     * Get sitioWeb
+     *
+     * @return string
+     */
+    public function getSitioWeb()
+    {
+        return $this->sitioWeb;
+    }
+
+    public function __toString() {
+      return "Software[ titulo=".$this->titulo.", pais=".$this->pais.", anual=".$this->anual.", disponibilidad=".$this->disponible.", sitioWeb=".$this->sitioWeb."]";
     }
 }

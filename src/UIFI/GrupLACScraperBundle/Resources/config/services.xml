@@ -36,6 +36,10 @@
           <argument type="service" id="service_container" />
         </service>
 
+        <service class="UIFI\GrupLACScraperBundle\Assembler\SoftwareAssembler" id="uifi.gruplac.assembler.software">
+          <argument type="service" id="service_container" />
+        </service>
+
         <!-- Servicios de scrapping -->
         <service class="UIFI\GrupLACScraperBundle\Service\Scraper\ScraperService" id="uifi.gruplac.scrap.scraper">
             <argument type="service" id="service_container" />
@@ -57,6 +61,10 @@
         <service class="UIFI\GrupLACScraperBundle\Service\Scraper\ProyectosDirigidosScraperService" id="uifi.gruplac.service.scraper.proyectosDirigidos">
           <argument type="service" id="service_container" />
         </service>
+
+        <service class="UIFI\GrupLACScraperBundle\Service\Scraper\SoftwareScraperService" id="uifi.gruplac.service.scraper.software">
+          <argument type="service" id="service_container" />
+        </service>
         <!-- Utilidades -->
 
         <service class="UIFI\GrupLACScraperBundle\Util\GrupoCollectionUtilities" id="uifi.gruplac.util.collection.grupo">
@@ -67,10 +75,6 @@
         <service class="UIFI\GrupLACScraperBundle\Util\ProyectoDirigidoCollectionUtilities" id="uifi.gruplac.util.collection.proyectoDirigido">
           <argument type="service" id="service_container" />
         </service>
-
-
-
-
 
     </services>
 </container>

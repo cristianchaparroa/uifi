@@ -44,26 +44,33 @@ class ScraperService {
        foreach($grupos as $grupo) {
          $this->em->persist($grupo);
        }
-       $integrantessDTO = $this->container->get('uifi.gruplac.service.scraper.integrantes')->getIntegrantes($gruposDTO);
-       $integrantes = $this->container->get('uifi.gruplac.assembler.integrante')->crearLista($integrantessDTO);
-       $grupo = NULL;
-       foreach($integrantes  as $integrante) {
-        //  if( is_null($grupo) || $grupo->getNombre() !== $integrante->getNombreGrupo()) {
-             $grupo = $this->container->get('uifi.gruplac.util.collection.grupo')->getGrupo($grupos,$integrante->getNombreGrupo());
-             if( !is_null($grupo)) {
-               $integrante->addGrupo($grupo);
-               $grupo->addIntegrante($integrante);
-             }
-        //  }
-         $this->em->persist($integrante);
+      //  $integrantessDTO = $this->container->get('uifi.gruplac.service.scraper.integrantes')->getIntegrantes($gruposDTO);
+      //  $integrantes = $this->container->get('uifi.gruplac.assembler.integrante')->crearLista($integrantessDTO);
+      //  $grupo = NULL;
+      //  foreach($integrantes  as $integrante) {
+      //   //  if( is_null($grupo) || $grupo->getNombre() !== $integrante->getNombreGrupo()) {
+      //        $grupo = $this->container->get('uifi.gruplac.util.collection.grupo')->getGrupo($grupos,$integrante->getNombreGrupo());
+      //        if( !is_null($grupo)) {
+      //          $integrante->addGrupo($grupo);
+      //          $grupo->addIntegrante($integrante);
+      //        }
+      //   //  }
+      //    $this->em->persist($integrante);
+      //  }
+
+      //  $proyectosDTO = $this->container->get('uifi.gruplac.service.scraper.proyectosDirigidos')->getProyectosDirigidos($gruposDTO);
+      //  $proyectos = $this->container->get('uifi.gruplac.assembler.proyectoDirigido')->crearLista($proyectosDTO);
+      //  foreach($proyectos as $proyecto) {
+      //     // $autores =  $this->container->get('uifi.gruplac.util.collection.proyectoDirigido')->getAutores($proyectosDTO,$proyecto,$integrantes);
+      //     $this->em->persist($proyecto);
+      //  }
+
+       $softwareDTO = $this->container->get('uifi.gruplac.service.scraper.software')->getSoftware($gruposDTO);
+       $softwares = $this->container->get('uifi.gruplac.assembler.software')->crearLista($softwareDTO);
+       foreach($softwares as $software) {
+          $this->em->persist($software);
        }
 
-       $proyectosDTO = $this->container->get('uifi.gruplac.service.scraper.proyectosDirigidos')->getProyectosDirigidos($gruposDTO);
-       $proyectos = $this->container->get('uifi.gruplac.assembler.proyectoDirigido')->crearLista($proyectosDTO);
-       foreach($proyectos as $proyecto) {
-          // $autores =  $this->container->get('uifi.gruplac.util.collection.proyectoDirigido')->getAutores($proyectosDTO,$proyecto,$integrantes);
-          $this->em->persist($proyecto);
-       }
       //  $eventosDTO = $this->container->get('uifi.gruplac.service.scraper.eventos')->getEventos($gruposDTO);
       //  $eventos = $this->container->get('uifi.gruplac.assembler.evento')->crearLista($eventosDTO);
       //  foreach($eventos as $evento) {
