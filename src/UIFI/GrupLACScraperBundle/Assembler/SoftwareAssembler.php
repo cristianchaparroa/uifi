@@ -32,7 +32,8 @@ class SoftwareAssembler {
     $software->setTitulo(array_key_exists('titulo',$softwareDTO) ? $softwareDTO['titulo'] : "");
     $software->setAnual(array_key_exists('anual',$softwareDTO) ? $softwareDTO['anual' ] : "" );
     $software->setDisponible(array_key_exists('disponibilidad',$softwareDTO) ? $softwareDTO['disponibilidad'] : "");
-    $software->setTipo(array_key_exists('nombreComercial',$softwareDTO) ? $softwareDTO['nombreComercial'] : "");
+    $software->setTipo(array_key_exists('tipo',$softwareDTO) ? $softwareDTO['tipo'] : "");
+    $software->setNombreComercial(array_key_exists('nombreComercial',$softwareDTO) ? $softwareDTO['nombreComercial'] : "");
     $software->setSitioWeb(array_key_exists('sitioWeb',$softwareDTO) ? $softwareDTO['sitioWeb'] : "");
     $software->setInstitucionFinanciera(array_key_exists('institucionFinanciera',$softwareDTO) ? $softwareDTO['institucionFinanciera'] : "");
     $software->setNombreGrupo(array_key_exists('nombreGrupo',$softwareDTO) ?  $softwareDTO['nombreGrupo'] : "");

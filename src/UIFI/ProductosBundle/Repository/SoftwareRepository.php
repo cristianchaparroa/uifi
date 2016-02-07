@@ -19,7 +19,7 @@ class SoftwareRepository extends EntityRepository implements IReportableReposito
     */
     public function deleteAll(){
       $em = $this->getEntityManager();
-      return $em->createQuery('DELETE FROM UIFIProductosBundle:Articulo')->execute();
+      return $em->createQuery('DELETE FROM UIFIProductosBundle:Software')->execute();
     }
 
     /**
