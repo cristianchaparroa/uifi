@@ -10,15 +10,15 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="articulo")
  * @ORM\Entity(repositoryClass="UIFI\ProductosBundle\Repository\ArticuloRepository")
  */
-class Articulo
-{
+class Articulo {
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="string", length=255)
-     * @ORM\Id
-     */
+  /**
+   * @var integer
+   *
+   * @ORM\Column(name="id", type="integer")
+   * @ORM\Id
+   * @ORM\GeneratedValue(strategy="AUTO")
+   */
     private $id;
 
     /**
@@ -126,7 +126,6 @@ class Articulo
      * @ORM\Column(name="pais", type="string", length=60, nullable=true )
      */
     private $pais;
-
     /**
      * Constructor
      */
@@ -135,24 +134,10 @@ class Articulo
         $this->integrantes = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-
-    /**
-     * Set id
-     *
-     * @param string $id
-     * @return Articulo
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
     /**
      * Get id
      *
-     * @return string
+     * @return integer 
      */
     public function getId()
     {
@@ -175,7 +160,7 @@ class Articulo
     /**
      * Get titulo
      *
-     * @return string
+     * @return string 
      */
     public function getTitulo()
     {
@@ -198,7 +183,7 @@ class Articulo
     /**
      * Get editorial
      *
-     * @return string
+     * @return string 
      */
     public function getEditorial()
     {
@@ -221,7 +206,7 @@ class Articulo
     /**
      * Get ISSN
      *
-     * @return string
+     * @return string 
      */
     public function getISSN()
     {
@@ -244,7 +229,7 @@ class Articulo
     /**
      * Get categoria
      *
-     * @return string
+     * @return string 
      */
     public function getCategoria()
     {
@@ -267,7 +252,7 @@ class Articulo
     /**
      * Get anual
      *
-     * @return string
+     * @return string 
      */
     public function getAnual()
     {
@@ -290,7 +275,7 @@ class Articulo
     /**
      * Get grupo
      *
-     * @return string
+     * @return string 
      */
     public function getGrupo()
     {
@@ -313,7 +298,7 @@ class Articulo
     /**
      * Get proceso
      *
-     * @return string
+     * @return string 
      */
     public function getProceso()
     {
@@ -336,7 +321,7 @@ class Articulo
     /**
      * Get tipo
      *
-     * @return string
+     * @return string 
      */
     public function getTipo()
     {
@@ -359,7 +344,7 @@ class Articulo
     /**
      * Get revista
      *
-     * @return string
+     * @return string 
      */
     public function getRevista()
     {
@@ -382,14 +367,35 @@ class Articulo
     /**
      * Get volumen
      *
-     * @return string
+     * @return string 
      */
     public function getVolumen()
     {
         return $this->volumen;
     }
 
+    /**
+     * Set fasciculo
+     *
+     * @param string $fasciculo
+     * @return Articulo
+     */
+    public function setFasciculo($fasciculo)
+    {
+        $this->fasciculo = $fasciculo;
 
+        return $this;
+    }
+
+    /**
+     * Get fasciculo
+     *
+     * @return string 
+     */
+    public function getFasciculo()
+    {
+        return $this->fasciculo;
+    }
 
     /**
      * Set paginas
@@ -407,11 +413,57 @@ class Articulo
     /**
      * Get paginas
      *
-     * @return string
+     * @return string 
      */
     public function getPaginas()
     {
         return $this->paginas;
+    }
+
+    /**
+     * Set nombreGrupo
+     *
+     * @param string $nombreGrupo
+     * @return Articulo
+     */
+    public function setNombreGrupo($nombreGrupo)
+    {
+        $this->nombreGrupo = $nombreGrupo;
+
+        return $this;
+    }
+
+    /**
+     * Get nombreGrupo
+     *
+     * @return string 
+     */
+    public function getNombreGrupo()
+    {
+        return $this->nombreGrupo;
+    }
+
+    /**
+     * Set pais
+     *
+     * @param string $pais
+     * @return Articulo
+     */
+    public function setPais($pais)
+    {
+        $this->pais = $pais;
+
+        return $this;
+    }
+
+    /**
+     * Get pais
+     *
+     * @return string 
+     */
+    public function getPais()
+    {
+        return $this->pais;
     }
 
     /**
@@ -440,79 +492,10 @@ class Articulo
     /**
      * Get integrantes
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getIntegrantes()
     {
         return $this->integrantes;
-    }
-
-    /**
-     * Set fasciculo
-     *
-     * @param string $fasciculo
-     * @return Articulo
-     */
-    public function setFasciculo($fasciculo)
-    {
-        $this->fasciculo = $fasciculo;
-
-        return $this;
-    }
-
-    /**
-     * Get fasciculo
-     *
-     * @return string
-     */
-    public function getFasciculo()
-    {
-        return $this->fasciculo;
-    }
-
-    /**
-     * Set nombreGrupo
-     *
-     * @param string $nombreGrupo
-     * @return Articulo
-     */
-    public function setNombreGrupo($nombreGrupo)
-    {
-        $this->nombreGrupo = $nombreGrupo;
-
-        return $this;
-    }
-
-    /**
-     * Get nombreGrupo
-     *
-     * @return string
-     */
-    public function getNombreGrupo()
-    {
-        return $this->nombreGrupo;
-    }
-
-    /**
-     * Set pais
-     *
-     * @param string $pais
-     * @return Articulo
-     */
-    public function setPais($pais)
-    {
-        $this->pais = $pais;
-
-        return $this;
-    }
-
-    /**
-     * Get pais
-     *
-     * @return string 
-     */
-    public function getPais()
-    {
-        return $this->pais;
     }
 }

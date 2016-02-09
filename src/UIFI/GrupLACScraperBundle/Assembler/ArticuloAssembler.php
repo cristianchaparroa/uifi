@@ -15,6 +15,7 @@ use Symfony\Component\DependencyInjection\Container;
   *
   */
 class ArticuloAssembler{
+  
   public function __construct(Container $container) {
      $this->container = $container;
      $this->em = $container->get('doctrine.orm.entity_manager');
@@ -36,6 +37,8 @@ class ArticuloAssembler{
       $articulo->setFasciculo(array_key_exists('fasc',$articuloDTO) ?  $articuloDTO['fasc']:"");
       $articulo->setPaginas(array_key_exists('paginas',$articuloDTO) ?  $articuloDTO['paginas']:"");
       $articulo->setPais(array_key_exists('pais',$articuloDTO) ?  $articuloDTO['pais']:"");
+      $articulo->setNombreGrupo(array_key_exists('nombreGrupo',$articuloDTO) ?  $articuloDTO['nombreGrupo'] : "");
+      $articulo->setGrupo(array_key_exists('grupo',$articuloDTO) ?  $articuloDTO['grupo'] : "");
       return $articulo;
   }
   /**

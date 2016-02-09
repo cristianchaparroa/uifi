@@ -65,12 +65,17 @@ class ScraperService {
       //     $this->em->persist($proyecto);
       //  }
 
-       $softwareDTO = $this->container->get('uifi.gruplac.service.scraper.software')->getSoftware($gruposDTO);
-       $softwares = $this->container->get('uifi.gruplac.assembler.software')->crearLista($softwareDTO);
-       foreach($softwares as $software) {
-          $this->em->persist($software);
-       }
+      //  $softwareDTO = $this->container->get('uifi.gruplac.service.scraper.software')->getSoftware($gruposDTO);
+      //  $softwares = $this->container->get('uifi.gruplac.assembler.software')->crearLista($softwareDTO);
+      //  foreach($softwares as $software) {
+      //     $this->em->persist($software);
+      //  }
 
+      $articulosDTO =$this->container->get('uifi.gruplac.service.scraper.articulo')->getArticulos($gruposDTO);
+      $articulos = $this->container->get('uifi.gruplac.assembler.articulo')->crearLista($articulosDTO);
+      foreach( $articulos as $articulo) {
+        $this->em->persist($articulo);
+      }
       //  $eventosDTO = $this->container->get('uifi.gruplac.service.scraper.eventos')->getEventos($gruposDTO);
       //  $eventos = $this->container->get('uifi.gruplac.assembler.evento')->crearLista($eventosDTO);
       //  foreach($eventos as $evento) {

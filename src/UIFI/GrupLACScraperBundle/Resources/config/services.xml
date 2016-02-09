@@ -46,6 +46,7 @@
         </service>
 
         <service class="UIFI\GrupLACScraperBundle\Service\Scraper\ArticulosScraperService" id="uifi.gruplac.service.scraper.articulo">
+          <argument type="service" id="service_container" />
         </service>
 
         <service class="UIFI\GrupLACScraperBundle\Service\Scraper\GrupoScraperService" id="uifi.gruplac.service.scraper.grupo">
