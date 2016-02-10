@@ -884,5 +884,760 @@ class GrupLACScraper extends  Scraper
 			}
 			return $eventos;
 		}
-
+		/*
+		* Obtienen los otros productos tecnologicos de un grupo de investgiación
+		* @return Arreglo de arreglos
+		* 		$producto['tipo'] el tipo del producto
+		* 		$producto['titulo'] el titulo del producto
+		* 		$producto['pais'] pais del grupo
+		* 		$producto['anual'] año del producto
+		* 		$producto['disponibilidad'] disponibilidad del producto
+		* 		$producto['nombre_comercial'] nombre comercial del producto
+		* 		$producto['institucion_financiadora'] institucion_financiadora del producto
+		*/
+		public function getOtrosProductosTecnologicos(){
+		 $query = '/html/body/table[35]'; //pendiente
+		 $array = $this->extraer( $query );
+		 $productos = array();
+		 foreach($array as $item ){
+			 $doc = new \DOMDocument();
+			 $doc->loadHTML( $item );
+			 $xpath = new \DOMXPath($doc);
+			 $list = $doc->getElementsByTagName('strong');
+			 $producto = array();
+			 foreach($list as $node ){
+				 $producto['tipo'] = $node->nodeValue;
+				 $tituloNode = $node->nextSibling;
+				 $titulo = $tituloNode->nodeValue;
+				 $titulo = str_replace(':','',$titulo);
+				 $titulo = utf8_encode ($titulo);
+				 $producto['titulo'] = $titulo;
+				 $list = $doc->getElementsByTagName('br');
+				 foreach($list as $node){
+					 $nodesiguiente = $node->nextSibling;
+					 $value = $nodesiguiente->nodeValue;
+					 $valores = explode(",",$value);
+					 $pais = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[0]) : "";
+					 $producto['pais'] = $pais;
+					 $anual = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[1]) : "";
+					 $producto['anual'] = $anual;
+					 foreach($valores as $valor) {
+							 if(strpos($valor,'Disponibilidad')){
+						 $result = explode(':',$valor);
+						 $disponibilidad = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+						 $producto['disponibilidad'] = $disponibilidad;
+							 }
+							 if(strpos($valor,'Nombre comercial')){
+						 $result = explode(':',$valor);
+						 $nombreComercial = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+						 $producto['nombre_comercial'] = $nombreComercial;
+							 }
+							 if(strpos($valor,'Institución financiadora')){
+						 $result = explode(':',$valor);
+						 $institucionFinanciadora = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+						 $producto['institucion_financiadora'] = $institucionFinanciadora;
+							 }
+					 }
+				 }
+			 }
+			 $productos[] = $producto;
+		 }
+		 return $productos;
+		}
+		/**
+		 *Obtienen los otros libros publicados
+		 * @return Arreglo de libros publicados
+		 */
+		public function otrosLibrosPublicados(){
+			 $query = '/html/body/table[35]'; //Qué es?
+			 return $this->extraer( $query );
+		}
+		 /**
+		* Obtienen los otros libros publicados
+		* @return Arreglo de arreglos
+		* 		$libro['titulo'] el titulo del libro
+		* 		$libro['pais'] el país del libro
+		* 		$libro['anual'] el año del libro
+		* 		$libro['isbn'] el isbn del libro
+		* 		$libro['tipo'] el tipo de libro
+		* 		$libro['volumen'] el volumen del libro
+		* 		$libro['paginas'] la cantidad de páginas del libro.
+		* 		$libro['editorial'] la editorial del libro
+		*/
+		public function getOtrosLibrosPublicados(){
+		 $query = '/html/body/table[35]'; //pendiente
+		 $array = $this->extraer( $query );
+		 $libros = array();
+		 foreach($array as $item ){
+			 $doc = new \DOMDocument();
+			 $doc->loadHTML( $item );
+			 $xpath = new \DOMXPath($doc);
+			 $list = $doc->getElementsByTagName('strong');
+			 $libro = array();
+			 foreach($list as $node ){
+				 $libro['tipo'] = $node->nodeValue;
+				 $tituloNode = $node->nextSibling;
+				 $titulo = $tituloNode->nodeValue;
+				 $titulo = str_replace(':','',$titulo);
+				 $titulo = utf8_encode ($titulo);
+				 $libro['titulo'] = $titulo;
+				 $list = $doc->getElementsByTagName('br');
+				 $nodesiguiente = $node[0]->nextSibling;
+				 $value = $nodesiguiente->nodeValue;
+				 $valores = explode(",",$value);
+				 $pais = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[0]) : "";
+				 $libro['pais'] = $pais;
+				 $anual = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[1]) : "";
+				 $libro['anual'] = $anual;
+				 // ISBN: 978-958-8723-10-5 vol: 0 págs: 177
+				 $datos = explode(":",$valores[2]);
+				 $isbn = count($datos) > 1 ? str_replace('vol','',$datos[1]):"";
+				 $libro['isbn'] = $isbn;
+				 $volumen = count($datos) >2  ? str_replace('págs','',$datos[2]):"";
+				 $libro['volumen'] = $volumen;
+				 $paginas = count($datos) > 3 ? $datos[3]:"";
+				 $libro['paginas'] = $paginas;
+				 $editorial = count($valores) > 3 ? $this->eliminarSaltoLinea($valores[3]) : "";
+				 $libro['editorial'] = $editorial;
+			 }
+			 $libros[] = $libro;
+		 }
+		 return $libros;
+		}
+		 /**
+		* Obtienen los otros articulos publicados
+		* @return Arreglo de arreglos
+		* 		$articulo['titulo'] el titulo del articulo
+		* 		$articulo['issn'] el issn del articulo
+		* 		$articulo['anual'] el año del articulo
+		* 		$articulo['tipo'] el tipo del articulo
+		* 		$articulo['revista'] revista del articulo
+		* 		$articulo['volumen'] el volumen del articulo
+		* 		$articulo['fasciculo'] el fasciculo del articulo
+		* 		$articulo['paginas'] páginas del articulo
+		* 		$articulo['pais'] el país del articulo
+		*/
+		public function getOtrosArticulosPublicados(){
+		 $query = '/html/body/table[35]'; //pendiente
+		 $array = $this->extraer( $query );
+		 $articulos = array();
+		 foreach($array as $item ){
+			 $doc = new \DOMDocument();
+			 $doc->loadHTML( $item );
+			 $xpath = new \DOMXPath($doc);
+			 $list = $doc->getElementsByTagName('strong');
+			 $articulo = array();
+			 foreach($list as $node ){
+				 $articulo['tipo'] = $node->nodeValue;
+				 $tituloNode = $node->nextSibling;
+				 $titulo = $tituloNode->nodeValue;
+				 $titulo = str_replace(':','',$titulo);
+				 $titulo = utf8_encode ($titulo);
+				 $articulo['titulo'] = $titulo;
+				 $list = $doc->getElementsByTagName('br');
+				 $nodesiguiente = $node[0]->nextSibling;
+				 $value = $nodesiguiente->nodeValue;
+				 $valores = explode(",",$value);
+				 $pais = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[0]) : "";
+				 $articulo['pais'] = $pais;
+				 $datos = count($valores) > 1 ? explode(":",$valores[1]) : "";
+				 $revista = count($datos) > 1 ? $this->eliminarSaltoLinea($datos[0]) : "";
+				 $revista = str_replace('ISSN','',$revista);
+				 $articulo['revista'] = $revista;
+				 $datos = count($valores) > 2 ? explode(":",$valores[2]) : "";
+				 $anual = count($datos) > 1 ? $this->eliminarSaltoLinea($datos[0]) : "";
+				 $anual = str_replace('vol','',$anual);
+				 $articulo['anual'] = $anual;
+				 $volumen = count($datos) > 1 ? $this->eliminarSaltoLinea($datos[1]) : "";
+				 $volumen = str_replace('fasc','',$volumen);
+				 $articulo['volumen'] = $volumen;
+				 $fasciculo = count($datos) > 2 ? $this->eliminarSaltoLinea($datos[2]) : "";
+				 $fasciculo = str_replace('págs','',$fasciculo);
+				 $articulo['fasciculo'] = $fasciculo;
+				 $paginas = count($datos) > 3 ? $this->eliminarSaltoLinea($datos[3]) : "";
+				 $articulo['paginas'] = $paginas;
+			 }
+			 $articulos[] = $articulo;
+		 }
+		 return $articulos;
+		}
+		 /**
+		 *Obtienen los otros diseños industriales
+		 * @return Arreglo de diseños indostriales
+		 */
+		 public function diseñosIndostriales(){
+			 $query = '/html/body/table[35]'; //Qué es?
+			 return $this->extraer( $query );
+		 }
+		 /**
+		* Obtienen los otros articulos publicados
+		* @return Arreglo de arreglos
+		* 		$diseno['tipo'] el tipo del diseño
+		* 		$diseno['titulo'] el titulo del diseño
+		* 		$diseo['pais'] el pais del diseño
+		* 		$diseno['tipo'] el tipo del diseño
+		* 		$diseno['anual'] el año del diseño
+		* 		$diseno['disponibilidad'] la disponibilidad del diseño
+		* 		$diseno['institucion_financiadora'] la institucion financiadora del diseño
+		*/
+		public function getDiseñosIndustriales(){
+		 $query = '/html/body/table[35]'; //pendiente
+		 $array = $this->extraer( $query );
+		 $disenos = array();
+		 foreach($array as $item ){
+			 $doc = new \DOMDocument();
+			 $doc->loadHTML( $item );
+			 $xpath = new \DOMXPath($doc);
+			 $list = $doc->getElementsByTagName('strong');
+			 $diseno = array();
+			 foreach($list as $node ){
+				 $diseno ['tipo'] = $node->nodeValue;
+				 $tituloNode = $node->nextSibling;
+				 $titulo = $tituloNode->nodeValue;
+				 $titulo = str_replace(':','',$titulo);
+				 $titulo = utf8_encode ($titulo);
+				 $diseno ['titulo'] = $titulo;
+				 $list = $doc->getElementsByTagName('br');
+				 $nodesiguiente = $node[0]->nextSibling;
+				 $value = $nodesiguiente->nodeValue;
+				 $valores = explode(",",$value);
+				 $pais = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[0]) : "";
+				 $diseno['pais'] = $pais;
+				 $anual = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[1]) : "";
+				 $diseno['anual'] = $anual;
+				 $datos = count($valores) > 2 ? explode(":",$valores[2]) : "";
+				 $disponibilidad = count($datos) > 1 ? $this->eliminarSaltoLinea($datos[1]) : "";
+				 $diseno['disponibilidad'] = $disponibilidad;
+				 $datos = count($valores) > 3 ? explode(":",$valores[3]) : "";
+				 $institucionFinanciadora = count($datos) > 1 ? $this->eliminarSaltoLinea($datos[1]) : "";
+				 $diseno['institucion_financiadora'] = $institucionFinanciadora;
+			 }
+			 $disenos[] = $diseno;
+		 }
+		 return $disenos;
+		}
+		/**
+		 *Obtiene las normas y regulaciones
+		 * @return Arreglo de normas y regulaciones
+		 */
+		 public function normasRegulaciones(){
+			 $query = '/html/body/table[35]'; //Qué es?
+			 return $this->extraer( $query );
+		 }
+		 /**
+		* Obtienen las normas y regulaciones
+		* @return Arreglo de arreglos
+		* 		$norma['tipo'] el tipo de la norma
+		* 		$norma['titulo'] el titulo de la norma
+		* 		$norma['pais'] el pais de la norma
+		* 		$norma['anual'] el año de la norma
+		* 		$norma['ambito'] el ambito de la norma
+		* 		$norma['objeto'] el objeto de la norma
+		* 		$norma['institucion_financiadora'] la institucion financiadora de la norma
+		*/
+		public function getNormasRegulaciones(){
+		 $query = '/html/body/table[35]'; //pendiente
+		 $array = $this->extraer( $query );
+		 $normas = array();
+		 foreach($array as $item ){
+			 $doc = new \DOMDocument();
+			 $doc->loadHTML( $item );
+			 $xpath = new \DOMXPath($doc);
+			 $list = $doc->getElementsByTagName('strong');
+			 $norma = array();
+			 foreach($list as $node ){
+				 $norma ['tipo'] = $node->nodeValue;
+				 $tituloNode = $node->nextSibling;
+				 $titulo = $tituloNode->nodeValue;
+				 $titulo = str_replace(':','',$titulo);
+				 $titulo = utf8_encode ($titulo);
+				 $norma ['titulo'] = $titulo;
+				 $list = $doc->getElementsByTagName('br');
+				 foreach($list as $node){
+					 $nodesiguiente = $node->nextSibling;
+					 $value = $nodesiguiente->nodeValue;
+					 $valores = explode(",",$value);
+					 $pais = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[0]) : "";
+					 $norma['pais'] = $pais;
+					 $anual = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[1]) : "";
+					 $norma['anual'] = $anual;
+					 foreach($valores as $valor) {
+							 if(strpos($valor,'Ambito')){
+						 $result = explode(':',$valor);
+						 $ambito = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+						 $norma['ambito'] = $ambito;
+							 }
+							 if(strpos($valor,'Objeto')){
+						 $result = explode(':',$valor);
+						 $objeto = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+						 $norma['objeto'] = $objeto;
+							 }
+							 if(strpos($valor,'Institución financiadora')){
+						 $result = explode(':',$valor);
+						 $institucionFinanciadora = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+						 $norma['institucion_financiadora'] = $institucionFinanciadora;
+							 }
+					 }
+				 }
+			 }
+			 $normas[] = $norma;
+		 }
+		 return $normas;
+		}
+		/**
+		 *Obtiene los signos distintivos
+		 * @return Arreglo de signos distintivos
+		 */
+		 public function signosDistintivos(){
+			 $query = '/html/body/table[35]'; //Qué es?
+			 return $this->extraer( $query );
+		 }
+		 /**
+		* Obtienen los signos distintivos
+		* @return Arreglo de arreglos
+		* 		$signo['tipo'] el tipo del signo distintivo
+		* 		$signo['titulo'] el titulo del signo distintivo
+		* 		$signo['pais'] el pais del signo distintivo
+		* 		$signo['anual'] el año del signo distintivo
+		* 		$signo['numeroRegistro'] el número de registro del signo distintivo
+		*/
+		public function getSignosDistintivos(){
+		 $query = '/html/body/table[35]'; //pendiente
+		 $array = $this->extraer( $query );
+		 $signos = array();
+		 foreach($array as $item ){
+			 $doc = new \DOMDocument();
+			 $doc->loadHTML( $item );
+			 $xpath = new \DOMXPath($doc);
+			 $list = $doc->getElementsByTagName('strong');
+			 $signo = array();
+			 foreach($list as $node ){
+				 $signo ['tipo'] = $node->nodeValue;
+				 $tituloNode = $node->nextSibling;
+				 $titulo = $tituloNode->nodeValue;
+				 $titulo = str_replace(':','',$titulo);
+				 $titulo = utf8_encode ($titulo);
+				 $signo ['titulo'] = $titulo;
+				 $list = $doc->getElementsByTagName('br');
+				 foreach($list as $node){
+					 $nodesiguiente = $node->nextSibling;
+					 $value = $nodesiguiente->nodeValue;
+					 $valores = explode(",",$value);
+					 $pais = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[0]) : "";
+					 $signo['pais'] = $pais;
+					 $anual = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[1]) : "";
+					 $signo['anual'] = $anual;
+					 foreach($valores as $valor) {
+							 if(strpos($valor,'Número del registro')){
+						 $result = explode(':',$valor);
+						 $numeroRegistro = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+						 $signo['numeroRegistro'] = $numeroRegistro;
+							 }
+					 }
+				 }
+			 }
+			 $signos[] = $signo;
+		 }
+		 return $signos;
+		}
+		/**
+		 *
+		 * @return Arreglo de innovación gestión empresarial
+		 */
+		 public function innovacionGestionEmpresarial(){
+			 $query = '/html/body/table[35]'; //Qué es?
+			 return $this->extraer( $query );
+		 }
+		 /**
+		* Obtienen la innovación gestión empresarial
+		* @return Arreglo de arreglos
+		* 		$innovacion['tipo'] el tipo de innovación
+		* 		$innovacion['titulo'] el titulo de innovación
+		* 		$innovacion['pais'] el pais de innovación
+		* 		$innovacion['anual'] el año de innovación
+		* 		$innovacion['disponibilidad'] la disponibilidad de innovación
+		* 		$innovacion['institucion_financiadora'] la institucion financiadora de innovación
+		*/
+		public function getInnovacionGestionEmpresarial(){
+		 $query = '/html/body/table[35]'; //pendiente
+		 $array = $this->extraer( $query );
+		 $innovaciones = array();
+		 foreach($array as $item ){
+			 $doc = new \DOMDocument();
+			 $doc->loadHTML( $item );
+			 $xpath = new \DOMXPath($doc);
+			 $list = $doc->getElementsByTagName('strong');
+			 $innovacion = array();
+			 foreach($list as $node ){
+				 $innovacion['tipo'] = $node->nodeValue;
+				 $tituloNode = $node->nextSibling;
+				 $titulo = $tituloNode->nodeValue;
+				 $titulo = str_replace(':','',$titulo);
+				 $titulo = utf8_encode ($titulo);
+				 $innovacion['titulo'] = $titulo;
+				 $list = $doc->getElementsByTagName('br');
+				 foreach($list as $node){
+					 $nodesiguiente = $node->nextSibling;
+					 $value = $nodesiguiente->nodeValue;
+					 $valores = explode(",",$value);
+					 $pais = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[0]) : "";
+					 $innovacion['pais'] = $pais;
+					 $anual = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[1]) : "";
+					 $innovacion['anual'] = $anual;
+					 foreach($valores as $valor) {
+							 if(strpos($valor,'Disponibilidad')){
+						 $result = explode(':',$valor);
+						 $disponibilidad = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+						 $innovacion['disponibilidad'] = $disponibilidad;
+							 }
+							 if(strpos($valor,'Institución financiadora')){
+						 $result = explode(':',$valor);
+						 $institucionFinanciadora = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+						 $innovacion['institucion_financiadora'] = $institucionFinanciadora;
+							 }
+					 }
+				 }
+			 }
+			 $innovaciones[] = $innovacion;
+		 }
+		 return $innovaciones;
+		}
+		/**
+		 *
+		 * @return Arreglo de innovación gestión empresarial
+		 */
+		 public function innovacionProcesosProcedimientos(){
+			 $query = '/html/body/table[35]'; //Qué es?
+			 return $this->extraer( $query );
+		 }
+		 /**
+		* Obtienen la innovación gestión empresarial
+		* @return Arreglo de arreglos
+		* 		$innovacion['tipo'] el tipo de innovación
+		* 		$innovacion['titulo'] el titulo de innovación
+		* 		$innovacion['pais'] el pais de innovación
+		* 		$innovacion['anual'] el año de innovación
+		* 		$innovacion['disponibilidad'] la disponibilidad de innovación
+		* 		$innovacion['institucion_financiadora'] la institucion financiadora de innovación
+		*/
+		public function getInnovacionProcesosProcedimientos(){
+		 $query = '/html/body/table[35]'; //pendiente
+		 $array = $this->extraer( $query );
+		 $innovaciones = array();
+		 foreach($array as $item ){
+			 $doc = new \DOMDocument();
+			 $doc->loadHTML( $item );
+			 $xpath = new \DOMXPath($doc);
+			 $list = $doc->getElementsByTagName('strong');
+			 $innovacion = array();
+			 foreach($list as $node ){
+				 $innovacion['tipo'] = $node->nodeValue;
+				 $tituloNode = $node->nextSibling;
+				 $titulo = $tituloNode->nodeValue;
+				 $titulo = str_replace(':','',$titulo);
+				 $titulo = utf8_encode ($titulo);
+				 $innovacion['titulo'] = $titulo;
+				 $list = $doc->getElementsByTagName('br');
+				 foreach($list as $node){
+					 $nodesiguiente = $node->nextSibling;
+					 $value = $nodesiguiente->nodeValue;
+					 $valores = explode(",",$value);
+					 $pais = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[0]) : "";
+					 $innovacion['pais'] = $pais;
+					 $anual = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[1]) : "";
+					 $innovacion['anual'] = $anual;
+					 foreach($valores as $valor) {
+							 if(strpos($valor,'Disponibilidad')){
+						 $result = explode(':',$valor);
+						 $disponibilidad = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+						 $innovacion['disponibilidad'] = $disponibilidad;
+							 }
+							 if(strpos($valor,'Institución financiadora')){
+						 $result = explode(':',$valor);
+						 $institucionFinanciadora = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+						 $innovacion['institucion_financiadora'] = $institucionFinanciadora;
+							 }
+					 }
+				 }
+			 }
+			 $innovaciones[] = $innovacion;
+		 }
+		 return $innovaciones;
+		}
+		/**
+		 *
+		 * @return Arreglo de documentos de trabajo
+		 */
+		 public function documentoTrabajo(){
+			 $query = '/html/body/table[35]'; //Qué es?
+			 return $this->extraer( $query );
+		 }
+		 /**
+		* Obtienen los documentos de trabajo
+		* @return Arreglo de arreglos
+		* 		$documento['titulo'] el titulo del documento
+		* 		$documento['tipo'] el tipo del documento
+		* 		$documento['anual'] el año del documento
+		* 		$documento['paginas'] las páginas del documento
+		* 		$documento['instituciones'] instituciones del documento
+		* 		$documento['url'] la url del documento
+		* 		$documento['doi'] doi del documento
+		*/
+		public function getDocumentoTrabajo(){
+		 $query = '/html/body/table[35]'; //pendiente
+		 $array = $this->extraer( $query );
+		 $documentos = array();
+		 foreach($array as $item ){
+			 $doc = new \DOMDocument();
+			 $doc->loadHTML( $item );
+			 $xpath = new \DOMXPath($doc);
+			 $list = $doc->getElementsByTagName('strong');
+			 $documento = array();
+			 foreach($list as $node ){
+				 $documento['tipo'] = $node->nodeValue;
+				 $tituloNode = $node->nextSibling;
+				 $titulo = $tituloNode->nodeValue;
+				 $titulo = str_replace(':','',$titulo);
+				 $titulo = utf8_encode ($titulo);
+				 $documento['titulo'] = $titulo;
+				 $list = $doc->getElementsByTagName('br');
+				 foreach($list as $node){
+					 $nodesiguiente = $node->nextSibling;
+					 $value = $nodesiguiente->nodeValue;
+					 $valores = explode(",",$value);
+					 $anual = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[0]) : "";
+					 $documento['anual'] = $anual;
+					 foreach($valores as $valor) {
+							 if(strpos($valor,'Nro. Paginas')){
+						 $result = explode(':',$valor);
+						 $paginas = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+						 $documento['paginas'] = $paginas;
+							 }
+							 if(strpos($valor,'Instituciones participantes')){
+						 $result = explode(':',$valor);
+						 $instituciones= count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+						 $documento['instituciones'] = $instituciones;
+							 }
+							 if(strpos($valor,'URL')){
+						 $result = explode(':',$valor);
+						 $url= count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+						 $documento['url'] = $url;
+							 }
+							 if(strpos($valor,'DOI')){
+						 $result = explode(':',$valor);
+						 $doi= count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+						 $documento['doi'] = $doi;
+							 }
+					 }
+				 }
+			 }
+			 $documentos[] = $documento;
+		 }
+		 return $documentos;
+		}
+		/**
+		 *
+		 * @return Arreglo de publicaciones
+		 */
+		 public function otraPublicacion(){
+			 $query = '/html/body/table[35]'; //Qué es?
+			 return $this->extraer( $query );
+		 }
+		 /**
+		* Obtienen las otras publicaciones divulgativas
+		* @return Arreglo de arreglos
+		* 		$publicacion['titulo'] el titulo de la publicación
+		* 		$publicacion['país'] el país de la publicación
+		* 		$publicacion['anual'] el año de la publicación
+		* 		$publicacion['isbn'] el isbn de la publicación
+		* 		$publicacion['tipo'] el tipo de la publicación
+		* 		$publicacion['volumen'] el volumen de la publicación
+		* 		$publicacion['paginas'] las páginas de la publicación
+		* 		$publicacion['editorial'] la editorial de la publicación
+		*/
+		public function getOtraPublicacion(){
+		 $query = '/html/body/table[35]'; //pendiente
+		 $array = $this->extraer( $query );
+		 $publicaciones = array();
+		 foreach($array as $item ){
+			 $doc = new \DOMDocument();
+			 $doc->loadHTML( $item );
+			 $xpath = new \DOMXPath($doc);
+			 $list = $doc->getElementsByTagName('strong');
+			 $publicacion = array();
+			 foreach($list as $node ){
+				 $publicacion['tipo'] = $node->nodeValue;
+				 $tituloNode = $node->nextSibling;
+				 $titulo = $tituloNode->nodeValue;
+				 $titulo = str_replace(':','',$titulo);
+				 $titulo = utf8_encode ($titulo);
+				 $publicacion['titulo'] = $titulo;
+				 $list = $doc->getElementsByTagName('br');
+				 foreach($list as $node){
+					 $nodesiguiente = $node->nextSibling;
+					 $value = $nodesiguiente->nodeValue;
+					 $valores = explode(",",$value);
+					 $pais = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[0]) : "";
+					 $publicacion['pais'] = $pais;
+					 $anual = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[1]) : "";
+					 $publicacion['anual'] = $anual;
+					 foreach($valores as $valor) {
+							 if(strpos($valor,'págs')){
+						 $result = explode(':',$valor);
+						 $paginas = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+						 $publicacion['paginas'] = $paginas;
+							 }
+							 if(strpos($valor,'vol')){
+						 $result = explode('.',$valor);
+						 $vol = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+						 $documento['volumen'] = $vol;
+							 }
+							 if(strpos($valor,'Ed')){
+						 $result = explode('.',$valor);
+						 $editorial = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+						 $documento['editorial'] = $editorial;
+							 }
+					 }
+				 }
+			 }
+			 $publicaciones[] = $publicacion;
+		 }
+		 return $publicaciones;
+		}
+		/**
+		 *
+		 * @return Arreglo de consultorías
+		 */
+		 public function consultoriasCientifica(){
+			 $query = '/html/body/table[35]'; //Qué es?
+			 return $this->extraer( $query );
+		 }
+		 /**
+		* Obtienen las consultorias Cientifico Tecnologicas
+		* @return Arreglo de arreglos
+		* 		$consultoria['tipo'] el tipo de la consultoria
+		* 		$consultoria['titulo'] el titulo de la consultoria
+		* 		$consultoria['país'] el país de la consultoria
+		* 		$consultoria['anual'] el año de la consultoria
+		* 		$consultoria['idioma'] el idioma de la consultoria
+		* 		$consultoria['disponibilidad'] la disponibilidad de la consultoria
+		* 		$consultoria['numero_contrato'] el número de contrato de la consultoria
+		* 		$consultoria['institucion_financiaria'] la institucion financiaria de la consultoria
+		*/
+		public function getConsultoriaCientifica(){
+		 $query = '/html/body/table[35]'; //pendiente
+		 $array = $this->extraer( $query );
+		 $consultorias = array();
+		 foreach($array as $item ){
+			 $doc = new \DOMDocument();
+			 $doc->loadHTML( $item );
+			 $xpath = new \DOMXPath($doc);
+			 $list = $doc->getElementsByTagName('strong');
+			 $consultoria = array();
+			 foreach($list as $node ){
+				 $consultoria['tipo'] = $node->nodeValue;
+				 $tituloNode = $node->nextSibling;
+				 $titulo = $tituloNode->nodeValue;
+				 $titulo = str_replace(':','',$titulo);
+				 $titulo = utf8_encode ($titulo);
+				 $consultoria['titulo'] = $titulo;
+				 $list = $doc->getElementsByTagName('br');
+				 foreach($list as $node){
+					 $nodesiguiente = $node->nextSibling;
+					 $value = $nodesiguiente->nodeValue;
+					 $valores = explode(",",$value);
+					 $pais = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[0]) : "";
+					 $consultoria['pais'] = $pais;
+					 $anual = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[1]) : "";
+					 $consultoria['anual'] = $anual;
+					 foreach($valores as $valor) {
+							 if(strpos($valor,'Idioma')){
+						 $result = explode(':',$valor);
+						 $idioma = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+						 $consultoria['idioma'] = $idioma;
+							 }
+							 if(strpos($valor,'Disponibilidad')){
+						 $result = explode(':',$valor);
+						 $disponibilidad = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+						 $consultoria['disponibilidad'] = $disponibilidad;
+							 }
+							 if(strpos($valor,'Número del contrato')){
+						 $result = explode(':',$valor);
+						 $numeroContrato = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+						 $consultoria['numero_contrato'] = $numeroContrato;
+							 }
+							 if(strpos($valor,'Institución que se benefició del servicio')){
+						 $result = explode(':',$valor);
+						 $institucion = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+						 $consultoria['institucion_financiaria'] = $institucion;
+							 }
+					 }
+				 }
+			 }
+			 $consultorias[] = $consultoria;
+		 }
+		 return $consultorias;
+		}
+		/**
+		 *
+		 * @return Arreglo de prototipos
+		 */
+		 public function prototipos(){
+			 $query = '/html/body/table[35]'; //Qué es?
+			 return $this->extraer( $query );
+		 }
+		 /**
+		* Obtienen los prototipos
+		* @return Arreglo de arreglos
+		* 		$prototipo['tipo'] el tipo del prototipo
+		* 		$prototipo['titulo'] el titulo del prototipo
+		* 		$prototipo['país'] el país del prototipo
+		* 		$prototipo['anual'] el año del prototipo
+		* 		$prototipo['disponibilidad'] la disponibilidad del prototipo
+		* 		$prototipo['institucion_financiadora'] la institucion financiadora del prototipo
+		*/
+		public function getPrototipos(){
+		 $query = '/html/body/table[35]'; //pendiente
+		 $array = $this->extraer( $query );
+		 $prototipos = array();
+		 foreach($array as $item ){
+			 $doc = new \DOMDocument();
+			 $doc->loadHTML( $item );
+			 $xpath = new \DOMXPath($doc);
+			 $list = $doc->getElementsByTagName('strong');
+			 $prototipo = array();
+			 foreach($list as $node ){
+				 $prototipo['tipo'] = $node->nodeValue;
+				 $tituloNode = $node->nextSibling;
+				 $titulo = $tituloNode->nodeValue;
+				 $titulo = str_replace(':','',$titulo);
+				 $titulo = utf8_encode ($titulo);
+				 $prototipo['titulo'] = $titulo;
+				 $list = $doc->getElementsByTagName('br');
+				 foreach($list as $node){
+					 $nodesiguiente = $node->nextSibling;
+					 $value = $nodesiguiente->nodeValue;
+					 $valores = explode(",",$value);
+					 $pais = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[0]) : "";
+					 $prototipo['pais'] = $pais;
+					 $anual = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[1]) : "";
+					 $prototipo['anual'] = $anual;
+					 foreach($valores as $valor) {
+							 if(strpos($valor,'Disponibilidad')){
+						 $result = explode(':',$valor);
+						 $disponibilidad = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+						 $prototipo['disponibilidad'] = $disponibilidad;
+							 }
+							 if(strpos($valor,'Institución financiadora')){
+						 $result = explode(':',$valor);
+						 $institucion = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+						 $prototipo['institucion_financiadora'] = $institucion;
+							 }
+					 }
+				 }
+			 }
+			 $prototipos[] = $prototipo;
+		 }
+		 return $prototipos;
+		}
 }
