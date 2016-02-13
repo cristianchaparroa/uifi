@@ -48,6 +48,11 @@
           <argument type="service" id="service_container" />
         </service>
 
+        <service class="UIFI\GrupLACScraperBundle\Assembler\DocumentoTrabajoAssembler" id="uifi.gruplac.assembler.documentoTrabajo">
+          <argument type="service" id="service_container" />
+        </service>
+
+
         <!-- Servicios de scrapping -->
         <service class="UIFI\GrupLACScraperBundle\Service\Scraper\ScraperService" id="uifi.gruplac.scrap.scraper">
             <argument type="service" id="service_container" />
@@ -80,6 +85,10 @@
         </service>
 
         <service class="UIFI\GrupLACScraperBundle\Service\Scraper\DisenosIndustrialesScraperService" id="uifi.gruplac.service.scraper.disenoIndustrial">
+          <argument type="service" id="service_container" />
+        </service>
+
+        <service class="UIFI\GrupLACScraperBundle\Service\Scraper\DocumentoTrabajoScraperService" id="uifi.gruplac.service.scraper.documentoTrabajo">
           <argument type="service" id="service_container" />
         </service>
 

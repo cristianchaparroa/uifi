@@ -88,12 +88,18 @@ class ScraperService {
       // foreach($consultoriasCientificas as $consultoriaCientifica){
       //   $this->em->persist($consultoriaCientifica);
       // }
+      //Errores: 1.no obtiene, autores, pais,anual, disponibilidad
+      // $disenosIndustrialesDTO =$this->container->get('uifi.gruplac.service.scraper.disenoIndustrial')->getDisenosIndustriales($gruposDTO);
+      // $disenosIndustriales  = $this->container->get('uifi.gruplac.assembler.disenoIndustrial')->crearLista($disenosIndustrialesDTO);
+      //
+      // foreach($disenosIndustriales  as $disenoIndustrial) {
+      //     $this->em->persist($disenoIndustrial);
+      // }
 
-      $disenosIndustrialesDTO =$this->container->get('uifi.gruplac.service.scraper.disenoIndustrial')->getDisenosIndustriales($gruposDTO);
-      $disenosIndustriales  = $this->container->get('uifi.gruplac.assembler.disenoIndustrial')->crearLista($disenosIndustrialesDTO);
-
-      foreach($disenosIndustriales  as $disenoIndustrial) {
-          $this->em->persist($disenoIndustrial);
+      $documentosTrabajoDTO = $this->container->get('uifi.gruplac.service.scraper.documentoTrabajo')->getDocumentosTrabajo($gruposDTO);
+      $documentosTrabajo = $this->container->get('uifi.gruplac.assembler.documentoTrabajo')->crearLista($documentosTrabajoDTO);
+      foreach($documentosTrabajo as $documentoTrabajo) {
+        $this->em->persist($documentoTrabajo);
       }
       $this->em->flush();
      }
