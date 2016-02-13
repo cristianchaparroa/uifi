@@ -52,16 +52,16 @@ class DisenoIndustrial
       /**
        * Año en el que fue publicado el articulo
        *
-       * @ORM\Column(name="disponibilidad", type="string",length=10,nullable=true)
+       * @ORM\Column(name="disponibilidad", type="string",length=20,nullable=true)
        */
       private $disponibilidad;
 
 
       /**
        * @var string
-       * @ORM\Column(name="institucion_financiadora", type="string",length=255 ,nullable=true)
+       * @ORM\Column(name="autores", type="string",nullable=true)
        */
-      private $institucionFinanciadora;
+      private $autores;
 
       /**
        * @var string
@@ -81,6 +81,7 @@ class DisenoIndustrial
        * @ORM\ManyToMany(targetEntity="UIFI\IntegrantesBundle\Entity\Integrante", mappedBy="articulos")
       */
       private $integrantes;
+
     /**
      * Constructor
      */
@@ -92,7 +93,7 @@ class DisenoIndustrial
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -115,7 +116,7 @@ class DisenoIndustrial
     /**
      * Get tipo
      *
-     * @return string
+     * @return string 
      */
     public function getTipo()
     {
@@ -138,7 +139,7 @@ class DisenoIndustrial
     /**
      * Get titulo
      *
-     * @return string
+     * @return string 
      */
     public function getTitulo()
     {
@@ -161,7 +162,7 @@ class DisenoIndustrial
     /**
      * Get pais
      *
-     * @return string
+     * @return string 
      */
     public function getPais()
     {
@@ -184,7 +185,7 @@ class DisenoIndustrial
     /**
      * Get anual
      *
-     * @return string
+     * @return string 
      */
     public function getAnual()
     {
@@ -192,26 +193,49 @@ class DisenoIndustrial
     }
 
     /**
-     * Set institucionFinanciadora
+     * Set disponibilidad
      *
-     * @param string $institucionFinanciadora
+     * @param string $disponibilidad
      * @return DisenoIndustrial
      */
-    public function setInstitucionFinanciadora($institucionFinanciadora)
+    public function setDisponibilidad($disponibilidad)
     {
-        $this->institucionFinanciadora = $institucionFinanciadora;
+        $this->disponibilidad = $disponibilidad;
 
         return $this;
     }
 
     /**
-     * Get institucionFinanciadora
+     * Get disponibilidad
      *
-     * @return string
+     * @return string 
      */
-    public function getInstitucionFinanciadora()
+    public function getDisponibilidad()
     {
-        return $this->institucionFinanciadora;
+        return $this->disponibilidad;
+    }
+
+    /**
+     * Set autores
+     *
+     * @param string $autores
+     * @return DisenoIndustrial
+     */
+    public function setAutores($autores)
+    {
+        $this->autores = $autores;
+
+        return $this;
+    }
+
+    /**
+     * Get autores
+     *
+     * @return string 
+     */
+    public function getAutores()
+    {
+        return $this->autores;
     }
 
     /**
@@ -230,7 +254,7 @@ class DisenoIndustrial
     /**
      * Get nombreGrupo
      *
-     * @return string
+     * @return string 
      */
     public function getNombreGrupo()
     {
@@ -253,7 +277,7 @@ class DisenoIndustrial
     /**
      * Get grupo
      *
-     * @return string
+     * @return string 
      */
     public function getGrupo()
     {
@@ -286,33 +310,10 @@ class DisenoIndustrial
     /**
      * Get integrantes
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getIntegrantes()
     {
         return $this->integrantes;
-    }
-
-    /**
-     * Set disponibilidad
-     *
-     * @param string $disponibilidad
-     * @return DisenoIndustrial
-     */
-    public function setDisponibilidad($disponibilidad)
-    {
-        $this->disponibilidad = $disponibilidad;
-
-        return $this;
-    }
-
-    /**
-     * Get disponibilidad
-     *
-     * @return string 
-     */
-    public function getDisponibilidad()
-    {
-        return $this->disponibilidad;
     }
 }

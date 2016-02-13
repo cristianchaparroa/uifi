@@ -71,17 +71,31 @@ class ScraperService {
       //     $this->em->persist($software);
       //  }
 
-      $articulosDTO =$this->container->get('uifi.gruplac.service.scraper.articulo')->getArticulos($gruposDTO);
-      $articulos = $this->container->get('uifi.gruplac.assembler.articulo')->crearLista($articulosDTO);
-      foreach( $articulos as $articulo) {
-        $this->em->persist($articulo);
-      }
+      // $articulosDTO =$this->container->get('uifi.gruplac.service.scraper.articulo')->getArticulos($gruposDTO);
+      // $articulos = $this->container->get('uifi.gruplac.assembler.articulo')->crearLista($articulosDTO);
+      // foreach( $articulos as $articulo) {
+      //   $this->em->persist($articulo);
+      // }
       //  $eventosDTO = $this->container->get('uifi.gruplac.service.scraper.eventos')->getEventos($gruposDTO);
       //  $eventos = $this->container->get('uifi.gruplac.assembler.evento')->crearLista($eventosDTO);
       //  foreach($eventos as $evento) {
       //    $this->em->persist($evento);
       //  }
-       $this->em->flush();
+
+      //Errores: 1. no trae autores, 2. pais esta mal. 3, anual no lo trae, institucion beneficiaria no la trae
+      // $consultoriasCientificasDTO =$this->container->get('uifi.gruplac.service.scraper.consultoriaCientifica')->getConsultoriasCientificas($gruposDTO);
+      // $consultoriasCientificas  = $this->container->get('uifi.gruplac.assembler.consultoriaCientifica')->crearLista($consultoriasCientificasDTO);
+      // foreach($consultoriasCientificas as $consultoriaCientifica){
+      //   $this->em->persist($consultoriaCientifica);
+      // }
+
+      $disenosIndustrialesDTO =$this->container->get('uifi.gruplac.service.scraper.disenoIndustrial')->getDisenosIndustriales($gruposDTO);
+      $disenosIndustriales  = $this->container->get('uifi.gruplac.assembler.disenoIndustrial')->crearLista($disenosIndustrialesDTO);
+
+      foreach($disenosIndustriales  as $disenoIndustrial) {
+          $this->em->persist($disenoIndustrial);
+      }
+      $this->em->flush();
      }
      return true;
    }
