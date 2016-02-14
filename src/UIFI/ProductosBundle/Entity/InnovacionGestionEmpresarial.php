@@ -56,7 +56,7 @@ class InnovacionGestionEmpresarial
 
       /**
        * @var string
-       * @ORM\Column(name="institucion_financiadora", type="string",length=555 ,nullable=true)
+       * @ORM\Column(name="institucion_financiadora", type="string",length=10000 ,nullable=true)
        */
       private $institucionFinanciadora;
 
