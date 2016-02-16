@@ -1098,19 +1098,27 @@ class GrupLACScraper extends  Scraper
 				 $titulo = utf8_encode ($titulo);
 				 $diseno ['titulo'] = $titulo;
 				 $list = $doc->getElementsByTagName('br');
-				 $nodesiguiente = $node[0]->nextSibling;
-				 $value = $nodesiguiente->nodeValue;
-				 $valores = explode(",",$value);
-				 $pais = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[0]) : "";
-				 $diseno['pais'] = $pais;
-				 $anual = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[1]) : "";
-				 $diseno['anual'] = $anual;
-				 $datos = count($valores) > 2 ? explode(":",$valores[2]) : "";
-				 $disponibilidad = count($datos) > 1 ? $this->eliminarSaltoLinea($datos[1]) : "";
-				 $diseno['disponibilidad'] = $disponibilidad;
-				 $datos = count($valores) > 3 ? explode(":",$valores[3]) : "";
-				 $institucionFinanciadora = count($datos) > 1 ? $this->eliminarSaltoLinea($datos[1]) : "";
-				 $diseno['institucion_financiadora'] = $institucionFinanciadora;
+				 foreach($list as $node){
+					 $nodesiguiente = $node->nextSibling;
+					 $value = $nodesiguiente->nodeValue;
+					 $valores = explode(",",$value);
+					 $pais = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[0]) : "";
+					 $diseno['pais'] = $pais;
+					 $anual = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[1]) : "";
+					 $diseno['anual'] = $anual;
+					 foreach($valores as $valor) {
+						if(strpos($valor,'Disponibilidad')){
+						      $result = explode(':',$valor);
+						      $disponibilidad = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+						      $diseno['disponibilidad'] = $disponibilidad;
+						 }
+						if(strpos($valor,'Institución financiadora')){
+						      $result = explode(':',$valor);
+						      $institucionFinanciadora = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+						      $diseno['institucion_financiadora'] = $institucionFinanciadora;
+						}
+					 }
+				 }
 			 }
 			 $disenos[] = $diseno;
 		 }
@@ -1163,19 +1171,19 @@ class GrupLACScraper extends  Scraper
 					 $norma['anual'] = $anual;
 					 foreach($valores as $valor) {
 							 if(strpos($valor,'Ambito')){
-						 $result = explode(':',$valor);
-						 $ambito = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
-						 $norma['ambito'] = $ambito;
-							 }
-							 if(strpos($valor,'Objeto')){
-						 $result = explode(':',$valor);
-						 $objeto = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
-						 $norma['objeto'] = $objeto;
-							 }
-							 if(strpos($valor,'Institución financiadora')){
-						 $result = explode(':',$valor);
-						 $institucionFinanciadora = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
-						 $norma['institucion_financiadora'] = $institucionFinanciadora;
+								$result = explode(':',$valor);
+								$ambito = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+								$norma['ambito'] = $ambito;
+								}
+							if(strpos($valor,'Objeto')){
+								$result = explode(':',$valor);
+								$objeto = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+								$norma['objeto'] = $objeto;
+								}
+							if(strpos($valor,'Institución financiadora')){
+								$result = explode(':',$valor);
+								$institucionFinanciadora = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+								$norma['institucion_financiadora'] = $institucionFinanciadora;
 							 }
 					 }
 				 }
@@ -1280,8 +1288,6 @@ class GrupLACScraper extends  Scraper
 					 $nodesiguiente = $node->nextSibling;
 					 $value = $nodesiguiente->nodeValue;
 					 $valores = explode(",",$value);
-					 $pais = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[0]) : "";
-					 $innovacion['pais'] = $pais;
 					 $anual = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[1]) : "";
 					 $innovacion['anual'] = $anual;
 					 foreach($valores as $valor) {
@@ -1295,6 +1301,14 @@ class GrupLACScraper extends  Scraper
 						 $institucionFinanciadora = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
 						 $innovacion['institucion_financiadora'] = $institucionFinanciadora;
 							 }
+						if(strpos($valor,'Autores')){
+							$result = explode(':',$valor);
+							$autores = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+							$innovacion['autores'] = $autores;
+						}else{
+							$pais = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[0]) : "";
+							$innovacion['pais'] = $pais;
+						}
 					 }
 				 }
 			 }
@@ -1405,8 +1419,7 @@ class GrupLACScraper extends  Scraper
 					 $nodesiguiente = $node->nextSibling;
 					 $value = $nodesiguiente->nodeValue;
 					 $valores = explode(",",$value);
-					 $anual = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[0]) : "";
-					 $documento['anual'] = $anual;
+					 
 					 foreach($valores as $valor) {
 							 if(strpos($valor,'Nro. Paginas')){
 						 $result = explode(':',$valor);
@@ -1428,6 +1441,14 @@ class GrupLACScraper extends  Scraper
 						 $doi= count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
 						 $documento['doi'] = $doi;
 							 }
+						if(strpos($valor,'Autores')){
+							$result = explode(':',$valor);
+							$autores= count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+							$documento['autores'] = $autores;
+						}else{
+							 $anual = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[0]) : "";
+							 $documento['anual'] = $anual;
+						}
 					 }
 				 }
 			 }
