@@ -8,9 +8,10 @@ class OtrosProductosTecnologicosScraper  extends  Scraper
      /**
       * Constructor del objeto
       */
-    public function __construct( $grupoDTO ) {
+    public function __construct( $grupoDTO ,$logger) {
          Scraper::__construct( self::URL_BASE . $grupoDTO['id'] );
          $this->grupoDTO = $grupoDTO;
+         $this->logger = $logger;
     }
     /**
      * @return
@@ -44,27 +45,33 @@ class OtrosProductosTecnologicosScraper  extends  Scraper
   				 foreach($list as $node) {
   					 $nodesiguiente = $node->nextSibling;
   					 $value = $nodesiguiente->nodeValue;
-  					 $valores = explode(",",$value);
-  					 $pais = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[0]) : "";
-  					 $producto['pais'] = $pais;
-  					 $anual = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[1]) : "";
-  					 $producto['anual'] = $anual;
 
+             if(strpos($value,'Disponibilidad:')) {
+               $data = explode(",",$value);
+    					 $pais = count($data) > 1 ? $this->eliminarSaltoLinea($data[0]) : "";
+    					 $producto['pais'] = $pais;
+    					 $anual = count($data) > 1 ? $this->eliminarSaltoLinea($data[1]) : "";
+    					 $producto['anual'] = $anual;
+             }
+             $valores = explode(",",$value);
   					 foreach($valores as $valor) {
   							 if(strpos($valor,'Disponibilidad')) {
   						      $result = explode(':',$valor);
       					    $disponibilidad = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
       						  $producto['disponibilidad'] = $disponibilidad;
   							 }
-  							 if(strpos($valor,'Nombre comercial')) {
+
+  							 if(strpos($valor,'Nombre comercial:')) {
       						 $result = explode(':',$valor);
       						 $nombreComercial = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
       						 $producto['nombre_comercial'] = $nombreComercial;
   							 }
-  							 if(strpos($valor,'Institución financiadora')) {
+                 $this->logger->err( "****".$valor);
+  							 if(strpos($valor,'Institución financiadora: ')) {
       						 $result = explode(':',$valor);
       						 $institucionFinanciadora = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
       						 $producto['institucion_financiadora'] = $institucionFinanciadora;
+                   $this->logger->err("institucion_financiadora: ". $institucionFinanciadora);
   							 }
   					 }
   				 }

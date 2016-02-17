@@ -23,7 +23,7 @@ use UIFI\GrupLACScraperBundle\Core\OtrosProductosTecnologicosScraper;
     * @return arreglo de docuementos del grupo
     */
     public function getOtrosProductosTecnologicosGrupo($grupoDTO) {
-      $scraper = new OtrosProductosTecnologicosScraper($grupoDTO);
+      $scraper = new OtrosProductosTecnologicosScraper($grupoDTO,$this->logger);
       return $scraper->getOtrosProductosTecnologicos();
     }
 

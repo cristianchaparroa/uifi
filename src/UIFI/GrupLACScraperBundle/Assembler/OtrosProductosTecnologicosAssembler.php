@@ -33,10 +33,10 @@ class OtrosProductosTecnologicosAssembler{
     $producto->setTitulo(array_key_exists('titulo',$productoDTO) ? $productoDTO['titulo'] : "");
     $producto->setTipo(array_key_exists('tipo',$productoDTO) ? $productoDTO['tipo'] : "");
     $producto->setAnual(array_key_exists('anual',$productoDTO) ? $productoDTO['anual'] : "");
-    $producto->setdisponibilidad(array_key_exists('disponibilidad',$productoDTO) ? $productoDTO['disponibilidad'] : "");
+    $producto->setDisponibilidad(array_key_exists('disponibilidad',$productoDTO) ? $productoDTO['disponibilidad'] : "");
     $producto->setNombreComercial(array_key_exists('nombre_comercial',$productoDTO) ? $productoDTO['nombre_comercial'] : "");
     $producto->setInstitucionFinanciadora(array_key_exists('institucion_financiadora',$productoDTO) ? $productoDTO['institucion_financiadora'] : "");
-
+    $producto->setPais(array_key_exists('pais',$productoDTO) ? $productoDTO['pais'] : "");
     $producto->setNombreGrupo(array_key_exists('nombreGrupo',$productoDTO) ?  $productoDTO['nombreGrupo'] : "");
     $producto->setGrupo(array_key_exists('grupo',$productoDTO) ?  $productoDTO['grupo'] : "");
     return $producto;
