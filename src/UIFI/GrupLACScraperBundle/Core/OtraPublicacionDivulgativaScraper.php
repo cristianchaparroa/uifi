@@ -25,7 +25,7 @@ class OtraPublicacionDivulgativaScraper  extends  Scraper
     		* 		$publicacion['editorial'] la editorial de la publicación
     		*/
     public function getOtrasPublicaciones() {
-    		 $query = '/html/body/table[35]'; //pendiente
+    		 $query = '/html/body/table[12]';
     		 $array = $this->extraer( $query );
     		 $publicaciones = array();
     		 foreach($array as $item ){
