@@ -119,10 +119,15 @@ class ScraperService {
       // foreach($normasRegulaciones as $normaRegulacion) {
       //   $this->em->persist($normaRegulacion);
       // }
-      $otrasPubicacionesDivulgativasDTO  =   $this->container->get('uifi.gruplac.service.scraper.otrasPublicacionesDivulgativas')->getOtrasPublicaciones($gruposDTO);
-      $otrasPublicacionesDivulgativas = $this->container->get('uifi.gruplac.assembler.otrasPublicacionesDivulgativas')->crearLista($otrasPubicacionesDivulgativasDTO);
-      foreach($otrasPublicacionesDivulgativas as $otraPublicacionDivulgativa) {
-        $this->em->persist($otraPublicacionDivulgativa);
+      // $otrasPubicacionesDivulgativasDTO  =   $this->container->get('uifi.gruplac.service.scraper.otrasPublicacionesDivulgativas')->getOtrasPublicaciones($gruposDTO);
+      // $otrasPublicacionesDivulgativas = $this->container->get('uifi.gruplac.assembler.otrasPublicacionesDivulgativas')->crearLista($otrasPubicacionesDivulgativasDTO);
+      // foreach($otrasPublicacionesDivulgativas as $otraPublicacionDivulgativa) {
+      //   $this->em->persist($otraPublicacionDivulgativa);
+      // }
+      $otrosArticulosPublicadosDTO =  $this->container->get('uifi.gruplac.service.scraper.otrosArticulosPublicados')->getOtrosArticulosPublicados($gruposDTO);
+      $otrosArticulosPublicados =  $this->container->get('uifi.gruplac.assembler.otrosArticulosPublicados')->crearLista($otrosArticulosPublicadosDTO);
+      foreach ($otrosArticulosPublicados as $otroArticulo) {
+        $this->em->persist($otroArticulo);
       }
 
       $this->em->flush();
