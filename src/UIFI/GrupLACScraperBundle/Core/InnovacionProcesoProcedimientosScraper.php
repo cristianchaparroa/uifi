@@ -23,7 +23,7 @@ class InnovacionProcesoProcedimientosScraper  extends  Scraper
     		* 		$innovacion['institucion_financiadora'] la institucion financiadora de innovación
     		*/
     public function getInnovacionProcesosProcedimientos(){
-    		 $query = '/html/body/table[35]'; //pendiente
+    		 $query = '/html/body/table[21]'; 
     		 $array = $this->extraer( $query );
     		 $innovaciones = array();
     		 foreach($array as $item ) {
