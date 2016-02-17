@@ -306,10 +306,14 @@ class InnovacionProcesosProcedimientos
     /**
      * Get disponibilidad
      *
-     * @return string 
+     * @return string
      */
     public function getDisponibilidad()
     {
         return $this->disponibilidad;
+    }
+
+    public function __toString() {
+      return " Innivacion Procesos Procedimientos[titulo=".$this->titulo.", tipo=".$this->tipo." ,pais=".$this->pais." ,anual=".$this->anual." ,dispnibilidad=".$this->disponibilidad." ,institucionFinanciadora=".$this->institucionFinanciadora."]";
     }
 }

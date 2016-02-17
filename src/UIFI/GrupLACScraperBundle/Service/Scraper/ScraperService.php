@@ -102,9 +102,15 @@ class ScraperService {
       //   $this->em->persist($documentoTrabajo);
       // }
 
-      $innovacionesGestionEmpresarialDTO = $this->container->get('uifi.gruplac.service.scraper.innovacionGestionEmpresarial')->getInnovacionGestionEmpresarial($gruposDTO);
-      $innovacionesGestionEmpresarial = $this->container->get('uifi.gruplac.assembler.innovacionGestionEmpresarial')->crearLista($innovacionesGestionEmpresarialDTO);
-      foreach($innovacionesGestionEmpresarial  as $innovacion) {
+      // $innovacionesGestionEmpresarialDTO = $this->container->get('uifi.gruplac.service.scraper.innovacionGestionEmpresarial')->getInnovacionGestionEmpresarial($gruposDTO);
+      // $innovacionesGestionEmpresarial = $this->container->get('uifi.gruplac.assembler.innovacionGestionEmpresarial')->crearLista($innovacionesGestionEmpresarialDTO);
+      // foreach($innovacionesGestionEmpresarial  as $innovacion) {
+      //   $this->em->persist($innovacion);
+      // }
+
+      $innovacionesProcesoProcedimientosDTO = $this->container->get('uifi.gruplac.service.scraper.innovacionProcesoProcedimientos')->getInnovacionProcesosProcedimientos($gruposDTO);
+      $innovacionesProcesoProcedimientos = $this->container->get('uifi.gruplac.assembler.innovacionProcesoProcedimientos')->crearLista($innovacionesProcesoProcedimientosDTO);
+      foreach($innovacionesProcesoProcedimientos as $innovacion) {
         $this->em->persist($innovacion);
       }
       $this->em->flush();
