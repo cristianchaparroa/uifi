@@ -26,7 +26,7 @@ class OtrosArticulosPublicadosScraper  extends  Scraper
 		* 		$articulo['pais'] el país del articulo
 		*/
 		public function getOtrosArticulosPublicados(){
-		 $query = '/html/body/table[35]'; //pendiente
+		 $query = '/html/body/table[13]'; //pendiente/html/body/table[13]
 		 $array = $this->extraer( $query );
 		 $articulos = array();
 		 foreach($array as $item ){
