@@ -108,10 +108,16 @@ class ScraperService {
       //   $this->em->persist($innovacion);
       // }
 
-      $innovacionesProcesoProcedimientosDTO = $this->container->get('uifi.gruplac.service.scraper.innovacionProcesoProcedimientos')->getInnovacionProcesosProcedimientos($gruposDTO);
-      $innovacionesProcesoProcedimientos = $this->container->get('uifi.gruplac.assembler.innovacionProcesoProcedimientos')->crearLista($innovacionesProcesoProcedimientosDTO);
-      foreach($innovacionesProcesoProcedimientos as $innovacion) {
-        $this->em->persist($innovacion);
+      // $innovacionesProcesoProcedimientosDTO = $this->container->get('uifi.gruplac.service.scraper.innovacionProcesoProcedimientos')->getInnovacionProcesosProcedimientos($gruposDTO);
+      // $innovacionesProcesoProcedimientos = $this->container->get('uifi.gruplac.assembler.innovacionProcesoProcedimientos')->crearLista($innovacionesProcesoProcedimientosDTO);
+      // foreach($innovacionesProcesoProcedimientos as $innovacion) {
+      //   $this->em->persist($innovacion);
+      // }
+
+      $normasRegulacionesDTO =  $this->container->get('uifi.gruplac.service.scraper.normasRegulaciones')->getNormasRegulaciones($gruposDTO);
+      $normasRegulaciones =  $this->container->get('uifi.gruplac.assembler.normasRegulaciones')->crearLista($normasRegulacionesDTO);
+      foreach($normasRegulaciones as $normaRegulacion) {
+        $this->em->persist($normaRegulacion);
       }
       $this->em->flush();
      }
