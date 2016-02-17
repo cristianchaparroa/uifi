@@ -8,7 +8,7 @@ class PrototipoScraper  extends  Scraper
      /**
       * Constructor del objeto
       */
-    public function __construct( $grupoDTO ) {
+    public function __construct($grupoDTO) {
          Scraper::__construct( self::URL_BASE . $grupoDTO['id'] );
          $this->grupoDTO = $grupoDTO;
     }
@@ -46,21 +46,30 @@ class PrototipoScraper  extends  Scraper
 				 foreach($list as $node){
 					 $nodesiguiente = $node->nextSibling;
 					 $value = $nodesiguiente->nodeValue;
-					 $valores = explode(",",$value);
-					 $pais = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[0]) : "";
-					 $prototipo['pais'] = $pais;
-					 $anual = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[1]) : "";
-					 $prototipo['anual'] = $anual;
+
+           if(strpos($value,'Disponibilidad:')) {
+             $data = explode(",",$value);
+             $pais = count($data) > 1 ? $this->eliminarSaltoLinea($data[0]) : "";
+             $prototipo['pais'] = $pais;
+             $anual = count($data) > 1 ? $this->eliminarSaltoLinea($data[1]) : "";
+             $prototipo['anual'] = $anual;
+           }
+           if(strpos($value,'Autores:')){
+             $resultAutores = explode('Autores:',$value);
+             $autores = count($resultAutores) >= 1 ? $resultAutores[1] : "";
+             $prototipo['autores'] = $autores;
+           }
+           if(strpos($value,'Institución financiadora:')){
+              $result = explode('Institución financiadora:',$value);
+              $institucion = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+              $prototipo['institucion_financiadora'] = $institucion;
+           }
+           $valores = explode(",",$value);
 					 foreach($valores as $valor) {
-							 if(strpos($valor,'Disponibilidad')){
+							 if(strpos($valor,'Disponibilidad:')){
 						      $result = explode(':',$valor);
-						      $disponibilidad = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+						      $disponibilidad = count($result) > 1 ? $result[1] : "";
 						      $prototipo['disponibilidad'] = $disponibilidad;
-							 }
-							 if(strpos($valor,'Institución financiadora')){
-						      $result = explode(':',$valor);
-						      $institucion = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
-						      $prototipo['institucion_financiadora'] = $institucion;
 							 }
 					 }
 				 }

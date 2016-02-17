@@ -72,6 +72,11 @@ class Prototipo
        * @ORM\Column(name="grupo", type="string", length=255)
        */
       private $grupo;
+
+      /**
+      * @ORM\Column(name="autores", type="string",length=1000,nullable=true)
+      */
+      private $autores;
       /**
        * Integrantes de un grupo de un investigacion que publicaron el articulo.
        *
@@ -89,7 +94,7 @@ class Prototipo
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -112,7 +117,7 @@ class Prototipo
     /**
      * Get tipo
      *
-     * @return string 
+     * @return string
      */
     public function getTipo()
     {
@@ -135,7 +140,7 @@ class Prototipo
     /**
      * Get titulo
      *
-     * @return string 
+     * @return string
      */
     public function getTitulo()
     {
@@ -158,7 +163,7 @@ class Prototipo
     /**
      * Get pais
      *
-     * @return string 
+     * @return string
      */
     public function getPais()
     {
@@ -181,7 +186,7 @@ class Prototipo
     /**
      * Get anual
      *
-     * @return string 
+     * @return string
      */
     public function getAnual()
     {
@@ -204,7 +209,7 @@ class Prototipo
     /**
      * Get disponibilidad
      *
-     * @return string 
+     * @return string
      */
     public function getDisponibilidad()
     {
@@ -227,7 +232,7 @@ class Prototipo
     /**
      * Get institucionFinanciadora
      *
-     * @return string 
+     * @return string
      */
     public function getInstitucionFinanciadora()
     {
@@ -250,7 +255,7 @@ class Prototipo
     /**
      * Get nombreGrupo
      *
-     * @return string 
+     * @return string
      */
     public function getNombreGrupo()
     {
@@ -273,7 +278,7 @@ class Prototipo
     /**
      * Get grupo
      *
-     * @return string 
+     * @return string
      */
     public function getGrupo()
     {
@@ -306,10 +311,33 @@ class Prototipo
     /**
      * Get integrantes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getIntegrantes()
     {
         return $this->integrantes;
+    }
+
+    /**
+     * Set autores
+     *
+     * @param string $autores
+     * @return Prototipo
+     */
+    public function setAutores($autores)
+    {
+        $this->autores = $autores;
+
+        return $this;
+    }
+
+    /**
+     * Get autores
+     *
+     * @return string 
+     */
+    public function getAutores()
+    {
+        return $this->autores;
     }
 }

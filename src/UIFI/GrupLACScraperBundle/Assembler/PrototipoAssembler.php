@@ -35,7 +35,7 @@ class PrototipoAssembler{
     $prototipo->setPais(array_key_exists('pais',$prototipoDTO) ? $prototipoDTO['pais'] : "");
     $prototipo->setDisponibilidad(array_key_exists('disponibilidad',$prototipoDTO) ? $prototipoDTO['disponibilidad'] : "");
     $prototipo->setInstitucionFinanciadora(array_key_exists('institucion_financiadora',$prototipoDTO) ? $prototipoDTO['institucion_financiadora'] : "");
-
+    $prototipo->setAutores(array_key_exists('autores',$prototipoDTO) ? $prototipoDTO['autores'] : "");
     $prototipo->setNombreGrupo(array_key_exists('nombreGrupo',$prototipoDTO) ?  $prototipoDTO['nombreGrupo'] : "");
     $prototipo->setGrupo(array_key_exists('grupo',$prototipoDTO) ?  $prototipoDTO['grupo'] : "");
     return $prototipo;
