@@ -23,7 +23,7 @@ class PrototipoScraper  extends  Scraper
 		* 		$prototipo['institucion_financiadora'] la institucion financiadora del prototipo
 		*/
 		public function getPrototipos() {
-		 $query = '/html/body/table[35]'; //pendiente
+		 $query = '/html/body/table[27]';
 		 $array = $this->extraer( $query );
 		 $prototipos = array();
 		 foreach($array as $item ){
