@@ -75,6 +75,11 @@ class OtroProductoTecnologico {
        * @ORM\Column(name="grupo", type="string", length=255)
        */
       private $grupo;
+
+      /**
+      * @ORM\Column(name="autores", type="string",length=1000,nullable=true)
+      */
+      private $autores;
       /**
        * Integrantes de un grupo de un investigacion que publicaron el articulo.
        *
@@ -92,7 +97,7 @@ class OtroProductoTecnologico {
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -115,7 +120,7 @@ class OtroProductoTecnologico {
     /**
      * Get tipo
      *
-     * @return string 
+     * @return string
      */
     public function getTipo()
     {
@@ -138,7 +143,7 @@ class OtroProductoTecnologico {
     /**
      * Get titulo
      *
-     * @return string 
+     * @return string
      */
     public function getTitulo()
     {
@@ -161,7 +166,7 @@ class OtroProductoTecnologico {
     /**
      * Get pais
      *
-     * @return string 
+     * @return string
      */
     public function getPais()
     {
@@ -184,7 +189,7 @@ class OtroProductoTecnologico {
     /**
      * Get anual
      *
-     * @return string 
+     * @return string
      */
     public function getAnual()
     {
@@ -207,7 +212,7 @@ class OtroProductoTecnologico {
     /**
      * Get disponibilidad
      *
-     * @return string 
+     * @return string
      */
     public function getDisponibilidad()
     {
@@ -230,7 +235,7 @@ class OtroProductoTecnologico {
     /**
      * Get nombreComercial
      *
-     * @return string 
+     * @return string
      */
     public function getNombreComercial()
     {
@@ -253,7 +258,7 @@ class OtroProductoTecnologico {
     /**
      * Get institucionFinanciadora
      *
-     * @return string 
+     * @return string
      */
     public function getInstitucionFinanciadora()
     {
@@ -276,7 +281,7 @@ class OtroProductoTecnologico {
     /**
      * Get nombreGrupo
      *
-     * @return string 
+     * @return string
      */
     public function getNombreGrupo()
     {
@@ -299,7 +304,7 @@ class OtroProductoTecnologico {
     /**
      * Get grupo
      *
-     * @return string 
+     * @return string
      */
     public function getGrupo()
     {
@@ -332,10 +337,33 @@ class OtroProductoTecnologico {
     /**
      * Get integrantes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getIntegrantes()
     {
         return $this->integrantes;
+    }
+
+    /**
+     * Set autores
+     *
+     * @param string $autores
+     * @return OtroProductoTecnologico
+     */
+    public function setAutores($autores)
+    {
+        $this->autores = $autores;
+
+        return $this;
+    }
+
+    /**
+     * Get autores
+     *
+     * @return string 
+     */
+    public function getAutores()
+    {
+        return $this->autores;
     }
 }

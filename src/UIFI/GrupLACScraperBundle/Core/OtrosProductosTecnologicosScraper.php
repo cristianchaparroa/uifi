@@ -8,10 +8,9 @@ class OtrosProductosTecnologicosScraper  extends  Scraper
      /**
       * Constructor del objeto
       */
-    public function __construct( $grupoDTO ,$logger) {
+    public function __construct($grupoDTO) {
          Scraper::__construct( self::URL_BASE . $grupoDTO['id'] );
          $this->grupoDTO = $grupoDTO;
-         $this->logger = $logger;
     }
     /**
      * @return
@@ -53,6 +52,11 @@ class OtrosProductosTecnologicosScraper  extends  Scraper
     					 $anual = count($data) > 1 ? $this->eliminarSaltoLinea($data[1]) : "";
     					 $producto['anual'] = $anual;
              }
+             if(strpos($value,'Autores:')){
+               $resultAutores = explode('Autores:',$value);
+               $autores = count($resultAutores) >= 1 ? $resultAutores[1] : "";
+               $producto['autores'] = $autores;
+             }
              $valores = explode(",",$value);
   					 foreach($valores as $valor) {
   							 if(strpos($valor,'Disponibilidad')) {
@@ -60,18 +64,15 @@ class OtrosProductosTecnologicosScraper  extends  Scraper
       					    $disponibilidad = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
       						  $producto['disponibilidad'] = $disponibilidad;
   							 }
-
   							 if(strpos($valor,'Nombre comercial:')) {
       						 $result = explode(':',$valor);
       						 $nombreComercial = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
       						 $producto['nombre_comercial'] = $nombreComercial;
   							 }
-                 $this->logger->err( "****".$valor);
   							 if(strpos($valor,'Institución financiadora: ')) {
       						 $result = explode(':',$valor);
       						 $institucionFinanciadora = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
       						 $producto['institucion_financiadora'] = $institucionFinanciadora;
-                   $this->logger->err("institucion_financiadora: ". $institucionFinanciadora);
   							 }
   					 }
   				 }
