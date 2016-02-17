@@ -24,7 +24,7 @@ class NormasRegulacionesScraper  extends  Scraper
   		* 		$norma['institucion_financiadora'] la institucion financiadora de la norma
   		*/
   	public function getNormasRegulaciones() {
-  		 $query = '/html/body/table[35]'; //pendiente
+  		 $query = '/html/body/table[28]'; 
   		 $array = $this->extraer( $query );
   		 $normas = array();
   		 foreach($array as $item ){
