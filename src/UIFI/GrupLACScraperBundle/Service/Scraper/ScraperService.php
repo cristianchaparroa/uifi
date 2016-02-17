@@ -113,12 +113,18 @@ class ScraperService {
       // foreach($innovacionesProcesoProcedimientos as $innovacion) {
       //   $this->em->persist($innovacion);
       // }
-
-      $normasRegulacionesDTO =  $this->container->get('uifi.gruplac.service.scraper.normasRegulaciones')->getNormasRegulaciones($gruposDTO);
-      $normasRegulaciones =  $this->container->get('uifi.gruplac.assembler.normasRegulaciones')->crearLista($normasRegulacionesDTO);
-      foreach($normasRegulaciones as $normaRegulacion) {
-        $this->em->persist($normaRegulacion);
+      //
+      // $normasRegulacionesDTO =  $this->container->get('uifi.gruplac.service.scraper.normasRegulaciones')->getNormasRegulaciones($gruposDTO);
+      // $normasRegulaciones =  $this->container->get('uifi.gruplac.assembler.normasRegulaciones')->crearLista($normasRegulacionesDTO);
+      // foreach($normasRegulaciones as $normaRegulacion) {
+      //   $this->em->persist($normaRegulacion);
+      // }
+      $otrasPubicacionesDivulgativasDTO  =   $this->container->get('uifi.gruplac.service.scraper.otrasPublicacionesDivulgativas')->getOtrasPublicaciones($gruposDTO);
+      $otrasPublicacionesDivulgativas = $this->container->get('uifi.gruplac.assembler.otrasPublicacionesDivulgativas')->crearLista($otrasPubicacionesDivulgativasDTO);
+      foreach($otrasPublicacionesDivulgativas as $otraPublicacionDivulgativa) {
+        $this->em->persist($otraPublicacionDivulgativa);
       }
+
       $this->em->flush();
      }
      return true;
