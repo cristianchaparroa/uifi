@@ -72,6 +72,13 @@
           <argument type="service" id="service_container" />
         </service>
 
+        <service class="UIFI\GrupLACScraperBundle\Assembler\OtrosLibrosPublicadosAssembler" id="uifi.gruplac.assembler.otrosLibrosPublicados">
+          <argument type="service" id="service_container" />
+        </service>
+
+        <service class="UIFI\GrupLACScraperBundle\Assembler\OtrosProductosTecnologicosAssembler" id="uifi.gruplac.assembler.otrosProductosTecnologicos">
+          <argument type="service" id="service_container" />
+        </service>
 
         <!-- Servicios de scrapping -->
         <service class="UIFI\GrupLACScraperBundle\Service\Scraper\ScraperService" id="uifi.gruplac.scrap.scraper">
@@ -129,6 +136,14 @@
         </service>
 
         <service class="UIFI\GrupLACScraperBundle\Service\Scraper\OtrosArticulosPublicadosScraperService" id="uifi.gruplac.service.scraper.otrosArticulosPublicados">
+          <argument type="service" id="service_container" />
+        </service>
+
+        <service class="UIFI\GrupLACScraperBundle\Service\Scraper\OtrosLibrosPublicadosScraperService" id="uifi.gruplac.service.scraper.otrosLibrosPublicados">
+          <argument type="service" id="service_container" />
+        </service>
+
+        <service class="UIFI\GrupLACScraperBundle\Service\Scraper\OtrosProductosTecnologicosScraperService" id="uifi.gruplac.service.scraper.otrosProductosTecnologicos">
           <argument type="service" id="service_container" />
         </service>
 

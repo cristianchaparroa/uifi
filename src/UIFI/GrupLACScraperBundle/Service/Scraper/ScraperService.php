@@ -124,12 +124,24 @@ class ScraperService {
       // foreach($otrasPublicacionesDivulgativas as $otraPublicacionDivulgativa) {
       //   $this->em->persist($otraPublicacionDivulgativa);
       // }
-      $otrosArticulosPublicadosDTO =  $this->container->get('uifi.gruplac.service.scraper.otrosArticulosPublicados')->getOtrosArticulosPublicados($gruposDTO);
-      $otrosArticulosPublicados =  $this->container->get('uifi.gruplac.assembler.otrosArticulosPublicados')->crearLista($otrosArticulosPublicadosDTO);
-      foreach ($otrosArticulosPublicados as $otroArticulo) {
-        $this->em->persist($otroArticulo);
-      }
+      // $otrosArticulosPublicadosDTO =  $this->container->get('uifi.gruplac.service.scraper.otrosArticulosPublicados')->getOtrosArticulosPublicados($gruposDTO);
+      // $otrosArticulosPublicados =  $this->container->get('uifi.gruplac.assembler.otrosArticulosPublicados')->crearLista($otrosArticulosPublicadosDTO);
+      // foreach ($otrosArticulosPublicados as $otroArticulo) {
+      //   $this->em->persist($otroArticulo);
+      // }
 
+      // NO SIRVE!
+      // $otrosLibrosPublicadosDTO =   $this->container->get('uifi.gruplac.service.scraper.otrosLibrosPublicados')->getOtrosLibrosPublicados($gruposDTO);
+      // $otrosLibrosPublicados =  $this->container->get('uifi.gruplac.assembler.otrosLibrosPublicados')->crearLista(  $otrosLibrosPublicadosDTO);
+      // foreach($otrosLibrosPublicados  as $otroLibro) {
+      //   $this->em->persist($otroLibro);
+      // }
+
+      $otrosProductosTecnologicosDTO  =  $this->container->get('uifi.gruplac.service.scraper.otrosProductosTecnologicos')->getOtrosProductosTecnologicos($gruposDTO);
+      $otrosProductosTecnologicos =  $this->container->get('uifi.gruplac.assembler.otrosProductosTecnologicos')->crearLista($otrosProductosTecnologicosDTO);
+      foreach($otrosProductosTecnologicos as $otroProductoTecnologico){
+        $this->em->persist($otroProductoTecnologico);
+      }
       $this->em->flush();
      }
      return true;
