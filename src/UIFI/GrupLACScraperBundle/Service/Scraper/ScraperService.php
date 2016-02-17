@@ -137,10 +137,16 @@ class ScraperService {
       //   $this->em->persist($otroLibro);
       // }
 
-      $otrosProductosTecnologicosDTO  =  $this->container->get('uifi.gruplac.service.scraper.otrosProductosTecnologicos')->getOtrosProductosTecnologicos($gruposDTO);
-      $otrosProductosTecnologicos =  $this->container->get('uifi.gruplac.assembler.otrosProductosTecnologicos')->crearLista($otrosProductosTecnologicosDTO);
-      foreach($otrosProductosTecnologicos as $otroProductoTecnologico){
-        $this->em->persist($otroProductoTecnologico);
+      // $otrosProductosTecnologicosDTO  =  $this->container->get('uifi.gruplac.service.scraper.otrosProductosTecnologicos')->getOtrosProductosTecnologicos($gruposDTO);
+      // $otrosProductosTecnologicos =  $this->container->get('uifi.gruplac.assembler.otrosProductosTecnologicos')->crearLista($otrosProductosTecnologicosDTO);
+      // foreach($otrosProductosTecnologicos as $otroProductoTecnologico){
+      //   $this->em->persist($otroProductoTecnologico);
+      // }
+
+      $prototiposDTO = $this->container->get('uifi.gruplac.service.scraper.prototipo')->getPrototipos($gruposDTO);
+      $prototipos =  $this->container->get('uifi.gruplac.assembler.prototipo')->crearLista($prototiposDTO);
+      foreach($prototipos as $prototipo){
+        $this->em->persist($prototipo);
       }
       $this->em->flush();
      }
