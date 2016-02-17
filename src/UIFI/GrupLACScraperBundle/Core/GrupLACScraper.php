@@ -1661,4 +1661,207 @@ class GrupLACScraper extends  Scraper
 		 }
 		 return $prototipos;
 		}
+		
+	/**
+		 *
+		 * @return Arreglo de ediciones
+		 */
+		 public function ediciones(){
+			 $query = '/html/body/table[34]';
+			 return $this->extraer( $query );
+		 }
+		 /**
+		* Obtienen las ediciones
+		* @return Arreglo de arreglos
+		* 		$edicion['tipo'] el tipo de la edición
+		* 		$edicion['titulo'] el titulo de la edición
+		* 		$edicion['pais'] el pais de la edición
+		* 		$edicion['anual'] el año de la edicion
+		* 		$edicion['editorial'] la editorial de la edicion
+		* 		$edicion['idiomas'] los idiomas de la edicion
+		* 		$edicion['paginas'] las páginas de la edicion
+		*/
+		public function getEdiciones(){
+		 $query = '/html/body/table[34]';
+		 $array = $this->extraer( $query );
+		 $ediciones = array();
+		 foreach($array as $item ){
+			 $doc = new \DOMDocument();
+			 $doc->loadHTML( $item );
+			 $xpath = new \DOMXPath($doc);
+			 $list = $doc->getElementsByTagName('strong');
+			 $edicion = array();
+			 foreach($list as $node ){
+				 $edicion['tipo'] = $node->nodeValue;
+				 $tituloNode = $node->nextSibling;
+				 $titulo = $tituloNode->nodeValue;
+				 $titulo = str_replace(':','',$titulo);
+				 $titulo = utf8_encode ($titulo);
+				 $edicion['titulo'] = $titulo;
+				 $list = $doc->getElementsByTagName('br');
+				 foreach($list as $node){
+					 $nodesiguiente = $node->nextSibling;
+					 $value = $nodesiguiente->nodeValue;
+					 $valores = explode(",",$value);
+					 if(strpos($value,'Autores'){
+						$result = explode(':',$value);
+						$autores = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+						$edicion['autores'] = $autores;
+					 }else{
+						$pais = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[0]) : "";
+						$edicion['pais'] = $pais;
+						$anual = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[1]) : "";
+						$edicion['anual'] = $anual;
+					 }
+					 foreach($valores as $valor) {
+							 if(strpos($valor,'Editorial')){
+								  $result = explode(':',$valor);
+								  $editorial = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+								  $edicion['editorial'] = $editorial;
+							 }
+							 if(strpos($valor,'Idiomas')){
+								  $result = explode(':',$valor);
+								  $idiomas = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+								  $edicion['idiomas'] = $idiomas;
+							 }
+							 if(strpos($valor,'Páginas')){
+								  $result = explode(':',$valor);
+								  $paginas = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+								  $edicion['paginas'] = $paginas;
+							 }
+						 }
+					}
+				}
+			      $ediciones[] = $edicion;
+			}
+			return $ediciones;
+		}
+		
+		
+		
+		/**
+		 *
+		 * @return Arreglo de informes de investiación
+		 */
+		 public function informesInvestigacion(){
+			 $query = '/html/body/table[36]';
+			 return $this->extraer( $query );
+		 }
+		 /**
+		* Obtienen los informes de investiación
+		* @return Arreglo de arreglos
+		* 		$informe['tipo'] el tipo del informe
+		* 		$informe['titulo'] el titulo del informe
+		* 		$informe['anual'] el año del informe
+		* 		$informe['proyecto_investigacion'] el proyecto del informe
+		*/
+		public function getInformesInvestigacion(){
+		 $query = '/html/body/table[36]';
+		 $array = $this->extraer( $query );
+		 $informes = array();
+		 foreach($array as $item ){
+			 $doc = new \DOMDocument();
+			 $doc->loadHTML( $item );
+			 $xpath = new \DOMXPath($doc);
+			 $list = $doc->getElementsByTagName('strong');
+			 $informe = array();
+			 foreach($list as $node ){
+				 $informe['tipo'] = $node->nodeValue;
+				 $tituloNode = $node->nextSibling;
+				 $titulo = $tituloNode->nodeValue;
+				 $titulo = str_replace(':','',$titulo);
+				 $titulo = utf8_encode ($titulo);
+				 $informe['titulo'] = $titulo;
+				 $list = $doc->getElementsByTagName('br');
+				 foreach($list as $node){
+					 $nodesiguiente = $node->nextSibling;
+					 $value = $nodesiguiente->nodeValue;
+					 $valores = explode(",",$value);
+					 if(strpos($value,'Autores'){
+						$result = explode(':',$value);
+						$autores = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+						$informe['autores'] = $autores;
+					 }else{
+						$anual = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[0]) : "";
+						$informe['anual'] = $anual;
+					 }
+					 foreach($valores as $valor) {
+							 if(strpos($valor,'Proyecto de investigación')){
+								  $result = explode(':',$valor);
+								  $proyecto = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+								  $informe['proyecto_investigacion'] = $proyecto;
+							 }
+						 }
+					}
+				}
+			      $informes[] = $informe;
+			}
+			return $informes;
+		}
+		
+		
+		/**
+		 *
+		 * @return Arreglo de redes de conocimiento
+		 */
+		 public function redesConocimiento(){
+			 $query = '/html/body/table[37]';
+			 return $this->extraer( $query );
+		 }
+		 /**
+		* Obtienen las redes de conocimiento
+		* @return Arreglo de arreglos
+		* 		$red['tipo'] el tipo de la red
+		* 		$red['titulo'] el titulo de la red
+		* 		$red['anual'] el lugar de la red
+		* 		$red['desde'] fecha inicio red
+		* 		$red['hasta'] fecha fin red
+		* 		$red['numero_participantes'] numero participantes red
+		*/
+		public function getRedesConocimiento(){
+		 $query = '/html/body/table[37]';
+		 $array = $this->extraer( $query );
+		 $redes = array();
+		 foreach($array as $item ){
+			 $doc = new \DOMDocument();
+			 $doc->loadHTML( $item );
+			 $xpath = new \DOMXPath($doc);
+			 $list = $doc->getElementsByTagName('strong');
+			 $red = array();
+			 foreach($list as $node ){
+				 $red['tipo'] = $node->nodeValue;
+				 $tituloNode = $node->nextSibling;
+				 $titulo = $tituloNode->nodeValue;
+				 $titulo = str_replace(':','',$titulo);
+				 $titulo = utf8_encode ($titulo);
+				 $red['titulo'] = $titulo;
+				 $list = $doc->getElementsByTagName('br');
+				 foreach($list as $node){
+					 $nodesiguiente = $node->nextSibling;
+					 $value = $nodesiguiente->nodeValue;
+					 $valores = explode(",",$value);
+					 $ciu = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[0]) : "";
+					 $ciudad = str_replace( 'en ','',$ciu);
+					 $red['lugar'] = $ciudad;
+					 foreach($valores as $valor) {
+							 if(strpos($valor,'Número de participantes')){
+								  $result = explode(':',$valor);
+								  $participantes = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+								  $red['numero_participantes'] = $participantes;
+							 }
+							 if(strpos($valor, 'hasta')){
+								$result = explode('hasta', $valor);
+								$fechaInicial = $result[0];
+								$desde = str_replace('desde ','', $fechaInicial);
+								$red['desde'] =  $desde;
+								$fechaFinal = count($result)>1 ? $result[1] : "";
+								$red['hasta'] = $hasta;
+							}
+						 }
+					}
+				}
+			      $redes[] = $red;
+			}
+			return $redes;
+		}
 }
