@@ -8,9 +8,10 @@ class ConsultoriaCientificaScraper extends  Scraper
      /**
       * Constructor del objeto
       */
-    public function __construct( $grupoDTO ) {
+    public function __construct( $grupoDTO ,$logger) {
          Scraper::__construct( self::URL_BASE . $grupoDTO['id'] );
          $this->grupoDTO = $grupoDTO;
+         $this->logger = $logger;
     }
     /**
 		* Obtienen las consultorias Cientifico Tecnologicas
@@ -49,32 +50,41 @@ class ConsultoriaCientificaScraper extends  Scraper
 				 foreach($list as $node){
 					 $nodesiguiente = $node->nextSibling;
 					 $value = $nodesiguiente->nodeValue;
-					 $valores = explode(",",$value);
-					 $pais = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[0]) : "";
-					 $consultoria['pais'] = $pais;
-					 $anual = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[1]) : "";
-					 $consultoria['anual'] = $anual;
+           $valores = explode(",",$value);
+
+           if(strpos($value,'Autores:')) {
+             $resultAutores = explode('Autores:',$value);
+             $autores = count($resultAutores) >= 1 ? $resultAutores[1] : "";
+             $consultoria['autores'] = $this->eliminarSaltoLinea($autores);
+           }
+           if(strpos($value,'Disponibilidad')) {
+              $resultPais = explode(',',$value);
+              $pais = count($resultPais)>1 ? $resultPais[0] : "";
+              $consultoria['pais'] =  $this->eliminarSaltoLinea($pais);
+              $anual = count($resultPais)>2 ? $resultPais[1] : "";
+              $consultoria['anual'] = $anual;
+           }
+           if(strpos($value,'Número del contrato')) {
+               $result = explode('Número del contrato:',$value);
+               $numeroContrato = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+               $consultoria['numero_contrato'] = $numeroContrato;
+           }
 					 foreach($valores as $valor) {
 							 if(strpos($valor,'Idioma')) {
-						      $result = explode(':',$valor);
+						      $result = explode('Idioma:',$valor);
 						      $idioma = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
 						      $consultoria['idioma'] = $idioma;
 							 }
 							 if(strpos($valor,'Disponibilidad')) {
-						      $result = explode(':',$valor);
+						      $result = explode('Disponibilidad:',$valor);
 						      $disponibilidad = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
 						      $consultoria['disponibilidad'] = $disponibilidad;
 							 }
-							 if(strpos($valor,'Número del contrato')) {
-						      $result = explode(':',$valor);
-						      $numeroContrato = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
-						      $consultoria['numero_contrato'] = $numeroContrato;
-							 }
-							 if(strpos($valor,'Institución que se benefició del servicio')) {
-						      $result = explode(':',$valor);
-						      $institucion = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
-						      $consultoria['institucionBeneficiaria'] = $institucion;
-							 }
+               if(strpos($valor,'servicio:')) {
+                   $result = explode('servicio:',$valor);
+                   $institucion = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+                   $consultoria['institucionBeneficiaria'] = $institucion;
+               }
 					 }
 				 }
 			 }

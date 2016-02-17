@@ -36,7 +36,8 @@ class ConsultoriaCientificaAssembler{
     $consultoria->setIdioma(array_key_exists('idioma',$consultoriaDTO) ? $consultoriaDTO['idioma'] : "");
     $consultoria->setDisponibilidad(array_key_exists('disponibilidad',$consultoriaDTO) ? $consultoriaDTO['disponibilidad'] : "");
     $consultoria->setNumeroContrato(array_key_exists('numero_contrato',$consultoriaDTO) ? $consultoriaDTO['numero_contrato'] : "");
-    $consultoria->setInstitucionBeneficiaria(array_key_exists('institucionBenficiaria',$consultoriaDTO) ?  $consultoriaDTO['institucionBeneficiaria'] : "");
+    $consultoria->setInstitucionBeneficiaria(array_key_exists('institucionBeneficiaria',$consultoriaDTO) ?  $consultoriaDTO['institucionBeneficiaria'] : "");
+    $consultoria->setAutores(array_key_exists('autores',$consultoriaDTO) ? $consultoriaDTO['autores'] :"");
     $consultoria->setNombreGrupo(array_key_exists('nombreGrupo',$consultoriaDTO) ?  $consultoriaDTO['nombreGrupo'] : "");
     $consultoria->setGrupo(array_key_exists('grupo',$consultoriaDTO) ?  $consultoriaDTO['grupo'] : "");
     return $consultoria;

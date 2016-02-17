@@ -85,6 +85,10 @@ class ConsultoriaCientifica
        */
       private $grupo;
       /**
+      * @ORM\Column(name="autores", type="string",length=1000,nullable=true)
+      */
+      private $autores;
+      /**
        * Integrantes de un grupo de un investigacion que publicaron el articulo.
        *
        * @ORM\ManyToMany(targetEntity="UIFI\IntegrantesBundle\Entity\Integrante", mappedBy="articulos")
@@ -371,5 +375,28 @@ class ConsultoriaCientifica
     public function getIntegrantes()
     {
         return $this->integrantes;
+    }
+
+    /**
+     * Set autores
+     *
+     * @param string $autores
+     * @return ConsultoriaCientifica
+     */
+    public function setAutores($autores)
+    {
+        $this->autores = $autores;
+
+        return $this;
+    }
+
+    /**
+     * Get autores
+     *
+     * @return string 
+     */
+    public function getAutores()
+    {
+        return $this->autores;
     }
 }
