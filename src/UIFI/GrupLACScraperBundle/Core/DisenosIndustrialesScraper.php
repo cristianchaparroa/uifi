@@ -23,44 +23,51 @@ class DisenosIndustrialesScraper  extends  Scraper
 		* 		$diseno['disponibilidad'] la disponibilidad del diseño
 		* 		$diseno['autores'] la institucion financiadora del diseño
 		*/
-		public function getDisenosIndustriales(){
-		 $query = '/html/body/table[19]';
-		 $array = $this->extraer( $query );
-		 $disenos = array();
-		 foreach($array as $item ){
-			 $doc = new \DOMDocument();
-			 $doc->loadHTML( $item );
-			 $xpath = new \DOMXPath($doc);
-			 $list = $doc->getElementsByTagName('strong');
-			 $diseno = array();
-       $diseno['nombreGrupo'] = $this->grupoDTO['nombre'];
-       $diseno['grupo'] = $this->grupoDTO['id'];
-			 foreach($list as $node ){
-				 $diseno ['tipo'] = $node->nodeValue;
+    public function getDisenosIndustriales() {
+       $query = '/html/body/table[19]';
+       $array = $this->extraer( $query );
+       $disenos = array();
+       foreach($array as $item ){
+         $doc = new \DOMDocument();
+         $doc->loadHTML( $item );
+         $xpath = new \DOMXPath($doc);
+         $list = $doc->getElementsByTagName('strong');
+         $diseno = array();
+         $diseno['nombreGrupo'] = $this->grupoDTO['nombre'];
+         $diseno['grupo'] = $this->grupoDTO['id'];
 
-				 $tituloNode = $node->nextSibling;
-				 $titulo = $tituloNode->nodeValue;
-				 $titulo = str_replace(':','',$titulo);
-				 $titulo = utf8_encode ($titulo);
-				 $diseno ['titulo'] = $titulo;
-
-				 $list = $doc->getElementsByTagName('br');
-				 $nodesiguiente = $node->nextSibling;
-				 $value = $nodesiguiente->nodeValue;
-				 $valores = explode(",",$value);
-				 $pais = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[0]) : "";
-				 $diseno['pais'] = $pais;
-
-				 $anual = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[1]) : "";
-				 $diseno['anual'] = $anual;
-
-				 $datos = count($valores) > 2 ? explode(":",$valores[2]) : "";
-				 $disponibilidad = count($datos) > 1 ? $this->eliminarSaltoLinea($datos[1]) : "";
-				 $diseno['disponibilidad'] = $disponibilidad;
-			 }
-			 $disenos[] = $diseno;
-		 }
-		 return $disenos;
-		}
-
+         foreach($list as $node ){
+           $diseno ['tipo'] = $node->nodeValue;
+           $tituloNode = $node->nextSibling;
+           $titulo = $tituloNode->nodeValue;
+           $titulo = str_replace(':','',$titulo);
+           $titulo = utf8_encode ($titulo);
+           $diseno ['titulo'] = $titulo;
+           $list = $doc->getElementsByTagName('br');
+           foreach($list as $node){
+             $nodesiguiente = $node->nextSibling;
+             $value = $nodesiguiente->nodeValue;
+             $valores = explode(",",$value);
+             $pais = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[0]) : "";
+             $diseno['pais'] = $pais;
+             $anual = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[1]) : "";
+             $diseno['anual'] = $anual;
+             foreach($valores as $valor) {
+                if(strpos($valor,'Disponibilidad')){
+                      $result = explode(':',$valor);
+                      $disponibilidad = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+                      $diseno['disponibilidad'] = $disponibilidad;
+                 }
+                if(strpos($valor,'Institución financiadora')){
+                      $result = explode(':',$valor);
+                      $institucionFinanciadora = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+                      $diseno['institucion_financiadora'] = $institucionFinanciadora;
+                }
+             }
+           }
+         }
+         $disenos[] = $diseno;
+       }
+       return $disenos;
+    }
 }

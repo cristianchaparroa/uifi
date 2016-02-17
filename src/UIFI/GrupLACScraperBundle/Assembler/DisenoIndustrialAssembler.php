@@ -35,7 +35,7 @@ class DisenoIndustrialAssembler{
     $diseno->setPais(array_key_exists('pais',$disenoDTO) ? $disenoDTO['pais'] : "");
     $diseno->setAnual(array_key_exists('anual',$disenoDTO) ? $disenoDTO['anual'] : "");
     $diseno->setDisponibilidad(array_key_exists('disponibilidad',$disenoDTO) ? $disenoDTO['disponibilidad'] : "");
-
+    $diseno->setInstitucionFinanciadora(array_key_exists('institucion_financiadora',$disenoDTO) ? $disenoDTO['institucion_financiadora']: "");
     $diseno->setNombreGrupo(array_key_exists('nombreGrupo',$disenoDTO) ?  $disenoDTO['nombreGrupo'] : "");
     $diseno->setGrupo(array_key_exists('grupo',$disenoDTO) ?  $disenoDTO['grupo'] : "");
     return $diseno;

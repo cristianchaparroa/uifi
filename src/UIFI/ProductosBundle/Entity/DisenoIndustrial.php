@@ -56,7 +56,12 @@ class DisenoIndustrial
        */
       private $disponibilidad;
 
-
+      /**
+       * Año en el que fue publicado el articulo
+       *
+       * @ORM\Column(name="institucion_financiadora", type="string",length=1000,nullable=true)
+       */
+      private $institucionFinanciadora;
       /**
        * @var string
        * @ORM\Column(name="autores", type="string",nullable=true)
@@ -93,7 +98,7 @@ class DisenoIndustrial
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -116,7 +121,7 @@ class DisenoIndustrial
     /**
      * Get tipo
      *
-     * @return string 
+     * @return string
      */
     public function getTipo()
     {
@@ -139,7 +144,7 @@ class DisenoIndustrial
     /**
      * Get titulo
      *
-     * @return string 
+     * @return string
      */
     public function getTitulo()
     {
@@ -162,7 +167,7 @@ class DisenoIndustrial
     /**
      * Get pais
      *
-     * @return string 
+     * @return string
      */
     public function getPais()
     {
@@ -185,7 +190,7 @@ class DisenoIndustrial
     /**
      * Get anual
      *
-     * @return string 
+     * @return string
      */
     public function getAnual()
     {
@@ -208,7 +213,7 @@ class DisenoIndustrial
     /**
      * Get disponibilidad
      *
-     * @return string 
+     * @return string
      */
     public function getDisponibilidad()
     {
@@ -231,7 +236,7 @@ class DisenoIndustrial
     /**
      * Get autores
      *
-     * @return string 
+     * @return string
      */
     public function getAutores()
     {
@@ -254,7 +259,7 @@ class DisenoIndustrial
     /**
      * Get nombreGrupo
      *
-     * @return string 
+     * @return string
      */
     public function getNombreGrupo()
     {
@@ -277,7 +282,7 @@ class DisenoIndustrial
     /**
      * Get grupo
      *
-     * @return string 
+     * @return string
      */
     public function getGrupo()
     {
@@ -310,10 +315,33 @@ class DisenoIndustrial
     /**
      * Get integrantes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getIntegrantes()
     {
         return $this->integrantes;
+    }
+
+    /**
+     * Set institucionFinanciadora
+     *
+     * @param string $institucionFinanciadora
+     * @return DisenoIndustrial
+     */
+    public function setInstitucionFinanciadora($institucionFinanciadora)
+    {
+        $this->institucionFinanciadora = $institucionFinanciadora;
+
+        return $this;
+    }
+
+    /**
+     * Get institucionFinanciadora
+     *
+     * @return string 
+     */
+    public function getInstitucionFinanciadora()
+    {
+        return $this->institucionFinanciadora;
     }
 }
