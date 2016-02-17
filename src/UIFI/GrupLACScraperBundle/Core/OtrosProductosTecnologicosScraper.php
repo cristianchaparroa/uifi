@@ -22,7 +22,7 @@ class OtrosProductosTecnologicosScraper  extends  Scraper
      * $producto['institucion_financiadora']
     */
     public function getOtrosProductosTecnologicos() {
-  		 $query = '/html/body/table[35]'; //pendiente
+  		 $query = '/html/body/table[26]';
   		 $array = $this->extraer( $query );
   		 $productos = array();
   		 foreach($array as $item ){
