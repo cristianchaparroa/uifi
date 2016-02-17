@@ -50,7 +50,7 @@ class InnovacionProcesosProcedimientos
 
       /**
        *
-       * @ORM\Column(name="disponibilidad", type="string",length=10,nullable=true)
+       * @ORM\Column(name="disponibilidad", type="string",length=15,nullable=true)
        */
       private $disponibilidad;
 
