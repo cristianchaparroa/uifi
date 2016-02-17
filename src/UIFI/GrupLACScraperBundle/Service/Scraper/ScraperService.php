@@ -142,11 +142,17 @@ class ScraperService {
       // foreach($otrosProductosTecnologicos as $otroProductoTecnologico){
       //   $this->em->persist($otroProductoTecnologico);
       // }
+      //Errores: no trae nada
+      // $prototiposDTO = $this->container->get('uifi.gruplac.service.scraper.prototipo')->getPrototipos($gruposDTO);
+      // $prototipos =  $this->container->get('uifi.gruplac.assembler.prototipo')->crearLista($prototiposDTO);
+      // foreach($prototipos as $prototipo){
+      //   $this->em->persist($prototipo);
+      // }
 
-      $prototiposDTO = $this->container->get('uifi.gruplac.service.scraper.prototipo')->getPrototipos($gruposDTO);
-      $prototipos =  $this->container->get('uifi.gruplac.assembler.prototipo')->crearLista($prototiposDTO);
-      foreach($prototipos as $prototipo){
-        $this->em->persist($prototipo);
+      $signosDistintivosDTO = $this->container->get('uifi.gruplac.service.scraper.signosDistintivos')->getSignosDistintivos($gruposDTO);
+      $signosDistintivos =  $this->container->get('uifi.gruplac.assembler.signosDistintivos')->crearLista($signosDistintivosDTO);
+      foreach($signosDistintivos as $signoDistintivo) {
+          $this->em->persist( $signoDistintivo);
       }
       $this->em->flush();
      }
