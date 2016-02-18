@@ -53,6 +53,11 @@ class SignoDistintivo {
       private $numeroRegistro;
 
       /**
+       * @ORM\Column(name="nombre_titular", type="string",nullable=true)
+       */
+      private $nombreTitular;
+
+      /**
        * @var string
        *
        * @ORM\Column(name="nombre_grupo", type="string", length=255)
@@ -70,7 +75,7 @@ class SignoDistintivo {
        * @ORM\ManyToMany(targetEntity="UIFI\IntegrantesBundle\Entity\Integrante", mappedBy="articulos")
       */
       private $integrantes;
-  
+
     /**
      * Constructor
      */
@@ -82,7 +87,7 @@ class SignoDistintivo {
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -105,7 +110,7 @@ class SignoDistintivo {
     /**
      * Get tipo
      *
-     * @return string 
+     * @return string
      */
     public function getTipo()
     {
@@ -128,7 +133,7 @@ class SignoDistintivo {
     /**
      * Get titulo
      *
-     * @return string 
+     * @return string
      */
     public function getTitulo()
     {
@@ -151,7 +156,7 @@ class SignoDistintivo {
     /**
      * Get pais
      *
-     * @return string 
+     * @return string
      */
     public function getPais()
     {
@@ -174,7 +179,7 @@ class SignoDistintivo {
     /**
      * Get anual
      *
-     * @return string 
+     * @return string
      */
     public function getAnual()
     {
@@ -197,7 +202,7 @@ class SignoDistintivo {
     /**
      * Get numeroRegistro
      *
-     * @return string 
+     * @return string
      */
     public function getNumeroRegistro()
     {
@@ -220,7 +225,7 @@ class SignoDistintivo {
     /**
      * Get nombreGrupo
      *
-     * @return string 
+     * @return string
      */
     public function getNombreGrupo()
     {
@@ -243,7 +248,7 @@ class SignoDistintivo {
     /**
      * Get grupo
      *
-     * @return string 
+     * @return string
      */
     public function getGrupo()
     {
@@ -276,10 +281,33 @@ class SignoDistintivo {
     /**
      * Get integrantes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getIntegrantes()
     {
         return $this->integrantes;
+    }
+
+    /**
+     * Set nombreTitular
+     *
+     * @param string $nombreTitular
+     * @return SignoDistintivo
+     */
+    public function setNombreTitular($nombreTitular)
+    {
+        $this->nombreTitular = $nombreTitular;
+
+        return $this;
+    }
+
+    /**
+     * Get nombreTitular
+     *
+     * @return string 
+     */
+    public function getNombreTitular()
+    {
+        return $this->nombreTitular;
     }
 }

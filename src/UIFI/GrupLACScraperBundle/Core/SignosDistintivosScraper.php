@@ -8,7 +8,7 @@ class SignosDistintivosScraper  extends  Scraper
      /**
       * Constructor del objeto
       */
-    public function __construct( $grupoDTO ) {
+    public function __construct( $grupoDTO) {
          Scraper::__construct( self::URL_BASE . $grupoDTO['id'] );
          $this->grupoDTO = $grupoDTO;
     }
@@ -44,7 +44,13 @@ class SignosDistintivosScraper  extends  Scraper
   				 $list = $doc->getElementsByTagName('br');
   				 foreach($list as $node) {
   					 $nodesiguiente = $node->nextSibling;
-  					 $value = $nodesiguiente->nodeValue;
+  					 $value = $nodesiguiente->nodeValue;;
+
+             if(strpos($value,'titular:')) {
+               $resultTitular = explode('titular:',$value);
+               $titular = count($resultTitular)>1 ? $resultTitular[1] : "";
+               $signo['nombreTitular'] = $titular;
+             }
   					 $valores = explode(",",$value);
   					 $pais = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[0]) : "";
   					 $signo['pais'] = $pais;

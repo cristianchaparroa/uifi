@@ -35,7 +35,7 @@ class SignosDistintivosAssembler{
     $signo->setAnual(array_key_exists('anual',$signoDTO) ? $signoDTO['anual'] : "");
     $signo->setPais(array_key_exists('pais',$signoDTO) ? $signoDTO['pais'] : "");
     $signo->setNumeroRegistro(array_key_exists('numeroRegistro',$signoDTO) ? $signoDTO['numeroRegistro'] : "");
-
+    $signo->setNombreTitular(array_key_exists('nombreTitular',$signoDTO) ? $signoDTO['nombreTitular'] : "");
     $signo->setNombreGrupo(array_key_exists('nombreGrupo',$signoDTO) ?  $signoDTO['nombreGrupo'] : "");
     $signo->setGrupo(array_key_exists('grupo',$signoDTO) ?  $signoDTO['grupo'] : "");
     return $signo;
