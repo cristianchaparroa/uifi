@@ -1036,26 +1036,52 @@ class GrupLACScraper extends  Scraper
 				 $articulo['titulo'] = $titulo;
 				 $list = $doc->getElementsByTagName('br');
 				 $nodesiguiente = $node[0]->nextSibling;
-				 $value = $nodesiguiente->nodeValue;
-				 $valores = explode(",",$value);
-				 $pais = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[0]) : "";
-				 $articulo['pais'] = $pais;
-				 $datos = count($valores) > 1 ? explode(":",$valores[1]) : "";
-				 $revista = count($datos) > 1 ? $this->eliminarSaltoLinea($datos[0]) : "";
-				 $revista = str_replace('ISSN','',$revista);
-				 $articulo['revista'] = $revista;
-				 $datos = count($valores) > 2 ? explode(":",$valores[2]) : "";
-				 $anual = count($datos) > 1 ? $this->eliminarSaltoLinea($datos[0]) : "";
-				 $anual = str_replace('vol','',$anual);
-				 $articulo['anual'] = $anual;
-				 $volumen = count($datos) > 1 ? $this->eliminarSaltoLinea($datos[1]) : "";
-				 $volumen = str_replace('fasc','',$volumen);
-				 $articulo['volumen'] = $volumen;
-				 $fasciculo = count($datos) > 2 ? $this->eliminarSaltoLinea($datos[2]) : "";
-				 $fasciculo = str_replace('págs','',$fasciculo);
-				 $articulo['fasciculo'] = $fasciculo;
-				 $paginas = count($datos) > 3 ? $this->eliminarSaltoLinea($datos[3]) : "";
-				 $articulo['paginas'] = $paginas;
+				 foreach($list as $node){
+					 $nodesiguiente = $node->nextSibling;
+					 $value = $nodesiguiente->nodeValue;
+					 $valores = explode(",",$value);
+					 if(strpos($value,'Autores')){
+						      $result = explode(':',$value);
+						      $autores = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+						      $articulo['autores'] = $autores;
+					}else{
+						$pais = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[0]) : "";
+						$articulo['pais'] = $pais;
+						$anual = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[1]) : "";
+						$articulo['anual'] = $anual;
+					}
+					 foreach($valores as $valor) {
+						if(strpos($valor,'Contacto ISSN')){
+						      $result = explode(':',$valor);
+						      $issn = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+						      $articulo['issn'] = $issn;
+						 }
+						 //2006 vol: fasc:  págs:  - 
+						if(strpos($valor,'vol')){
+						      $result = explode('vol:',$valor);
+						      $anual = count($result) > 1 ? $this->eliminarSaltoLinea($result[0]) : "";
+						      $articulo['anual'] = $anual;
+						}
+						if(strpos($valor,'págs')){
+						      $result = explode('págs:',$valor);
+						      $paginas = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+						      $articulo['paginas'] = $paginas;
+						}
+						$vals = explode(":",$valor);
+						foreach($vals as $val) {
+							if(strpos($valor,'fasc')){
+							      $result = explode('fasc',$valor);
+							      $volumen = count($result) > 1 ? $this->eliminarSaltoLinea($result[0]) : "";
+							      $articulo['volumen'] = $volumen;
+							}
+							if(strpos($valor,'págs')){
+							      $result = explode('págs',$valor);
+							      $fasciculo = count($result) > 1 ? $this->eliminarSaltoLinea($result[0]) : "";
+							      $articulo['fasciculo'] = $fasciculo;
+							}
+						}
+					 }
+				 }
 			 }
 			 $articulos[] = $articulo;
 		 }
