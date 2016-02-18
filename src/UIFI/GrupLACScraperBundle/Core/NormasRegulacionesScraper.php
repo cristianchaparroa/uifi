@@ -8,7 +8,7 @@ class NormasRegulacionesScraper  extends  Scraper
      /**
       * Constructor del objeto
       */
-    public function __construct( $grupoDTO ) {
+    public function __construct($grupoDTO) {
          Scraper::__construct( self::URL_BASE . $grupoDTO['id'] );
          $this->grupoDTO = $grupoDTO;
     }
@@ -24,7 +24,7 @@ class NormasRegulacionesScraper  extends  Scraper
   		* 		$norma['institucion_financiadora'] la institucion financiadora de la norma
   		*/
   	public function getNormasRegulaciones() {
-  		 $query = '/html/body/table[28]'; 
+  		 $query = '/html/body/table[28]';
   		 $array = $this->extraer( $query );
   		 $normas = array();
   		 foreach($array as $item ){
@@ -49,10 +49,21 @@ class NormasRegulacionesScraper  extends  Scraper
   					 $nodesiguiente = $node->nextSibling;
   					 $value = $nodesiguiente->nodeValue;
   					 $valores = explode(",",$value);
-  					 $pais = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[0]) : "";
-  					 $norma['pais'] = $pais;
-  					 $anual = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[1]) : "";
-  					 $norma['anual'] = $anual;
+             if(strpos($value,'Ambito')){
+                $result = explode('Ambito:',$value);
+                $resultAmbito = $result[0];
+                $resultPais = explode(',',$resultAmbito);
+                $pais = count($resultPais) > 1 ? $resultPais[0] : "";
+                $norma['pais'] = $this->eliminarSaltoLinea($pais);
+
+                $anual = count($resultPais) > 2 ? $resultPais[1] :"";
+                $norma['anual'] = $this->eliminarSaltoLinea($anual);
+             }
+             if(strpos($value,'Autores:')){
+               $resultAutores = explode('Autores:',$value);
+               $autores = count($resultAutores) >= 2 ? $resultAutores[1] : "";
+               $norma['autores'] = $autores;
+             }
   					 foreach($valores as $valor) {
   							 if(strpos($valor,'Ambito')){
       						 $result = explode(':',$valor);
@@ -64,8 +75,8 @@ class NormasRegulacionesScraper  extends  Scraper
       						 $objeto = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
       						 $norma['objeto'] = $objeto;
   							 }
-  							 if(strpos($valor,'Institución financiadora')){
-      						 $result = explode(':',$valor);
+  							 if(strpos($valor,'financiadora:')){
+      						 $result = explode('financiadora:',$valor);
       						 $institucionFinanciadora = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
       						 $norma['institucion_financiadora'] = $institucionFinanciadora;
   							 }

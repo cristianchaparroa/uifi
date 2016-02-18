@@ -36,7 +36,7 @@ class NormasRegulacionesAssembler{
     $norma->setAmbito(array_key_exists('ambito',$normaDTO) ? $normaDTO['ambito'] : "");
     $norma->setInstitucionFinanciadora(array_key_exists('institucion_financiadora',$normaDTO) ? $normaDTO['institucion_financiadora'] : "");
     $norma->setObjeto(array_key_exists('objeto',$normaDTO) ? $normaDTO['objeto'] : "");
-
+    $norma->setAutores(array_key_exists('autores',$normaDTO) ? $normaDTO['autores'] : "");
     $norma->setNombreGrupo(array_key_exists('nombreGrupo',$normaDTO) ?  $normaDTO['nombreGrupo'] : "");
     $norma->setGrupo(array_key_exists('grupo',$normaDTO) ?  $normaDTO['grupo'] : "");
     return $norma;
