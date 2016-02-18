@@ -62,13 +62,13 @@ class ConsultoriaCientifica
 
       /**
        * @var string
-       * @ORM\Column(name="numero_contrato", type="string",length=50 ,nullable=true)
+       * @ORM\Column(name="numero_contrato", type="string",length=255 ,nullable=true)
        */
       private $numeroContrato;
 
       /**
        * @var string
-       * @ORM\Column(name="institucion_beneficiaria", type="string",length=255 ,nullable=true)
+       * @ORM\Column(name="institucion_beneficiaria", type="string",length=500 ,nullable=true)
        */
       private $institucionBeneficiaria;
 
@@ -393,7 +393,7 @@ class ConsultoriaCientifica
     /**
      * Get autores
      *
-     * @return string 
+     * @return string
      */
     public function getAutores()
     {

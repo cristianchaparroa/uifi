@@ -8,10 +8,9 @@ class ConsultoriaCientificaScraper extends  Scraper
      /**
       * Constructor del objeto
       */
-    public function __construct( $grupoDTO ,$logger) {
+    public function __construct( $grupoDTO) {
          Scraper::__construct( self::URL_BASE . $grupoDTO['id'] );
          $this->grupoDTO = $grupoDTO;
-         $this->logger = $logger;
     }
     /**
 		* Obtienen las consultorias Cientifico Tecnologicas
@@ -64,9 +63,9 @@ class ConsultoriaCientificaScraper extends  Scraper
               $anual = count($resultPais)>2 ? $resultPais[1] : "";
               $consultoria['anual'] = $anual;
            }
-           if(strpos($value,'Número del contrato')) {
-               $result = explode('Número del contrato:',$value);
-               $numeroContrato = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+           if(strpos($value,'contrato:')) {
+               $result = explode('contrato:',$value);
+               $numeroContrato = count($result) > 1 ? $result[1] : "";
                $consultoria['numero_contrato'] = $numeroContrato;
            }
 					 foreach($valores as $valor) {

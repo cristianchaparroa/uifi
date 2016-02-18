@@ -23,7 +23,7 @@ use UIFI\GrupLACScraperBundle\Core\ConsultoriaCientificaScraper;
     * @return arreglo de consultorias del grupo
     */
     public function getConsultoriasCientificasGrupo($grupoDTO) {
-      $grupoScraper = new ConsultoriaCientificaScraper($grupoDTO,$this->logger);
+      $grupoScraper = new ConsultoriaCientificaScraper($grupoDTO);
       return $grupoScraper->getConsultoriaCientifica();
     }
 
