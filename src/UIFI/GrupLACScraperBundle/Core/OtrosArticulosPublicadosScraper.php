@@ -8,10 +8,9 @@ class OtrosArticulosPublicadosScraper  extends  Scraper
      /**
       * Constructor del objeto
       */
-    public function __construct($grupoDTO,$logger) {
+    public function __construct($grupoDTO) {
          Scraper::__construct( self::URL_BASE . $grupoDTO['id'] );
          $this->grupoDTO = $grupoDTO;
-         $this->logger = $logger;
     }
     /**
 		* Obtienen los otros articulos publicados

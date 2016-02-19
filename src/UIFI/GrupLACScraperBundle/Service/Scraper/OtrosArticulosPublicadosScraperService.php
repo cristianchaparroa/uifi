@@ -23,7 +23,7 @@ use UIFI\GrupLACScraperBundle\Core\OtrosArticulosPublicadosScraper;
     * @return arreglo de docuementos del grupo
     */
     public function getOtrosArticulosPublicadosGrupo($grupoDTO) {
-      $scraper = new OtrosArticulosPublicadosScraper($grupoDTO,$this->logger);
+      $scraper = new OtrosArticulosPublicadosScraper($grupoDTO);
       return $scraper->getOtrosArticulosPublicados();
     }
 
