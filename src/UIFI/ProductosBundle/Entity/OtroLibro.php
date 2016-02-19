@@ -45,7 +45,7 @@ class OtroLibro
     /**
      * @var string
      *
-     * @ORM\Column(name="isbn", type="string", length=255)
+     * @ORM\Column(name="isbn", type="string", length=255,nullable=true)
      */
     private $isbn;
 
@@ -58,7 +58,7 @@ class OtroLibro
     /**
      * Codigo del grupo en el cual fue publicado el articulo
      *
-     * @ORM\Column(name="grupo", type="string", length=255)
+     * @ORM\Column(name="grupo", type="string", length=255,nullable=true)
      */
     private $grupo;
 
@@ -88,11 +88,14 @@ class OtroLibro
      * @ORM\Column(name="editorial", type="string", nullable=true)
      */
     private $editorial;
-
+    /**
+    * @ORM\Column(name="autores", type="string",length=1000,nullable=true)
+    */
+    private $autores;
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre_grupo", type="string", length=255)
+     * @ORM\Column(name="nombre_grupo", type="string", length=255,nullable=true)
      */
     private $nombreGrupo;
     /**
@@ -106,7 +109,7 @@ class OtroLibro
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -129,7 +132,7 @@ class OtroLibro
     /**
      * Get titulo
      *
-     * @return string 
+     * @return string
      */
     public function getTitulo()
     {
@@ -152,7 +155,7 @@ class OtroLibro
     /**
      * Get pais
      *
-     * @return string 
+     * @return string
      */
     public function getPais()
     {
@@ -175,7 +178,7 @@ class OtroLibro
     /**
      * Get anual
      *
-     * @return string 
+     * @return string
      */
     public function getAnual()
     {
@@ -198,7 +201,7 @@ class OtroLibro
     /**
      * Get isbn
      *
-     * @return string 
+     * @return string
      */
     public function getIsbn()
     {
@@ -221,7 +224,7 @@ class OtroLibro
     /**
      * Get grupo
      *
-     * @return string 
+     * @return string
      */
     public function getGrupo()
     {
@@ -244,7 +247,7 @@ class OtroLibro
     /**
      * Get tipo
      *
-     * @return string 
+     * @return string
      */
     public function getTipo()
     {
@@ -267,7 +270,7 @@ class OtroLibro
     /**
      * Get volumen
      *
-     * @return string 
+     * @return string
      */
     public function getVolumen()
     {
@@ -290,7 +293,7 @@ class OtroLibro
     /**
      * Get paginas
      *
-     * @return string 
+     * @return string
      */
     public function getPaginas()
     {
@@ -313,7 +316,7 @@ class OtroLibro
     /**
      * Get editorial
      *
-     * @return string 
+     * @return string
      */
     public function getEditorial()
     {
@@ -336,7 +339,7 @@ class OtroLibro
     /**
      * Get nombreGrupo
      *
-     * @return string 
+     * @return string
      */
     public function getNombreGrupo()
     {
@@ -369,10 +372,33 @@ class OtroLibro
     /**
      * Get integrantes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getIntegrantes()
     {
         return $this->integrantes;
+    }
+
+    /**
+     * Set autores
+     *
+     * @param string $autores
+     * @return OtroLibro
+     */
+    public function setAutores($autores)
+    {
+        $this->autores = $autores;
+
+        return $this;
+    }
+
+    /**
+     * Get autores
+     *
+     * @return string 
+     */
+    public function getAutores()
+    {
+        return $this->autores;
     }
 }
