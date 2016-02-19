@@ -1036,8 +1036,8 @@ class GrupLACScraper extends  Scraper
 		* 		$articulo['paginas'] páginas del articulo
 		* 		$articulo['pais'] el país del articulo
 		*/
-		public function getOtrosArticulosPublicados(){
-		 $query = '/html/body/table[35]'; //pendiente
+		 public function getOtrosArticulosPublicados(){
+		 $query = '/html/body/table[13]'; //pendiente
 		 $array = $this->extraer( $query );
 		 $articulos = array();
 		 foreach($array as $item ){
@@ -1053,52 +1053,58 @@ class GrupLACScraper extends  Scraper
 				 $titulo = str_replace(':','',$titulo);
 				 $titulo = utf8_encode ($titulo);
 				 $articulo['titulo'] = $titulo;
+         $articulo ['nombreGrupo'] = $this->grupoDTO['nombre'];
+         $articulo ['grupo'] = $this->grupoDTO['id'];
 				 $list = $doc->getElementsByTagName('br');
+				 $nodesiguiente = $node->nextSibling;
 				 foreach($list as $node){
-					 $nodesiguiente = $node->nextSibling;
-					 $value = $nodesiguiente->nodeValue;
-					 $valores = explode(",",$value);
-					 if(strpos($value,'Autores')){
-						      $result = explode(':',$value);
-						      $autores = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
-						      $articulo['autores'] = $autores;
-					}else{
-						$pais = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[0]) : "";
-						$articulo['pais'] = $pais;
-						$anual = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[1]) : "";
-						$articulo['anual'] = $anual;
-					}
-					 foreach($valores as $valor) {
-						if(strpos($valor,'Contacto ISSN')){
-						      $result = explode(':',$valor);
-						      $issn = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
-						      $articulo['issn'] = $issn;
-						 }
-						 //2006 vol: fasc:  págs:  - 
-						if(strpos($valor,'vol')){
-						      $result = explode('vol:',$valor);
-						      $anual = count($result) > 1 ? $this->eliminarSaltoLinea($result[0]) : "";
-						      $articulo['anual'] = $anual;
-						}
-						if(strpos($valor,'págs')){
-						      $result = explode('págs:',$valor);
-						      $paginas = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
-						      $articulo['paginas'] = $paginas;
-						}
-						$vals = explode(":",$valor);
-						foreach($vals as $val) {
-							if(strpos($valor,'fasc')){
-							      $result = explode('fasc',$valor);
-							      $volumen = count($result) > 1 ? $this->eliminarSaltoLinea($result[0]) : "";
-							      $articulo['volumen'] = $volumen;
-							}
-							if(strpos($valor,'págs')){
-							      $result = explode('págs',$valor);
-							      $fasciculo = count($result) > 1 ? $this->eliminarSaltoLinea($result[0]) : "";
-							      $articulo['fasciculo'] = $fasciculo;
-							}
-						}
-					 }
+  					$nodesiguiente = $node->nextSibling;
+  					$value = $nodesiguiente->nodeValue;
+  					$valores = explode(",",$value);
+  					if(strpos($value,'Autores')){
+  						      $result = explode(':',$value);
+  						      $autores = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+  						      $articulo['autores'] = $autores;
+  					}else{
+  						$pais = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[0]) : "";
+  						$articulo['pais'] = $pais;
+  						$anual = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[1]) : "";
+  						$articulo['anual'] = $anual;
+  					}
+  					foreach($valores as $valor) {
+			
+    						if(strpos($valor,'ISSN:')){
+    						      $result = explode('ISSN:',$valor);
+						      $revista = count($result) > 1 ? $result[0] : "";
+						      $articulo['revista'] = $revista;
+    						      $issn = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+    						      $articulo['issn'] = $issn;
+    						 }
+    						 //2006 vol: fasc:  págs:  -
+    						if(strpos($valor,'vol')){
+    						      $result = explode('vol:',$valor);
+    						      $anual = count($result) > 1 ? $this->eliminarSaltoLinea($result[0]) : "";
+    						      $articulo['anual'] = $anual;
+    						}
+    						if(strpos($valor,'págs')){
+    						      $result = explode('págs:',$valor);
+    						      $paginas = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+    						      $articulo['paginas'] = $paginas;
+    						}
+    						$vals = explode(":",$valor);
+    						foreach($vals as $val) {
+    							if(strpos($valor,'fasc')){
+    							      $result = explode('fasc',$valor);
+    							      $volumen = count($result) > 1 ? $this->eliminarSaltoLinea($result[0]) : "";
+    							      $articulo['volumen'] = $volumen;
+    							}
+    							if(strpos($valor,'págs')){
+    							      $result = explode('págs',$valor);
+    							      $fasciculo = count($result) > 1 ? $this->eliminarSaltoLinea($result[0]) : "";
+    							      $articulo['fasciculo'] = $fasciculo;
+    							}
+    						}
+  					}
 				 }
 			 }
 			 $articulos[] = $articulo;
@@ -1907,5 +1913,215 @@ class GrupLACScraper extends  Scraper
 			      $redes[] = $red;
 			}
 			return $redes;
+		}
+		
+		/**
+		 *
+		 * @return Arreglo de generación de contenido impreso
+		 */
+		 public function contenidoImpreso(){
+			 $query = '/html/body/table[38]';
+			 return $this->extraer( $query );
+		 }
+		 /**
+		* Obtienen la generación de contenido impreso
+		* @return Arreglo de arreglos
+		* 		$contenido['tipo'] el tipo del contenido
+		* 		$contenido['titulo'] el titulo del contenido
+		* 		$contenido['fecha'] fecha del contenido
+		* 		$contenido['ambito'] ámbito del contenido
+		* 		$contenido['medio_circulacion'] medio circulación del contenido
+		* 		$contenido['lugar'] lugar de publicación del contenido
+		*/
+		public function getContenidoImpreso(){
+		 $query = '/html/body/table[38]';
+		 $array = $this->extraer( $query );
+		 $contenidos = array();
+		 foreach($array as $item ){
+			 $doc = new \DOMDocument();
+			 $doc->loadHTML( $item );
+			 $xpath = new \DOMXPath($doc);
+			 $list = $doc->getElementsByTagName('strong');
+			 $contenido = array();
+			 foreach($list as $node ){
+				 $contenido['tipo'] = $node->nodeValue;
+				 $tituloNode = $node->nextSibling;
+				 $titulo = $tituloNode->nodeValue;
+				 $titulo = str_replace(':','',$titulo);
+				 $titulo = utf8_encode ($titulo);
+				 $contenido['titulo'] = $titulo;
+				 $list = $doc->getElementsByTagName('br');
+				 foreach($list as $node){
+					 $nodesiguiente = $node->nextSibling;
+					 $value = $nodesiguiente->nodeValue;
+					 $valores = explode(",",$value);
+					 if(strpos($value,'Autores'){
+						$result = explode(':',$value);
+						$autores = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+						$contenido['autores'] = $autores;
+					 }else if(strpos($value,'Lugar de publicación')){
+						$result = explode(':',$valor);
+						$lugar = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+						$contenido['lugar'] = $lugar;
+					}else{
+						$fecha = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[0]) : "";
+						$fecha = str_replace( '00:00:00.0','',$fecha);
+						$contenido['fecha'] = $fecha;
+					 }
+					 foreach($valores as $valor) {
+							 if(strpos($valor,'Ambito')){
+								  $result = explode(':',$valor);
+								  $ambito = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+								  $contenido['ambito'] = $ambito;
+							 }
+							 if(strpos($valor,'Medio de circulación')){
+								  $result = explode(':',$valor);
+								  $medio = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+								  $contenido['medio_circulacion'] = $medio;
+							 }
+						 }
+					}
+				}
+			      $contenidos[] = $contenido;
+			}
+			return $contenidos;
+		}
+		
+		
+		/**
+		 *
+		 * @return Arreglo de generación de contenido virtual
+		 */
+		 public function contenidoVirtual(){
+			 $query = '/html/body/table[40]';
+			 return $this->extraer( $query );
+		 }
+		 /**
+		* Obtienen la generación de contenido virtual
+		* @return Arreglo de arreglos
+		* 		$contenido['tipo'] el tipo del contenido
+		* 		$contenido['titulo'] el titulo del contenido
+		* 		$contenido['fecha'] fecha del contenido
+		* 		$contenido['entidades_vinculadas'] entidades vinculadas al contenido
+		* 		$contenido['sitio_web'] sitio web del contenido
+		*/
+		public function getContenidoVirtual(){
+		 $query = '/html/body/table[40]';
+		 $array = $this->extraer( $query );
+		 $contenidos = array();
+		 foreach($array as $item ){
+			 $doc = new \DOMDocument();
+			 $doc->loadHTML( $item );
+			 $xpath = new \DOMXPath($doc);
+			 $list = $doc->getElementsByTagName('strong');
+			 $contenido = array();
+			 foreach($list as $node ){
+				 $contenido['tipo'] = $node->nodeValue;
+				 $tituloNode = $node->nextSibling;
+				 $titulo = $tituloNode->nodeValue;
+				 $titulo = str_replace(':','',$titulo);
+				 $titulo = utf8_encode ($titulo);
+				 $contenido['titulo'] = $titulo;
+				 $list = $doc->getElementsByTagName('br');
+				 foreach($list as $node){
+					 $nodesiguiente = $node->nextSibling;
+					 $value = $nodesiguiente->nodeValue;
+					 $valores = explode(",",$value);
+					 if(strpos($value,'Autores'){
+						$result = explode(':',$value);
+						$autores = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+						$contenido['autores'] = $autores;
+					 }else{
+						$fecha = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[0]) : "";
+						$fecha = str_replace( '00:00:00.0','',$fecha);
+						$contenido['fecha'] = $fecha;
+					 }
+					 foreach($valores as $valor) {
+							 if(strpos($valor,'Entidades vinculadas')){
+								  $result = explode(':',$valor);
+								  $entidades = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+								  $contenido['entidades_vinculadas'] = $entidades;
+							 }
+							 if(strpos($valor,'Sitio web')){
+								  $result = explode(':',$valor);
+								  $medio = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+								  $contenido['sitio_web'] = $medio;
+							 }
+						 }
+					}
+				}
+			      $contenidos[] = $contenido;
+			}
+			return $contenidos;
+		}
+		
+		
+		/**
+		 *
+		 * @return Arreglo de trabajos
+		 */
+		 public function demasTrabajos(){
+			 $query = '/html/body/table[53]';
+			 return $this->extraer( $query );
+		 }
+		 /**
+		* Obtienen los demás trabajos
+		* @return Arreglo de arreglos
+		* 		$trabajo['tipo'] el tipo del trabajo
+		* 		$trabajo['titulo'] el titulo del trabajo
+		* 		$trabajo['pais'] país del trabajo
+		* 		$trabajo['anual'] año del trabajo
+		* 		$trabajo['idioma'] idioma del trabajo
+		* 		$trabajo['medio_divulgacion'] medio divulgación del trabajo
+		*/
+		public function getDemasTrabajos(){
+		 $query = '/html/body/table[53]';
+		 $array = $this->extraer( $query );
+		 $trabajos = array();
+		 foreach($array as $item ){
+			 $doc = new \DOMDocument();
+			 $doc->loadHTML( $item );
+			 $xpath = new \DOMXPath($doc);
+			 $list = $doc->getElementsByTagName('strong');
+			 $trabajo = array();
+			 foreach($list as $node ){
+				 $trabajo['tipo'] = $node->nodeValue;
+				 $tituloNode = $node->nextSibling;
+				 $titulo = $tituloNode->nodeValue;
+				 $titulo = str_replace(':','',$titulo);
+				 $titulo = utf8_encode ($titulo);
+				 $trabajo['titulo'] = $titulo;
+				 $list = $doc->getElementsByTagName('br');
+				 foreach($list as $node){
+					 $nodesiguiente = $node->nextSibling;
+					 $value = $nodesiguiente->nodeValue;
+					 $valores = explode(",",$value);
+					 if(strpos($value,'Autores'){
+						$result = explode(':',$value);
+						$autores = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+						$trabajo['autores'] = $autores;
+					 }else{
+						$pais = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[0]) : "";
+						$trabajo['pais'] = $pais;
+						$anual = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[1]) : "";
+						$trabajo['anual'] = $anual;
+					 }
+					 foreach($valores as $valor) {
+							 if(strpos($valor,'Idioma')){
+								  $result = explode(':',$valor);
+								  $idioma = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+								  $trabajo['idioma'] = $idioma;
+							 }
+							 if(strpos($valor,'Medio de divulgación')){
+								  $result = explode(':',$valor);
+								  $medio = count($result) > 1 ? $this->eliminarSaltoLinea($result[1]) : "";
+								  $trabajo['medio_divulgacion'] = $medio;
+							 }
+						 }
+					}
+				}
+			      $trabajos[] = $trabajo;
+			}
+			return $trabajos;
 		}
 }
