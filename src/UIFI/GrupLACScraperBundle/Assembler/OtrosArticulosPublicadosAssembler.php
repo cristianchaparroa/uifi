@@ -34,12 +34,12 @@ class OtrosArticulosPublicadosAssembler{
     $articulo->setTipo(array_key_exists('tipo',$articuloDTO) ? $articuloDTO['tipo'] : "");
     $articulo->setAnual(array_key_exists('anual',$articuloDTO) ? $articuloDTO['anual'] : "");
     $articulo->setPais(array_key_exists('pais',$articuloDTO) ? $articuloDTO['pais'] : "");
-    $articulo->setIssn(array_key_exists('issn',$articuloDTO) ? $articuloDTO['ambito'] : "");
+    $articulo->setIssn(array_key_exists('issn',$articuloDTO) ? $articuloDTO['issn'] : "");
     $articulo->setRevista(array_key_exists('revista',$articuloDTO) ? $articuloDTO['revista'] : "");
     $articulo->setVolumen(array_key_exists('volumen',$articuloDTO) ? $articuloDTO['volumen'] : "");
     $articulo->setFasciculo(array_key_exists('fasciculo',$articuloDTO) ? $articuloDTO['fasciculo'] : "");
     $articulo->setPaginas(array_key_exists('paginas',$articuloDTO) ? $articuloDTO['paginas'] : "");
-
+    $articulo->setAutores(array_key_exists('autores',$articuloDTO) ? $articuloDTO['autores']: "" );
 
     $articulo->setNombreGrupo(array_key_exists('nombreGrupo',$articuloDTO) ?  $articuloDTO['nombreGrupo'] : "");
     $articulo->setGrupo(array_key_exists('grupo',$articuloDTO) ?  $articuloDTO['grupo'] : "");

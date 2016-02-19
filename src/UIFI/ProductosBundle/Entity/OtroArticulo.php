@@ -91,6 +91,10 @@ class OtroArticulo
      */
     private $grupo;
     /**
+    * @ORM\Column(name="autores", type="string",length=1000,nullable=true)
+    */
+    private $autores;
+    /**
      * Integrantes de un grupo de un investigacion que publicaron el articulo.
      *
      * @ORM\ManyToMany(targetEntity="UIFI\IntegrantesBundle\Entity\Integrante", mappedBy="articulos")
@@ -108,7 +112,7 @@ class OtroArticulo
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -131,7 +135,7 @@ class OtroArticulo
     /**
      * Get titulo
      *
-     * @return string 
+     * @return string
      */
     public function getTitulo()
     {
@@ -154,7 +158,7 @@ class OtroArticulo
     /**
      * Get ISSN
      *
-     * @return string 
+     * @return string
      */
     public function getISSN()
     {
@@ -177,7 +181,7 @@ class OtroArticulo
     /**
      * Get anual
      *
-     * @return string 
+     * @return string
      */
     public function getAnual()
     {
@@ -200,7 +204,7 @@ class OtroArticulo
     /**
      * Get tipo
      *
-     * @return string 
+     * @return string
      */
     public function getTipo()
     {
@@ -223,7 +227,7 @@ class OtroArticulo
     /**
      * Get revista
      *
-     * @return string 
+     * @return string
      */
     public function getRevista()
     {
@@ -246,7 +250,7 @@ class OtroArticulo
     /**
      * Get volumen
      *
-     * @return string 
+     * @return string
      */
     public function getVolumen()
     {
@@ -269,7 +273,7 @@ class OtroArticulo
     /**
      * Get fasciculo
      *
-     * @return string 
+     * @return string
      */
     public function getFasciculo()
     {
@@ -292,7 +296,7 @@ class OtroArticulo
     /**
      * Get paginas
      *
-     * @return string 
+     * @return string
      */
     public function getPaginas()
     {
@@ -315,7 +319,7 @@ class OtroArticulo
     /**
      * Get pais
      *
-     * @return string 
+     * @return string
      */
     public function getPais()
     {
@@ -338,7 +342,7 @@ class OtroArticulo
     /**
      * Get nombreGrupo
      *
-     * @return string 
+     * @return string
      */
     public function getNombreGrupo()
     {
@@ -361,7 +365,7 @@ class OtroArticulo
     /**
      * Get grupo
      *
-     * @return string 
+     * @return string
      */
     public function getGrupo()
     {
@@ -394,10 +398,33 @@ class OtroArticulo
     /**
      * Get integrantes
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getIntegrantes()
     {
         return $this->integrantes;
+    }
+
+    /**
+     * Set autores
+     *
+     * @param string $autores
+     * @return OtroArticulo
+     */
+    public function setAutores($autores)
+    {
+        $this->autores = $autores;
+
+        return $this;
+    }
+
+    /**
+     * Get autores
+     *
+     * @return string 
+     */
+    public function getAutores()
+    {
+        return $this->autores;
     }
 }
