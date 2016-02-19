@@ -62,7 +62,6 @@ class OtrosArticulosPublicadosScraper  extends  Scraper
   						$articulo['anual'] = $anual;
   					}
   					foreach($valores as $valor) {
-                $this->logger->err('ISSSN??: '.$valor);
     						if(strpos($valor,'ISSN:')){
     						      $result = explode('ISSN:',$valor);
                       $revista = count($result) > 1 ? $result[0] : "";
