@@ -29,7 +29,7 @@ class DocumentoTrabajoAssembler{
   */
   public function crearModelo($documentoDTO) {
     $documento = new DocumentoTrabajo();
-    
+
     $documento->setTitulo(array_key_exists('titulo',$documentoDTO) ? $documentoDTO['titulo'] : "");
     $documento->setTipo(array_key_exists('tipo',$documentoDTO) ? $documentoDTO['tipo'] : "");
     $documento->setAnual(array_key_exists('anual',$documentoDTO) ? $documentoDTO['anual'] : "");
@@ -37,7 +37,7 @@ class DocumentoTrabajoAssembler{
     $documento->setInstituciones(array_key_exists('instituciones',$documentoDTO) ? $documentoDTO['instituciones'] : "");
     $documento->setUrl(array_key_exists('url',$documentoDTO) ? $documentoDTO['url'] : "");
     $documento->setDoi(array_key_exists('doi',$documentoDTO) ? $documentoDTO['doi'] : "");
-
+    $documento->setAutores(array_key_exists('autores',$documentoDTO) ? $documentoDTO['autores'] : ""); 
     $documento->setNombreGrupo(array_key_exists('nombreGrupo',$documentoDTO) ?  $documentoDTO['nombreGrupo'] : "");
     $documento->setGrupo(array_key_exists('grupo',$documentoDTO) ?  $documentoDTO['grupo'] : "");
     return $documento;

@@ -8,9 +8,10 @@ class DocumentoTrabajoScraper  extends  Scraper
      /**
       * Constructor del objeto
       */
-    public function __construct( $grupoDTO ) {
+    public function __construct( $grupoDTO ,$logger) {
          Scraper::__construct( self::URL_BASE . $grupoDTO['id'] );
          $this->grupoDTO = $grupoDTO;
+         $this->logger = $logger;
     }
     /**
   		* Obtienen los documentos de trabajo
@@ -49,9 +50,21 @@ class DocumentoTrabajoScraper  extends  Scraper
   					 $nodesiguiente = $node->nextSibling;
   					 $value = $nodesiguiente->nodeValue;
   					 $valores = explode(",",$value);
-  					 $anual = count($valores) > 1 ? $this->eliminarSaltoLinea($valores[0]) : "";
-  					 $documento['anual'] = $anual;
 
+             if(strpos($value,' Nro. Paginas:')){
+               $resultAnual = explode(' Nro. Paginas:',$value);
+               $anual = count($resultAnual) > 1 ? $resultAnual[0] : "";
+               $anual = str_replace(',','',$anual);
+               $documento['anual'] = $this->eliminarSaltoLinea($anual);
+             }
+             if(strpos($value,'Autores:')){
+               $this->logger->err($value);
+               $resultAutores = explode('Autores:',$this->eliminarSaltoLinea($value));
+               $this->logger->err(json_encode($resultAutores));
+               $autores = count($resultAutores) > 1  ? $resultAutores[1] : "";
+               $this->logger->err($autores);
+               $documento['autores'] = $autores;
+             }
   					 foreach($valores as $valor) {
   							 if(strpos($valor,'Nro. Paginas')) {
   						      $result = explode(':',$valor);
