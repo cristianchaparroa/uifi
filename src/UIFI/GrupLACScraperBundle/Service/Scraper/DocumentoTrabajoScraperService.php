@@ -23,7 +23,7 @@ use UIFI\GrupLACScraperBundle\Core\DocumentoTrabajoScraper;
     * @return arreglo de docuementos del grupo
     */
     public function getDocumentosTrabajoGrupo($grupoDTO) {
-      $scraper = new DocumentoTrabajoScraper($grupoDTO,$this->logger);
+      $scraper = new DocumentoTrabajoScraper($grupoDTO);
       return $scraper->getDocumentosTrabajo();
     }
 

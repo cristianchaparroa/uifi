@@ -8,10 +8,9 @@ class DocumentoTrabajoScraper  extends  Scraper
      /**
       * Constructor del objeto
       */
-    public function __construct( $grupoDTO ,$logger) {
+    public function __construct($grupoDTO) {
          Scraper::__construct( self::URL_BASE . $grupoDTO['id'] );
          $this->grupoDTO = $grupoDTO;
-         $this->logger = $logger;
     }
     /**
   		* Obtienen los documentos de trabajo
@@ -58,11 +57,8 @@ class DocumentoTrabajoScraper  extends  Scraper
                $documento['anual'] = $this->eliminarSaltoLinea($anual);
              }
              if(strpos($value,'Autores:')){
-               $this->logger->err($value);
                $resultAutores = explode('Autores:',$this->eliminarSaltoLinea($value));
-               $this->logger->err(json_encode($resultAutores));
                $autores = count($resultAutores) > 1  ? $resultAutores[1] : "";
-               $this->logger->err($autores);
                $documento['autores'] = $autores;
              }
   					 foreach($valores as $valor) {
