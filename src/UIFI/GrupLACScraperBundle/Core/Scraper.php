@@ -71,7 +71,9 @@ class Scraper
 	}
 
 	public function eliminarSaltoLinea( $string ){
-		return  trim(preg_replace('/\s\s+/', ' ', $string ));
+		$string =  trim(preg_replace('/\s\s+/', ' ', $string ));
+		$string =  trim(preg_replace('/\s+/', ' ', $string));
+		return str_replace(array("\n", "\r"), ' ', $string);
 	}
 	public function getDOM(){
 		return $this->dom;
